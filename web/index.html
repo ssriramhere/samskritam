@@ -1,0 +1,345 @@
+<title>Samskritam.ai</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sanskrit with its grammar shown: every word of the Bhagavad Gītā analysed by scholars and re-derived by Pāṇini's rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap">
+<style>
+/* Layout: a narrow argument column beside a wide palm-leaf folio that holds the live
+   verse; below, two tracks, the numbers, and the sources. One bold object: the leaf. */
+:root {
+  --paper: #f3f3f6;
+  --leaf: #fbfaf5;
+  --ink: #171a2c;
+  --muted: #5a5f78;
+  --rule: #d9dbe5;
+  --indigo: #333f99;
+  --indigo-soft: #e6e8f6;
+  --turmeric: #b07800;
+  --ok: #2d7a57;
+  --warn: #a8620a;
+  --none: #6b7086;
+  --font-display: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", Georgia, serif;
+  --font-ui: "Hind", "Noto Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --step-0: 1rem; --step-1: 1.2rem; --step-2: 1.5rem; --step-3: 2.1rem; --step-4: 3rem;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f1120; --leaf: #171a2e; --ink: #e8e9f2; --muted: #a2a7bf; --rule: #2b2f48;
+  --indigo: #9ea8ff; --indigo-soft: #23284a; --turmeric: #f0b840; --ok: #6cc79a;
+  --warn: #f2a23c; --none: #9095ad; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0f1120; --leaf: #171a2e; --ink: #e8e9f2; --muted: #a2a7bf; --rule: #2b2f48;
+  --indigo: #9ea8ff; --indigo-soft: #23284a; --turmeric: #f0b840; --ok: #6cc79a;
+  --warn: #f2a23c; --none: #9095ad; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-ui);
+  font-size: var(--step-0); line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1120px; margin: 0 auto; }
+a { color: var(--indigo) }
+:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; border-radius: 4px }
+h1, h2, h3 { text-wrap: balance; margin: 0 }
+.eyebrow { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600 }
+
+header.top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding-block: 20px 8px; flex-wrap: wrap }
+.mark { display: flex; align-items: baseline; gap: 10px; font-weight: 600; font-size: var(--step-1) }
+.mark .dev { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--indigo) }
+.launch { font-size: .9rem; color: var(--muted) }
+.launch strong { color: var(--ink); font-weight: 600 }
+
+.hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 40px;
+  padding-block: 28px 48px; align-items: start }
+.pitch h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.08; letter-spacing: -.01em }
+.pitch h1 em { color: var(--indigo); font-style: italic }
+.pitch p { color: var(--muted); max-width: 34ch; font-size: var(--step-1); margin: 18px 0 0 }
+.legend { display: grid; gap: 8px; margin-top: 26px; font-size: .92rem }
+.legend div { display: flex; gap: 10px; align-items: baseline }
+
+.dot { width: .62em; height: .62em; border-radius: 50%; flex: none; display: inline-block; transform: translateY(.02em) }
+.s-agree { --c: var(--ok) } .s-form-known { --c: var(--warn) } .s-unknown { --c: var(--none) } .s-not-checked { --c: var(--rule) }
+.dot { background: var(--c, var(--none)) }
+.s-not-checked .dot, .dot.s-not-checked { background: transparent; box-shadow: inset 0 0 0 1.5px var(--none) }
+
+/* The folio: a palm-leaf manuscript proportion with its two binding holes. */
+.folio { background: var(--leaf); border: 1px solid var(--rule); border-radius: 14px;
+  padding: 22px clamp(18px, 4vw, 44px) 24px; position: relative; min-width: 0 }
+.folio::before, .folio::after { content: ""; position: absolute; top: 50%; width: 11px; height: 11px;
+  border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 1px var(--rule) }
+.folio::before { left: 14px } .folio::after { right: 14px }
+.nav { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: space-between }
+.nav .ref { font-family: var(--font-mono); font-size: .9rem; color: var(--muted) }
+.nav select, .nav button { font: inherit; font-size: .9rem; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 8px; padding: 5px 10px; cursor: pointer }
+.nav button:hover, .nav select:hover { border-color: var(--indigo) }
+.controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap }
+.speaker { margin-top: 18px; font-family: var(--font-display); color: var(--muted); font-style: italic }
+.verse { margin-top: 10px; display: grid; gap: 14px }
+.line .dev { font-family: var(--font-display); font-size: clamp(1.45rem, 3.2vw, 2.05rem); line-height: 1.5 }
+.line .iast { font-family: var(--font-display); color: var(--muted); font-size: var(--step-1); font-style: italic }
+.scan { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--font-display); color: var(--turmeric);
+  font-size: 1.15rem; letter-spacing: .32em; margin-top: 2px }
+.meter { margin-top: 14px; font-size: .88rem; color: var(--muted) }
+.meter b { color: var(--ink); font-weight: 600 }
+
+.words { margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--rule); display: flex; flex-wrap: wrap; gap: 12px 14px }
+.grp { display: grid; gap: 4px; min-width: 0 }
+.grp .surf { font-size: .74rem; color: var(--muted); font-family: var(--font-display); font-style: italic; padding-left: 2px }
+.grp .row { display: flex; gap: 6px; flex-wrap: wrap }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-family: var(--font-display);
+  font-size: 1.12rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 3px 12px 2px 10px; cursor: pointer; line-height: 1.4 }
+.chip:hover { border-color: var(--indigo) }
+.chip[aria-pressed="true"] { background: var(--indigo-soft); border-color: var(--indigo) }
+
+.detail { margin-top: 18px; background: var(--paper); border-radius: 10px; padding: 16px 18px; min-width: 0 }
+.detail h3 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap }
+.detail h3 .lat { font-size: var(--step-1); color: var(--muted); font-style: italic }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; margin-top: 10px; font-size: .95rem }
+.kv dt { color: var(--muted) } .kv dd { margin: 0 }
+.status { margin-top: 10px; font-size: .92rem; display: flex; gap: 8px; align-items: baseline }
+.deriv { margin-top: 12px }
+.deriv summary { cursor: pointer; color: var(--indigo); font-weight: 500; font-size: .95rem }
+.steps { overflow-x: auto; margin-top: 8px }
+.steps table { border-collapse: collapse; font-size: .88rem; width: 100% }
+.steps td { padding: 5px 10px 5px 0; border-top: 1px solid var(--rule); vertical-align: baseline; white-space: nowrap }
+.steps td.code { font-family: var(--font-mono); color: var(--indigo); font-variant-numeric: tabular-nums }
+.steps td.text { font-family: var(--font-display); font-style: italic; color: var(--muted); white-space: normal; min-width: 9ch }
+.steps td.res { font-family: var(--font-display) }
+.hint { font-size: .88rem; color: var(--muted); margin-top: 14px }
+
+section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
+.band h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); line-height: 1.15 }
+.tracks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 28px }
+.track h3 { font-size: var(--step-1); font-weight: 600; margin-top: 6px }
+.track p { color: var(--muted); max-width: 52ch; margin: 8px 0 0 }
+.track ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px }
+.track li { display: flex; gap: 10px; align-items: baseline }
+.tag { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; padding: 1px 7px;
+  border-radius: 999px; flex: none; border: 1px solid currentColor }
+.tag.live { color: var(--ok) } .tag.soon { color: var(--muted) }
+.tasks { overflow-x: auto; margin-top: 18px }
+.tasks table { border-collapse: collapse; width: 100%; font-size: .92rem; min-width: 480px }
+.tasks th, .tasks td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: baseline }
+.tasks th { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600 }
+.tasks td.n { font-variant-numeric: tabular-nums; text-align: right }
+
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 26px }
+.fig .num { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums }
+.fig .lab { color: var(--muted); font-size: .9rem; margin-top: 6px }
+.credits { color: var(--muted); font-size: .92rem; max-width: 70ch; display: grid; gap: 10px; margin-top: 16px }
+footer { padding-block: 28px 40px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--rule);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap }
+footer .dev { font-family: var(--font-display); color: var(--ink) }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px }
+  .pitch p { max-width: 60ch }
+  .tracks { grid-template-columns: minmax(0, 1fr) }
+  .figures { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .pitch h1 { font-size: 2.4rem }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .verse, .words, .detail { animation: rise .35s ease both }
+  @keyframes rise { from { opacity: .35; transform: translateY(4px) } to { opacity: 1; transform: none } }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="mark"><span class="dev">संस्कृतम्</span><span>Samskritam.ai</span></div>
+    <div class="launch">Opening on <strong>Vijayadaśamī, 20 October 2026</strong></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="pitch">
+        <h1>Sanskrit, with its <em>grammar shown</em>.</h1>
+        <p>Every word of the Bhagavad Gītā, analysed by scholars and re-derived from Pāṇini's rules. Tap any word to see why it is what it is.</p>
+        <div class="legend" aria-label="What the colours mean">
+          <div><span class="dot s-agree"></span><span>Scholarly annotation and Pāṇini's rules agree</span></div>
+          <div><span class="dot s-form-known"></span><span>The two sources differ: open for review</span></div>
+          <div><span class="dot s-unknown"></span><span>The rule engine has no entry for this form yet</span></div>
+          <div><span class="dot s-not-checked"></span><span>Compound member, not yet checked</span></div>
+        </div>
+      </div>
+
+      <article class="folio" aria-live="polite">
+        <div class="nav">
+          <span class="ref" id="ref">Bhagavad Gītā 2.47</span>
+          <div class="controls">
+            <label for="chap" class="eyebrow" style="letter-spacing:.08em">Chapter</label>
+            <select id="chap" aria-label="Chapter"></select>
+            <button id="prev" type="button" aria-label="Previous verse">←</button>
+            <select id="verse" aria-label="Verse"></select>
+            <button id="next" type="button" aria-label="Next verse">→</button>
+          </div>
+        </div>
+        <div class="speaker" id="speaker" hidden></div>
+        <div class="verse" id="lines">
+          <div class="line"><div class="dev">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन</div><div class="iast">karmaṇyevādhikāraste mā phaleṣu kadācana</div></div>
+          <div class="line"><div class="dev">मा कर्मफलहेतुर्भूर् मा ते सङ्गो ऽस्त्वकर्मणि</div><div class="iast">mā karmaphalaheturbhūr mā te saṅgo 'stvakarmaṇi</div></div>
+        </div>
+        <div class="meter" id="meter">Meter: <b>anuṣṭubh</b> (pathyā). <span style="color:var(--turmeric)">ऽ</span> guru, <span style="color:var(--turmeric)">।</span> laghu.</div>
+        <div class="words" id="words"><span class="hint">Loading the word analysis…</span></div>
+        <div class="detail" id="detail" hidden></div>
+      </article>
+    </section>
+
+    <section class="band" id="tracks">
+      <div class="eyebrow">Two directions, one engine</div>
+      <h2>AI that teaches Sanskrit, and Sanskrit that tests AI.</h2>
+      <div class="tracks">
+        <div class="track">
+          <div class="eyebrow">Learn</div>
+          <h3>Read classical texts with every word explained</h3>
+          <p>The analysis you see above is checked twice: once by scholars who annotated the corpus, once by a working implementation of the Aṣṭādhyāyī. Where they disagree, we show it.</p>
+          <ul>
+            <li><span class="tag live">Live</span><span>Bhagavad Gītā explorer: 700 verses, word analysis, sūtra derivations, meter</span></li>
+            <li><span class="tag soon">Next</span><span>Paste any verse and get a verified word-by-word reading</span></li>
+            <li><span class="tag soon">Next</span><span>Spoken Samskritam practice partner</span></li>
+            <li><span class="tag soon">Next</span><span>Recitation coach for meter and pronunciation</span></li>
+          </ul>
+        </div>
+        <div class="track">
+          <div class="eyebrow">Improve AI</div>
+          <h3>A grammar benchmark that no model can talk its way through</h3>
+          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. The first results publish at launch.</p>
+          <div class="tasks">
+            <table>
+              <thead><tr><th>Task</th><th>What the model must do</th><th class="n">Items</th></tr></thead>
+              <tbody>
+                <tr><td>Tiṅanta</td><td>Produce a verb form from root, lakāra, person and number</td><td class="n">150</td></tr>
+                <tr><td>Subanta</td><td>Decline a stem in a given case and number</td><td class="n">100</td></tr>
+                <tr><td>Analysis</td><td>Identify lakāra, puruṣa and vacana of a verb form</td><td class="n">100</td></tr>
+                <tr><td>Gītā in context</td><td>Give a word's lemma and grammar inside a verse</td><td class="n">100</td></tr>
+                <tr><td>Chandas</td><td>Scan a half-verse into guru and laghu syllables</td><td class="n">50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="numbers">
+      <div class="eyebrow">The Gītā, checked</div>
+      <h2>What the two sources say together</h2>
+      <div class="figures">
+        <div class="fig"><div class="num">700</div><div class="lab">verses, with the critical edition's numbering mapped</div></div>
+        <div class="fig"><div class="num" id="f-checked">8,982</div><div class="lab">words checked against Pāṇini's rules</div></div>
+        <div class="fig"><div class="num" id="f-agree">93.0%</div><div class="lab">where scholars and rules agree</div></div>
+        <div class="fig"><div class="num">782</div><div class="lab">step-by-step sūtra derivations</div></div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="eyebrow">Sources</div>
+      <h2>Built on open scholarship</h2>
+      <div class="credits">
+        <p>Word analyses: the <a href="https://github.com/OliverHellwig/sanskrit" target="_blank" rel="noopener">Digital Corpus of Sanskrit</a> by Oliver Hellwig, licensed CC BY 4.0. It follows the critical edition of the Mahābhārata; verse numbers here use the common numbering, which differs in chapter 13.</p>
+        <p>Grammar engine: <a href="https://github.com/ambuda-org/vidyut" target="_blank" rel="noopener">Vidyut</a> from the Ambuda project, which implements more than 2,000 rules of the Aṣṭādhyāyī.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span><span class="dev">विजयादशमी</span> · the traditional day to begin learning</span>
+    <span>Samskritam.ai</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const MARK = { G: "ऽ", L: "।" };
+  const STATUS = {
+    "agree": "Scholarly annotation and Pāṇini's rules agree.",
+    "form-known": "The rule engine knows this form but analyses it differently. Open for review.",
+    "unknown": "The rule engine has no entry for this form yet.",
+    "not-checked": "Compound members are not checked yet."
+  };
+  let verses = [], byChapter = new Map(), derivs = null, current = null, selected = -1;
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function renderVerse(v) {
+    current = v; selected = -1;
+    $("ref").textContent = `Bhagavad Gītā ${v.id}` + (v.ce && v.id.startsWith("13.") ? ` (critical ed. 13.${v.ce})` : "");
+    const sp = $("speaker"); sp.hidden = !v.sp; sp.textContent = v.sp || "";
+    const padaLen = v.m[0] === "triṣṭubh" ? 11 : 8;
+    $("lines").innerHTML = v.dev.map((d, i) => {
+      const scans = v.scan.length === v.dev.length * 2 ? v.scan.slice(i * 2, i * 2 + 2) : [v.scan[i] || ""];
+      const marks = scans.map(s => `<span>${[...s].map(c => MARK[c] || "").join("")}</span>`).join("");
+      return `<div class="line"><div class="dev">${esc(d)}</div><div class="iast">${esc(v.iast[i])}</div><div class="scan" aria-label="Syllable weights">${marks}</div></div>`;
+    }).join("");
+    const variant = v.m[1] ? ` (${esc(v.m[1])})` : "";
+    $("meter").innerHTML = `Meter: <b>${esc(v.m[0])}</b>${variant}. <span style="color:var(--turmeric)">ऽ</span> guru, <span style="color:var(--turmeric)">।</span> laghu; the last syllable of each pāda may be either.`;
+    renderWords(v);
+    $("detail").hidden = true;
+    try { history.replaceState(null, "", "#v" + v.id); } catch (e) {}
+    syncSelects();
+  }
+
+  function renderWords(v) {
+    if (!v.w.length) { $("words").innerHTML = `<span class="hint">${esc(v.note || "No word analysis for this verse yet.")}</span>`; return; }
+    const groups = []; let last = null;
+    v.w.forEach((w, i) => {
+      if (w.g && last && last.g === w.g) last.items.push(i);
+      else { last = { g: w.g || null, items: [i] }; groups.push(last); }
+    });
+    $("words").innerHTML = groups.map(g => {
+      const chips = g.items.map(i => { const w = v.w[i];
+        return `<button type="button" class="chip s-${w.s}" data-i="${i}" aria-pressed="false"><span class="dot"></span>${esc(w.d)}</button>`; }).join("");
+      return `<div class="grp">${g.g ? `<span class="surf">${esc(g.g)}</span>` : `<span class="surf">&nbsp;</span>`}<div class="row">${chips}</div></div>`;
+    }).join("") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one for its grammar and derivation.</span>`;
+  }
+
+  function renderDetail(i) {
+    const w = current.w[i]; selected = i;
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.i == i ? "true" : "false"));
+    let html = `<h3><span>${esc(w.d)}</span><span class="lat">${esc(w.f)}</span></h3>
+      <dl class="kv"><dt>Lemma</dt><dd>${esc(w.l)}</dd><dt>Grammar</dt><dd>${esc(w.sa)}</dd><dt></dt><dd style="color:var(--muted)">${esc(w.en)}</dd></dl>
+      <div class="status"><span class="dot s-${w.s}"></span><span>${STATUS[w.s]}</span></div>`;
+    if (w.alt) html += `<div class="hint">The engine's readings: ${w.alt.map(esc).join("; ")}</div>`;
+    if (w.x && derivs && derivs[w.x]) {
+      const d = derivs[w.x];
+      html += `<details class="deriv"${window.matchMedia("(min-width: 861px)").matches ? " open" : ""}><summary>Derivation by Pāṇini's sūtras, ${d.s.length} steps</summary>
+        <div class="steps"><table><tbody>${d.s.map(s => `<tr><td class="code">${esc(s[0])}</td><td class="text">${esc(s[1])}</td><td class="res">${esc(s[2])}</td></tr>`).join("")}</tbody></table></div></details>`;
+    } else if (w.x) html += `<div class="hint">Loading derivation…</div>`;
+    const det = $("detail"); det.innerHTML = html; det.hidden = false;
+  }
+
+  function syncSelects() {
+    const ch = +current.id.split(".")[0];
+    $("chap").value = ch;
+    const list = byChapter.get(ch);
+    $("verse").innerHTML = list.map(v => `<option value="${v.id}">${v.id.split(".")[1]}</option>`).join("");
+    $("verse").value = current.id;
+  }
+
+  function go(id) { const v = verses.find(x => x.id === id); if (v) renderVerse(v); }
+  function step(d) { const i = verses.indexOf(current); const v = verses[i + d]; if (v) renderVerse(v); }
+
+  $("words").addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) renderDetail(+b.dataset.i); });
+  $("prev").addEventListener("click", () => step(-1));
+  $("next").addEventListener("click", () => step(1));
+  $("chap").addEventListener("change", e => go(byChapter.get(+e.target.value)[0].id));
+  $("verse").addEventListener("change", e => go(e.target.value));
+
+  fetch("data/gita.json").then(r => r.json()).then(data => {
+    verses = data.verses;
+    verses.forEach(v => { const ch = +v.id.split(".")[0]; if (!byChapter.has(ch)) byChapter.set(ch, []); byChapter.get(ch).push(v); });
+    $("chap").innerHTML = [...byChapter.keys()].map(c => `<option value="${c}">${c}</option>`).join("");
+    const m = data.meta;
+    $("f-checked").textContent = m.checkable.toLocaleString("en-US");
+    $("f-agree").textContent = (100 * m.agree / m.checkable).toFixed(1) + "%";
+    const h = (location.hash || "").replace(/^#v/, "");
+    go(verses.some(v => v.id === h) ? h : "2.47");
+    return fetch("data/derivations.json").then(r => r.json());
+  }).then(d => { derivs = d; if (selected >= 0) renderDetail(selected); })
+    .catch(() => { $("words").innerHTML = `<span class="hint">The word analysis could not load. Reload the page to try again.</span>`; });
+})();
+</script>
