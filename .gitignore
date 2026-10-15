@@ -1,0 +1,4 @@
+vidyut-data/
+__pycache__/
+bench/results/
+*.pyc
