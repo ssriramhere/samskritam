@@ -323,6 +323,25 @@ def gen_meter(rng, n):
     return items
 
 
+def confirmed(it) -> bool:
+    """Second check on noun answers: every accepted form must also appear in
+    Vidyut's dictionary (kosha) with the same stem, gender, case and number.
+    The derivation from a bare stem can miss stem-specific rules; for example
+    mahat (dual mahāntau) and the feminine of bhagavat (bhagavatī)."""
+    if it["task"] != "subanta":
+        return True
+    m = it["meta"]
+    for form in it["accept"]:
+        if not any(v["kind"] == "subanta" and not v.get("krdanta")
+                   and verify.canon(v["lemma"]) == verify.canon(m["stem"])
+                   and v["vibhakti"].name == m["vibhakti"]
+                   and v["vacana"].name == m["vacana"]
+                   and v["linga"].name == m["linga"]
+                   for v in verify.lookup(form)):
+            return False
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=108)
@@ -339,9 +358,15 @@ def main():
              gen_gita(rng, gold, sizes["gita"]) +
              gen_meter(rng, sizes["meter"]))
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
+    for i, it in enumerate(items):
+        it["id"] = f"{it['task']}-{i:04d}"
+    # Ids are fixed before filtering, so dropping an item never renumbers others.
+    dropped = [it["id"] for it in items if not confirmed(it)]
+    items = [it for it in items if it["id"] not in dropped]
+    if dropped:
+        print("dropped after dictionary cross-check:", ", ".join(dropped))
     with open(a.out, "w", encoding="utf-8") as fh:
-        for i, it in enumerate(items):
-            it["id"] = f"{it['task']}-{i:04d}"
+        for it in items:
             fh.write(json.dumps(it, ensure_ascii=False) + "\n")
     print(Counter(it["task"] for it in items), "->", a.out)
 

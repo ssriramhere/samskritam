@@ -168,6 +168,40 @@ section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
 .textbar button:hover { border-color: var(--indigo); color: var(--ink) }
 .textbar button[aria-pressed="true"] { background: var(--indigo); border-color: var(--indigo); color: var(--leaf) }
 #numbers .sub { color: var(--muted); margin: 16px 0 0; font-size: .9rem }
+.topnav { display: flex; gap: 18px; flex-wrap: wrap; font-size: .95rem }
+.topnav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent }
+.topnav a:hover { border-bottom-color: var(--indigo); color: var(--indigo) }
+p.launch { margin: 6px 0 0; color: var(--muted); font-size: .92rem }
+p.launch strong { color: var(--ink); font-weight: 600 }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+.search { position: relative; margin-bottom: 14px }
+#q { font: inherit; font-size: .95rem; width: 100%; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px }
+#q:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft) }
+.results { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% + 4px); background: var(--leaf); border: 1px solid var(--rule);
+  border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 340px; overflow-y: auto; padding: 6px }
+.results button { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; width: 100%; text-align: left; font: inherit;
+  color: var(--ink); background: transparent; border: 0; border-radius: 6px; padding: 7px 8px; cursor: pointer }
+.results button:hover, .results button[aria-selected="true"] { background: var(--indigo-soft) }
+.results .r-ref { font-family: var(--font-mono); font-size: .82rem; color: var(--indigo) }
+.results .r-txt { font-family: var(--font-display); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.results .r-why { grid-column: 2; font-size: .8rem; color: var(--muted) }
+.results .r-none { padding: 8px; color: var(--muted); font-size: .9rem }
+.copy { font-size: .85rem !important }
+.pada { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 18px; flex-wrap: wrap }
+.pada + .pada { padding-left: 1.4em }
+.pada .scan { margin: 0; font-size: 1rem; letter-spacing: .26em }
+.tk.on { cursor: pointer; border-radius: 4px; transition: background-color .15s }
+.tk.on:hover { background: var(--indigo-soft) }
+.tk.hl { background: var(--indigo-soft); box-shadow: 0 0 0 2px var(--indigo-soft); color: var(--indigo) }
+.steps3 { list-style: none; padding: 0; margin: 26px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px }
+.steps3 li { display: flex; gap: 14px; align-items: flex-start }
+.stepn { flex: none; width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; font-weight: 600;
+  color: var(--indigo); background: var(--indigo-soft); font-variant-numeric: tabular-nums }
+.steps3 h3 { font-size: var(--step-1); font-weight: 600; margin: 2px 0 0 }
+.steps3 p { color: var(--muted); margin: 8px 0 0 }
+.steps3 .ex { font-family: var(--font-display); font-style: italic; color: var(--ink) }
+.steps3 .dot { margin: 0 2px 0 6px }
+.steps3 p .dot:first-child { margin-left: 0 }
 .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 26px }
 .fig .num { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums }
 .fig .lab { color: var(--muted); font-size: .9rem; margin-top: 6px }
@@ -182,6 +216,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   .tracks { grid-template-columns: minmax(0, 1fr) }
   .figures { grid-template-columns: repeat(2, minmax(0, 1fr)) }
   .joinbox { grid-template-columns: minmax(0, 1fr); gap: 20px }
+  .steps3 { grid-template-columns: minmax(0, 1fr); gap: 20px }
+  .pada + .pada { padding-left: .8em }
   .surf.blank { display: none }
   .grp:has(.blank) { align-self: end }
   .folio::before, .folio::after { display: none }
@@ -197,11 +233,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 <div class="wrap">
   <header class="top">
     <a class="home" href="/" aria-label="Samskritam.ai home"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1297 212" role="img" aria-label="Samskritam.ai"><g transform="translate(0 13)"><path class="ink" d="M155.59820426487093 122.47138047138046H153.9102132435466L139.35129068462402 110.02244668911334Q146.73625140291807 101.37149270482603 151.9057239057239 91.2435465768799Q157.07519640852973 81.11560044893376 157.07519640852973 74.1526374859708Q157.07519640852973 68.66666666666664 154.01571268237933 65.8181818181818Q150.95622895622895 62.969696969696955 146.9472502805836 62.969696969696955Q142.5162738496072 62.969696969696955 136.81930415263747 65.8181818181818Q131.12233445566778 68.66666666666664 125.42536475869808 72.67564534231198Q119.72839506172838 76.68462401795733 115.0864197530864 80.2716049382716L115.29741863075196 138.92929292929293H113.18742985409651L96.30751964085297 127.53535353535352L96.5185185185185 93.98653198653197Q89.13355780022445 99.47250280583611 84.38608305274971 102.42648709315374Q79.63860830527497 105.38047138047136 75.62962962962962 106.54096520763186Q71.62065095398428 107.70145903479235 66.76767676767676 107.70145903479235Q56.006734006734 107.70145903479235 47.46127946127945 102.00448933782266Q38.915824915824906 96.30751964085296 33.95735129068461 87.55106621773287Q28.99887766554432 78.79461279461277 28.99887766554432 70.14365881032546Q28.99887766554432 61.07070707070706 33.85185185185184 54.52974186307518Q38.70482603815936 47.9887766554433 46.40628507295173 44.40179573512905Q54.1077441077441 40.814814814814795 62.336700336700325 40.814814814814795Q73.09764309764309 40.814814814814795 81.85409652076316 46.40628507295172Q90.61054994388326 51.99775533108864 96.9405162738496 59.804713804713785L97.36251402918069 21.824915824915806H20.769921436588092L13.595959595959584 8.109988776655428V5.999999999999972H179.2300785634119L186.40404040404042 19.714927048260364V21.824915824915806H114.66442199775531L114.87542087542087 58.9607182940516Q121.83838383838383 54.10774410774408 128.4848484848485 50.6262626262626Q135.13131313131314 47.14478114478112 139.98428731762064 47.14478114478112Q143.78226711560043 47.14478114478112 148.9517396184063 49.57126823793488Q154.12121212121212 51.99775533108864 159.07968574635242 56.85072951739616Q164.0381593714927 61.70370370370368 167.30864197530866 68.87766554433219Q170.5791245791246 76.05162738496071 170.5791245791246 85.54657687991019Q170.5791245791246 95.25252525252523 166.675645342312 103.90347923681256Q162.77216610549945 112.55443322109987 155.59820426487093 122.47138047138046ZM96.72951739618406 72.675645342312V71.40965207631872Q91.24354657687991 65.50168350168349 83.64758698092031 61.2817059483726Q76.05162738496071 57.06172839506171 67.82267115600447 57.06172839506171Q58.74971941638607 57.06172839506171 51.47025813692479 62.54769921436586Q44.19079685746351 68.03367003367002 44.19079685746351 78.3726150392817Q44.19079685746351 86.39057239057237 48.410774410774394 90.29405162738495Q52.630751964085285 94.19753086419752 58.32772166105499 94.19753086419752Q63.391694725028046 94.19753086419752 69.82716049382715 90.92704826038158Q76.26262626262626 87.65656565656565 83.22558922558923 82.80359147025813Q90.1885521885522 77.9506172839506 96.72951739618406 72.675645342312Z"/><path class="bindu" d="M128.59034792368124 172.68911335578002 138.71829405162737 185.77104377104376Q135.34231200897867 187.8810325476992 128.06285072951738 190.9405162738496Q120.78338945005609 194.0 110.86644219977552 194.0Q98.62850729517393 194.0 90.82154882154879 189.0415263748597Q83.01459034792366 184.0830527497194 79.21661054994385 177.12008978675644Q75.41863075196406 170.15712682379348 75.41863075196406 164.67115600448932Q75.41863075196406 157.91919191919192 79.95510662177327 152.85521885521885Q84.49158249158248 147.79124579124579 91.9820426487093 144.62626262626262Q99.47250280583611 141.46127946127945 108.12345679012344 140.82828282828282L117.82940516273848 153.48821548821547V154.75420875420875Q106.85746352413017 155.59820426487093 100.52749719416384 158.34118967452298Q94.19753086419752 161.08417508417506 91.5600448933782 164.56565656565655Q88.92255892255889 168.04713804713805 88.92255892255889 171.2121212121212Q88.92255892255889 174.16610549943883 91.77104377104375 177.331088664422Q94.61952861952861 180.49607182940514 103.05948372615038 180.49607182940514Q108.33445566778897 180.49607182940514 114.55892255892253 178.80808080808077Q120.78338945005609 177.12008978675644 128.59034792368124 172.68911335578002Z"/></g><path class="word" d="M310.2857142857143 39.25714285714285V60.171428571428564Q297.42857142857144 52.457142857142856 282.85714285714283 52.457142857142856Q274.8 52.457142857142856 270.25714285714287 56.05714285714286Q265.7142857142857 59.65714285714286 265.7142857142857 65.31428571428572Q265.7142857142857 70.97142857142858 270.6 74.65714285714286Q275.48571428571427 78.34285714285714 285.25714285714287 82.8Q292.1142857142857 85.88571428571429 296.4 88.19999999999999Q300.6857142857143 90.5142857142857 305.74285714285713 94.62857142857142Q310.8 98.74285714285713 313.28571428571433 104.48571428571428Q315.7714285714286 110.22857142857143 315.7714285714286 117.6Q315.7714285714286 133.02857142857144 304.7142857142857 142.2Q293.65714285714284 151.37142857142857 275.65714285714284 151.37142857142857Q256.1142857142857 151.37142857142857 243.25714285714287 144.0V121.88571428571429Q258.0 132.5142857142857 275.48571428571427 132.5142857142857Q283.37142857142857 132.5142857142857 288.1714285714286 128.65714285714284Q292.9714285714286 124.8 292.9714285714286 118.28571428571428Q292.9714285714286 115.2 291.7714285714286 112.80000000000001Q290.57142857142856 110.4 286.88571428571424 108.0Q283.2 105.6 281.2285714285714 104.57142857142857Q279.25714285714287 103.54285714285714 273.0857142857143 100.8Q271.37142857142857 99.94285714285715 270.51428571428573 99.6Q264.1714285714286 96.68571428571428 260.2285714285714 94.37142857142857Q256.2857142857143 92.05714285714285 251.65714285714284 88.11428571428571Q247.02857142857144 84.17142857142858 244.71428571428572 78.68571428571428Q242.4 73.2 242.4 66.17142857142856Q242.4 51.42857142857143 253.28571428571428 42.51428571428571Q264.1714285714286 33.599999999999994 282.1714285714286 33.599999999999994Q298.45714285714286 33.599999999999994 310.2857142857143 39.25714285714285ZM378.34285714285716 112.62857142857143H367.7142857142857Q359.65714285714284 112.62857142857143 355.37142857142857 115.97142857142858Q351.0857142857143 119.31428571428572 351.0857142857143 124.45714285714286Q351.0857142857143 135.42857142857142 363.7714285714286 135.42857142857142Q370.62857142857143 135.42857142857142 374.48571428571427 131.39999999999998Q378.34285714285716 127.37142857142857 378.34285714285716 120.85714285714286ZM336.1714285714286 86.57142857142857V67.54285714285714Q345.9428571428572 61.542857142857144 364.2857142857143 61.542857142857144Q399.6 61.542857142857144 399.6 94.45714285714286V150.0H379.2V139.54285714285714Q373.2 150.68571428571428 356.57142857142856 150.68571428571428Q344.22857142857146 150.68571428571428 336.9428571428572 143.48571428571427Q329.65714285714284 136.28571428571428 329.65714285714284 125.31428571428572Q329.65714285714284 112.97142857142856 338.9142857142857 105.94285714285714Q348.1714285714286 98.91428571428571 365.65714285714284 98.91428571428571H378.34285714285716V93.6Q378.34285714285716 86.4 374.57142857142856 82.62857142857143Q370.8 78.85714285714286 361.7142857142857 78.85714285714286Q347.8285714285714 78.85714285714286 336.1714285714286 86.57142857142857ZM441.42857142857144 63.08571428571429V76.8Q448.8 62.05714285714285 465.9428571428572 62.05714285714285Q484.9714285714286 62.05714285714285 490.62857142857143 78.51428571428572Q494.0571428571429 70.62857142857143 500.9142857142857 66.34285714285714Q507.7714285714286 62.05714285714285 516.5142857142857 62.05714285714285Q529.7142857142858 62.05714285714285 536.9142857142858 70.02857142857142Q544.1142857142858 78.0 544.1142857142858 92.74285714285713V150.0H523.3714285714286V96.68571428571428Q523.3714285714286 79.2 510.0 79.2Q503.3142857142857 79.2 498.0857142857143 85.02857142857144Q492.8571428571429 90.85714285714286 492.8571428571429 103.37142857142857V150.0H472.1142857142857V96.68571428571428Q472.1142857142857 79.2 458.74285714285713 79.2Q452.0571428571429 79.2 446.74285714285713 85.02857142857144Q441.42857142857144 90.85714285714286 441.42857142857144 103.37142857142857V150.0H420.8571428571429V63.08571428571429ZM617.3142857142858 65.82857142857142V84.0Q608.7428571428572 78.85714285714286 595.8857142857144 78.85714285714286Q590.5714285714287 78.85714285714286 587.5714285714287 81.17142857142858Q584.5714285714287 83.48571428571428 584.5714285714287 87.08571428571429Q584.5714285714287 88.45714285714286 585.0000000000001 89.65714285714286Q585.4285714285716 90.85714285714286 586.5428571428572 91.97142857142858Q587.657142857143 93.08571428571429 588.6857142857143 93.94285714285715Q589.7142857142858 94.8 591.6000000000001 95.74285714285713Q593.4857142857144 96.68571428571428 594.8571428571429 97.37142857142857Q596.2285714285715 98.05714285714285 598.6285714285715 99.08571428571429Q601.0285714285715 100.11428571428571 602.4000000000001 100.8Q611.4857142857144 105.25714285714287 616.8000000000001 110.74285714285715Q622.1142857142858 116.22857142857143 622.1142857142858 124.97142857142858Q622.1142857142858 137.14285714285714 613.3714285714286 144.0Q604.6285714285715 150.85714285714286 590.0571428571429 150.85714285714286Q573.9428571428572 150.85714285714286 564.0000000000001 145.54285714285714V126.68571428571428Q575.4857142857144 134.4 588.8571428571429 134.4Q594.5142857142858 134.4 597.6857142857143 132.25714285714287Q600.8571428571429 130.1142857142857 600.8571428571429 126.34285714285714Q600.8571428571429 124.11428571428571 599.8285714285714 122.31428571428572Q598.8000000000001 120.5142857142857 595.8857142857144 118.8Q592.9714285714286 117.08571428571429 591.3428571428572 116.31428571428572Q589.7142857142858 115.54285714285714 584.9142857142858 113.4857142857143Q584.4000000000001 113.31428571428572 584.1428571428572 113.14285714285714Q583.8857142857144 112.97142857142856 583.3714285714286 112.8Q582.8571428571429 112.62857142857143 582.5142857142858 112.45714285714286Q563.4857142857144 103.88571428571429 563.4857142857144 87.77142857142857Q563.4857142857144 75.77142857142857 572.5714285714287 68.91428571428571Q581.657142857143 62.05714285714285 595.3714285714286 62.05714285714285Q608.5714285714287 62.05714285714285 617.3142857142858 65.82857142857142ZM714.5142857142857 150.0H690.3428571428572L659.1428571428571 105.08571428571429V150.0H638.5714285714286V30.85714285714286H659.1428571428571V103.88571428571429L689.8285714285714 63.08571428571429H713.8285714285714L681.9428571428572 104.57142857142857ZM748.6285714285714 63.08571428571429V78.51428571428572Q754.6285714285714 62.400000000000006 770.5714285714286 62.400000000000006Q774.1714285714286 62.400000000000006 776.4 62.91428571428571V82.8Q772.4571428571428 81.08571428571429 767.6571428571428 81.08571428571429Q759.2571428571429 81.08571428571429 753.9428571428571 87.94285714285715Q748.6285714285714 94.8 748.6285714285714 105.08571428571429V150.0H727.8857142857142L728.0571428571428 63.08571428571429ZM789.4285714285714 150.0V63.08571428571429H810.0V150.0ZM787.3714285714286 37.028571428571425Q787.3714285714286 31.885714285714286 790.9714285714285 28.285714285714285Q794.5714285714286 24.685714285714283 799.7142857142858 24.685714285714283Q804.8571428571429 24.685714285714283 808.4571428571428 28.285714285714285Q812.0571428571428 31.885714285714286 812.0571428571428 37.028571428571425Q812.0571428571428 42.34285714285714 808.4571428571428 45.94285714285714Q804.8571428571429 49.542857142857144 799.7142857142858 49.542857142857144Q794.5714285714286 49.542857142857144 790.9714285714285 45.94285714285714Q787.3714285714286 42.34285714285714 787.3714285714286 37.028571428571425ZM858.1714285714286 78.51428571428572V122.74285714285715Q858.1714285714286 128.22857142857143 861.0857142857143 131.05714285714288Q864.0 133.8857142857143 869.1428571428571 133.8857142857143Q875.6571428571428 133.8857142857143 881.1428571428571 130.28571428571428V147.94285714285715Q875.1428571428571 150.85714285714286 865.7142857142857 150.85714285714286Q837.6 150.85714285714286 837.6 122.4V78.51428571428572H824.5714285714286V63.08571428571429H837.6V42.171428571428564H858.1714285714286V63.08571428571429H879.7714285714286V78.51428571428572ZM942.5142857142857 112.62857142857143H931.8857142857142Q923.8285714285714 112.62857142857143 919.5428571428572 115.97142857142858Q915.2571428571429 119.31428571428572 915.2571428571429 124.45714285714286Q915.2571428571429 135.42857142857142 927.9428571428571 135.42857142857142Q934.8 135.42857142857142 938.6571428571428 131.39999999999998Q942.5142857142857 127.37142857142857 942.5142857142857 120.85714285714286ZM900.3428571428572 86.57142857142857V67.54285714285714Q910.1142857142856 61.542857142857144 928.4571428571428 61.542857142857144Q963.7714285714285 61.542857142857144 963.7714285714285 94.45714285714286V150.0H943.3714285714285V139.54285714285714Q937.3714285714285 150.68571428571428 920.7428571428571 150.68571428571428Q908.4 150.68571428571428 901.1142857142856 143.48571428571427Q893.8285714285714 136.28571428571428 893.8285714285714 125.31428571428572Q893.8285714285714 112.97142857142856 903.0857142857143 105.94285714285714Q912.3428571428572 98.91428571428571 929.8285714285714 98.91428571428571H942.5142857142857V93.6Q942.5142857142857 86.4 938.7428571428571 82.62857142857143Q934.9714285714285 78.85714285714286 925.8857142857142 78.85714285714286Q912.0 78.85714285714286 900.3428571428572 86.57142857142857ZM1005.5999999999999 63.08571428571429V76.8Q1012.9714285714285 62.05714285714285 1030.1142857142856 62.05714285714285Q1049.142857142857 62.05714285714285 1054.8 78.51428571428572Q1058.2285714285713 70.62857142857143 1065.0857142857142 66.34285714285714Q1071.942857142857 62.05714285714285 1080.6857142857143 62.05714285714285Q1093.8857142857141 62.05714285714285 1101.0857142857142 70.02857142857142Q1108.2857142857142 78.0 1108.2857142857142 92.74285714285713V150.0H1087.5428571428572V96.68571428571428Q1087.5428571428572 79.2 1074.1714285714286 79.2Q1067.4857142857143 79.2 1062.2571428571428 85.02857142857144Q1057.0285714285715 90.85714285714286 1057.0285714285715 103.37142857142857V150.0H1036.2857142857142V96.68571428571428Q1036.2857142857142 79.2 1022.9142857142857 79.2Q1016.2285714285714 79.2 1010.9142857142856 85.02857142857144Q1005.5999999999999 90.85714285714286 1005.5999999999999 103.37142857142857V150.0H985.0285714285714V63.08571428571429Z"/><circle class="bindu" cx="1139.2" cy="136.2" r="13.8"/><path class="word" d="M1214.642147708895 112.62857142857143H1204.0135762803236Q1195.9564334231807 112.62857142857143 1191.6707191374662 115.97142857142858Q1187.385004851752 119.31428571428572 1187.385004851752 124.45714285714286Q1187.385004851752 135.42857142857142 1200.0707191374663 135.42857142857142Q1206.9278619946092 135.42857142857142 1210.785004851752 131.39999999999998Q1214.642147708895 127.37142857142857 1214.642147708895 120.85714285714286ZM1172.4707191374664 86.57142857142857V67.54285714285714Q1182.242147708895 61.542857142857144 1200.585004851752 61.542857142857144Q1235.8992905660377 61.542857142857144 1235.8992905660377 94.45714285714286V150.0H1215.4992905660379V139.54285714285714Q1209.4992905660379 150.68571428571428 1192.8707191374663 150.68571428571428Q1180.527861994609 150.68571428571428 1173.242147708895 143.48571428571427Q1165.9564334231807 136.28571428571428 1165.9564334231807 125.31428571428572Q1165.9564334231807 112.97142857142856 1175.2135762803237 105.94285714285714Q1184.4707191374664 98.91428571428571 1201.9564334231807 98.91428571428571H1214.642147708895V93.6Q1214.642147708895 86.4 1210.8707191374665 82.62857142857143Q1207.0992905660378 78.85714285714286 1198.0135762803236 78.85714285714286Q1184.1278619946092 78.85714285714286 1172.4707191374664 86.57142857142857ZM1258.0135762803234 150.0V63.08571428571429H1278.585004851752V150.0ZM1255.9564334231804 37.028571428571425Q1255.9564334231804 31.885714285714286 1259.5564334231804 28.285714285714285Q1263.1564334231805 24.685714285714283 1268.2992905660376 24.685714285714283Q1273.4421477088947 24.685714285714283 1277.0421477088948 28.285714285714285Q1280.6421477088948 31.885714285714286 1280.6421477088948 37.028571428571425Q1280.6421477088948 42.34285714285714 1277.0421477088948 45.94285714285714Q1273.4421477088947 49.542857142857144 1268.2992905660376 49.542857142857144Q1263.1564334231805 49.542857142857144 1259.5564334231804 45.94285714285714Q1255.9564334231804 42.34285714285714 1255.9564334231804 37.028571428571425Z"/></svg></a>
-    <div class="launch">Opening on <strong>Vijayadaśamī, 20 October 2026</strong> · <a href="#join">Join the list</a></div>
+    <nav class="topnav" aria-label="Site"><a href="/#reader">Reader</a><a href="/bench">Benchmark</a><a href="#join">Join the list</a></nav>
   </header>
 
   <main>
-    <section class="hero">
+    <p class="launch" id="launch">Opening on <strong>Vijayadaśamī, 20 October 2026</strong>, the traditional day to begin learning.</p>
+    <section class="hero" id="reader">
       <div class="pitch">
         <h1>Sanskrit, with its <em>grammar shown</em>.</h1>
         <p>Every word of the Bhagavad Gītā and Kālidāsa's Meghadūta, analysed by scholars and checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
@@ -215,6 +252,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
       <article class="folio" aria-live="polite">
         <div class="textbar" id="texts" role="group" aria-label="Text"></div>
+        <div class="search">
+          <label for="q" class="visually-hidden">Find a verse or word</label>
+          <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Go to 2.47, or find a word: karma, कर्म">
+          <div id="results" class="results" role="listbox" aria-label="Search results" hidden></div>
+        </div>
         <div class="nav">
           <span class="ref" id="ref">Bhagavad Gītā 2.47</span>
           <div class="controls">
@@ -223,6 +265,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
             <button id="prev" type="button" aria-label="Previous verse">←</button>
             <select id="verse" aria-label="Verse"></select>
             <button id="next" type="button" aria-label="Next verse">→</button>
+            <button id="copylink" type="button" class="copy" aria-label="Copy a link to this verse">Copy link</button>
           </div>
         </div>
         <div class="speaker" id="speaker" hidden></div>
@@ -234,6 +277,16 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="words" id="words"><span class="hint">Loading the word analysis…</span></div>
         <div class="detail" id="detail" hidden></div>
       </article>
+    </section>
+
+    <section class="band" id="how">
+      <div class="eyebrow">How a word is checked</div>
+      <h2>Two independent sources, and you see whether they agree.</h2>
+      <ol class="steps3">
+        <li><span class="stepn">1</span><div><h3>Scholars annotated it</h3><p>The Digital Corpus of Sanskrit records each word's dictionary form and grammar by hand: <span class="ex">adhikāraḥ → adhikāra, prathamā, puṃliṅga, ekavacana</span>.</p></div></li>
+        <li><span class="stepn">2</span><div><h3>Pāṇini's rules check it</h3><p>Vidyut, a working implementation of more than 2,000 sūtras of the Aṣṭādhyāyī, looks the form up and tests the same analysis. For verbs and participles it also derives the word, sūtra by sūtra.</p></div></li>
+        <li><span class="stepn">3</span><div><h3>You see the result</h3><p><span class="dot s-agree"></span> They agree. <span class="dot s-form-known"></span> They differ, so the word is open for review. <span class="dot s-unknown"></span> The rules have no entry yet. <span class="dot s-not-checked"></span> A compound member, not yet checked.</p></div></li>
+      </ol>
     </section>
 
     <section class="band" id="tracks">
@@ -254,13 +307,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="track">
           <div class="eyebrow">Improve AI</div>
           <h3>A grammar benchmark that no model can talk its way through</h3>
-          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. Items and grader are open.</p>
+          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. Items and grader are open. <a href="/bench">How the benchmark works</a></p>
           <div class="tasks">
             <table>
               <thead><tr><th>Task</th><th>What the model must do</th><th class="n">Items</th></tr></thead>
               <tbody>
                 <tr><td>Tiṅanta</td><td>Produce a verb form from root, lakāra, person and number</td><td class="n">150</td></tr>
-                <tr><td>Subanta</td><td>Decline a stem in a given case and number</td><td class="n">100</td></tr>
+                <tr><td>Subanta</td><td>Decline a stem in a given case and number</td><td class="n">98</td></tr>
                 <tr><td>Analysis</td><td>Identify lakāra, puruṣa and vacana of a verb form</td><td class="n">100</td></tr>
                 <tr><td>Gītā in context</td><td>Give a word's lemma and grammar inside a verse</td><td class="n">100</td></tr>
                 <tr><td>Chandas</td><td>Scan a half-verse into guru and laghu syllables</td><td class="n">50</td></tr>
@@ -274,6 +327,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     <section class="band" id="results" hidden>
       <div class="eyebrow">Benchmark v0 results</div>
       <h2>How today's models handle Pāṇini</h2>
+      <p class="sub"><a href="/bench">Method, sample questions and the full item set</a></p>
       <p class="sub" id="lb-note"></p>
       <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
     </section>
@@ -352,17 +406,40 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       : `${text.title}, ${text.parts[+chs - 1]} ${vs}`;
     const sp = $("speaker"); sp.hidden = !v.sp; sp.textContent = v.sp || "";
     const padaLen = v.m[0] === "triṣṭubh" ? 11 : 8;
-    $("lines").innerHTML = v.dev.map((d, i) => {
-      const scans = v.scan.length === v.dev.length * 2 ? v.scan.slice(i * 2, i * 2 + 2) : [v.scan[i] || ""];
-      const marks = scans.map(s => `<span>${[...s].map(c => MARK[c] || "").join("")}</span>`).join("");
-      return `<div class="line"><div class="dev">${esc(d)}</div><div class="iast">${esc(v.iast[i])}</div><div class="scan" aria-label="Syllable weights">${marks}</div></div>`;
-    }).join("");
+    $("lines").innerHTML = v.dev.map((d, li) => lineHTML(v, li)).join("");
     const variant = v.m[1] ? ` (${esc(v.m[1])})` : "";
     $("meter").innerHTML = `Meter: <b>${esc(v.m[0])}</b>${variant}. <span style="color:var(--turmeric)">ऽ</span> guru, <span style="color:var(--turmeric)">।</span> laghu; the last syllable of each pāda may be either.`;
     renderWords(v);
     $("detail").hidden = true;
+    highlight(null);
     try { history.replaceState(null, "", "#" + text.slug + "-" + v.id); } catch (e) {}
     syncSelects();
+  }
+
+  const marks = s => [...s].map(c => MARK[c] || "").join("");
+
+  function lineHTML(v, li) {
+    const scans = v.scan.length === v.dev.length * 2 ? v.scan.slice(li * 2, li * 2 + 2) : [v.scan[li] || ""];
+    const scanRow = `<div class="scan" aria-label="Syllable weights">${scans.map(x => `<span>${marks(x)}</span>`).join("")}</div>`;
+    const toks = v.lt && v.lt[li];
+    if (!toks) return `<div class="line"><div class="dev">${esc(v.dev[li])}</div><div class="iast">${esc(v.iast[li])}</div>${scanRow}</div>`;
+    const keys = new Set(v.w.map(w => w.k).filter(Boolean));
+    const span = (j, which) => { const k = `${li}.${j}`;
+      return `<span class="tk${keys.has(k) ? " on" : ""}" data-k="${k}">${esc(toks[j][which])}</span>`; };
+    const run = (a, b, which) => { const out = []; for (let j = a; j <= b; j++) out.push(span(j, which)); return out.join(" "); };
+    const iast = `<div class="iast">${run(0, toks.length - 1, 0)}</div>`;
+    const pb = v.pb && v.pb[li];
+    if (pb && scans.length === pb.length + 1) {
+      const ends = [...pb, toks.length - 1]; let start = 0;
+      const rows = ends.map((end, pi) => { const html = `<div class="pada"><span class="dev">${run(start, end, 1)}</span><span class="scan" aria-label="Syllable weights">${marks(scans[pi])}</span></div>`; start = end + 1; return html; });
+      return `<div class="line">${rows.join("")}${iast}</div>`;
+    }
+    return `<div class="line"><div class="dev">${run(0, toks.length - 1, 1)}</div>${iast}${scanRow}</div>`;
+  }
+
+  function highlight(k) {
+    document.querySelectorAll("#lines .tk.hl").forEach(e => e.classList.remove("hl"));
+    if (k) document.querySelectorAll(`#lines .tk[data-k="${k}"]`).forEach(e => e.classList.add("hl"));
   }
 
   function renderWords(v) {
@@ -376,11 +453,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       const chips = g.items.map(i => { const w = v.w[i];
         return `<button type="button" class="chip s-${w.s}" data-i="${i}" aria-pressed="false"><span class="dot"></span>${esc(w.d)}</button>`; }).join("");
       return `<div class="grp">${g.g ? `<span class="surf">${esc(g.g)}</span>` : `<span class="surf blank">&nbsp;</span>`}<div class="row">${chips}</div></div>`;
-    }).join("") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one for its grammar and derivation.</span>`;
+    }).join("") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one here or in the verse for its grammar and derivation. Use ← and → to move between verses.</span>`;
   }
 
   function renderDetail(i) {
     const w = current.w[i]; selected = i;
+    highlight(w.k);
     document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.i == i ? "true" : "false"));
     let html = `<h3><span>${esc(w.d)}</span><span class="lat">${esc(w.f)}</span></h3>
       <dl class="kv"><dt>Lemma</dt><dd>${esc(w.l)}</dd><dt>Grammar</dt><dd>${esc(w.sa)}</dd><dt></dt><dd style="color:var(--muted)">${esc(w.en)}</dd></dl>
@@ -407,6 +485,75 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   function step(d) { const i = verses.indexOf(current); const v = verses[i + d]; if (v) renderVerse(v); }
 
   $("words").addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) renderDetail(+b.dataset.i); });
+  $("lines").addEventListener("click", e => {
+    const t = e.target.closest(".tk.on"); if (!t) return;
+    const i = current.w.findIndex(w => w.k === t.dataset.k); if (i >= 0) renderDetail(i);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.target.closest("input, select, textarea") || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+    else if (e.key === "ArrowRight") { step(1); e.preventDefault(); }
+    else if (e.key === "/") { $("q").focus(); e.preventDefault(); }
+  });
+  $("copylink").addEventListener("click", () => {
+    const url = `https://samskritam.ai/#${text.slug}-${current.id}`;
+    const done = ok => { const b = $("copylink"); b.textContent = ok ? "Copied" : "Select and copy"; setTimeout(() => (b.textContent = "Copy link"), 1600); };
+    const fallback = () => { $("q").value = url; $("q").select(); done(false); };
+    try { navigator.clipboard.writeText(url).then(() => done(true), fallback); } catch (err) { fallback(); }
+  });
+
+  // ---- search: verse numbers and word forms/lemmas in the current text
+  const fold = x => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  let index = null, hits = [], active = -1;
+  function buildIndex() {
+    index = verses.map(v => ({ v, words: v.w.map(w => ({ f: fold(w.f), l: fold(w.l), d: w.d, raw: w.f })) }));
+  }
+  function refLabel(v) { const [c, n] = v.id.split("."); return text.slug === "gita" ? v.id : `${text.parts[+c - 1]} ${n}`; }
+  let lastQ = null;
+  function runSearch(q) {
+    lastQ = q; q = q.trim(); hits = []; active = -1;
+    const box = $("results");
+    if (!q) { box.hidden = true; return; }
+    const num = q.match(/^(\d+)\s*[.:]\s*(\d+)$/);
+    if (num) { const v = verses.find(x => x.id === `${+num[1]}.${+num[2]}`); if (v) hits.push({ v, why: "Verse" }); }
+    if (!num && q.length >= 2) {
+      if (!index) buildIndex();
+      const isDev = /[\u0900-\u097F]/.test(q), fq = fold(q);
+      for (const { v, words } of index) {
+        const m = words.find(w => isDev ? w.d.startsWith(q) : (w.f.startsWith(fq) || w.l.startsWith(fq)));
+        if (m) hits.push({ v, why: m.raw });
+        if (hits.length >= 40) break;
+      }
+    }
+    box.innerHTML = hits.length
+      ? hits.map((h, i) => `<button type="button" role="option" data-i="${i}" aria-selected="false"><span class="r-ref">${esc(refLabel(h.v))}</span><span class="r-txt">${esc(h.v.dev[0])}</span><span class="r-why">${h.why === "Verse" ? "Go to verse" : "contains " + esc(h.why)}</span></button>`).join("")
+        + (hits.length >= 40 ? `<div class="r-none">Showing the first 40 verses. Type more letters to narrow it.</div>` : "")
+      : `<div class="r-none">No verse or word matches “${esc(q)}” in the ${esc(text.title)}.</div>`;
+    box.hidden = false;
+  }
+  function pick(i) { const h = hits[i]; if (!h) return; $("results").hidden = true; $("q").value = ""; renderVerse(h.v); $("lines").scrollIntoView({ block: "nearest" }); }
+  let tmr = null;
+  $("q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(() => runSearch(e.target.value), 120); });
+  $("q").addEventListener("keydown", e => {
+    const opts = [...document.querySelectorAll("#results button")];
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault(); if (!opts.length) return;
+      active = (active + (e.key === "ArrowDown" ? 1 : -1) + opts.length) % opts.length;
+      opts.forEach((o, i) => o.setAttribute("aria-selected", i === active ? "true" : "false")); opts[active].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      e.preventDefault(); clearTimeout(tmr);
+      if (lastQ !== e.target.value) runSearch(e.target.value);  // typed faster than the debounce
+      pick(active >= 0 ? active : 0);
+    }
+    else if (e.key === "Escape") { $("results").hidden = true; $("q").blur(); }
+  });
+  $("results").addEventListener("click", e => { const b = e.target.closest("button"); if (b) pick(+b.dataset.i); });
+  document.addEventListener("click", e => { if (!e.target.closest(".search")) $("results").hidden = true; });
+
+  if (Date.now() >= Date.parse("2026-10-20T00:00:00+05:30")) {
+    $("launch").innerHTML = "Launched on <strong>Vijayadaśamī, 20 October 2026</strong>, the traditional day to begin learning.";
+  }
+
   $("prev").addEventListener("click", () => step(-1));
   $("next").addEventListener("click", () => step(1));
   $("chap").addEventListener("change", e => go(byChapter.get(+e.target.value)[0].id));
@@ -462,7 +609,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     showStats(t);
     return getJSON(`data/${t.slug}.json`).then(data => {
       if (seq !== loadSeq) return;
-      verses = data.verses; byChapter = new Map();
+      verses = data.verses; byChapter = new Map(); index = null;
       verses.forEach(v => { const ch = +v.id.split(".")[0]; if (!byChapter.has(ch)) byChapter.set(ch, []); byChapter.get(ch).push(v); });
       $("chap").innerHTML = [...byChapter.keys()].map(c => `<option value="${c}">${esc(t.parts[c - 1] || c)}</option>`).join("");
       go(verses.some(v => v.id === vid) ? vid : t.default);
