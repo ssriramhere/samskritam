@@ -135,6 +135,10 @@ def main():
                 pace()
                 t0 = time.time()
                 out = call(a.model, it["prompt"], a)
+                if not (out or "").strip():
+                    # Some reasoning models spend the whole budget thinking and
+                    # return no answer; treat that as a failure to retry.
+                    raise RuntimeError("empty answer")
                 rec = {"id": it["id"], "output": out, "latency_s": round(time.time() - t0, 2),
                        "provider": a.provider, "model": a.model}
                 break
