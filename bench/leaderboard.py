@@ -9,6 +9,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "bench"))
 import grade  # noqa: E402
 
+# Display names for the site; the id column keeps the exact model string.
+NAMES = {"anthropic/claude-opus-5.5": "Claude Opus 5.5",
+         "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5",
+         "google/gemini-4-argon": "Gemini 4 Argon",
+         "google/gemini-3.8-flash": "Gemini 3.8 Flash",
+         "openai/gpt-6-sol": "GPT-6 Sol",
+         "sarvam-105b": "Sarvam-105B"}
+
 items = grade.load_items(os.path.join(ROOT, "bench/data/v0.jsonl"))
 rows = []
 for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
@@ -23,7 +31,7 @@ for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
         continue
     s = grade.score(items, results)
     model = next((r.get("model") for r in results if r.get("model")), os.path.basename(path))
-    rows.append({"model": model, "overall": s["overall"]["acc"],
+    rows.append({"model": NAMES.get(model, model), "id": model, "overall": s["overall"]["acc"],
                  "tasks": {k: v["acc"] for k, v in s["by_task"].items()}})
     with open(path.replace(".jsonl", ".graded.json"), "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False)

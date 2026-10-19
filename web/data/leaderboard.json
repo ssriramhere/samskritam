@@ -1,0 +1,67 @@
+{
+ "benchmark": "samskritam-bench v0",
+ "items": 487,
+ "updated": "2026-10-20",
+ "rows": [
+  {
+   "model": "Claude Opus 5.5",
+   "id": "anthropic/claude-opus-5.5",
+   "overall": 0.9979,
+   "tasks": {
+    "analyze": 1.0,
+    "gita": 1.0,
+    "meter": 0.98,
+    "subanta": 1.0,
+    "tinanta": 1.0
+   }
+  },
+  {
+   "model": "Gemini 3.8 Flash",
+   "id": "google/gemini-3.8-flash",
+   "overall": 0.9671,
+   "tasks": {
+    "analyze": 0.98,
+    "gita": 1.0,
+    "meter": 0.76,
+    "subanta": 1.0,
+    "tinanta": 0.9867
+   }
+  },
+  {
+   "model": "Gemini 4 Argon",
+   "id": "google/gemini-4-argon",
+   "overall": 0.9589,
+   "tasks": {
+    "analyze": 0.98,
+    "gita": 1.0,
+    "meter": 0.82,
+    "subanta": 1.0,
+    "tinanta": 0.94
+   }
+  },
+  {
+   "model": "Claude Sonnet 5.5",
+   "id": "anthropic/claude-sonnet-5.5",
+   "overall": 0.9548,
+   "tasks": {
+    "analyze": 0.99,
+    "gita": 1.0,
+    "meter": 0.74,
+    "subanta": 1.0,
+    "tinanta": 0.9467
+   }
+  },
+  {
+   "model": "GPT-6 Sol",
+   "id": "openai/gpt-6-sol",
+   "overall": 0.9507,
+   "tasks": {
+    "analyze": 0.97,
+    "gita": 0.9892,
+    "meter": 0.9,
+    "subanta": 0.9894,
+    "tinanta": 0.9067
+   }
+  }
+ ]
+}
