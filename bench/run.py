@@ -45,13 +45,19 @@ def call_anthropic(model, prompt, a):
     return "".join(b.get("text", "") for b in r.get("content", []) if b.get("type") == "text")
 
 
-def _openai_compatible(url, key, model, prompt, a):
+_usage = threading.local()
+
+
+def _openai_compatible(url, key, model, prompt, a, extra=None):
     body = {"model": model,
             "messages": [{"role": "system", "content": SYSTEM},
                          {"role": "user", "content": prompt}]}
     if a.temperature is not None:
         body["temperature"] = a.temperature
+    body.update(extra or {})
     r = _post(url, {"authorization": f"Bearer {key}"}, body)
+    _usage.last = {"usage": r.get("usage"),
+                   "finish_reason": r["choices"][0].get("finish_reason")}
     return r["choices"][0]["message"]["content"]
 
 
@@ -67,8 +73,13 @@ def call_openrouter(model, prompt, a):
 
 def call_sarvam(model, prompt, a):
     # Sarvam's own API is OpenAI-compatible and accepts a Bearer key.
+    # Its max_tokens (default 2048) includes reasoning, and reasoning_effort
+    # defaults to "max", so the default budget can end before any answer.
+    extra = {"max_tokens": a.sarvam_max_tokens}
+    if a.reasoning_effort:
+        extra["reasoning_effort"] = a.reasoning_effort
     return _openai_compatible("https://api.sarvam.ai/v1/chat/completions",
-                              os.environ["SARVAM_API_KEY"], model, prompt, a)
+                              os.environ["SARVAM_API_KEY"], model, prompt, a, extra)
 
 
 def call_google(model, prompt, a):
@@ -98,6 +109,10 @@ def main():
     ap.add_argument("--temperature", type=float, default=None,
                     help="omit for the provider default (some reasoning models reject it)")
     ap.add_argument("--limit", type=int, default=None, help="first N items, for a smoke test")
+    ap.add_argument("--sarvam-max-tokens", type=int, default=8192,
+                    help="Sarvam only: token budget including reasoning")
+    ap.add_argument("--reasoning-effort", choices=["low", "high", "max"], default=None,
+                    help="Sarvam only: reasoning effort (provider default is max)")
     ap.add_argument("--rpm", type=float, default=0,
                     help="cap requests per minute (OpenRouter new accounts: 20 per model)")
     a = ap.parse_args()
@@ -138,9 +153,13 @@ def main():
                 if not (out or "").strip():
                     # Some reasoning models spend the whole budget thinking and
                     # return no answer; treat that as a failure to retry.
-                    raise RuntimeError("empty answer")
+                    info = getattr(_usage, "last", None) or {}
+                    raise RuntimeError(f"empty answer (finish_reason={info.get('finish_reason')}, usage={info.get('usage')})")
                 rec = {"id": it["id"], "output": out, "latency_s": round(time.time() - t0, 2),
                        "provider": a.provider, "model": a.model}
+                info = getattr(_usage, "last", None)
+                if info and info.get("usage"):
+                    rec["usage"] = info["usage"]
                 break
             except urllib.error.HTTPError as e:
                 msg = e.read().decode(errors="replace")[:300]
