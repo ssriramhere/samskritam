@@ -38,10 +38,16 @@ python pipeline/audit_gita.py     # agreement report
 The runner uses only the Python standard library.
 
 ```bash
-export OPENROUTER_API_KEY=...     # or ANTHROPIC_API_KEY / OPENAI_API_KEY / GEMINI_API_KEY
-python bench/run.py --provider openrouter --model <vendor/model>
-python bench/grade.py bench/results/*.jsonl
+export OPENROUTER_API_KEY=...     # PowerShell: $env:OPENROUTER_API_KEY = "..."
+python bench/run_all.py           # every model in bench/models.txt, then web/data/leaderboard.json
 ```
+
+One model at a time: `python bench/run.py --provider openrouter --model <vendor/model>`,
+then `python bench/grade.py bench/results/<file>.jsonl`.
+
+The questions are generated from templates in `bench/generate.py`. Answers come
+from Vidyut's implementation of the Aṣṭādhyāyī and, for the Gītā questions,
+from the Digital Corpus of Sanskrit annotation where Vidyut agrees with it.
 
 Regenerate the items with `python bench/generate.py --seed 108`.
 

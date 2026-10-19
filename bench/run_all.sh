@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
-# Run every model in bench/models.txt through OpenRouter, then grade and
-# write web/data/leaderboard.json for the site.
-#   export OPENROUTER_API_KEY=...
-#   bash bench/run_all.sh
-set -euo pipefail
+# Kept for convenience; bench/run_all.py does the work on every platform.
 cd "$(dirname "$0")/.."
-: "${OPENROUTER_API_KEY:?Set OPENROUTER_API_KEY first}"
-grep -v -E '^\s*(#|$)' bench/models.txt | while read -r model; do
-  echo "== $model"
-  python3 bench/run.py --provider openrouter --model "$model" --workers "${WORKERS:-8}" || true
-done
-python3 bench/leaderboard.py
+PY=$(command -v python3 >/dev/null 2>&1 && python3 -c "" 2>/dev/null && echo python3 || echo python)
+exec "$PY" bench/run_all.py "$@"
