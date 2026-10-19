@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Samskritam Benchmark</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="An open Sanskrit grammar benchmark for AI models: 487 questions on verbs, nouns, parsing and meter, with answers fixed by Pāṇini's rules.">
+<meta name="description" content="An open Sanskrit grammar benchmark for AI models: 487 questions on verbs, nouns, parsing and meter, graded by rule against an answer key from Pāṇini's rules and a scholarly corpus.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://samskritam.ai/bench">
 <meta property="og:title" content="Samskritam Benchmark">
-<meta property="og:description" content="487 Sanskrit grammar questions for AI models, with answers fixed by Pāṇini's rules. Open items and grader.">
+<meta property="og:description" content="487 Sanskrit grammar questions for AI models, graded by rule, not by another model. Open items and grader.">
 <meta property="og:image" content="https://samskritam.ai/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -269,8 +269,8 @@ pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10p
   <main>
     <section class="bhero">
       <div class="eyebrow">Samskritam benchmark v0</div>
-      <h1>A Sanskrit grammar test with answers <em>fixed by Pāṇini's rules</em>.</h1>
-      <p class="lead">Models write Sanskrit that looks fluent. This measures whether the grammar underneath is right: building verb and noun forms, reading them back, parsing words in real verses, and scanning meter. Every answer comes from a rule engine or from two independent sources, never from another model.</p>
+      <h1>A Sanskrit grammar test <em>graded by rule</em>, not by another model.</h1>
+      <p class="lead">Models write Sanskrit that looks fluent. This measures whether the grammar underneath is right: building verb and noun forms, reading them back, parsing words in real verses, and scanning meter. Every answer is an exact form or analysis. The answer key comes from an implementation of Pāṇini's rules and from a scholarly corpus, and was reviewed by hand.</p>
       <div class="facts">
         <span><b>487</b>questions</span>
         <span><b>5</b>tasks</span>
@@ -329,7 +329,7 @@ pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10p
           <li><b>Noun questions</b> use the most frequent noun and adjective stems of the Bhagavad Gītā.</li>
           <li><b>Answers for verbs and nouns</b> are derived by <a href="https://github.com/ambuda-org/vidyut" target="_blank" rel="noopener">Vidyut</a>, an implementation of more than 2,000 sūtras of the Aṣṭādhyāyī. Where Pāṇini allows more than one form, every form is accepted. Each noun answer is also checked against Vidyut's dictionary of inflected forms; two questions failed that check (the dual of <i>mahat</i> and the feminine of <i>bhagavat</i>) and were removed.</li>
           <li><b>Hand review.</b> Before publishing, every question that any model got wrong was reviewed by hand. Eleven answer keys turned out to be wrong or genuinely disputable, for example the feminine of <i>rājasa</i> (it is <i>rājasī</i>) and the gender of <i>dhṛti</i> in 18.34. Those eleven were removed, leaving 487. Each removal and its reason is listed in <a href="https://github.com/ssriramhere/samskritam/blob/main/bench/generate.py" target="_blank" rel="noopener"><code>bench/generate.py</code></a>. Reviewing only the questions models missed can favour the models, so the full set is open for anyone to check.</li>
-          <li><b>Answers for the Gītā questions</b> are the hand annotations of the <a href="https://github.com/OliverHellwig/sanskrit" target="_blank" rel="noopener">Digital Corpus of Sanskrit</a>, used only where Vidyut agrees with them.</li>
+          <li><b>Answers for the Gītā questions</b> are the hand annotations of the <a href="https://github.com/OliverHellwig/sanskrit" target="_blank" rel="noopener">Digital Corpus of Sanskrit</a>, used only where Vidyut's rules allow the same analysis. The rules confirm the analysis is possible for the form; the choice in context is the annotators'.</li>
           <li><b>Answers for meter</b> are computed from the rules of prosody. The last syllable of each pāda is not graded, since either weight is allowed there.</li>
         </ul>
       </div>

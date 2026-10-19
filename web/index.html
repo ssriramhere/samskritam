@@ -243,10 +243,10 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     <section class="hero" id="reader">
       <div class="pitch">
         <h1>Sanskrit, with its <em>grammar shown</em>.</h1>
-        <p>Every word of the Bhagavad Gītā and Kālidāsa's Meghadūta, analysed by scholars and checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
+        <p>The Bhagavad Gītā and Kālidāsa's Meghadūta, word by word: each word analysed by scholars, and each analysis checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
         <div class="legend" aria-label="What the colours mean">
-          <div><span class="dot s-agree"></span><span>Scholarly annotation and Pāṇini's rules agree</span></div>
-          <div><span class="dot s-form-known"></span><span>The two sources differ: open for review</span></div>
+          <div><span class="dot s-agree"></span><span>Pāṇini's rules allow this analysis</span></div>
+          <div><span class="dot s-form-known"></span><span>Pāṇini's rules analyse this form differently</span></div>
           <div><span class="dot s-unknown"></span><span>The rule engine has no entry for this form yet</span></div>
           <div><span class="dot s-not-checked"></span><span>Compound member, not yet checked</span></div>
         </div>
@@ -283,11 +283,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
     <section class="band" id="how">
       <div class="eyebrow">How a word is checked</div>
-      <h2>Two independent sources, and you see whether they agree.</h2>
+      <h2>A scholar's analysis, checked against Pāṇini's rules.</h2>
       <ol class="steps3">
         <li><span class="stepn">1</span><div><h3>Scholars annotated it</h3><p>The Digital Corpus of Sanskrit records each word's dictionary form and grammar by hand: <span class="ex">adhikāraḥ → adhikāra, prathamā, puṃliṅga, ekavacana</span>.</p></div></li>
-        <li><span class="stepn">2</span><div><h3>Pāṇini's rules check it</h3><p>Vidyut, a working implementation of more than 2,000 sūtras of the Aṣṭādhyāyī, looks the form up and tests the same analysis. For verbs and participles it also derives the word, sūtra by sūtra.</p></div></li>
-        <li><span class="stepn">3</span><div><h3>You see the result</h3><p><span class="dot s-agree"></span> They agree. <span class="dot s-form-known"></span> They differ, so the word is open for review. <span class="dot s-unknown"></span> The rules have no entry yet. <span class="dot s-not-checked"></span> A compound member, not yet checked.</p></div></li>
+        <li><span class="stepn">2</span><div><h3>Pāṇini's rules check it</h3><p>Vidyut, a working implementation of more than 2,000 sūtras of the Aṣṭādhyāyī, tests whether its rules allow that analysis for this form. Where they do, it also derives the word sūtra by sūtra. The rules say what a form can be; choosing among the possibilities in context is still the scholar's reading.</p></div></li>
+        <li><span class="stepn">3</span><div><h3>You see the result</h3><p><span class="dot s-agree"></span> The rules allow the analysis. <span class="dot s-form-known"></span> The rules analyse the form differently, so it is open for review. <span class="dot s-unknown"></span> The rules have no entry yet. <span class="dot s-not-checked"></span> A compound member, not yet checked.</p></div></li>
       </ol>
     </section>
 
@@ -297,8 +297,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <div class="tracks">
         <div class="track">
           <div class="eyebrow">Learn</div>
-          <h3>Read classical texts with every word explained</h3>
-          <p>The analysis you see above is checked twice: once by scholars who annotated the corpus, once by a working implementation of the Aṣṭādhyāyī. Where they disagree, we show it.</p>
+          <h3>Read classical texts word by word</h3>
+          <p>Each word's analysis comes from scholars who annotated the corpus and is then tested against a working implementation of the Aṣṭādhyāyī. Where the rules disagree, the reader says so.</p>
           <ul>
             <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
             <li><span class="tag soon">Next</span><span>Paste any verse and get a verified word-by-word reading</span></li>
@@ -308,8 +308,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         </div>
         <div class="track">
           <div class="eyebrow">Improve AI</div>
-          <h3>A grammar benchmark that no model can talk its way through</h3>
-          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. Items and grader are open. <a href="/bench">How the benchmark works</a></p>
+          <h3>A grammar benchmark graded by rule, not by another model</h3>
+          <p>Every answer is an exact form or analysis, checked by rule. The answer key comes from Pāṇini's rules and a scholarly corpus, reviewed by hand. Items and grader are open. <a href="/bench">How the benchmark works</a></p>
           <div class="tasks">
             <table>
               <thead><tr><th>Task</th><th>What the model must do</th><th class="n">Items</th></tr></thead>
@@ -336,11 +336,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
     <section class="band" id="numbers">
       <div class="eyebrow" id="n-title">The Bhagavad Gītā, checked</div>
-      <h2>What the two sources say together</h2>
+      <h2>How the annotation fares against the rules</h2>
       <div class="figures">
         <div class="fig"><div class="num" id="f-verses">701</div><div class="lab">verses in the reader</div></div>
         <div class="fig"><div class="num" id="f-checked">8,982</div><div class="lab">words checked against Pāṇini's rules</div></div>
-        <div class="fig"><div class="num" id="f-agree">93.0%</div><div class="lab">where scholars and rules agree</div></div>
+        <div class="fig"><div class="num" id="f-agree">93.0%</div><div class="lab">where the rules allow the scholars' analysis</div></div>
         <div class="fig"><div class="num" id="f-deriv">782</div><div class="lab">step-by-step sūtra derivations</div></div>
       </div>
       <p class="sub" id="n-note">Compound members are not yet checked, so they are left out of the agreement figure.</p>
@@ -390,8 +390,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   const $ = id => document.getElementById(id);
   const MARK = { G: "ऽ", L: "।" };
   const STATUS = {
-    "agree": "Scholarly annotation and Pāṇini's rules agree.",
-    "form-known": "The rule engine knows this form but analyses it differently. Open for review.",
+    "agree": "Pāṇini's rules allow this analysis of the form. The choice in context is the scholars' reading.",
+    "form-known": "Pāṇini's rules know this form but analyse it differently. Open for review.",
     "unknown": "The rule engine has no entry for this form yet.",
     "not-checked": "Compound members are not checked yet."
   };
@@ -474,7 +474,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     else if (w.s === "agree") {
       html += `<div class="hint">${/nipāta|avyaya/.test(w.sa)
         ? "An indeclinable, so there is no inflection to derive."
-        : "No derivation shown: either the word is built from a root whose identity the two sources do not settle (common for nouns like yoga from √yuj), or the rule engine's derivation does not end in exactly this form."}</div>`;
+        : "No derivation shown: either the word is built from a root whose identity the annotation and the rules do not settle (common for nouns like yoga from √yuj), or the rule engine's derivation does not end in exactly this form."}</div>`;
     }
     const det = $("detail"); det.innerHTML = html; det.hidden = false;
   }
