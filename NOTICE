@@ -1,0 +1,25 @@
+Samskritam.ai
+Copyright 2026 Sriram Subramanian
+
+Code is licensed under the Apache License, Version 2.0 (LICENSE).
+Data and the benchmark are licensed CC BY 4.0 (LICENSE-DATA.md).
+
+This project includes or derives from the following third-party work:
+
+- Digital Corpus of Sanskrit, Oliver Hellwig. CC BY 4.0.
+  https://github.com/OliverHellwig/sanskrit
+  Used for: word analyses of the Bhagavad Gītā (data/sources/dcs-gita/).
+
+- Vidyut, Ambuda project. MIT License.
+  https://github.com/ambuda-org/vidyut
+  Used for: verification, derivations, meter weights, transliteration.
+  Its sūtra and dhātupāṭha data come from ashtadhyayi.com, shared under the
+  MIT License.
+
+- Bhagavad Gītā verse text from gita/gita. Public domain (The Unlicense).
+  https://github.com/gita/gita
+  Used for: display text of verses carried only in the DCS treebank layer
+  (data/sources/gita-sanskrit-text.json). Only the Sanskrit text is used.
+
+- Logo outlines derived from Tiro Devanagari Sanskrit (Tiro Typeworks) and
+  Hind (Indian Type Foundry), both SIL Open Font License 1.1.
