@@ -1,0 +1,52 @@
+[
+ {
+  "slug": "gita",
+  "title": "Bhagavad Gītā",
+  "author": null,
+  "partLabel": "Chapter",
+  "parts": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "13",
+   "14",
+   "15",
+   "16",
+   "17",
+   "18"
+  ],
+  "default": "2.47",
+  "note": null,
+  "verses": 701,
+  "agree": 8355,
+  "checkable": 8982,
+  "notChecked": 1423,
+  "derivations": 782
+ },
+ {
+  "slug": "meghaduta",
+  "title": "Meghadūta",
+  "author": "Kālidāsa",
+  "partLabel": "Part",
+  "parts": [
+   "Pūrvamegha",
+   "Uttaramegha"
+  ],
+  "default": "1.1",
+  "note": "Verse numbers follow the Digital Corpus of Sanskrit, counted separately in each part.",
+  "verses": 122,
+  "agree": 2119,
+  "checkable": 2403,
+  "notChecked": 991,
+  "derivations": 286
+ }
+]

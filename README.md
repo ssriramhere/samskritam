@@ -16,7 +16,7 @@ Sanskrit with its grammar shown.
 | `engine/` | Verifier (`verify.py`), DCS reader, meter identification, labels |
 | `pipeline/` | Builds the verified dataset (`build_gita.py`) and the site data (`build_web.py`) |
 | `data/sources/` | Source annotations (DCS, CC BY 4.0) and verse text (public domain) |
-| `data/build/` | Built dataset: `gita.json`, `derivations.json` |
+| `data/build/` | Built datasets: Gītā (`gita.json`) and Meghadūta (`meghaduta.json`), with derivations |
 | `bench/` | Benchmark generator, runner, grader; items in `bench/data/v0.jsonl` |
 | `web/` | The static site served at samskritam.ai |
 | `api/waitlist.js` | Sign-up endpoint (Vercel function, Upstash Redis) |
@@ -28,6 +28,7 @@ Sanskrit with its grammar shown.
 pip install -r pipeline/requirements.txt
 python -c "import vidyut; vidyut.download_data('vidyut-data')"
 python pipeline/build_gita.py     # data/build/*.json
+python pipeline/build_text.py     # data/build/meghaduta*.json (and any text in TEXTS)
 python pipeline/build_web.py      # web/data/*.json
 python pipeline/audit_gita.py     # agreement report
 ```

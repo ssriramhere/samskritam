@@ -8,6 +8,7 @@ checks are implemented here from the standard definitions.
 from __future__ import annotations
 
 import os
+import re
 from functools import lru_cache
 
 from vidyut.chandas import Chandas
@@ -22,7 +23,10 @@ def chandas() -> Chandas:
 
 def weights(line_iast: str) -> list[tuple[str, str]]:
     """[(syllable, 'G'|'L'), ...] for one line, ignoring spaces and avagraha."""
-    slp = to_slp1(line_iast).replace("'", "").replace(" ", "")
+    slp = to_slp1(line_iast).replace("'", "")
+    # ch after a vowel is pronounced and scanned as cch (che ca, 6.1.73;
+    # padāntād vā, 6.1.76). Some editions write the single ch.
+    slp = re.sub(r"([aAiIuUfFxXeEoO])(\s*)C", r"\1\2cC", slp).replace(" ", "")
     for ch in ",.|।॥-":
         slp = slp.replace(ch, "")
     m = chandas().classify(slp)
@@ -71,7 +75,7 @@ def identify(half_lines: list[str]) -> dict:
         elif kinds <= {"indravajrā", "upendravajrā"}:
             variant = "upajāti"
         else:
-            variant = "mixed (ārṣa)"
+            variant = "mixed pādas, ārṣa"
         return {"name": "triṣṭubh", "variant": variant, "pada_meters": names,
                 "padas": _render(padas), "check": "rule"}
     # Hypermetric verses: a 9-syllable śloka pāda, or a 12-syllable
@@ -82,6 +86,25 @@ def identify(half_lines: list[str]) -> dict:
     if counts and all(c in (22, 23, 24) for c in counts):
         return {"name": "triṣṭubh", "variant": "with jagatī pāda",
                 "syllables": counts, "check": "count-only"}
+    # Other sama-vṛttas: each half-verse holds two equal pādas. Compare with
+    # the Vṛttaratnākara patterns in Vidyut's meters.tsv; the last syllable
+    # of a pāda is anceps.
+    if counts and len(set(counts)) == 1 and counts[0] % 2 == 0:
+        n = counts[0] // 2
+        padas = [p for s_ in sylls for p in _split(s_, n)]
+        best = None
+        for name, pat in _vrttas().get(n, []):
+            fits = sum(_fits(p, pat) for p in padas)
+            if fits == len(padas):
+                return {"name": verify_iast(name), "variant": None,
+                        "padas": _render(padas), "check": "rule"}
+            if best is None or fits > best[0]:
+                best = (fits, name)
+        # One pāda off the pattern is usually a variant reading or a typo
+        # in the source text; report it rather than hide it.
+        if best and best[0] == len(padas) - 1 and len(padas) >= 4:
+            return {"name": verify_iast(best[1]), "variant": "one pāda irregular",
+                    "padas": _render(padas), "check": "rule"}
     m = chandas().classify("\n".join(to_slp1(h).replace("'", "")
                                      for h in half_lines))
     name = m.padya if isinstance(m.padya, str) else getattr(m.padya, "name", None)
@@ -90,6 +113,29 @@ def identify(half_lines: list[str]) -> dict:
         name = to_iast(name)
     return {"name": name or "unidentified", "variant": None,
             "syllables": counts, "check": "vidyut" if name else "none"}
+
+
+@lru_cache(maxsize=1)
+def _vrttas() -> dict[int, list[tuple[str, str]]]:
+    out: dict[int, list] = {}
+    with open(os.path.join(DATA, "chandas", "meters.tsv"), encoding="utf-8") as f:
+        for line in f:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) == 3 and parts[1] == "vrtta":
+                pat = parts[2].replace("|", "")
+                if set(pat) <= {"G", "L"}:
+                    out.setdefault(len(pat), []).append((parts[0], pat))
+    return out
+
+
+def _fits(pada: list, pat: str) -> bool:
+    w = "".join(x[1] for x in pada)
+    return len(w) == len(pat) and w[:-1] == pat[:-1]
+
+
+def verify_iast(slp: str) -> str:
+    from .verify import to_iast
+    return to_iast(slp)
 
 
 # Common 11-syllable patterns (last syllable anceps, so 10 are compared).

@@ -1,5 +1,9 @@
-"""Compact the Gītā dataset for the website: adds Devanagari, drops fields
-the page does not use, and splits derivations into their own file."""
+"""Compact the built datasets for the website.
+
+For each text: web/data/<slug>.json (verses and word analyses, with
+Devanagari added) and web/data/<slug>-derivations.json. Also writes
+web/data/texts.json, the list of texts the reader offers.
+"""
 import json
 import os
 import sys
@@ -10,15 +14,18 @@ from vidyut.lipi import Scheme, transliterate  # noqa: E402
 
 from engine import meter  # noqa: E402
 
+# slug, built dataset, built derivations, default verse, chapter label
+TEXTS = [
+    ("gita", "gita.json", "derivations.json", "2.47", "Chapter"),
+    ("meghaduta", "meghaduta.json", "meghaduta-derivations.json", "1.1", None),
+]
+
 
 def dev(s: str) -> str:
     return transliterate(s, Scheme.Iast, Scheme.Devanagari)
 
 
-def main():
-    src = json.load(open(os.path.join(ROOT, "data/build/gita.json"), encoding="utf-8"))
-    out_dir = os.path.join(ROOT, "web/data")
-    os.makedirs(out_dir, exist_ok=True)
+def compact(src: dict) -> list:
     verses = []
     for c in src["chapters"]:
         for v in c["verses"]:
@@ -37,9 +44,10 @@ def main():
                             w["g"] = g["surface"]
                         words.append(w)
             m = v["meter"]
-            scan = None
             if m.get("padas"):
                 scan = [p["weights"] for p in m["padas"]]
+            elif m["name"] == "prose":
+                scan = []
             else:
                 scan = ["".join(x[1] for x in meter.weights(l)) for l in v["lines"]]
             verses.append({"id": v["id"], "ce": v["ce"], "sp": v["speaker"],
@@ -47,20 +55,41 @@ def main():
                            "m": [m["name"], m.get("variant")], "scan": scan,
                            "layer": v["layer"], "w": words,
                            **({"note": v["note"]} if v.get("note") else {})})
-    stats = src["meta"]["stats"]
-    meta = {"sources": src["meta"]["sources"],
-            "agree": stats["agree"], "checkable": stats["agree"] + stats["form-known"] + stats["unknown"],
-            "notChecked": stats["not-checked"]}
-    json.dump({"meta": meta, "verses": verses},
-              open(os.path.join(out_dir, "gita.json"), "w", encoding="utf-8"),
-              ensure_ascii=False, separators=(",", ":"))
-    der = json.load(open(os.path.join(ROOT, "data/build/derivations.json"), encoding="utf-8"))
-    slim = {k: {"f": v["form"], "s": [[st["sutra"], st["text"], st["result"]] for st in v["steps"]]}
-            for k, v in der.items()}
-    json.dump(slim, open(os.path.join(out_dir, "derivations.json"), "w", encoding="utf-8"),
-              ensure_ascii=False, separators=(",", ":"))
-    for f in ("gita.json", "derivations.json"):
-        print(f, os.path.getsize(os.path.join(out_dir, f)) // 1024, "KB")
+    return verses
+
+
+def main():
+    out_dir = os.path.join(ROOT, "web/data")
+    os.makedirs(out_dir, exist_ok=True)
+    index = []
+    for slug, data_file, deriv_file, default, ch_label in TEXTS:
+        src = json.load(open(os.path.join(ROOT, "data/build", data_file), encoding="utf-8"))
+        verses = compact(src)
+        st = src["meta"]["stats"]
+        checkable = st["agree"] + st["form-known"] + st["unknown"]
+        meta = src["meta"]
+        der = json.load(open(os.path.join(ROOT, "data/build", deriv_file), encoding="utf-8"))
+        slim = {k: {"f": v["form"], "s": [[s["sutra"], s["text"], s["result"]] for s in v["steps"]]}
+                for k, v in der.items()}
+        json.dump({"verses": verses},
+                  open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, separators=(",", ":"))
+        json.dump(slim, open(os.path.join(out_dir, f"{slug}-derivations.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, separators=(",", ":"))
+        index.append({
+            "slug": slug, "title": meta["title"], "author": meta.get("author"),
+            "partLabel": ch_label or meta.get("part_label", "Part"),
+            "parts": [c.get("name") or str(c["ch"]) for c in src["chapters"]],
+            "default": default, "note": meta.get("note"),
+            "verses": len(verses), "agree": st["agree"], "checkable": checkable,
+            "notChecked": st["not-checked"], "derivations": len(slim)})
+        print(slug, len(verses), "verses,",
+              os.path.getsize(os.path.join(out_dir, f"{slug}.json")) // 1024, "KB")
+    json.dump(index, open(os.path.join(out_dir, "texts.json"), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+    old = os.path.join(out_dir, "derivations.json")
+    if os.path.exists(old):
+        os.remove(old)  # renamed to gita-derivations.json
 
 
 if __name__ == "__main__":
