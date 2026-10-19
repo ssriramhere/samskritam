@@ -49,7 +49,7 @@ def norm_form(s) -> str:
 def lemma_equal(model: str, gold: str) -> bool:
     if not isinstance(model, str):
         return False
-    m = model.strip().lstrip("√").split("(")[0].strip()
+    m = model.strip().lstrip("√").split("(")[0].strip().replace("-", "")
     if norm_form(m) == norm_form(gold):
         return True
     claim = {"lemma": gold}
@@ -68,16 +68,23 @@ LEMMA_EQUIV = {"tvad": {"yuṣmad", "tvam"}, "mad": {"asmad", "aham"},
 PAST = {"past", "aorist", "imperfect", "perfect"}
 
 
-def _field_ok(field, model_v, gold_v):
+NOMINAL = {"noun", "adjective", "pronoun"}
+
+
+def _field_ok(field, model_v, gold_v, lemma=None):
     if gold_v is None:
         return True  # not applicable for this word; ignore what the model says
     if model_v is None:
         return False
     mv = str(model_v).strip().lower()
     if field == "tense_mood" and gold_v == "past":
-        return mv in PAST
-    if field == "pos" and {mv, gold_v} <= {"noun", "adjective"}:
-        return True  # noun/adjective boundary is not graded
+        # vid has a present-meaning perfect, and Pāṇini derives vetti/vettha
+        # as laṭ with perfect endings (vido laṭo vā, 3.4.83): accept both.
+        return mv in PAST or (lemma == "vid" and mv == "present")
+    if field == "pos" and gold_v in NOMINAL:
+        # Only verb vs nominal is graded. The lines between noun, adjective
+        # and pronominal adjective (para, sarva, anya) are conventions.
+        return mv in NOMINAL
     return mv == str(gold_v).lower()
 
 
@@ -87,8 +94,12 @@ def grade_item(item: dict, answer_text: str) -> dict:
     if ans is None:
         return {"correct": False, "reason": "no-json"}
     if task in ("tinanta", "subanta"):
-        got = norm_form(ans.get("form"))
-        ok = got in {norm_form(a) for a in item["accept"]}
+        accept = {norm_form(a) for a in item["accept"]}
+        raw = ans.get("form")
+        # "buddheḥ / buddhyāḥ": several forms count only if every one is right.
+        parts = [p for p in re.split(r"\s*(?:/|,|\bor\b)\s*", raw)] if isinstance(raw, str) else [raw]
+        parts = [p for p in parts if p]
+        ok = bool(parts) and all(norm_form(p) in accept for p in parts)
         return {"correct": ok}
     if task == "analyze":
         got = {k: str(ans.get(k, "")).strip().lower().replace("ṅ", "n")
@@ -98,7 +109,7 @@ def grade_item(item: dict, answer_text: str) -> dict:
         gold = item["accept"][0]
         lem = lemma_equal(ans.get("lemma"), gold["lemma"]) or \
             str(ans.get("lemma", "")).strip() in LEMMA_EQUIV.get(gold["lemma"], set())
-        fields = {k: _field_ok(k, ans.get(k), gold.get(k))
+        fields = {k: _field_ok(k, ans.get(k), gold.get(k), gold["lemma"])
                   for k in ("pos", "case", "number", "gender", "tense_mood",
                             "person", "voice")}
         return {"correct": lem and all(fields.values()), "lemma": lem,

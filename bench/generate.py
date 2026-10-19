@@ -323,6 +323,23 @@ def gen_meter(rng, n):
     return items
 
 
+# Removed after hand review (19 Oct 2026) of every question at least one model
+# got wrong. Each key below was wrong or genuinely disputable.
+EXCLUDED = {
+    "subanta-0191": "asat is the negated participle of √as: masculine nominative is asan, not asat",
+    "subanta-0227": "asat is the negated participle of √as: masculine dual is asantau",
+    "subanta-0199": "the feminine of īśvara is īśvarī; the key declined it as īśvarā",
+    "subanta-0235": "rājasa is an aṇ derivative, so its feminine is rājasī (Gītā 17.2); the key declined rājasā",
+    "gita-0350": "śaśisūryayoḥ (7.8) is read as genitive by the commentators; the annotation has locative",
+    "gita-0362": "dhṛti is feminine (dhṛtiḥ sā, 18.34); the annotation has masculine",
+    "gita-0377": "atīndriyam (6.21) can be nominative or the object of vetti; the annotation picks one",
+    "gita-0395": "vaiśyāḥ (9.32) is the masculine plural of vaiśya; the annotation has feminine vaiśyā",
+    "gita-0403": "akarmaṇaḥ (3.8) is read as ablative (Śaṅkara: akaraṇāt) or genitive; disputable",
+    "gita-0412": "lelihyase (11.30) is the intensive of √lih with middle endings, not a passive",
+    "gita-0418": "etayoḥ (5.1) refers to saṃnyāsa and yoga, both masculine; the annotation has neuter",
+}
+
+
 def confirmed(it) -> bool:
     """Second check on noun answers: every accepted form must also appear in
     Vidyut's dictionary (kosha) with the same stem, gender, case and number.
@@ -361,7 +378,7 @@ def main():
     for i, it in enumerate(items):
         it["id"] = f"{it['task']}-{i:04d}"
     # Ids are fixed before filtering, so dropping an item never renumbers others.
-    dropped = [it["id"] for it in items if not confirmed(it)]
+    dropped = [it["id"] for it in items if not confirmed(it) or it["id"] in EXCLUDED]
     items = [it for it in items if it["id"] not in dropped]
     if dropped:
         print("dropped after dictionary cross-check:", ", ".join(dropped))
