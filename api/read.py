@@ -82,8 +82,12 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
-        if not (REDIS_URL and REDIS_TOKEN and os.environ.get("OPENROUTER_API_KEY")):
-            return self._send(503, {"ok": False, "error": "The reader is not connected yet."})
+        missing = [name for name, ok in (("database (Upstash)", REDIS_URL and REDIS_TOKEN),
+                                          ("model key (OPENROUTER_API_KEY)", os.environ.get("OPENROUTER_API_KEY")))
+                   if not ok]
+        if missing:
+            return self._send(503, {"ok": False, "error": "The reader is not connected yet: missing "
+                                    + " and ".join(missing) + "."})
         try:
             n = int(self.headers.get("Content-Length") or 0)
             body = json.loads(self.rfile.read(min(n, 8000)) or b"{}")
