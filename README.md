@@ -25,7 +25,7 @@ Sanskrit with its grammar shown.
 ## Build the data
 
 ```bash
-pip install -r requirements.txt
+pip install -r pipeline/requirements.txt
 python -c "import vidyut; vidyut.download_data('vidyut-data')"
 python pipeline/build_gita.py     # data/build/*.json
 python pipeline/build_web.py      # web/data/*.json
