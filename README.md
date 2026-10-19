@@ -39,7 +39,7 @@ The runner uses only the Python standard library.
 
 ```bash
 export OPENROUTER_API_KEY=...     # PowerShell: $env:OPENROUTER_API_KEY = "..."
-python bench/run_all.py           # every model in bench/models.txt, then web/data/leaderboard.json
+python bench/run_all.py           # all models in parallel, 18 requests/min each, then web/data/leaderboard.json
 ```
 
 One model at a time: `python bench/run.py --provider openrouter --model <vendor/model>`,

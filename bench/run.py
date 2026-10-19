@@ -91,6 +91,8 @@ def main():
     ap.add_argument("--temperature", type=float, default=None,
                     help="omit for the provider default (some reasoning models reject it)")
     ap.add_argument("--limit", type=int, default=None, help="first N items, for a smoke test")
+    ap.add_argument("--rpm", type=float, default=0,
+                    help="cap requests per minute (OpenRouter new accounts: 20 per model)")
     a = ap.parse_args()
 
     items = [json.loads(l) for l in open(a.bench, encoding="utf-8")]
@@ -107,10 +109,23 @@ def main():
     print(f"{len(todo)} to run, {len(done)} already done -> {out_path}")
 
     lock, call = threading.Lock(), PROVIDERS[a.provider]
+    pace_lock, next_slot = threading.Lock(), [time.monotonic()]
+
+    def pace():
+        """Space requests evenly when --rpm is set, across all workers."""
+        if not a.rpm:
+            return
+        with pace_lock:
+            now = time.monotonic()
+            wait = next_slot[0] - now
+            next_slot[0] = max(now, next_slot[0]) + 60.0 / a.rpm
+        if wait > 0:
+            time.sleep(wait)
 
     def work(it):
-        for attempt in range(5):
+        for attempt in range(6):
             try:
+                pace()
                 t0 = time.time()
                 out = call(a.model, it["prompt"], a)
                 rec = {"id": it["id"], "output": out, "latency_s": round(time.time() - t0, 2),
@@ -118,13 +133,18 @@ def main():
                 break
             except urllib.error.HTTPError as e:
                 msg = e.read().decode(errors="replace")[:300]
-                if e.code in (429, 500, 502, 503, 529) and attempt < 4:
-                    time.sleep(2 ** attempt * 3)
+                if e.code in (429, 500, 502, 503, 529) and attempt < 5:
+                    retry_after = e.headers.get("Retry-After") if e.headers else None
+                    try:
+                        delay = float(retry_after)
+                    except (TypeError, ValueError):
+                        delay = 2 ** attempt * 5   # 5, 10, 20, 40, 80 s
+                    time.sleep(min(delay, 120))
                     continue
                 rec = {"id": it["id"], "output": None, "error": f"HTTP {e.code}: {msg}"}
                 break
             except Exception as e:  # network hiccup; retry
-                if attempt < 4:
+                if attempt < 5:
                     time.sleep(2 ** attempt)
                     continue
                 rec = {"id": it["id"], "output": None, "error": repr(e)}

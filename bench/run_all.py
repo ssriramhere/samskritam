@@ -4,7 +4,8 @@ write web/data/leaderboard.json for the site. Works on Windows, macOS, Linux.
     # PowerShell:  $env:OPENROUTER_API_KEY = "sk-or-..."
     # bash/zsh:    export OPENROUTER_API_KEY=sk-or-...
     python bench/run_all.py              # all models
-    python bench/run_all.py --workers 4  # gentler on rate limits
+    python bench/run_all.py --rpm 10     # if 429 errors persist
+    python bench/run_all.py --sequential # one model at a time
 """
 import argparse
 import os
@@ -16,20 +17,32 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--workers", default="8")
+    ap.add_argument("--workers", default="4")
+    ap.add_argument("--rpm", default="18",
+                    help="per-model request cap; OpenRouter new accounts allow 20/min per model")
+    ap.add_argument("--sequential", action="store_true",
+                    help="run one model at a time instead of all at once")
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
     with open(os.path.join(ROOT, "bench", "models.txt"), encoding="utf-8") as f:
         models = [l.strip() for l in f if l.strip() and not l.lstrip().startswith("#")]
+    # Rate limits are per model, so the models can run side by side.
+    cmd = lambda m: [sys.executable, os.path.join(ROOT, "bench", "run.py"),
+                     "--provider", "openrouter", "--model", m,
+                     "--workers", a.workers, "--rpm", a.rpm]
     failed = []
-    for m in models:
-        print(f"== {m}", flush=True)
-        r = subprocess.run([sys.executable, os.path.join(ROOT, "bench", "run.py"),
-                            "--provider", "openrouter", "--model", m,
-                            "--workers", a.workers])
-        if r.returncode != 0:
-            failed.append(m)
+    if a.sequential:
+        for m in models:
+            print(f"== {m}", flush=True)
+            if subprocess.run(cmd(m)).returncode != 0:
+                failed.append(m)
+    else:
+        procs = {m: subprocess.Popen(cmd(m)) for m in models}
+        print(f"Running {len(procs)} models at once, up to {a.rpm} requests/min each.", flush=True)
+        for m, p in procs.items():
+            if p.wait() != 0:
+                failed.append(m)
     subprocess.run([sys.executable, os.path.join(ROOT, "bench", "leaderboard.py")], check=True)
     if failed:
         print("These models stopped early; run the same command again to resume:",
