@@ -20,6 +20,7 @@ Sanskrit with its grammar shown.
 | `bench/` | Benchmark generator, runner, grader; items in `bench/data/v0.jsonl` |
 | `web/` | The static site served at samskritam.ai |
 | `api/waitlist.js` | Sign-up endpoint (Vercel function, Upstash Redis) |
+| `api/read.py` | Verse reader: an AI model analyses a pasted verse, `engine/reader.py` checks each word (needs `OPENROUTER_API_KEY` and Upstash; optional `READER_MODEL`, `READER_DAILY_CAP`) |
 | `brand/` | Logo source and build script |
 
 ## Build the data

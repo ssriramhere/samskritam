@@ -27,5 +27,12 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/read.py": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": "engine/**"
+    }
+  }
 }

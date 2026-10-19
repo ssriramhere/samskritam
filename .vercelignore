@@ -1,13 +1,11 @@
-# The site is static (web/) plus one Node function (api/).
-# Keep the Python tooling out of the deployment. Paths are anchored with a
-# leading slash so they match only at the repo root: an unanchored "data/"
-# also matched web/data/ and left the site without its data files.
-/engine/
+# The site is static (web/) plus functions in api/: waitlist.js (Node) and
+# read.py (Python, which needs engine/ and requirements.txt).
+# Paths are anchored with a leading slash so they match only at the repo root:
+# an unanchored "data/" also matched web/data/ and left the site without its data.
 /pipeline/
 /bench/
 /brand/
 /data/
 /scripts/
 /vidyut-data/
-*.py
 __pycache__/
