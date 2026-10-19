@@ -159,6 +159,9 @@ section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
 #joinbtn:disabled { opacity: .6; cursor: default }
 .joinmsg { margin: 0; min-height: 1.4em; font-size: .95rem }
 .joinmsg.ok { color: var(--ok) } .joinmsg.err { color: var(--warn) }
+#results .sub { color: var(--muted); margin: 10px 0 0; max-width: 70ch }
+#lb td.n, #lb th.n { text-align: right }
+#lb td.top { font-weight: 600 }
 .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 26px }
 .fig .num { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums }
 .fig .lab { color: var(--muted); font-size: .9rem; margin-top: 6px }
@@ -244,7 +247,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="track">
           <div class="eyebrow">Improve AI</div>
           <h3>A grammar benchmark that no model can talk its way through</h3>
-          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. The first results publish at launch.</p>
+          <p>Every answer is fixed by Pāṇini's rules or by two independent sources, never by another model. Items and grader are open.</p>
           <div class="tasks">
             <table>
               <thead><tr><th>Task</th><th>What the model must do</th><th class="n">Items</th></tr></thead>
@@ -259,6 +262,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="band" id="results" hidden>
+      <div class="eyebrow">Benchmark v0 results</div>
+      <h2>How today's models handle Pāṇini</h2>
+      <p class="sub" id="lb-note"></p>
+      <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
     </section>
 
     <section class="band" id="numbers">
@@ -407,6 +417,16 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     } catch (err) { msg.className = "joinmsg err"; msg.textContent = err.message || "We couldn't save your sign-up. Please try again."; }
     finally { btn.disabled = false; }
   });
+
+  fetch("data/leaderboard.json").then(r => r.ok ? r.json() : null).then(lb => {
+    if (!lb || !lb.rows || !lb.rows.length) return;
+    const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
+    const keys = ["tinanta", "subanta", "analyze", "gita", "meter"];
+    document.querySelector("#lb tbody").innerHTML = lb.rows.map(r =>
+      `<tr><td>${esc(r.model)}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
+    $("lb-note").textContent = `${lb.items} items, answers graded automatically against rule-derived keys. Updated ${lb.updated}.`;
+    $("results").hidden = false;
+  }).catch(() => {});
   fetch("data/gita.json").then(r => r.json()).then(data => {
     verses = data.verses;
     verses.forEach(v => { const ch = +v.id.split(".")[0]; if (!byChapter.has(ch)) byChapter.set(ch, []); byChapter.get(ch).push(v); });

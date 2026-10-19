@@ -1,0 +1,10 @@
+# OpenRouter model IDs to run, one per line. Lines starting with # are skipped.
+# Verified on openrouter.ai or a page quoting its ID, 19 Oct 2026:
+anthropic/claude-opus-5.5
+anthropic/claude-sonnet-5.5
+google/gemini-4-argon
+google/gemini-3.8-flash
+openai/gpt-6-sol
+# Not yet verified: check https://openrouter.ai/models and uncomment.
+# openai/gpt-6-astra
+# Open-weight and Indian models are worth including; add their IDs here.
