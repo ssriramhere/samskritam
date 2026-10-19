@@ -8,3 +8,6 @@ openai/gpt-6-sol
 # Not yet verified: check https://openrouter.ai/models and uncomment.
 # openai/gpt-6-astra
 # Open-weight and Indian models are worth including; add their IDs here.
+# Sarvam (India) through its own API: needs SARVAM_API_KEY from dashboard.sarvam.ai.
+# OpenRouter only lists sarvam-m, which Sarvam has deprecated.
+# sarvam:sarvam-105b

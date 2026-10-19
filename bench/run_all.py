@@ -24,13 +24,17 @@ def main():
                     help="run one model at a time instead of all at once")
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
-        sys.exit("Set OPENROUTER_API_KEY first.")
+        print("OPENROUTER_API_KEY is not set; only provider-prefixed models will run.")
     with open(os.path.join(ROOT, "bench", "models.txt"), encoding="utf-8") as f:
         models = [l.strip() for l in f if l.strip() and not l.lstrip().startswith("#")]
     # Rate limits are per model, so the models can run side by side.
-    cmd = lambda m: [sys.executable, os.path.join(ROOT, "bench", "run.py"),
-                     "--provider", "openrouter", "--model", m,
-                     "--workers", a.workers, "--rpm", a.rpm]
+    # A line like "sarvam:sarvam-105b" uses that provider's own API;
+    # anything else goes through OpenRouter.
+    def cmd(m):
+        prov, model = m.split(":", 1) if ":" in m and m.split(":", 1)[0] in ("sarvam", "anthropic", "openai", "google") else ("openrouter", m)
+        return [sys.executable, os.path.join(ROOT, "bench", "run.py"),
+                "--provider", prov, "--model", model,
+                "--workers", a.workers, "--rpm", a.rpm]
     failed = []
     if a.sequential:
         for m in models:

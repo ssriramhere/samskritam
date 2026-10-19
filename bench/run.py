@@ -1,6 +1,6 @@
 """Run a model over the benchmark. Standard library only.
 
-    export ANTHROPIC_API_KEY=...   # or OPENAI_API_KEY / GEMINI_API_KEY / OPENROUTER_API_KEY
+    export ANTHROPIC_API_KEY=...   # or OPENAI_API_KEY / GEMINI_API_KEY / OPENROUTER_API_KEY / SARVAM_API_KEY
     python bench/run.py --provider anthropic --model <model-id>
     python bench/run.py --provider openai    --model <model-id>
     python bench/run.py --provider google    --model <model-id>
@@ -65,6 +65,12 @@ def call_openrouter(model, prompt, a):
                               os.environ["OPENROUTER_API_KEY"], model, prompt, a)
 
 
+def call_sarvam(model, prompt, a):
+    # Sarvam's own API is OpenAI-compatible and accepts a Bearer key.
+    return _openai_compatible("https://api.sarvam.ai/v1/chat/completions",
+                              os.environ["SARVAM_API_KEY"], model, prompt, a)
+
+
 def call_google(model, prompt, a):
     key = os.environ.get("GEMINI_API_KEY") or os.environ["GOOGLE_API_KEY"]
     body = {"systemInstruction": {"parts": [{"text": SYSTEM}]},
@@ -78,7 +84,8 @@ def call_google(model, prompt, a):
 
 
 PROVIDERS = {"anthropic": call_anthropic, "openai": call_openai,
-             "google": call_google, "openrouter": call_openrouter}
+             "google": call_google, "openrouter": call_openrouter,
+             "sarvam": call_sarvam}
 
 
 def main():
