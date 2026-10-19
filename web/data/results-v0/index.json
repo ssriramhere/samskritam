@@ -1,0 +1,32 @@
+[
+ {
+  "model": "anthropic/claude-opus-5.5",
+  "file": "openrouter__anthropic_claude-opus-5.5.jsonl",
+  "correct": 486,
+  "n": 487
+ },
+ {
+  "model": "anthropic/claude-sonnet-5.5",
+  "file": "openrouter__anthropic_claude-sonnet-5.5.jsonl",
+  "correct": 465,
+  "n": 487
+ },
+ {
+  "model": "google/gemini-3.8-flash",
+  "file": "openrouter__google_gemini-3.8-flash.jsonl",
+  "correct": 471,
+  "n": 487
+ },
+ {
+  "model": "google/gemini-4-argon",
+  "file": "openrouter__google_gemini-4-argon.jsonl",
+  "correct": 467,
+  "n": 487
+ },
+ {
+  "model": "openai/gpt-6-sol",
+  "file": "openrouter__openai_gpt-6-sol.jsonl",
+  "correct": 463,
+  "n": 487
+ }
+]

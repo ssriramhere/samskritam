@@ -51,6 +51,10 @@ from the Digital Corpus of Sanskrit annotation where Vidyut agrees with it.
 
 Regenerate the items with `python bench/generate.py --seed 108`.
 
+Published results: `web/data/leaderboard.json` (scores) and `bench/results-v0/`
+(each model's final answer to every question, with its grade), written by
+`python bench/leaderboard.py` and `python bench/publish_results.py`.
+
 ## Deploy
 
 Vercel serves `web/` as static files and `api/` as functions (`vercel.json`).

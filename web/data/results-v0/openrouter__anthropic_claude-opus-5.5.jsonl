@@ -1,0 +1,487 @@
+{"id": "tinanta-0000", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dadhuḥ\"}", "correct": true}
+{"id": "tinanta-0001", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ruruhathuḥ\"}", "correct": true}
+{"id": "tinanta-0002", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jānāsi\"}", "correct": true}
+{"id": "tinanta-0003", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amanyāvahi\"}", "correct": true}
+{"id": "tinanta-0004", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jānāti\"}", "correct": true}
+{"id": "tinanta-0005", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jayeyuḥ\"}", "correct": true}
+{"id": "tinanta-0006", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yayātha\"}", "correct": true}
+{"id": "tinanta-0007", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"siṣevimahe\"}", "correct": true}
+{"id": "tinanta-0008", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dadṛśima\"}", "correct": true}
+{"id": "tinanta-0009", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vahetām\"}", "correct": true}
+{"id": "tinanta-0010", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"cikrīḍa\"}", "correct": true}
+{"id": "tinanta-0011", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ayajāva\"}", "correct": true}
+{"id": "tinanta-0012", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śṛṇutaḥ\"}", "correct": true}
+{"id": "tinanta-0013", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dhariṣyataḥ\"}", "correct": true}
+{"id": "tinanta-0014", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"manyantām\"}", "correct": true}
+{"id": "tinanta-0015", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"uvāsa\"}", "correct": true}
+{"id": "tinanta-0016", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amucat\"}", "correct": true}
+{"id": "tinanta-0017", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"svapāni\"}", "correct": true}
+{"id": "tinanta-0018", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"agacchāva\"}", "correct": true}
+{"id": "tinanta-0019", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"aśaknuvan\"}", "correct": true}
+{"id": "tinanta-0020", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avardhanta\"}", "correct": true}
+{"id": "tinanta-0021", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"apibam\"}", "correct": true}
+{"id": "tinanta-0022", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"etu\"}", "correct": true}
+{"id": "tinanta-0023", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"atāpsva\"}", "correct": true}
+{"id": "tinanta-0024", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"labheya\"}", "correct": true}
+{"id": "tinanta-0025", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ūṣathuḥ\"}", "correct": true}
+{"id": "tinanta-0026", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tapāma\"}", "correct": true}
+{"id": "tinanta-0027", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śaknutha\"}", "correct": true}
+{"id": "tinanta-0028", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rohathaḥ\"}", "correct": true}
+{"id": "tinanta-0029", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amanyata\"}", "correct": true}
+{"id": "tinanta-0030", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jigāya\"}", "correct": true}
+{"id": "tinanta-0031", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"abhajatām\"}", "correct": true}
+{"id": "tinanta-0032", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vacāva\"}", "correct": true}
+{"id": "tinanta-0033", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dadyuḥ\"}", "correct": true}
+{"id": "tinanta-0034", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"aśṛṇuma\"}", "correct": true}
+{"id": "tinanta-0035", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tiṣṭhāmaḥ\"}", "correct": true}
+{"id": "tinanta-0036", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tapsyati\"}", "correct": true}
+{"id": "tinanta-0037", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vahatam\"}", "correct": true}
+{"id": "tinanta-0038", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pateva\"}", "correct": true}
+{"id": "tinanta-0039", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"akārṣma\"}", "correct": true}
+{"id": "tinanta-0040", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ayutsmahi\"}", "correct": true}
+{"id": "tinanta-0041", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"patāvaḥ\"}", "correct": true}
+{"id": "tinanta-0042", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"lebhidhve\"}", "correct": true}
+{"id": "tinanta-0043", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dāsyatha\"}", "correct": true}
+{"id": "tinanta-0044", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"svaḥ\"}", "correct": true}
+{"id": "tinanta-0045", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"abravam\"}", "correct": true}
+{"id": "tinanta-0046", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"carema\"}", "correct": true}
+{"id": "tinanta-0047", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"papau\"}", "correct": true}
+{"id": "tinanta-0048", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhakṣyatha\"}", "correct": true}
+{"id": "tinanta-0049", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amaṃsvahi\"}", "correct": true}
+{"id": "tinanta-0050", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"siṣeve\"}", "correct": true}
+{"id": "tinanta-0051", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vacyām\"}", "correct": true}
+{"id": "tinanta-0052", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sthāsyanti\"}", "correct": true}
+{"id": "tinanta-0053", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"arukṣat\"}", "correct": true}
+{"id": "tinanta-0054", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jāyase\"}", "correct": true}
+{"id": "tinanta-0055", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"teruḥ\"}", "correct": true}
+{"id": "tinanta-0056", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ajīvīḥ\"}", "correct": true}
+{"id": "tinanta-0057", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"atuṣyaḥ\"}", "correct": true}
+{"id": "tinanta-0058", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tutuṣima\"}", "correct": true}
+{"id": "tinanta-0059", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tyajetām\"}", "correct": true}
+{"id": "tinanta-0060", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"krīḍataḥ\"}", "correct": true}
+{"id": "tinanta-0061", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ajīviṣma\"}", "correct": true}
+{"id": "tinanta-0062", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"carata\"}", "correct": true}
+{"id": "tinanta-0063", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tasthuḥ\"}", "correct": true}
+{"id": "tinanta-0064", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"abhavaḥ\"}", "correct": true}
+{"id": "tinanta-0065", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"āpnomi\"}", "correct": true}
+{"id": "tinanta-0066", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"careta\"}", "correct": true}
+{"id": "tinanta-0067", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śakṣyasi\"}", "correct": true}
+{"id": "tinanta-0068", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yāhi\"}", "correct": true}
+{"id": "tinanta-0069", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dadhātu\"}", "correct": true}
+{"id": "tinanta-0070", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"mokṣyathaḥ\"}", "correct": true}
+{"id": "tinanta-0071", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vahāma\"}", "correct": true}
+{"id": "tinanta-0072", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"viśatām\"}", "correct": true}
+{"id": "tinanta-0073", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"āpa\"}", "correct": true}
+{"id": "tinanta-0074", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yaya\"}", "correct": true}
+{"id": "tinanta-0075", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"muñcāmi\"}", "correct": true}
+{"id": "tinanta-0076", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ūṣatuḥ\"}", "correct": true}
+{"id": "tinanta-0077", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śekima\"}", "correct": true}
+{"id": "tinanta-0078", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"seveya\"}", "correct": true}
+{"id": "tinanta-0079", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dharetam\"}", "correct": true}
+{"id": "tinanta-0080", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"nayatha\"}", "correct": true}
+{"id": "tinanta-0081", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tarāma\"}", "correct": true}
+{"id": "tinanta-0082", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śekuḥ\"}", "correct": true}
+{"id": "tinanta-0083", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vakṣyanti\"}", "correct": true}
+{"id": "tinanta-0084", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"patsyante\"}", "correct": true}
+{"id": "tinanta-0085", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"gamiṣyāmaḥ\"}", "correct": true}
+{"id": "tinanta-0086", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vahathaḥ\"}", "correct": true}
+{"id": "tinanta-0087", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vidanti\"}", "correct": true}
+{"id": "tinanta-0088", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"krīḍetam\"}", "correct": true}
+{"id": "tinanta-0089", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"siṣeve\"}", "correct": true}
+{"id": "tinanta-0090", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"neṣyāmi\"}", "correct": true}
+{"id": "tinanta-0091", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tatyaja\"}", "correct": true}
+{"id": "tinanta-0092", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"atyāktam\"}", "correct": true}
+{"id": "tinanta-0093", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amanyetām\"}", "correct": true}
+{"id": "tinanta-0094", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śayīyāthām\"}", "correct": true}
+{"id": "tinanta-0095", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avahat\"}", "correct": true}
+{"id": "tinanta-0096", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"caratu\"}", "correct": true}
+{"id": "tinanta-0097", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śṛṇuta\"}", "correct": true}
+{"id": "tinanta-0098", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"viśāmi\"}", "correct": true}
+{"id": "tinanta-0099", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rarakṣa\"}", "correct": true}
+{"id": "tinanta-0100", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"atuṣāva\"}", "correct": true}
+{"id": "tinanta-0101", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"āpa\"}", "correct": true}
+{"id": "tinanta-0102", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jajñiṣe\"}", "correct": true}
+{"id": "tinanta-0103", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amucam\"}", "correct": true}
+{"id": "tinanta-0104", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"hanyām\"}", "correct": true}
+{"id": "tinanta-0105", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yāma\"}", "correct": true}
+{"id": "tinanta-0106", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"alabhathāḥ\"}", "correct": true}
+{"id": "tinanta-0107", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"eṣyasi\"}", "correct": true}
+{"id": "tinanta-0108", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tiṣṭheta\"}", "correct": true}
+{"id": "tinanta-0109", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"akrīḍīḥ\"}", "correct": true}
+{"id": "tinanta-0110", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"apibata\"}", "correct": true}
+{"id": "tinanta-0111", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"abhajat\"}", "correct": true}
+{"id": "tinanta-0112", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jigetha\"}", "correct": true}
+{"id": "tinanta-0113", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"patatam\"}", "correct": true}
+{"id": "tinanta-0114", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"labhantām\"}", "correct": true}
+{"id": "tinanta-0115", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avaham\"}", "correct": true}
+{"id": "tinanta-0116", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jahruḥ\"}", "correct": true}
+{"id": "tinanta-0117", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"budhyante\"}", "correct": true}
+{"id": "tinanta-0118", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avadhīḥ\"}", "correct": true}
+{"id": "tinanta-0119", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tapathaḥ\"}", "correct": true}
+{"id": "tinanta-0120", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"paśyathaḥ\"}", "correct": true}
+{"id": "tinanta-0121", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rakṣantu\"}", "correct": true}
+{"id": "tinanta-0122", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"cariṣyāmaḥ\"}", "correct": true}
+{"id": "tinanta-0123", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"svapitām\"}", "correct": true}
+{"id": "tinanta-0124", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ayāḥ\"}", "correct": true}
+{"id": "tinanta-0125", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ījiṣe\"}", "correct": true}
+{"id": "tinanta-0126", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"lebhimahe\"}", "correct": true}
+{"id": "tinanta-0127", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"cikrīḍuḥ\"}", "correct": true}
+{"id": "tinanta-0128", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vasema\"}", "correct": true}
+{"id": "tinanta-0129", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"patataḥ\"}", "correct": true}
+{"id": "tinanta-0130", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ajīvatām\"}", "correct": true}
+{"id": "tinanta-0131", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"adhattam\"}", "correct": true}
+{"id": "tinanta-0132", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avahaḥ\"}", "correct": true}
+{"id": "tinanta-0133", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tuṣyatha\"}", "correct": true}
+{"id": "tinanta-0134", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śayiṣyāmahe\"}", "correct": true}
+{"id": "tinanta-0135", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ahārṣma\"}", "correct": true}
+{"id": "tinanta-0136", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"aseviṣi\"}", "correct": true}
+{"id": "tinanta-0137", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yudhyedhvam\"}", "correct": true}
+{"id": "tinanta-0138", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sta\"}", "correct": true}
+{"id": "tinanta-0139", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śuśruma\"}", "correct": true}
+{"id": "tinanta-0140", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ayāḥ\"}", "correct": true}
+{"id": "tinanta-0141", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ayutsāthām\"}", "correct": true}
+{"id": "tinanta-0142", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vasanti\"}", "correct": true}
+{"id": "tinanta-0143", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śayāthām\"}", "correct": true}
+{"id": "tinanta-0144", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"terima\"}", "correct": true}
+{"id": "tinanta-0145", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vidanti\"}", "correct": true}
+{"id": "tinanta-0146", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kramiṣyati\"}", "correct": true}
+{"id": "tinanta-0147", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"apātām\"}", "correct": true}
+{"id": "tinanta-0148", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"caretam\"}", "correct": true}
+{"id": "tinanta-0149", "task": "tinanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vakṣyāmi\"}", "correct": true}
+{"id": "subanta-0150", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kṣetra\"}", "correct": true}
+{"id": "subanta-0151", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"lokam\"}", "correct": true}
+{"id": "subanta-0152", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kṛtsnābhyām\"}", "correct": true}
+{"id": "subanta-0153", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"amṛtebhyaḥ\"}", "correct": true}
+{"id": "subanta-0154", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kāmayoḥ\"}", "correct": true}
+{"id": "subanta-0155", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"buddheḥ\"}", "correct": true}
+{"id": "subanta-0156", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhīṣmābhyām\"}", "correct": true}
+{"id": "subanta-0157", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pārthāt\"}", "correct": true}
+{"id": "subanta-0158", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"balābhyām\"}", "correct": true}
+{"id": "subanta-0159", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jagatau\"}", "correct": true}
+{"id": "subanta-0160", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"viśvāḥ\"}", "correct": true}
+{"id": "subanta-0161", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kālebhyaḥ\"}", "correct": true}
+{"id": "subanta-0162", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dhanaṃjayebhyaḥ\"}", "correct": true}
+{"id": "subanta-0163", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"nāśam\"}", "correct": true}
+{"id": "subanta-0164", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vratānām\"}", "correct": true}
+{"id": "subanta-0165", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pārthayoḥ\"}", "correct": true}
+{"id": "subanta-0166", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"antābhyām\"}", "correct": true}
+{"id": "subanta-0167", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"akṣaraḥ\"}", "correct": true}
+{"id": "subanta-0168", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"saṃjayasya\"}", "correct": true}
+{"id": "subanta-0169", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhayāya\"}", "correct": true}
+{"id": "subanta-0170", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"manobhyām\"}", "correct": true}
+{"id": "subanta-0171", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dhārtarāṣṭrayoḥ\"}", "correct": true}
+{"id": "subanta-0172", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"antebhyaḥ\"}", "correct": true}
+{"id": "subanta-0173", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pāṇḍavāḥ\"}", "correct": true}
+{"id": "subanta-0174", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yuddhāḥ\"}", "correct": true}
+{"id": "subanta-0175", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śarīrābhyām\"}", "correct": true}
+{"id": "subanta-0176", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"krodheṣu\"}", "correct": true}
+{"id": "subanta-0177", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pāṇḍavayoḥ\"}", "correct": true}
+{"id": "subanta-0178", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vāyūnām\"}", "correct": true}
+{"id": "subanta-0179", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"brahmāṇi\"}", "correct": true}
+{"id": "subanta-0180", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kṣetrasya\"}", "correct": true}
+{"id": "subanta-0181", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"divyayoḥ\"}", "correct": true}
+{"id": "subanta-0182", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jñānena\"}", "correct": true}
+{"id": "subanta-0183", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"nāśau\"}", "correct": true}
+{"id": "subanta-0184", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"muneḥ\"}", "correct": true}
+{"id": "subanta-0185", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"priyāya\"}", "correct": true}
+{"id": "subanta-0186", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śaṅkhān\"}", "correct": true}
+{"id": "subanta-0187", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rajobhyaḥ\"}", "correct": true}
+{"id": "subanta-0188", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vāyvoḥ\"}", "correct": true}
+{"id": "subanta-0189", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"phalena\"}", "correct": true}
+{"id": "subanta-0190", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"mahātmānaḥ\"}", "correct": true}
+{"id": "subanta-0192", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"putreṇa\"}", "correct": true}
+{"id": "subanta-0193", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kāmān\"}", "correct": true}
+{"id": "subanta-0194", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rājasaḥ\"}", "correct": true}
+{"id": "subanta-0195", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"puruṣe\"}", "correct": true}
+{"id": "subanta-0196", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kartṛbhyām\"}", "correct": true}
+{"id": "subanta-0197", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"narayoḥ\"}", "correct": true}
+{"id": "subanta-0198", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"hetubhyaḥ\"}", "correct": true}
+{"id": "subanta-0200", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tyāgāḥ\"}", "correct": true}
+{"id": "subanta-0201", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yajñe\"}", "correct": true}
+{"id": "subanta-0202", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pārthau\"}", "correct": true}
+{"id": "subanta-0203", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"tamobhyaḥ\"}", "correct": true}
+{"id": "subanta-0204", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"hetavaḥ\"}", "correct": true}
+{"id": "subanta-0205", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"svaiḥ\"}", "correct": true}
+{"id": "subanta-0206", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sukheṣu\"}", "correct": true}
+{"id": "subanta-0207", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"devasya\"}", "correct": true}
+{"id": "subanta-0208", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pitṛṣu\"}", "correct": true}
+{"id": "subanta-0209", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"yoginaḥ\"}", "correct": true}
+{"id": "subanta-0210", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"brahmabhyām\"}", "correct": true}
+{"id": "subanta-0211", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"acalena\"}", "correct": true}
+{"id": "subanta-0212", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"namāṃsi\"}", "correct": true}
+{"id": "subanta-0213", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"kāla\"}", "correct": true}
+{"id": "subanta-0214", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dharmaiḥ\"}", "correct": true}
+{"id": "subanta-0216", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"priye\"}", "correct": true}
+{"id": "subanta-0217", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"vāyo\"}", "correct": true}
+{"id": "subanta-0218", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"pravṛttīḥ\"}", "correct": true}
+{"id": "subanta-0219", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"buddheḥ\"}", "correct": true}
+{"id": "subanta-0220", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ajau\"}", "correct": true}
+{"id": "subanta-0221", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"padānām\"}", "correct": true}
+{"id": "subanta-0222", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dvārābhyām\"}", "correct": true}
+{"id": "subanta-0223", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"janāya\"}", "correct": true}
+{"id": "subanta-0224", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"naraiḥ\"}", "correct": true}
+{"id": "subanta-0225", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sve\"}", "correct": true}
+{"id": "subanta-0226", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rūpam\"}", "correct": true}
+{"id": "subanta-0228", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"trividhābhyaḥ\"}", "correct": true}
+{"id": "subanta-0229", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"madhyābhyaḥ\"}", "correct": true}
+{"id": "subanta-0230", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rūpe\"}", "correct": true}
+{"id": "subanta-0231", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhavati\"}", "correct": true}
+{"id": "subanta-0232", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ādim\"}", "correct": true}
+{"id": "subanta-0233", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"nāśasya\"}", "correct": true}
+{"id": "subanta-0234", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"ṛṣeḥ\"}", "correct": true}
+{"id": "subanta-0236", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhūtasya\"}", "correct": true}
+{"id": "subanta-0238", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"jñāninyāḥ\"}", "correct": true}
+{"id": "subanta-0239", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sukhāya\"}", "correct": true}
+{"id": "subanta-0240", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"dhṛtibhyām\"}", "correct": true}
+{"id": "subanta-0241", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"śaṅkhān\"}", "correct": true}
+{"id": "subanta-0242", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sattvāni\"}", "correct": true}
+{"id": "subanta-0243", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"bhaktāt\"}", "correct": true}
+{"id": "subanta-0244", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"divyāḥ\"}", "correct": true}
+{"id": "subanta-0245", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"gatibhyaḥ\"}", "correct": true}
+{"id": "subanta-0246", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"rājñā\"}", "correct": true}
+{"id": "subanta-0247", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"sakhyā\"}", "correct": true}
+{"id": "subanta-0248", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"saṃśayayoḥ\"}", "correct": true}
+{"id": "subanta-0249", "task": "subanta", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"form\": \"avyaktayoḥ\"}", "correct": true}
+{"id": "analyze-0250", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0251", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0252", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0253", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0254", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0255", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0256", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0257", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0258", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0259", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0260", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0261", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0262", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0263", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0264", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0265", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0266", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0267", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0268", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0269", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0270", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0271", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0272", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0273", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0274", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0275", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0276", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0277", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0278", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0279", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0280", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0281", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0282", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0283", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0284", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0285", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0286", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0287", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0288", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0289", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0290", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0291", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0292", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0293", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0294", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0295", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0296", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0297", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0298", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0299", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0300", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0301", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0302", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0303", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0304", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0305", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0306", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0307", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0308", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0309", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0310", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0311", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0312", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0313", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0314", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0315", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0316", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0317", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0318", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0319", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0320", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0321", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0322", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0323", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0324", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0325", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0326", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0327", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0328", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0329", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0330", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0331", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0332", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0333", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0334", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lan\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0335", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0336", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0337", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0338", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0339", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"uttama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0340", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lot\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0341", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0342", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"madhyama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0343", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0344", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lrt\", \"purusha\": \"prathama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0345", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lun\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0346", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"uttama\", \"vacana\": \"eka\"}", "correct": true}
+{"id": "analyze-0347", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"vidhilin\", \"purusha\": \"uttama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "analyze-0348", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lat\", \"purusha\": \"prathama\", \"vacana\": \"dvi\"}", "correct": true}
+{"id": "analyze-0349", "task": "analyze", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lakara\": \"lit\", \"purusha\": \"madhyama\", \"vacana\": \"bahu\"}", "correct": true}
+{"id": "gita-0351", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"loka\", \"pos\": \"noun\", \"case\": \"loc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0352", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"prabhu\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0353", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ātmavat\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0354", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ātman\", \"pos\": \"noun\", \"case\": \"gen\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0355", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"manas\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0356", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"mad\", \"pos\": \"pronoun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": null, \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0357", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"bāhu\", \"pos\": \"noun\", \"case\": \"voc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0358", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"sūtra\", \"pos\": \"noun\", \"case\": \"loc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0359", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"dhīmat\", \"pos\": \"adjective\", \"case\": \"gen\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0360", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"saubhadra\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0361", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"mad\", \"pos\": \"pronoun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": null, \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0363", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yādas\", \"pos\": \"noun\", \"case\": \"gen\", \"number\": \"pl\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0364", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"anya\", \"pos\": \"pronoun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0365", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kṣetra\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0366", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vid\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"imperative\", \"person\": \"2\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0367", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"prahṛṣ\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"optative\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0368", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yad\", \"pos\": \"pronoun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0369", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kirīṭin\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0370", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"jñāna\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0371", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vid\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"perfect\", \"person\": \"2\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0372", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kara\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"du\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0373", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"veda\", \"pos\": \"noun\", \"case\": \"ins\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0374", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vid\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0375", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kriyā\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"f\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0376", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yuṣmad\", \"pos\": \"pronoun\", \"case\": \"dat\", \"number\": \"sg\", \"gender\": null, \"tense_mood\": null, \"person\": \"2\", \"voice\": null}", "correct": true}
+{"id": "gita-0378", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"keśava\", \"pos\": \"noun\", \"case\": \"voc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0379", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"dūra\", \"pos\": \"adjective\", \"case\": \"ins\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0380", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yad\", \"pos\": \"pronoun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0381", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vega\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0382", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"hita\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0383", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kṛṣṇa\", \"pos\": \"noun\", \"case\": \"voc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0384", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tāmasa\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0385", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kavi\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0386", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"bhagavat\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0387", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"pāṇḍava\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0388", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"pāṇḍava\", \"pos\": \"noun\", \"case\": \"voc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0389", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"purujit\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0390", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"manīṣin\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0391", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yogin\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0392", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"bhaya\", \"pos\": \"noun\", \"case\": \"abl\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0393", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tad\", \"pos\": \"pronoun\", \"case\": \"gen\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0394", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"dṛś\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"1\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0396", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"akṣara\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0397", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"aś\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0398", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"bhū\", \"pos\": \"verb\", \"case\": null, \"number\": \"du\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0399", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ātman\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0400", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"jñāna\", \"pos\": \"noun\", \"case\": \"gen\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0401", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"duḥkha\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"du\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0402", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vac\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"perfect\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0404", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"iṣ\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"2\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0405", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vepathu\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0406", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"dviṣ\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0407", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ātman\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0408", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"mad\", \"pos\": \"pronoun\", \"case\": \"ins\", \"number\": \"sg\", \"gender\": null, \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0409", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tad\", \"pos\": \"pronoun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0410", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"mukha\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0411", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"nivṛtti\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"f\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0413", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"jana\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0414", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yad\", \"pos\": \"pronoun\", \"case\": \"ins\", \"number\": \"sg\", \"gender\": \"f\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0415", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tad\", \"pos\": \"pronoun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0416", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"sva\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0417", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"pravṛtti\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"f\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0419", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"yaj\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"passive\"}", "correct": true}
+{"id": "gita-0420", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"varṇa\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0421", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kusumākara\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0422", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"śrotra\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0423", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vināśa\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0424", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"bhūta\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"pl\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0425", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tuṣ\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0426", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"tattva\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0427", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"para\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0428", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"arpaṇa\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0429", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"avyavasāyin\", \"pos\": \"adjective\", \"case\": \"gen\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0430", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"vividha\", \"pos\": \"adjective\", \"case\": \"ins\", \"number\": \"pl\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0431", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"kaunteya\", \"pos\": \"noun\", \"case\": \"voc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0432", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ātman\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0433", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"sattva\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0434", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"guhya\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0435", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ādi\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0436", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"narādhipa\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0437", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"ayukta\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0438", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"anātman\", \"pos\": \"noun\", \"case\": \"gen\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0439", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"śraddhā\", \"pos\": \"noun\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"f\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0440", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"as\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0441", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"nirguṇa\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0442", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"upapad\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0443", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"avyakta\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0444", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"gandharva\", \"pos\": \"noun\", \"case\": \"gen\", \"number\": \"pl\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0445", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"darpa\", \"pos\": \"noun\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"m\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0446", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"garīyas\", \"pos\": \"adjective\", \"case\": \"nom\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0447", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"labh\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"present\", \"person\": \"3\", \"voice\": \"active\"}", "correct": true}
+{"id": "gita-0448", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"pūrvaka\", \"pos\": \"adjective\", \"case\": \"acc\", \"number\": \"sg\", \"gender\": \"n\", \"tense_mood\": null, \"person\": null, \"voice\": null}", "correct": true}
+{"id": "gita-0449", "task": "gita", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"lemma\": \"pravac\", \"pos\": \"verb\", \"case\": null, \"number\": \"sg\", \"gender\": null, \"tense_mood\": \"future\", \"person\": \"1\", \"voice\": \"active\"}", "correct": true}
+{"id": "meter-0450", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LLGGLGGLLGLLLGLG\"}", "correct": true}
+{"id": "meter-0451", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGLLGGLGGGGLGLG\"}", "correct": true}
+{"id": "meter-0452", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGGGGGGLGLL\"}", "correct": true}
+{"id": "meter-0453", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLGLGLLGLL\"}", "correct": true}
+{"id": "meter-0454", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LLGLLGGLGGGLLGLG\"}", "correct": true}
+{"id": "meter-0455", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGGLGGLGLGGLGLL\"}", "correct": true}
+{"id": "meter-0456", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGLGLGGLGLG\"}", "correct": true}
+{"id": "meter-0457", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LLGGLGGLGGGGLGLG\"}", "correct": true}
+{"id": "meter-0458", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLGLGGGGLGLLGLG\"}", "correct": true}
+{"id": "meter-0459", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGLLGGLLGGLLGLG\"}", "correct": true}
+{"id": "meter-0460", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLLGGGLGGGGLGLL\"}", "correct": false}
+{"id": "meter-0461", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LLGLLGGGGGGLLGLG\"}", "correct": true}
+{"id": "meter-0462", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGGGLGGLGLG\"}", "correct": true}
+{"id": "meter-0463", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGLLLGGLGLG\"}", "correct": true}
+{"id": "meter-0464", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLGLGGGLGGLLGLG\"}", "correct": true}
+{"id": "meter-0465", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LLGLLGGLLLGLLGLG\"}", "correct": true}
+{"id": "meter-0466", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGLLGGGGGGLLGLG\"}", "correct": true}
+{"id": "meter-0467", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGGGGLLLGLG\"}", "correct": true}
+{"id": "meter-0468", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGGLGGLGLGLLGLL\"}", "correct": true}
+{"id": "meter-0469", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"GLGLLGGGGLGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0470", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLLLGGGGGGGLGLG\"}", "correct": true}
+{"id": "meter-0471", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLLGGLLGLG\"}", "correct": true}
+{"id": "meter-0472", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"LLGLLGGLGGGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0473", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"GLGGLGGGLGGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0474", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLLLGLLGLL\"}", "correct": true}
+{"id": "meter-0475", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGLLGGLLGLG\"}", "correct": true}
+{"id": "meter-0476", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"GLGGLGGGGGGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0477", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLLLGGGGLGGLGLG\"}", "correct": true}
+{"id": "meter-0478", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGLLGGGGGLLLGLG\"}", "correct": true}
+{"id": "meter-0479", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGLLLGGLGLG\"}", "correct": true}
+{"id": "meter-0480", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGGLGGGLGLLLGLG\"}", "correct": true}
+{"id": "meter-0481", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLGLGGLGLG\"}", "correct": true}
+{"id": "meter-0482", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GLGLLGGGGGGGLGLG\"}", "correct": true}
+{"id": "meter-0483", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLGLGGLLGGLLGLG\"}", "correct": true}
+{"id": "meter-0484", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"GGGGLGGGGLGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0485", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGGGGGGLGLG\"}", "correct": true}
+{"id": "meter-0486", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLGLGGGLGLLLGLG\"}", "correct": true}
+{"id": "meter-0487", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLLLGGGLGLLLGLG\"}", "correct": true}
+{"id": "meter-0488", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGLLLGGGGLGGLGLG\"}", "correct": true}
+{"id": "meter-0489", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGGLGGGGGGGLGLG\"}", "correct": true}
+{"id": "meter-0490", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGGLGGGGGGGLGLG\"}", "correct": true}
+{"id": "meter-0491", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "```json\n{\"pattern\": \"GGGGLGGGGGGGLGLG\"}\n```", "correct": true}
+{"id": "meter-0492", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLGLGLLGLG\"}", "correct": true}
+{"id": "meter-0493", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"LGGLLGGLLGLLLGLG\"}", "correct": true}
+{"id": "meter-0494", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLGGLLGLGGGGLGGLLGLGG\"}", "correct": true}
+{"id": "meter-0495", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLLLGGLGLGLLGLG\"}", "correct": true}
+{"id": "meter-0496", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLLLGGGGLGGLGLL\"}", "correct": true}
+{"id": "meter-0497", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGGLGGLGGGLLGLG\"}", "correct": true}
+{"id": "meter-0498", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGGLLGGLGGLLLGLL\"}", "correct": true}
+{"id": "meter-0499", "task": "meter", "model": "anthropic/claude-opus-5.5", "provider": "openrouter", "output": "{\"pattern\": \"GGLGGLLGLGGLGLGGLLGLGL\"}", "correct": true}

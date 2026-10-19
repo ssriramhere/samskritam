@@ -287,6 +287,7 @@ pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10p
         <p class="sub muted">How to read it: with 487 questions, an overall score carries a margin of roughly ±2 points, and a task with 50 questions roughly ±12. Gaps smaller than that, such as the order of the four models between 95% and 97%, are not meaningful. Each model was run once, at its provider's default settings.</p>
         <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
       </div>
+      <p class="sub muted" id="raw" hidden>Every model's answers, graded question by question: <span id="rawlinks"></span>.</p>
       <p class="pending" id="lb-pending">The first results will appear here once the runs are complete and the wrong answers have been checked by hand for grading mistakes.</p>
     </section>
 
@@ -372,6 +373,7 @@ python -c "import vidyut; vidyut.download_data('vidyut-data')"
 export OPENROUTER_API_KEY=...
 python bench/run.py --provider openrouter --model &lt;vendor/model&gt; --rpm 18
 python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
+        <p>Each model's raw answers are published too, one line per question with the grade, in <a href="https://github.com/ssriramhere/samskritam/tree/main/bench/results-v0" target="_blank" rel="noopener"><code>bench/results-v0</code></a>, so the scores can be re-graded and the hand review checked.</p>
         <p class="muted">Items and results are licensed CC BY 4.0. Please credit Samskritam.ai, the Digital Corpus of Sanskrit (Oliver Hellwig) and Vidyut (Ambuda).</p>
       </div>
     </section>
@@ -394,6 +396,13 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
       `<tr><td>${esc(r.model)}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
     $("lb-note").textContent = `${lb.items} questions, graded automatically against rule-derived answers. Updated ${lb.updated}.`;
     $("lb-wrap").hidden = false; $("lb-pending").hidden = true;
+  }).catch(() => {});
+  const NAMES = { "anthropic/claude-opus-5.5": "Claude Opus 5.5", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5",
+    "google/gemini-4-argon": "Gemini 4 Argon", "google/gemini-3.8-flash": "Gemini 3.8 Flash", "openai/gpt-6-sol": "GPT-6 Sol" };
+  fetch("/data/results-v0/index.json").then(r => r.ok ? r.json() : null).then(list => {
+    if (!list || !list.length) return;
+    $("rawlinks").innerHTML = list.map(x => `<a href="/data/results-v0/${encodeURIComponent(x.file)}" download>${esc(NAMES[x.model] || x.model)}</a>`).join(", ");
+    $("raw").hidden = false;
   }).catch(() => {});
 })();
 </script>
