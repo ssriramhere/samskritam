@@ -471,6 +471,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       html += `<details class="deriv"${window.matchMedia("(min-width: 861px)").matches ? " open" : ""}><summary>Derivation by Pāṇini's sūtras, ${d.s.length} steps</summary>
         <div class="steps"><table><tbody>${d.s.map(s => `<tr><td class="code">${esc(s[0])}</td><td class="text">${esc(s[1] || (/^\d\d\.\d{4}$/.test(s[0]) ? "dhātupāṭha entry" : ""))}</td><td class="res"><span class="rd">${esc(s[3] || "")}</span><span class="ri">${esc(s[2])}</span></td></tr>`).join("")}</tbody></table></div></details>`;
     } else if (w.x) html += `<div class="hint">Loading derivation…</div>`;
+    else if (w.s === "agree") {
+      html += `<div class="hint">${/nipāta|avyaya/.test(w.sa)
+        ? "An indeclinable, so there is no inflection to derive."
+        : "No derivation shown: either the word is built from a root whose identity the two sources do not settle (common for nouns like yoga from √yuj), or the rule engine's derivation does not end in exactly this form."}</div>`;
+    }
     const det = $("detail"); det.innerHTML = html; det.hidden = false;
   }
 

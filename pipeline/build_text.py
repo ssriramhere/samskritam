@@ -47,7 +47,10 @@ def analyse(half, stats, derivations):
                 tok["engine_alternatives"] = r["alternatives"]
             if r["status"] == "agree":
                 ev = r["entry"]
-                if t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta")):
+                verbal = t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta"))
+                nominal = (t["upos"] in ("NOUN", "ADJ", "PRON", "NUM") and ev["kind"] == "subanta"
+                           and not ev.get("krdanta") and not ev.get("avyaya"))
+                if verbal or nominal:
                     k = str(ev["raw"]) + "|" + verify.canon(verify.to_slp1(t["form"]))
                     if k not in derivations:
                         d = verify.derivation(ev, t["form"])

@@ -123,7 +123,12 @@ def main():
                         # participles, absolutives): their lemma is the root, so
                         # the right root is known. A noun like kṛt or a particle
                         # like yat can match a homonymous root (√kṛt, √yat).
-                        if t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta")):
+                        verbal = t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta"))
+                        # Nouns, adjectives and pronouns from a plain stem: the
+                        # stem is the annotation's lemma, so it is known too.
+                        nominal = (t["upos"] in ("NOUN", "ADJ", "PRON", "NUM") and ev["kind"] == "subanta"
+                                   and not ev.get("krdanta") and not ev.get("avyaya"))
+                        if verbal or nominal:
                             # One derivation per (entry, word): the rules can
                             # allow several forms, and the word picks one.
                             k = deriv_key(ev) + "|" + verify.canon(verify.to_slp1(t["form"]))
