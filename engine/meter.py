@@ -84,7 +84,10 @@ def identify(half_lines: list[str]) -> dict:
                 "syllables": counts, "check": "count-only"}
     m = chandas().classify("\n".join(to_slp1(h).replace("'", "")
                                      for h in half_lines))
-    name = getattr(m.padya, "name", None) if m.padya else None
+    name = m.padya if isinstance(m.padya, str) else getattr(m.padya, "name", None)
+    if name:
+        from .verify import to_iast
+        name = to_iast(name)
     return {"name": name or "unidentified", "variant": None,
             "syllables": counts, "check": "vidyut" if name else "none"}
 
