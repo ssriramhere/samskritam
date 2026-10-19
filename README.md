@@ -20,7 +20,7 @@ Sanskrit with its grammar shown.
 | `bench/` | Benchmark generator, runner, grader; items in `bench/data/v0.jsonl` |
 | `web/` | The static site served at samskritam.ai |
 | `api/waitlist.js` | Sign-up endpoint (Vercel function, Upstash Redis) |
-| `api/read.py` | Verse reader: an AI model analyses a pasted verse, `engine/reader.py` checks each word (needs `OPENROUTER_API_KEY` and Upstash; optional `READER_MODEL`, `READER_DAILY_CAP`) |
+| `api/read.py` | Verse reader: an AI model analyses a pasted verse, `engine/reader.py` checks each word (needs `OPENROUTER_API_KEY` and Upstash; optional `READER_MODEL` (default), `READER_MODELS` (the models people can pick), `READER_DAILY_CAP`) |
 | `brand/` | Logo source and build script |
 
 ## Build the data
@@ -33,6 +33,19 @@ python pipeline/build_text.py     # data/build/meghaduta*.json (and any text in 
 python pipeline/build_web.py      # web/data/*.json
 python pipeline/audit_gita.py     # agreement report
 ```
+
+## AI translations
+
+English translations for the texts in the Library come from an AI model, given
+each verse with its word-by-word analysis. The site labels them as the model's
+and unchecked.
+
+```bash
+export OPENROUTER_API_KEY=...
+python pipeline/translate.py gita meghaduta     # web/data/<slug>-translations.json; resumable
+```
+
+Default model `anthropic/claude-opus-5.5`; change with `--model`.
 
 ## Run the benchmark
 

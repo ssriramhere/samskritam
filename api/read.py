@@ -6,7 +6,9 @@ calls are limited per network and per day, because each one costs a model call.
 
 Env:
   OPENROUTER_API_KEY                         required
-  READER_MODEL                               default google/gemini-3.8-flash
+  READER_MODEL                               default model, google/gemini-3.8-flash
+  READER_MODELS                              comma-separated models people may pick;
+                                             default: the five models on the leaderboard
   READER_DAILY_CAP                           default 500 model calls a day
   UPSTASH_REDIS_REST_URL / _TOKEN            required (or KV_REST_API_URL / _TOKEN)
 """
@@ -32,6 +34,11 @@ fetch_data.ensure(os.environ["VIDYUT_DATA"])
 from engine import reader  # noqa: E402
 
 MODEL = os.environ.get("READER_MODEL", "google/gemini-3.8-flash")
+MODELS = [m.strip() for m in os.environ.get("READER_MODELS", ",".join([
+    "google/gemini-3.8-flash", "anthropic/claude-opus-5.5", "anthropic/claude-sonnet-5.5",
+    "google/gemini-4-argon", "openai/gpt-6-sol"])).split(",") if m.strip()]
+if MODEL not in MODELS:
+    MODELS.insert(0, MODEL)
 DAILY_CAP = int(os.environ.get("READER_DAILY_CAP", "500"))
 PER_IP_PER_HOUR = 20
 CACHE_DAYS = 30
@@ -56,13 +63,14 @@ def redis(*commands):
     return [x.get("result") for x in out]
 
 
-def ask_model(prompt: str) -> str:
-    body = {"model": MODEL, "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0, "max_tokens": 6000,
-            "response_format": {"type": "json_object"}}
+def ask_model(prompt: str, model: str = MODEL) -> str:
+    body = {"model": model, "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": 12000}
+    # No temperature or response_format: some models on the list reject them,
+    # and reader.parse_model_json already copes with fenced or wrapped JSON.
     r = _post("https://openrouter.ai/api/v1/chat/completions", body,
               {"Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
-               "HTTP-Referer": "https://samskritam.ai", "X-Title": "Samskritam.ai reader"}, 50)
+               "HTTP-Referer": "https://samskritam.ai", "X-Title": "Samskritam.ai reader"}, 52)
     return r["choices"][0]["message"]["content"] or ""
 
 
@@ -77,9 +85,8 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_GET(self):
-        self.send_response(405)
-        self.send_header("Allow", "POST")
-        self.end_headers()
+        # The models a reader may choose from; the page labels them from the leaderboard.
+        return self._send(200, {"ok": True, "models": MODELS, "default": MODEL})
 
     def do_POST(self):
         missing = [name for name, ok in (("database (Upstash)", REDIS_URL and REDIS_TOKEN),
@@ -92,6 +99,9 @@ class handler(BaseHTTPRequestHandler):
             n = int(self.headers.get("Content-Length") or 0)
             body = json.loads(self.rfile.read(min(n, 8000)) or b"{}")
             raw = str(body.get("text") or "")
+            model = str(body.get("model") or MODEL)
+            if model not in MODELS:
+                return self._send(400, {"ok": False, "error": "That model isn't available here."})
             lines = reader.clean_input(raw)
         except reader.ReaderError as e:
             return self._send(400, {"ok": False, "error": str(e)})
@@ -99,7 +109,7 @@ class handler(BaseHTTPRequestHandler):
             return self._send(400, {"ok": False, "error": "Send JSON like {\"text\": \"...\"}."})
 
         key = "reader:" + VERSION + ":" + hashlib.sha256(
-            (MODEL + "\n" + "\n".join(lines)).encode()).hexdigest()[:32]
+            (model + "\n" + "\n".join(lines)).encode()).hexdigest()[:32]
         try:
             (cached,) = redis(["GET", key])
             if cached:
@@ -116,12 +126,12 @@ class handler(BaseHTTPRequestHandler):
             return self._send(429, {"ok": False, "error": "The reader has reached today's limit. Try again tomorrow, or read the Gītā and Meghadūta on the home page."})
 
         try:
-            result = reader.read(raw, ask_model)
+            result = reader.read(raw, lambda p: ask_model(p, model))
         except reader.ReaderError as e:
             return self._send(422, {"ok": False, "error": str(e)})
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError):
             return self._send(502, {"ok": False, "error": "The model did not answer. Try again."})
-        result["model"] = MODEL
+        result["model"] = model
         try:
             redis(["SET", key, json.dumps(result, ensure_ascii=False), "EX", CACHE_DAYS * 86400])
         except Exception:
