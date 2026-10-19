@@ -1,6 +1,9 @@
 """Build the Samskritam.ai logo files from font outlines.
 
-Concept: the anusvāra bindu over सं is the same dot as the one in ".ai".
+Concept: कृ, from √kṛ "to make". It is the syllable that saṃskṛta ("well
+made", Sanskrit) and kṛtrima buddhi ("made intelligence", AI) share. The
+vowel sign ṛ, drawn in turmeric, matches the turmeric dot in ".ai".
+An alternate mark, सं with its bindu as the dot, is kept as mark-sam.svg.
 Fonts (SIL OFL 1.1): Tiro Devanagari Sanskrit for the mark, Hind SemiBold
 for the wordmark. Outlines are converted to SVG paths, so no font loads.
 
@@ -90,6 +93,33 @@ def mark_svg(tiro, tile=True, size=512, ink=PAPER, bg=INDIGO, dot=TURMERIC,
             f'role="img" aria-label="Samskritam.ai">{"".join(body)}</svg>'), r / size
 
 
+ACCENT_GLYPHS = {"dSignVocalicR"}
+
+
+def kr_svg(tiro, tile=True, size=512, ink=PAPER, bg=INDIGO, dot=TURMERIC,
+           css=False):
+    """कृ: the consonant in ink, the ṛ vowel sign in the accent colour."""
+    font, glyphs, _ = shape(tiro, "कृ")
+    boxes = [bounds_of(font, *g) for g in glyphs]
+    x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes)
+    x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
+    pad = 0.16 if tile else 0.03
+    scale = size * (1 - 2 * pad) / max(x1 - x0, y1 - y0)
+    ox = (size - (x1 - x0) * scale) / 2 - x0 * scale
+    oy = (size + (y1 - y0) * scale) / 2 + y0 * scale  # baseline
+    base = [g for g in glyphs if g[0] not in ACCENT_GLYPHS]
+    acc = [g for g in glyphs if g[0] in ACCENT_GLYPHS]
+    fill_ink = 'class="ink"' if css else f'fill="{ink}"'
+    fill_dot = 'class="bindu"' if css else f'fill="{dot}"'
+    body = []
+    if tile:
+        body.append(f'<rect width="{size}" height="{size}" rx="{size * .22:.1f}" fill="{bg}"/>')
+    body.append(f'<path {fill_ink} d="{path_of(font, base, scale, ox, oy)}"/>')
+    body.append(f'<path {fill_dot} d="{path_of(font, acc, scale, ox, oy)}"/>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}" '
+            f'role="img" aria-label="Samskritam.ai">{"".join(body)}</svg>')
+
+
 def wordmark_svg(tiro, hind, ink=INK, accent=INDIGO, dot=TURMERIC, css=False):
     """Horizontal logo: mark (no tile) + 'Samskritam' + bindu + 'ai'."""
     h = 120  # cap-height box the wordmark is fitted to
@@ -98,7 +128,8 @@ def wordmark_svg(tiro, hind, ink=INK, accent=INDIGO, dot=TURMERIC, css=False):
     upem = hfont["head"].unitsPerEm
     scale = h / (upem * 0.70)
     base = 150
-    mark, rel = mark_svg(tiro, tile=False, size=200, css=css, ink=accent, dot=dot)
+    _, rel = mark_svg(tiro, tile=False, size=200)  # keeps the dot size
+    mark = kr_svg(tiro, tile=False, size=200, css=css, ink=accent, dot=dot)
     inner = mark.split(">", 1)[1].rsplit("</svg>", 1)[0]
     x_text = 200 + 34
     d_sam = path_of(hfont, sam, scale, x_text, base)
@@ -109,8 +140,9 @@ def wordmark_svg(tiro, hind, ink=INK, accent=INDIGO, dot=TURMERIC, css=False):
     width = x_ai + ai_adv * scale + 6
     fill_ink = 'class="word"' if css else f'fill="{ink}"'
     fill_dot = 'class="bindu"' if css else f'fill="{dot}"'
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width:.0f} 200" '
-            f'role="img" aria-label="Samskritam.ai">{inner}'
+    # Sit the consonant on the text baseline and let the ṛ hook descend.
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width:.0f} 212" '
+            f'role="img" aria-label="Samskritam.ai"><g transform="translate(0 13)">{inner}</g>'
             f'<path {fill_ink} d="{d_sam}"/>'
             f'<circle {fill_dot} cx="{dot_cx:.1f}" cy="{base - dot_r:.1f}" r="{dot_r:.1f}"/>'
             f'<path {fill_ink} d="{d_ai}"/></svg>')
@@ -121,9 +153,10 @@ def main():
     out = os.path.join(ROOT, "brand")
     web = os.path.join(ROOT, "web")
     files = {
-        os.path.join(out, "mark.svg"): mark_svg(tiro)[0],
-        os.path.join(web, "favicon.svg"): mark_svg(tiro)[0],
-        os.path.join(out, "mark-plain.svg"): mark_svg(tiro, tile=False, ink=INDIGO)[0],
+        os.path.join(out, "mark.svg"): kr_svg(tiro),
+        os.path.join(web, "favicon.svg"): kr_svg(tiro),
+        os.path.join(out, "mark-plain.svg"): kr_svg(tiro, tile=False, ink=INDIGO),
+        os.path.join(out, "mark-sam.svg"): mark_svg(tiro)[0],
         os.path.join(out, "logo.svg"): wordmark_svg(tiro, hind),
         os.path.join(out, "logo-dark.svg"): wordmark_svg(tiro, hind, ink=INK_D, accent=INDIGO_D),
         os.path.join(out, "logo-css.svg"): wordmark_svg(tiro, hind, css=True),
