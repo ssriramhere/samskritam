@@ -111,7 +111,10 @@ def main():
         checkable = st["agree"] + st["form-known"] + st["unknown"]
         meta = src["meta"]
         der = json.load(open(os.path.join(ROOT, "data/build", deriv_file), encoding="utf-8"))
-        slim = {k: {"f": v["form"], "s": [[s["sutra"], s["text"], s["result"]] for s in v["steps"]]}
+        def dev_step(slp):
+            return transliterate(slp.replace("\\", "").replace("^", ""), Scheme.Slp1, Scheme.Devanagari)
+        slim = {k: {"f": v["form"], "s": [[s["sutra"], s["text"], s["result"], dev_step(s["result_slp"])]
+                                          for s in v["steps"]]}
                 for k, v in der.items()}
         json.dump({"verses": verses},
                   open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8"),

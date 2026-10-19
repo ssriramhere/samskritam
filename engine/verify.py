@@ -286,21 +286,37 @@ def describe(v: dict) -> str:
     return f"{base} {v['vibhakti'].name} {v['vacana'].name} {v['linga'].name}"
 
 
-def derivation(entry_view: dict, max_variants: int = 1) -> list[dict]:
-    """Sūtra-by-sūtra derivation for a verified entry. Returns the steps of
-    the variant whose final text equals the entry's form, when available."""
+def derivation(entry_view: dict, form_iast: str | None = None) -> list[dict]:
+    """Sūtra-by-sūtra derivation for a verified entry.
+
+    Vidyut returns every prakriyā the rules allow (for example abravīt and
+    abrūta, paśya and paśyatāt). When form_iast is given, only the variant
+    that ends in that word is returned; if none does, the result is empty
+    rather than a derivation of some other form."""
     e = entry_view["raw"]
     try:
         args = e.to_prakriya_args()
         ps = vyakarana().derive(args)
     except Exception as exc:  # engine gap; report, don't crash
         return [{"error": str(exc)}]
+    if form_iast is not None:
+        want = {canon(k) for k in kosha_keys(form_iast)}
+        ps = [p for p in ps if canon(p.text) in want]
     out = []
-    for p in ps[:max_variants or None]:
+    for p in ps[:1]:
         steps = []
-        for s in p.history:
-            code = s.code
-            steps.append({"sutra": code, "text": to_iast(sutras().get(code, "")),
-                          "result": to_iast("".join(s.result))})
+        for s_ in p.history:
+            raw = "".join(s_.result)
+            steps.append({"sutra": s_.code, "text": to_iast(sutras().get(s_.code, "")),
+                          "result_slp": raw, "result": display_iast(raw)})
         out.append({"form": to_iast(p.text), "steps": steps})
     return out
+
+
+def display_iast(slp: str) -> str:
+    """IAST for an intermediate prakriyā form. Accent marks (\\ and ^ in SLP1)
+    are dropped, and the anunāsika marker on an it-vowel (~) is shown with a
+    combining candrabindu on the vowel, the convention for upadeśa forms."""
+    clean = slp.replace("\\", "").replace("^", "")
+    out = to_iast(clean.replace("~", "\x00"))
+    return out.replace("\x00", "\u0310")

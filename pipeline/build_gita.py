@@ -119,10 +119,16 @@ def main():
                         tok["engine_alternatives"] = r["alternatives"]
                     if r["status"] == "agree":
                         ev = r["entry"]
-                        if ev["kind"] == "tinanta" or ev.get("krdanta"):
-                            k = deriv_key(ev)
+                        # Only words the annotation tags as verbs (finite forms,
+                        # participles, absolutives): their lemma is the root, so
+                        # the right root is known. A noun like kṛt or a particle
+                        # like yat can match a homonymous root (√kṛt, √yat).
+                        if t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta")):
+                            # One derivation per (entry, word): the rules can
+                            # allow several forms, and the word picks one.
+                            k = deriv_key(ev) + "|" + verify.canon(verify.to_slp1(t["form"]))
                             if k not in derivations:
-                                d = verify.derivation(ev)
+                                d = verify.derivation(ev, t["form"])
                                 derivations[k] = d[0] if d and "steps" in d[0] else None
                             if derivations[k]:
                                 tok["derivation"] = k

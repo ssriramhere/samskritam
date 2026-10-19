@@ -47,10 +47,10 @@ def analyse(half, stats, derivations):
                 tok["engine_alternatives"] = r["alternatives"]
             if r["status"] == "agree":
                 ev = r["entry"]
-                if ev["kind"] == "tinanta" or ev.get("krdanta"):
-                    k = str(ev["raw"])
+                if t["upos"] == "VERB" and (ev["kind"] == "tinanta" or ev.get("krdanta")):
+                    k = str(ev["raw"]) + "|" + verify.canon(verify.to_slp1(t["form"]))
                     if k not in derivations:
-                        d = verify.derivation(ev)
+                        d = verify.derivation(ev, t["form"])
                         derivations[k] = d[0] if d and "steps" in d[0] else None
                     if derivations[k]:
                         tok["derivation"] = k
