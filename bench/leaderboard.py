@@ -22,7 +22,7 @@ NAMES = {"anthropic/claude-opus-5.5": "Claude Opus 5.5",
 FILE_NAMES = {"sarvam__sarvam-105b.reasoning-low": "Sarvam-105B (reasoning on, low effort)"}
 
 # Shown under the table, for runs that differ from the default setup.
-NOTES = {"sarvam-105b": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. Sanskrit is not among the languages Sarvam lists for this model."}
+NOTES = {"sarvam-105b": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. In a 10-question test with reasoning on (low effort, 32,000-token budget), it ran out on 5, got 2 right, and used about 24,000 tokens per answer; with reasoning off it also got 2 of those 10 right. Sanskrit is not among the languages Sarvam lists for this model."}
 
 items = grade.load_items(os.path.join(ROOT, "bench/data/v0.jsonl"))
 rows = []
