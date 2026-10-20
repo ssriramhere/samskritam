@@ -60,21 +60,25 @@ Answer with JSON only:
 {{"why": "...", "steps": [{{"sutra": "8.2.66", "result": "..."}}]}}"""
 
 
-def ask(model, prompt):
+def ask(model, prompt, provider=None):
     body = {"model": model, "max_tokens": 4000, "messages": [{"role": "user", "content": prompt}]}
+    if provider:
+        # OpenRouter routing: try these providers first (e.g. "anthropic").
+        body["provider"] = {"order": [provider], "allow_fallbacks": False}
     req = urllib.request.Request(
         "https://openrouter.ai/api/v1/chat/completions", data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json",
                  "Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
                  "HTTP-Referer": "https://samskritam.ai", "X-Title": "Samskritam.ai sandhi"})
     with urllib.request.urlopen(req, timeout=120) as r:
-        choice = json.loads(r.read())["choices"][0]
+        resp = json.loads(r.read())
+    choice = resp["choices"][0]
     text = choice["message"].get("content") or ""
     if isinstance(text, list):  # some providers return content parts
         text = "".join(p.get("text", "") for p in text if isinstance(p, dict))
     m = re.search(r"\{.*\}", re.sub(r"```(?:json)?", "", text), re.S)
     if not m:
-        raise RuntimeError(f"no JSON (finish_reason={choice.get('finish_reason')}): {text[:200]!r}")
+        raise RuntimeError(f"no JSON (finish_reason={choice.get('finish_reason')}, provider={resp.get('provider')}): {text[:200]!r}")
     try:
         d = json.loads(m.group())
     except json.JSONDecodeError as e:
@@ -91,6 +95,8 @@ def main():
     ap.add_argument("--rpm", type=float, default=18)
     ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--provider", default=None,
+                    help="OpenRouter provider to use only, e.g. anthropic (see the model's page on openrouter.ai)")
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
@@ -121,7 +127,7 @@ def main():
         for attempt in range(6):
             pace()
             try:
-                why, steps = ask(a.model, prompt)
+                why, steps = ask(a.model, prompt, a.provider)
             except urllib.error.HTTPError as e:
                 if e.code in (429, 500, 502, 503) and attempt < 5:
                     time.sleep(int(e.headers.get("Retry-After") or 10 * (attempt + 1)))
@@ -129,7 +135,8 @@ def main():
                 errors.append((key, repr(e)))
                 return
             except Exception as e:
-                if attempt < 5:
+                # A provider's content filter answers the same way every time; don't spend six tries on it.
+                if attempt < (1 if "content_filter" in str(e) else 5):
                     continue
                 errors.append((key, repr(e)))
                 return
