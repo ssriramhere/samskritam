@@ -76,7 +76,10 @@ def call_sarvam(model, prompt, a):
     # Its max_tokens (default 2048) includes reasoning, and reasoning_effort
     # defaults to "max", so the default budget can end before any answer.
     extra = {"max_tokens": a.sarvam_max_tokens}
-    if a.reasoning_effort:
+    if a.reasoning_effort == "none":
+        # Sarvam's v1 docs: reasoning "can be disabled by explicitly setting to None".
+        extra["reasoning_effort"] = None
+    elif a.reasoning_effort:
         extra["reasoning_effort"] = a.reasoning_effort
     return _openai_compatible("https://api.sarvam.ai/v1/chat/completions",
                               os.environ["SARVAM_API_KEY"], model, prompt, a, extra)
@@ -111,8 +114,8 @@ def main():
     ap.add_argument("--limit", type=int, default=None, help="first N items, for a smoke test")
     ap.add_argument("--sarvam-max-tokens", type=int, default=8192,
                     help="Sarvam only: token budget including reasoning")
-    ap.add_argument("--reasoning-effort", choices=["low", "high", "max"], default=None,
-                    help="Sarvam only: reasoning effort (provider default is max)")
+    ap.add_argument("--reasoning-effort", choices=["none", "low", "high", "max"], default=None,
+                    help="Sarvam only: reasoning effort; none turns reasoning off")
     ap.add_argument("--rpm", type=float, default=0,
                     help="cap requests per minute (OpenRouter new accounts: 20 per model)")
     a = ap.parse_args()
@@ -152,9 +155,14 @@ def main():
                 out = call(a.model, it["prompt"], a)
                 if not (out or "").strip():
                     # Some reasoning models spend the whole budget thinking and
-                    # return no answer; treat that as a failure to retry.
+                    # return no answer. If the budget ran out, the same request
+                    # will run out again, so record it once instead of retrying.
                     info = getattr(_usage, "last", None) or {}
-                    raise RuntimeError(f"empty answer (finish_reason={info.get('finish_reason')}, usage={info.get('usage')})")
+                    err = f"empty answer (finish_reason={info.get('finish_reason')}, usage={info.get('usage')})"
+                    if info.get("finish_reason") == "length":
+                        rec = {"id": it["id"], "output": None, "error": err}
+                        break
+                    raise RuntimeError(err)
                 rec = {"id": it["id"], "output": out, "latency_s": round(time.time() - t0, 2),
                        "provider": a.provider, "model": a.model}
                 info = getattr(_usage, "last", None)
