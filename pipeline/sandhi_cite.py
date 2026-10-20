@@ -135,8 +135,13 @@ def main():
                 errors.append((key, repr(e)))
                 return
             except Exception as e:
-                # A provider's content filter answers the same way every time; don't spend six tries on it.
-                if attempt < (1 if "content_filter" in str(e) else 5):
+                if "content_filter" in str(e) and "Examples from the texts" in prompt:
+                    # The filter answers the same way every time, so retrying is
+                    # pointless. Ask once more about the join alone, without the
+                    # example words, which are the likeliest trigger.
+                    prompt = re.sub(r"Examples from the texts:\n.*?\n\n", "", prompt, flags=re.S)
+                    continue
+                if attempt < (0 if "content_filter" in str(e) else 5):
                     continue
                 errors.append((key, repr(e)))
                 return

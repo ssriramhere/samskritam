@@ -103,13 +103,39 @@ def render(words, groups, line, joins, types, ref):
                                 "rd": dev(jn), "k": j["key"], "x": int(j["across"])})
         t = types[j["key"]]
         t["n"] += 1
-        if len(t["ex"]) < 3 and [left, right, jn] not in t["ex"]:
-            t["ex"].append([left, right, jn, ref])
+        if len(t["all"]) < 400 and [left, right, jn] not in [x[:3] for x in t["all"]]:
+            t["all"].append([left, right, jn, ref])
     return [chunks[k] for k in sorted(chunks)]
 
 
+def pick_examples(cands, k=3):
+    """Three examples from different places, preferring the Meghadūta and the
+    later Gītā: the first examples found all come from the battlefield verses of
+    Gītā chapter 1, which made the citation prompts read like a list of war
+    words (and some were blocked by a content filter)."""
+    def rank(x):
+        slug, vid = x[3].split()
+        ch = int(vid.split(".")[0])
+        return (0 if slug == "meghaduta" else 2 if ch == 1 else 1, len(x[2]))
+    out, seen = [], set()
+    for x in sorted(cands, key=rank):
+        place = x[3].rsplit(".", 1)[0]
+        if place in seen:
+            continue
+        out.append(x)
+        seen.add(place)
+        if len(out) == k:
+            break
+    for x in sorted(cands, key=rank):  # fewer than k distinct places
+        if len(out) == k:
+            break
+        if x not in out:
+            out.append(x)
+    return out
+
+
 def main():
-    types = defaultdict(lambda: {"n": 0, "ex": []})
+    types = defaultdict(lambda: {"n": 0, "all": []})
     for slug, src in TEXTS:
         data = json.load(open(os.path.join(ROOT, "data/build", src), encoding="utf-8"))
         out, lines = {}, [0, 0, 0]
@@ -135,6 +161,8 @@ def main():
         json.dump(out, open(os.path.join(ROOT, f"web/data/{slug}-sandhi.json"), "w", encoding="utf-8"),
                   ensure_ascii=False, separators=(",", ":"))
         print(f"{slug}: {lines[1]}/{lines[0]} half-lines fully traced, {lines[2]} partly")
+    for t in types.values():
+        t["ex"] = pick_examples(t.pop("all"))
     json.dump(dict(sorted(types.items(), key=lambda kv: -kv[1]["n"])),
               open(os.path.join(ROOT, "data/build/sandhi-types.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
