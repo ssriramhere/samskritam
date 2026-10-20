@@ -171,7 +171,8 @@ def main():
         next(f)
         for line in f:
             code, text = line.rstrip("\n").split("\t")
-            sutras[code] = iast(text)
+            # jihvāmūlīya and upadhmānīya come out of the transliteration as ≍
+            sutras[code] = iast(text).replace("≍k", "ẖk").replace("≍p", "ḫp")
     json.dump(sutras, open(os.path.join(ROOT, "web/data/sutras.json"), "w", encoding="utf-8"),
               ensure_ascii=False, separators=(",", ":"))
     print(f"{len(types)} junction types, {sum(t['n'] for t in types.values())} joins; {len(sutras)} sūtras")

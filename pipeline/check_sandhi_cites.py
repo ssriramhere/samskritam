@@ -45,6 +45,8 @@ def family(key):
                 else ("-as + voiced consonant: o", {"8.2.66", "6.1.114", "6.1.87"})
         if v == "a" and ib in VOWELS:
             return "-as + other vowel: y, then dropped", {"8.2.66", "8.3.17", "8.3.19"}
+        if ib == "r" and "r" not in r.replace(" ", "")[:-1]:
+            return "s/r before r: first r dropped (vowel lengthened)", {"8.3.14"}
         if v == "A" and (ib in VOWELS or ib in VOICED):
             return "-ās + voiced: y, then dropped", {"8.2.66", "8.3.17"}
         if v and v not in "aA" and (ib in VOWELS or ib in VOICED) and "r" in r:
