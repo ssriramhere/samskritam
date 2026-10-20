@@ -132,6 +132,18 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .split .si { display: block; font-size: .92rem; color: var(--muted); font-style: italic }
 .trans .tr { margin-top: 12px }
 .trans .tr p { margin: 4px 0 0; font-size: 1.02rem; max-width: 70ch }
+.linkbtn { font: inherit; font-size: .88rem; color: var(--indigo); background: none; border: 0; padding: 0; margin-top: 8px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px }
+.aitr { margin-top: 8px; font-size: .92rem } .aitr summary { cursor: pointer; color: var(--muted) }
+.sug { display: grid; gap: 8px; margin-top: 10px; background: var(--paper); border-radius: 10px; padding: 14px 16px }
+.sug textarea, .sug input { font: inherit; font-size: .95rem; color: var(--ink); background: var(--leaf); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0 }
+.sug textarea:focus, .sug input:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft) }
+.sug[hidden] { display: none }
+.sugrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.sugrow input { flex: 1 1 220px }
+#sugsend { font: inherit; font-weight: 600; color: var(--leaf); background: var(--indigo); border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer }
+#sugsend:disabled { opacity: .6 }
+.sug .hint { margin: 0 }
+#sugmsg:empty { display: none }
 .textbar .more { font-size: .82rem; color: var(--muted); align-self: center; padding-left: 4px }
 .hint { font-size: .88rem; color: var(--muted); margin-top: 14px }
 
@@ -460,10 +472,51 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         dev += x.d + sep; iast += x.f + sep; });
       html += `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
     }
-    const tr = translations && translations.t[v.id];
-    if (tr) html += `<div class="tr"><span class="eyebrow">English translation by ${esc(modelNames[translations.model] || translations.model)} (AI), not checked</span><p>${esc(tr)}</p></div>`;
+    const ai = translations && translations.t[v.id];
+    const hum = translations && translations.h && translations.h[v.id];
+    const aiLabel = `English translation by ${esc(modelNames[translations && translations.model] || (translations && translations.model) || "")} (AI), not checked`;
+    if (hum) {
+      html += `<div class="tr"><span class="eyebrow">English translation suggested by ${esc(hum.by)}, reviewed</span><p>${esc(hum.t)}</p>`
+        + (ai ? `<details class="aitr"><summary>The AI translation</summary><span class="eyebrow">${aiLabel}</span><p>${esc(ai)}</p></details>` : "") + `</div>`;
+    } else if (ai) {
+      html += `<div class="tr"><span class="eyebrow">${aiLabel}</span><p>${esc(ai)}</p></div>`;
+    }
+    if (ai || hum) html += `<button type="button" class="linkbtn" id="sugbtn">Suggest a better translation</button>
+      <form class="sug" id="sugform" hidden>
+        <label class="flabel" for="sugtext">Your translation of ${esc(v.id)}</label>
+        <textarea id="sugtext" rows="4" maxlength="1500" required>${esc((hum && hum.t) || ai)}</textarea>
+        <div class="sugrow">
+          <input id="sugname" maxlength="80" placeholder="Name to credit (optional)" autocomplete="name">
+          <input id="sugemail" type="email" maxlength="254" placeholder="Email (optional, never shown)" autocomplete="email">
+        </div>
+        <input id="sugnote" maxlength="600" placeholder="What did the translation get wrong? (optional)">
+        <input class="hp" id="sugweb" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="sugrow"><button type="submit" id="sugsend">Send for review</button><button type="button" class="linkbtn" id="sugcancel">Cancel</button></div>
+        <p class="hint">Suggestions are read before anything changes. If yours is used, it appears with the name you give. Your email is never shown.</p>
+      </form><p class="joinmsg" id="sugmsg" role="status"></p>`;
     $("trans").innerHTML = html;
   }
+
+  $("trans").addEventListener("click", e => {
+    if (e.target.id === "sugbtn") { $("sugform").hidden = false; e.target.hidden = true; $("sugmsg").textContent = ""; $("sugtext").focus(); }
+    if (e.target.id === "sugcancel") { $("sugform").hidden = true; $("sugbtn").hidden = false; }
+  });
+  $("trans").addEventListener("submit", async e => {
+    if (e.target.id !== "sugform") return;
+    e.preventDefault();
+    const msg = $("sugmsg"), btn = $("sugsend");
+    btn.disabled = true; msg.className = "joinmsg"; msg.textContent = "Sending…";
+    try {
+      const r = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: text.slug, id: current.id, text: $("sugtext").value, name: $("sugname").value,
+          email: $("sugemail").value, note: $("sugnote").value, website: $("sugweb").value }) });
+      const j = await r.json().catch(() => null);
+      if (!j || !j.ok) throw new Error((j && j.error) || "We couldn't send that. Please try again.");
+      $("sugform").hidden = true; $("sugbtn").hidden = false;
+      msg.className = "joinmsg ok"; msg.textContent = "Thank you. Your suggestion will be reviewed before it appears.";
+    } catch (err) { msg.className = "joinmsg err"; msg.textContent = err.message; }
+    finally { btn.disabled = false; }
+  });
 
   function renderWords(v) {
     if (!v.w.length) { $("words").innerHTML = `<span class="hint">${esc(v.note || "No word analysis for this verse yet.")}</span>`; return; }

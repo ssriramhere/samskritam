@@ -47,6 +47,20 @@ python pipeline/translate.py gita meghaduta     # web/data/<slug>-translations.j
 
 Default model `anthropic/claude-opus-5.5`; change with `--model`.
 
+Readers can suggest a better translation for any verse (`api/suggest.js`). Suggestions
+wait in Upstash until reviewed:
+
+```bash
+vercel env pull .env.local                                   # once
+node --env-file=.env.local scripts/suggestions.mjs list
+node --env-file=.env.local scripts/suggestions.mjs approve <id> ["edited text"]
+node --env-file=.env.local scripts/suggestions.mjs reject <id>
+```
+
+Approving writes the translation into `web/data/<slug>-translations.json` (under `h`),
+credited to the name the reader gave; commit and push to publish. The site then shows
+it in place of the AI translation, with the AI one a click away.
+
 ## Run the benchmark
 
 The runner uses only the Python standard library.
