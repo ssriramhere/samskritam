@@ -74,7 +74,7 @@
     "subanta": 0.6596,
     "tinanta": 0.1667
    },
-   "note": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. In a 10-question test with reasoning on (low effort, 32,000-token budget), it ran out on 5, got 2 right, and used about 24,000 tokens per answer; with reasoning off it also got 2 of those 10 right. Sanskrit is not among the languages Sarvam lists for this model."
+   "note": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. In a 10-question test with reasoning on (low effort, 32,000-token budget), it ran out on 5, got 2 right, and used about 20,000 tokens for each answer it finished; with reasoning off it also got 2 of those 10 right. Sanskrit is not among the languages Sarvam lists for this model."
   }
  ]
 }
