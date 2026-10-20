@@ -20,7 +20,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TITLES = {"gita": "the Bhagavad Gītā", "meghaduta": "Kālidāsa's Meghadūta"}
@@ -122,8 +122,18 @@ def main():
                     save(out_path, out)
                     print(f"  {n}/{len(verses)}")
 
-        with ThreadPoolExecutor(a.workers) as ex:
-            list(ex.map(work, todo))
+        ex = ThreadPoolExecutor(a.workers)
+        futures = [ex.submit(work, v) for v in todo]
+        try:
+            # Wait in short steps: a plain blocking wait ignores Ctrl+C on Windows.
+            while wait(futures, timeout=1).not_done:
+                pass
+        except KeyboardInterrupt:
+            with lock:
+                save(out_path, out)
+            print(f"\nStopped. {len(out['t'])}/{len(verses)} saved; run the same command to continue.")
+            os._exit(1)  # don't wait for requests still in flight
+        ex.shutdown()
         save(out_path, out)
         print(f"{slug}: {len(out['t'])}/{len(verses)} translated -> {out_path}")
         for vid, err in errors:
