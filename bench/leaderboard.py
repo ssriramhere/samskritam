@@ -17,6 +17,10 @@ NAMES = {"anthropic/claude-opus-5.5": "Claude Opus 5.5",
          "openai/gpt-6-sol": "GPT-6 Sol",
          "sarvam-105b": "Sarvam-105B (reasoning off)"}
 
+# Runs of one model with different settings, told apart by results file name
+# (bench/run.py --tag).
+FILE_NAMES = {"sarvam__sarvam-105b.reasoning-low": "Sarvam-105B (reasoning on, low effort)"}
+
 # Shown under the table, for runs that differ from the default setup.
 NOTES = {"sarvam-105b": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. Sanskrit is not among the languages Sarvam lists for this model."}
 
@@ -34,7 +38,8 @@ for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
         continue
     s = grade.score(items, results)
     model = next((r.get("model") for r in results if r.get("model")), os.path.basename(path))
-    rows.append({"model": NAMES.get(model, model), "id": model, "overall": s["overall"]["acc"],
+    stem = os.path.basename(path)[:-len(".jsonl")]
+    rows.append({"model": FILE_NAMES.get(stem) or NAMES.get(model, model), "id": model, "overall": s["overall"]["acc"],
                  "tasks": {k: v["acc"] for k, v in s["by_task"].items()},
                  **({"note": NOTES[model]} if model in NOTES else {})})
     with open(path.replace(".jsonl", ".graded.json"), "w", encoding="utf-8") as f:

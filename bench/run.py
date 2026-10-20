@@ -116,6 +116,8 @@ def main():
                     help="Sarvam only: token budget including reasoning")
     ap.add_argument("--reasoning-effort", choices=["none", "low", "high", "max"], default=None,
                     help="Sarvam only: reasoning effort; none turns reasoning off")
+    ap.add_argument("--tag", default=None,
+                    help="suffix for the results file, to keep runs with different settings apart")
     ap.add_argument("--rpm", type=float, default=0,
                     help="cap requests per minute (OpenRouter new accounts: 20 per model)")
     a = ap.parse_args()
@@ -124,8 +126,9 @@ def main():
     if a.limit:
         items = items[:a.limit]
     os.makedirs(os.path.join(ROOT, "bench/results"), exist_ok=True)
+    tag = f".{a.tag}" if a.tag else ""
     out_path = os.path.join(ROOT, "bench/results",
-                            f"{a.provider}__{a.model.replace('/', '_')}.jsonl")
+                            f"{a.provider}__{a.model.replace('/', '_')}{tag}.jsonl")
     done = set()
     if os.path.exists(out_path):
         done = {r["id"] for r in map(json.loads, open(out_path, encoding="utf-8"))
@@ -165,6 +168,8 @@ def main():
                     raise RuntimeError(err)
                 rec = {"id": it["id"], "output": out, "latency_s": round(time.time() - t0, 2),
                        "provider": a.provider, "model": a.model}
+                if a.reasoning_effort:
+                    rec["reasoning_effort"] = a.reasoning_effort
                 info = getattr(_usage, "last", None)
                 if info and info.get("usage"):
                     rec["usage"] = info["usage"]
