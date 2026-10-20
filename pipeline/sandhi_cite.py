@@ -68,11 +68,17 @@ def ask(model, prompt):
                  "Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
                  "HTTP-Referer": "https://samskritam.ai", "X-Title": "Samskritam.ai sandhi"})
     with urllib.request.urlopen(req, timeout=120) as r:
-        text = json.loads(r.read())["choices"][0]["message"]["content"] or ""
+        choice = json.loads(r.read())["choices"][0]
+    text = choice["message"].get("content") or ""
+    if isinstance(text, list):  # some providers return content parts
+        text = "".join(p.get("text", "") for p in text if isinstance(p, dict))
     m = re.search(r"\{.*\}", re.sub(r"```(?:json)?", "", text), re.S)
     if not m:
-        raise RuntimeError("no JSON")
-    d = json.loads(m.group())
+        raise RuntimeError(f"no JSON (finish_reason={choice.get('finish_reason')}): {text[:200]!r}")
+    try:
+        d = json.loads(m.group())
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"bad JSON: {m.group()[:200]!r}") from e
     steps = [[str(s.get("sutra", "")).strip(), str(s.get("result", "")).strip()] for s in d.get("steps") or []]
     if not d.get("why") or not steps:
         raise RuntimeError("empty answer")
