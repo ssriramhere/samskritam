@@ -435,7 +435,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "unknown": "The rule engine has no entry for this form yet.",
     "not-checked": "Compound members are not checked yet."
   };
-  let translations = null, reviewed = null, modelNames = {};
+  let translations = null, reviewed = null, modelNames = {}, writeHash = location.hash.length > 1;
   let texts = [], text = null, verses = [], byChapter = new Map(), derivs = null, current = null, selected = -1, loadSeq = 0;
   const cache = {};
 
@@ -456,7 +456,10 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     renderTrans(v);
     $("detail").hidden = true;
     highlight(null);
-    try { history.replaceState(null, "", "#" + text.slug + "-" + v.id); } catch (e) {}
+    // A plain visit to samskritam.ai keeps a clean address; the hash appears
+    // once the reader moves to another verse or text, so links can be shared.
+    if (writeHash) { try { history.replaceState(null, "", "#" + text.slug + "-" + v.id); } catch (e) {} }
+    writeHash = true;
     syncSelects();
   }
 
@@ -488,12 +491,6 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   function renderTrans(v) {
     let html = "";
-    if (v.w.length) {
-      let dev = "", iast = "";
-      v.w.forEach((x, i) => { const sep = i === v.w.length - 1 ? "" : (/compound member/.test(x.en) ? "-" : " ");
-        dev += x.d + sep; iast += x.f + sep; });
-      html += `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
-    }
     const ai = translations && translations.t[v.id];
     const hum = reviewed && reviewed[text.slug] && reviewed[text.slug][v.id];
     const aiLabel = `English translation by ${esc(modelNames[translations && translations.model] || (translations && translations.model) || "")} (AI), not checked`;
@@ -516,6 +513,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="sugrow"><button type="submit" id="sugsend">Send for review</button><button type="button" class="linkbtn" id="sugcancel">Cancel</button></div>
         <p class="hint">Suggestions are reviewed in public on GitHub before anything changes here, with the name you give. Your email is kept private and never published.</p>
       </form><p class="joinmsg" id="sugmsg" role="status"></p>`;
+    if (v.w.length) {
+      let dev = "", iast = "";
+      v.w.forEach((x, i) => { const sep = i === v.w.length - 1 ? "" : (/compound member/.test(x.en) ? "-" : " ");
+        dev += x.d + sep; iast += x.f + sep; });
+      html += `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
+    }
     $("trans").innerHTML = html;
   }
 
@@ -732,6 +735,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     texts = list;
     $("texts").innerHTML = texts.map(t => `<button type="button" data-slug="${t.slug}" aria-pressed="false">${esc(t.title)}</button>`).join("")
       + `<span class="more">More texts coming</span>`;
+    window.addEventListener("hashchange", () => {
+      const m2 = (location.hash || "").slice(1).match(/^([a-z]+)-(\d+\.\d+)$/);
+      if (!m2) return;
+      if (m2[1] === text.slug) { if (!current || current.id !== m2[2]) go(m2[2]); }
+      else loadText(m2[1], m2[2]);
+      $("reader").scrollIntoView({ behavior: "smooth" });
+    });
     const h = (location.hash || "").slice(1);
     let slug = "gita", vid = null;
     const m = h.match(/^([a-z]+)-(\d+\.\d+)$/);

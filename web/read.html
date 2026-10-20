@@ -377,7 +377,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       g.items.map(i => `<button type="button" class="chip s-${b.w[i].s}" data-i="${i}" aria-pressed="false"><span class="dot"></span>${esc(b.w[i].d)}</button>`).join("")}</div></div>`).join("")
       + `<span class="hint" style="flex-basis:100%">Words appear before sandhi, as the model split them. Tap one for its grammar and, where the rules can build it, its derivation.</span>`;
     $("detail").hidden = true;
-    $("trans").innerHTML = padapatha(b.w) + (b.translation ? `<div style="margin-top:14px"><span class="eyebrow">English translation by ${esc(modelName(b.model))} (AI), not checked</span><p>${esc(b.translation)}</p></div>` : "");
+    $("trans").innerHTML = (b.translation ? `<div><span class="eyebrow">English translation by ${esc(modelName(b.model))} (AI), not checked</span><p>${esc(b.translation)}</p></div>` : "") + padapatha(b.w);
     const s = b.stats;
     $("tally").textContent = `${s.agree} of ${s.checkable} checkable words: the rules allow the model's analysis. ${s["form-known"]} analysed differently by the rules, ${s.unknown} not in the rule engine. Model: ${modelName(b.model)}${b.cached ? ", saved reading" : ""}.`;
   }
