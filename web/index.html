@@ -284,6 +284,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   .verse, .words, .detail { animation: rise .35s ease both }
   @keyframes rise { from { opacity: .35; transform: translateY(4px) } to { opacity: 1; transform: none } }
 }
+.steps td.code a.sl, .ch code a.sl { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px }
+.steps td.code a.sl:hover, .ch code a.sl:hover { text-decoration-color: currentColor }
 </style>
 </head>
 <body>
@@ -471,6 +473,14 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   const cache = {};
 
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Sūtra numbers link to the sūtra on ashtadhyayi.com (dhātupāṭha and other codes stay plain).
+  // A vārttika (6.4.12.1) links to the page of the sūtra it comments on.
+  const sutraLink = code => {
+    const m = /^([1-8])\.([1-4])\.(\d{1,3})(\.\d+)?$/.exec(code);
+    if (!m) return esc(code);
+    const title = m[4] ? `Vārttika on sūtra ${m[1]}.${m[2]}.${m[3]}, on ashtadhyayi.com` : `Sūtra ${code} on ashtadhyayi.com`;
+    return `<a class="sl" href="https://ashtadhyayi.com/sutraani/${m[1]}/${m[2]}/${m[3]}" target="_blank" rel="noopener" title="${title}">${code}</a>`;
+  };
 
   function renderVerse(v) {
     current = v; selected = -1;
@@ -585,7 +595,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <table><tbody>${c.j.map((j, ji) => { const cit = citation(j.k);
         return `<tr><td class="jn">${esc(j.ad)} + ${esc(j.bd)} → ${esc(j.rd)}<span class="si">${esc(j.a)} + ${esc(j.b)} → ${esc(j.r)}</span></td>
         <td class="why">${cit ? esc(cit.why) : `<span class="hint">No citation yet.</span>`}</td>
-        <td class="su">${cit ? cit.s.map(([code, txt, r]) => `<span class="step"><code>${esc(code)}</code>${txt ? esc(txt) : "<em>not found in the Aṣṭādhyāyī</em>"}${r ? ` → <b>${esc(r)}</b>` : ""}</span>`).join("") + `<span class="lab">${esc(cit.label)}</span>` : ""}
+        <td class="su">${cit ? cit.s.map(([code, txt, r]) => `<span class="step"><code>${sutraLink(code)}</code>${txt ? esc(txt) : "<em>not found in the Aṣṭādhyāyī</em>"}${r ? ` → <b>${esc(r)}</b>` : ""}</span>`).join("") + `<span class="lab">${esc(cit.label)}</span>` : ""}
           <button type="button" class="linkbtn sjfix" data-c="${ci}" data-j="${ji}">Suggest a correction</button></td></tr>`; }).join("")}</tbody></table></div>`).join("")
       + `<p class="hint">Words that stand apart unchanged are not listed. Highlighted letters mark where words meet. Each join is traced with Vidyut's sandhi rules${d.p ? "; some joins in this verse could not be traced" : ""}. Sūtra numbers are checked against the Aṣṭādhyāyī; a citation applies to every join of the same kind.</p>`;
   }
@@ -715,7 +725,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     if (w.x && derivs && derivs[w.x]) {
       const d = derivs[w.x];
       html += `<details class="deriv"${window.matchMedia("(min-width: 861px)").matches ? " open" : ""}><summary>Derivation by Pāṇini's sūtras, ${d.s.length} steps</summary>
-        <div class="steps"><table><tbody>${d.s.map(s => `<tr><td class="code">${esc(s[0])}</td><td class="text">${esc(s[1] || (/^\d\d\.\d{4}$/.test(s[0]) ? "dhātupāṭha entry" : ""))}</td><td class="res"><span class="rd">${esc(s[3] || "")}</span><span class="ri">${esc(s[2])}</span></td></tr>`).join("")}</tbody></table></div></details>`;
+        <div class="steps"><table><tbody>${d.s.map(s => `<tr><td class="code">${sutraLink(s[0])}</td><td class="text">${esc(s[1] || (/^\d\d\.\d{4}$/.test(s[0]) ? "dhātupāṭha entry" : ""))}</td><td class="res"><span class="rd">${esc(s[3] || "")}</span><span class="ri">${esc(s[2])}</span></td></tr>`).join("")}</tbody></table></div></details>`;
     } else if (w.x) html += `<div class="hint">Loading derivation…</div>`;
     else if (w.s === "agree") {
       html += `<div class="hint">${/nipāta|avyaya/.test(w.sa)
