@@ -1,6 +1,8 @@
 # Samskritam.ai
 
-Sanskrit with its grammar shown.
+AI for Sanskrit, Sanskrit for AI.
+
+Learn Sanskrit using AI, with every word checked against Pāṇini's rules.
 
 - **Learn:** read the Bhagavad Gītā word by word. Each word carries the
   scholarly analysis from the Digital Corpus of Sanskrit, checked against

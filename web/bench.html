@@ -380,8 +380,8 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
   </main>
 
   <footer>
-    <span><a href="/">Samskritam.ai</a> · Sanskrit, with its grammar shown</span>
-    <span>Benchmark v0</span>
+    <span>Built by Sriram Subramanian using AI · <a class="contact" href="#" data-u="sriram" data-d="sriramhere.com">Contact</a> · <a href="https://github.com/ssriramhere/samskritam">Source on GitHub</a></span>
+    <span>Samskritam.ai · AI for Sanskrit, Sanskrit for AI</span>
   </footer>
 </div>
 <script>
@@ -407,6 +407,9 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
     $("raw").hidden = false;
   }).catch(() => {});
 })();
+</script>
+<script>
+document.querySelectorAll("a.contact").forEach(a => { a.href = "mailto:" + a.dataset.u + "@" + a.dataset.d + "?subject=" + encodeURIComponent("Samskritam.ai"); });
 </script>
 </body>
 </html>

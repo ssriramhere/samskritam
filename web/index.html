@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Samskritam.ai</title>
+<title>Samskritam.ai · AI for Sanskrit, Sanskrit for AI</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Sanskrit with its grammar shown. The Bhagavad Gītā word by word, with scholarly analysis checked against Pāṇini's rules, and an open Sanskrit grammar benchmark for AI.">
+<meta name="description" content="AI for Sanskrit, Sanskrit for AI. Learn Sanskrit using AI: the Bhagavad Gītā and Meghadūta word by word with every analysis checked against Pāṇini's rules, a verse reader for any verse, and an open Sanskrit grammar benchmark for AI models.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://samskritam.ai/">
-<meta property="og:title" content="Samskritam.ai">
-<meta property="og:description" content="Sanskrit with its grammar shown. The Bhagavad Gītā word by word, checked against Pāṇini's rules.">
+<meta property="og:title" content="Samskritam.ai · AI for Sanskrit, Sanskrit for AI">
+<meta property="og:description" content="Learn Sanskrit using AI, with every word checked against Pāṇini's rules. And an open benchmark of how well AI models know Sanskrit grammar.">
 <meta property="og:image" content="https://samskritam.ai/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -145,6 +145,13 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .sug .hint { margin: 0 }
 #sugmsg:empty { display: none }
 .textbar .more { font-size: .82rem; color: var(--muted); align-self: center; padding-left: 4px }
+.tagline { color: var(--indigo); margin-bottom: 14px }
+.pitch p.for { font-size: 1rem; margin-top: 14px }
+.start { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 40px }
+.start li { display: grid; gap: 2px; align-content: start }
+.start a { font-weight: 600 }
+.start span { color: var(--muted); font-size: .95rem }
+@media (max-width: 860px) { .start { grid-template-columns: minmax(0, 1fr) } }
 .hint { font-size: .88rem; color: var(--muted); margin-top: 14px }
 
 section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
@@ -259,8 +266,10 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     <p class="launch" id="launch">Opening on <strong>Vijayadaśamī, 20 October 2026</strong>, the traditional day to begin learning.</p>
     <section class="hero" id="reader">
       <div class="pitch">
-        <h1>Sanskrit, with its <em>grammar shown</em>.</h1>
-        <p>The Bhagavad Gītā and Kālidāsa's Meghadūta, word by word: each word analysed by scholars, and each analysis checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
+        <div class="eyebrow tagline">AI for Sanskrit, Sanskrit for AI</div>
+        <h1>Learn Sanskrit <em>using AI</em>.</h1>
+        <p>Read the Bhagavad Gītā and Kālidāsa's Meghadūta word by word, with an English translation of every verse, or <a href="/read">paste a verse of your own</a>. Every word's analysis is checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
+        <p class="for">For anyone learning or teaching Sanskrit, and for people building and testing AI. <a href="#start">New to Sanskrit? Start here.</a></p>
         <div class="legend" aria-label="What the colours mean">
           <div><span class="dot s-agree"></span><span>Pāṇini's rules allow this analysis</span></div>
           <div><span class="dot s-form-known"></span><span>Pāṇini's rules analyse this form differently</span></div>
@@ -309,6 +318,18 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       </ol>
     </section>
 
+    <section class="band" id="start">
+      <div class="eyebrow">New to Sanskrit?</div>
+      <h2>Start here.</h2>
+      <ul class="start">
+        <li><a href="https://www.learnsanskrit.org/">learnsanskrit.org</a><span>A complete guide to Sanskrit, from the alphabet up. Start with the sounds and the script.</span></li>
+        <li><a href="https://www.samskritabharati.in/">Samskrita Bharati</a><span>Spoken Sanskrit, taught in short in-person courses, including a free ten-day class.</span></li>
+        <li><a href="https://www.sanskrit-lexicon.uni-koeln.de/">Cologne Digital Sanskrit Dictionaries</a><span>Monier-Williams and other standard dictionaries, searchable online.</span></li>
+        <li><a href="https://ambuda.org/">Ambuda</a><span>A free library of Sanskrit texts with word-by-word help. Ambuda also makes Vidyut, the rule engine this site uses.</span></li>
+        <li><a href="/#gita-2.47">The Library here</a><span>Once you know the script, read a verse a day: tap each word for its grammar, and check yourself against the translation.</span></li>
+      </ul>
+    </section>
+
     <section class="band" id="tracks">
       <div class="eyebrow">Two directions, one engine</div>
       <h2>AI that teaches Sanskrit, and Sanskrit that tests AI.</h2>
@@ -319,7 +340,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
           <p>Each word's analysis comes from scholars who annotated the corpus and is then tested against a working implementation of the Aṣṭādhyāyī. Where the rules disagree, the reader says so.</p>
           <ul>
             <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
-            <li><span class="tag soon">Next</span><span>Paste any verse and get a verified word-by-word reading</span></li>
+            <li><span class="tag live">Live</span><span>AI English translation of every verse, with a way to <a href="/#gita-2.47">suggest a better one</a></span></li>
+            <li><span class="tag live">Live</span><span><a href="/read">Verse reader</a>: paste any verse and get a word-by-word reading, checked against Pāṇini's rules</span></li>
             <li><span class="tag soon">Next</span><span>Spoken Samskritam practice partner</span></li>
             <li><span class="tag soon">Next</span><span>Recitation coach for meter and pronunciation</span></li>
           </ul>
@@ -398,8 +420,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   </main>
 
   <footer>
-    <span><span class="dev">विजयादशमी</span> · the traditional day to begin learning</span>
-    <span>Samskritam.ai</span>
+    <span>Built by Sriram Subramanian using AI · <a class="contact" href="#" data-u="sriram" data-d="sriramhere.com">Contact</a> · <a href="https://github.com/ssriramhere/samskritam">Source on GitHub</a></span>
+    <span>Samskritam.ai · AI for Sanskrit, Sanskrit for AI</span>
   </footer>
 </div>
 
@@ -718,6 +740,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     loadText(slug, vid);
   }).catch(() => { $("words").innerHTML = `<span class="hint">The word analysis could not load. Reload the page to try again.</span>`; });
 })();
+</script>
+<script>
+document.querySelectorAll("a.contact").forEach(a => { a.href = "mailto:" + a.dataset.u + "@" + a.dataset.d + "?subject=" + encodeURIComponent("Samskritam.ai"); });
 </script>
 </body>
 </html>

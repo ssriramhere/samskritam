@@ -269,7 +269,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
           <div><span class="dot s-unknown"></span><span>The rule engine has no entry for this form</span></div>
           <div><span class="dot s-not-checked"></span><span>Compound member, not checked yet</span></div>
         </div>
-        <p class="caveat">The rules check that a form <i>can</i> carry the analysis, not that it is the right reading in context. The gloss and translation are the model's and are not checked.</p>
+        <p class="caveat">The rules check that a form <i>can</i> carry the analysis, not that it is the right reading in context. The gloss and translation are the model's and are not checked. The rule checks use <a href="https://github.com/ambuda-org/vidyut">Vidyut</a>, Ambuda's implementation of the Aṣṭādhyāyī.</p>
       </div>
 
       <article class="folio" aria-live="polite">
@@ -299,8 +299,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   </main>
 
   <footer>
-    <span>Rule engine: <a href="https://github.com/ambuda-org/vidyut">Vidyut</a> (Ambuda), an implementation of Pāṇini's Aṣṭādhyāyī. Word analysis and translation: an AI model, named under each reading.</span>
-    <span>Samskritam.ai</span>
+    <span>Built by Sriram Subramanian using AI · <a class="contact" href="#" data-u="sriram" data-d="sriramhere.com">Contact</a> · <a href="https://github.com/ssriramhere/samskritam">Source on GitHub</a></span>
+    <span>Samskritam.ai · AI for Sanskrit, Sanskrit for AI</span>
   </footer>
 </div>
 
@@ -401,6 +401,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   if (location.hash.length > 1) { try { $("t").value = decodeURIComponent(location.hash.slice(1)); submit(); } catch (e) {} }
 })();
+</script>
+<script>
+document.querySelectorAll("a.contact").forEach(a => { a.href = "mailto:" + a.dataset.u + "@" + a.dataset.d + "?subject=" + encodeURIComponent("Samskritam.ai"); });
 </script>
 </body>
 </html>
