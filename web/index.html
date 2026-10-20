@@ -163,6 +163,18 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .sjrow td { border-top: 0 !important }
 .sendbtn { font: inherit; font-weight: 600; color: var(--leaf); background: var(--indigo); border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer }
 @media (max-width: 700px) { .ch table, .ch tbody, .ch tr, .ch td { display: block } .ch td, .ch td.jn, .ch td.why { width: auto; border-top: 0; padding: 2px 0 } .ch tr { border-top: 1px solid var(--rule); padding: 6px 0 } }
+.sjf .sjhead { margin: 0; font-size: .95rem }
+.sjf .sjtip { margin: -2px 0 2px }
+.sjf #sjadd { justify-self: start }
+.sjhd { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: -2px }
+.sjsteps { display: grid; gap: 6px }
+.sjstep { display: grid; grid-template-columns: 1.6em 6.5em minmax(0, 1fr) 9em 1.6em; gap: 8px; align-items: center }
+.sjstep .sjn { color: var(--muted); font-variant-numeric: tabular-nums }
+.sjstep .sjc { font-family: var(--font-mono) !important }
+.sjstep .sjt { font-family: var(--font-display); font-style: italic; font-size: .92rem; color: var(--muted); min-width: 0; overflow-wrap: anywhere }
+.sjstep .sjt.ok { color: var(--ok) } .sjstep .sjt.bad { color: var(--warn); font-style: normal; font-family: var(--font-ui) }
+.sjstep .sjx { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 1.1rem }
+@media (max-width: 700px) { .sjhd .sjtl { display: none } .sjstep { grid-template-columns: 1.6em 6.5em minmax(0, 1fr) 1.6em } .sjstep .sjt { grid-column: 2 / 4; grid-row: 2 } .sjstep .sjr { grid-column: 3; grid-row: 1 } .sjstep .sjx { grid-column: 4; grid-row: 1 } }
 .textbar .more { font-size: .82rem; color: var(--muted); align-self: center; padding-left: 4px }
 .tagline { color: var(--indigo); margin-bottom: 14px }
 .pitch p.for { font-size: 1rem; margin-top: 14px }
@@ -544,7 +556,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   }
 
   // ---- sandhi: how the words join (loaded when first opened) ----
-  let sandhiOpen = false, sandhiRules = null;
+  let sandhiOpen = false, sandhiRules = null, sutraText = null;
   const sandhiData = {};
   function loadSandhi() {
     const slug = text.slug;
@@ -586,32 +598,73 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     const b = e.target.closest(".sjfix"); if (!b) return;
     const c = sandhiData[text.slug][current.id].c[+b.dataset.c], j = c.j[+b.dataset.j], cit = citation(j.k);
     const old = document.getElementById("sjform"); if (old) old.remove();
-    const f = document.createElement("form"); f.className = "sug"; f.id = "sjform";
-    f.innerHTML = `<label class="flabel">How ${esc(j.a)} + ${esc(j.b)} → ${esc(j.r)} comes about</label>
-      <textarea id="sjwhy" rows="2" maxlength="400" placeholder="Plain-English explanation">${esc(cit ? cit.why : "")}</textarea>
-      <label class="flabel">Sūtras, one per line, in order: number → junction after it</label>
-      <textarea id="sjsteps" rows="4" maxlength="800" placeholder="6.1.77 → y e">${esc(cit ? cit.s.map(([code, , r]) => `${code} → ${r}`).join("\n") : "")}</textarea>
-      <div class="sugrow"><input id="sjname" maxlength="80" placeholder="Name to credit (optional)" autocomplete="name"><input id="sjemail" type="email" maxlength="254" placeholder="Email (optional, never shown)" autocomplete="email"></div>
-      <input id="sjnote" maxlength="600" placeholder="What was wrong? (optional)">
+    const f = document.createElement("form"); f.className = "sug sjf"; f.id = "sjform";
+    const ex = `${j.a} + ${j.b} → ${j.r}`;
+    f.innerHTML = `<p class="sjhead">Correcting the explanation of <b>${esc(ex)}</b>. Change what is wrong and leave the rest. Your correction applies to every join of this kind in the Library.</p>
+      <label class="flabel" for="sjwhy">1. Explanation, in plain English</label>
+      <textarea id="sjwhy" rows="3" maxlength="400" placeholder="For example: Two a sounds merge into one long ā.">${esc(cit ? cit.why : "")}</textarea>
+      <div class="flabel">2. The sūtras that apply, in order</div>
+      <p class="hint sjtip">For each step, give the sūtra number. The sūtra's text appears beside it so you can check you have the right one. Under "Result", write how the meeting point looks after that sūtra applies, like <i>aru a</i> or <i>ā</i>.</p>
+      <div class="sjstep sjhd" aria-hidden="true"><span></span><span>Sūtra no.</span><span class="sjtl">Sūtra text (filled in for you)</span><span>Result</span><span></span></div>
+      <div class="sjsteps" id="sjsteps"></div>
+      <button type="button" class="linkbtn" id="sjadd">+ Add a sūtra</button>
+      <div class="flabel">3. About you (optional)</div>
+      <div class="sugrow"><input id="sjname" maxlength="80" placeholder="Name to credit if it's accepted" autocomplete="name"><input id="sjemail" type="email" maxlength="254" placeholder="Email, never shown" autocomplete="email"></div>
+      <input id="sjnote" maxlength="600" placeholder="What was wrong? A source helps, e.g. Siddhānta Kaumudī no. 47">
       <div class="sugrow"><button type="submit" class="sendbtn">Send for review</button><button type="button" class="linkbtn" id="sjcancel">Cancel</button></div>
-      <p class="hint">A correction applies to every join of this kind. Suggestions are reviewed in public on GitHub; your email is never published.</p><p class="joinmsg" id="sjmsg" role="status"></p>`;
+      <p class="hint">Corrections are reviewed in public on GitHub before anything changes. Your email is never published.</p><p class="joinmsg" id="sjmsg" role="status"></p>`;
     b.closest("tr").after(Object.assign(document.createElement("tr"), { className: "sjrow" }));
     const td = document.createElement("td"); td.colSpan = 3; td.appendChild(f); b.closest("tr").nextSibling.appendChild(td);
     f.querySelector("#sjcancel").onclick = () => td.parentNode.remove();
+    const box = f.querySelector("#sjsteps");
+    const lookup = row => {
+      const code = row.querySelector(".sjc").value.trim(), out = row.querySelector(".sjt");
+      if (!code) { out.textContent = ""; out.className = "sjt"; return; }
+      if (!sutraText) { out.textContent = "Checking…"; return; }
+      const t = sutraText[code];
+      out.textContent = t ? t : /^\d\.\d\.\d+$/.test(code) ? "No sūtra with this number" : "Write it like 6.1.77";
+      out.className = "sjt " + (t ? "ok" : "bad");
+    };
+    const addRow = (code = "", res = "") => {
+      const row = document.createElement("div"); row.className = "sjstep";
+      row.innerHTML = `<span class="sjn"></span><input class="sjc" inputmode="decimal" maxlength="9" placeholder="6.1.101" aria-label="Sūtra number" value="${esc(code)}">
+        <span class="sjt"></span><input class="sjr" maxlength="40" placeholder="Result" aria-label="Result after this sūtra" value="${esc(res)}">
+        <button type="button" class="sjx" aria-label="Remove this step">×</button>`;
+      row.querySelector(".sjc").addEventListener("input", () => lookup(row));
+      row.querySelector(".sjx").onclick = () => { row.remove(); number(); };
+      box.appendChild(row); number(); lookup(row);
+      return row;
+    };
+    const number = () => box.querySelectorAll(".sjn").forEach((n, k) => (n.textContent = k + 1 + "."));
+    (cit && cit.s.length ? cit.s : [["", "", ""]]).forEach(([code, , r]) => addRow(code, r));
+    f.querySelector("#sjadd").onclick = () => addRow().querySelector(".sjc").focus();
+    (sutraText ? Promise.resolve() : getJSON("data/sutras.json").then(d => { sutraText = d; }))
+      .then(() => box.querySelectorAll(".sjstep").forEach(lookup)).catch(() => {});
+    f.querySelector("#sjwhy").focus();
     f.onsubmit = async ev => {
       ev.preventDefault();
       const msg = f.querySelector("#sjmsg"), btn = f.querySelector(".sendbtn");
+      const rows = [...box.querySelectorAll(".sjstep")].map(r => [r.querySelector(".sjc").value.trim(), r.querySelector(".sjr").value.trim()]).filter(([c2, r2]) => c2 || r2);
+      const why = f.querySelector("#sjwhy").value.trim();
+      const fail = t => { msg.className = "joinmsg err"; msg.textContent = t; };
+      if (why.length < 10) return fail("Add a short explanation in step 1.");
+      if (!rows.length) return fail("Add at least one sūtra in step 2.");
+      const badRow = rows.findIndex(([c2]) => !(sutraText ? sutraText[c2] : /^\d\.\d\.\d+$/.test(c2)));
+      if (badRow >= 0) return fail(`Step ${badRow + 1}: that isn't a sūtra number in the Aṣṭādhyāyī.`);
+      const steps = rows.map(([c2, r2]) => `${c2} → ${r2}`).join("\n");
+      const cur = cit ? [cit.why, ...cit.s.map(([code, , r2]) => `${code} → ${r2}`)].join("\n") : "";
+      if ([why, steps].join("\n") === cur) return fail("Nothing has changed yet. Edit the explanation or the sūtras first.");
       btn.disabled = true; msg.className = "joinmsg"; msg.textContent = "Sending…";
       try {
         const r = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind: "sandhi", key: j.k, example: `${j.a} + ${j.b} → ${j.r}`, why: f.querySelector("#sjwhy").value,
-            steps: f.querySelector("#sjsteps").value, name: f.querySelector("#sjname").value, email: f.querySelector("#sjemail").value,
-            note: f.querySelector("#sjnote").value, current: cit ? [cit.why, ...cit.s.map(([code, , r2]) => `${code} → ${r2}`)].join("\n") : "" }) });
+          body: JSON.stringify({ kind: "sandhi", key: j.k, example: ex, why, steps, name: f.querySelector("#sjname").value,
+            email: f.querySelector("#sjemail").value, note: f.querySelector("#sjnote").value, current: cur }) });
         const out = await r.json().catch(() => null);
         if (!out || !out.ok) throw new Error((out && out.error) || "We couldn't send that. Please try again.");
         msg.className = "joinmsg ok"; msg.textContent = "Thank you. Your correction will be reviewed before it appears.";
-        f.querySelectorAll("textarea, input, .sendbtn").forEach(x => (x.disabled = true));
-      } catch (err) { msg.className = "joinmsg err"; msg.textContent = err.message; btn.disabled = false; }
+        f.querySelectorAll("textarea, input, button:not(#sjcancel)").forEach(x => (x.disabled = true));
+        f.querySelector("#sjcancel").textContent = "Close";
+      } catch (err) { fail(err.message); btn.disabled = false; }
     };
   });
 
