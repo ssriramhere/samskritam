@@ -413,7 +413,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "unknown": "The rule engine has no entry for this form yet.",
     "not-checked": "Compound members are not checked yet."
   };
-  let translations = null, modelNames = {};
+  let translations = null, reviewed = null, modelNames = {};
   let texts = [], text = null, verses = [], byChapter = new Map(), derivs = null, current = null, selected = -1, loadSeq = 0;
   const cache = {};
 
@@ -473,7 +473,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       html += `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
     }
     const ai = translations && translations.t[v.id];
-    const hum = translations && translations.h && translations.h[v.id];
+    const hum = reviewed && reviewed[text.slug] && reviewed[text.slug][v.id];
     const aiLabel = `English translation by ${esc(modelNames[translations && translations.model] || (translations && translations.model) || "")} (AI), not checked`;
     if (hum) {
       html += `<div class="tr"><span class="eyebrow">English translation suggested by ${esc(hum.by)}, reviewed</span><p>${esc(hum.t)}</p>`
@@ -492,7 +492,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <input id="sugnote" maxlength="600" placeholder="What did the translation get wrong? (optional)">
         <input class="hp" id="sugweb" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="sugrow"><button type="submit" id="sugsend">Send for review</button><button type="button" class="linkbtn" id="sugcancel">Cancel</button></div>
-        <p class="hint">Suggestions are read before anything changes. If yours is used, it appears with the name you give. Your email is never shown.</p>
+        <p class="hint">Suggestions are reviewed in public on GitHub before anything changes here, with the name you give. Your email is kept private and never published.</p>
       </form><p class="joinmsg" id="sugmsg" role="status"></p>`;
     $("trans").innerHTML = html;
   }
@@ -509,7 +509,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     try {
       const r = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: text.slug, id: current.id, text: $("sugtext").value, name: $("sugname").value,
-          email: $("sugemail").value, note: $("sugnote").value, website: $("sugweb").value }) });
+          email: $("sugemail").value, note: $("sugnote").value, website: $("sugweb").value,
+          current: (() => { const h = reviewed && reviewed[text.slug] && reviewed[text.slug][current.id]; return h ? h.t : (translations && translations.t[current.id]) || ""; })() }) });
       const j = await r.json().catch(() => null);
       if (!j || !j.ok) throw new Error((j && j.error) || "We couldn't send that. Please try again.");
       $("sugform").hidden = true; $("sugbtn").hidden = false;
@@ -696,6 +697,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       verses.forEach(v => { const ch = +v.id.split(".")[0]; if (!byChapter.has(ch)) byChapter.set(ch, []); byChapter.get(ch).push(v); });
       $("chap").innerHTML = [...byChapter.keys()].map(c => `<option value="${c}">${esc(t.parts[c - 1] || c)}</option>`).join("");
       go(verses.some(v => v.id === vid) ? vid : t.default);
+      getJSON("data/reviewed.json").then(r => { reviewed = r; if (current) renderTrans(current); }).catch(() => {});
       getJSON(`data/${t.slug}-translations.json`).then(tr => { if (seq !== loadSeq) return; translations = tr; if (current) renderTrans(current); }).catch(() => {});
       return getJSON(`data/${t.slug}-derivations.json`).then(d => { if (seq !== loadSeq) return; derivs = d; if (selected >= 0) renderDetail(selected); });
     }).catch(() => { $("words").innerHTML = `<span class="hint">The word analysis could not load. Reload the page to try again.</span>`; });

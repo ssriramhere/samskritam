@@ -20,6 +20,7 @@ Sanskrit with its grammar shown.
 | `bench/` | Benchmark generator, runner, grader; items in `bench/data/v0.jsonl` |
 | `web/` | The static site served at samskritam.ai |
 | `api/waitlist.js` | Sign-up endpoint (Vercel function, Upstash Redis) |
+| `api/suggest.js` | Translation suggestions, opened as GitHub pull requests (`reviewed/`) |
 | `api/read.py` | Verse reader: an AI model analyses a pasted verse, `engine/reader.py` checks each word (needs `OPENROUTER_API_KEY` and Upstash; optional `READER_MODEL` (default), `READER_MODELS` (the models people can pick), `READER_DAILY_CAP`) |
 | `brand/` | Logo source and build script |
 
@@ -47,19 +48,13 @@ python pipeline/translate.py gita meghaduta     # web/data/<slug>-translations.j
 
 Default model `anthropic/claude-opus-5.5`; change with `--model`.
 
-Readers can suggest a better translation for any verse (`api/suggest.js`). Suggestions
-wait in Upstash until reviewed:
-
-```bash
-vercel env pull .env.local                                   # once
-node --env-file=.env.local scripts/suggestions.mjs list
-node --env-file=.env.local scripts/suggestions.mjs approve <id> ["edited text"]
-node --env-file=.env.local scripts/suggestions.mjs reject <id>
-```
-
-Approving writes the translation into `web/data/<slug>-translations.json` (under `h`),
-credited to the name the reader gave; commit and push to publish. The site then shows
-it in place of the AI translation, with the AI one a click away.
+Readers can suggest a better translation for any verse. Each suggestion becomes a
+pull request adding `reviewed/<text>/<verse>.json` (see `reviewed/README.md`): merge to
+approve, edit the file in the pull request to change it, close to reject. Vercel's build
+(`scripts/build_reviewed.mjs`) collects merged ones into `web/data/reviewed.json`, and the
+site shows them in place of the AI translation, with the AI one a click away.
+Needs `GITHUB_TOKEN` in Vercel: a fine-grained token for this repository only, with
+Contents and Pull requests set to read and write.
 
 ## Run the benchmark
 

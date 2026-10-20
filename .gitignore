@@ -4,3 +4,4 @@ bench/results/
 *.pyc
 .env*
 .vercel/
+web/data/reviewed.json
