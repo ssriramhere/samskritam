@@ -667,8 +667,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
     const keys = ["tinanta", "subanta", "analyze", "gita", "meter"];
     document.querySelector("#lb tbody").innerHTML = lb.rows.map(r =>
-      `<tr><td>${esc(r.model)}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
+      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
     $("lb-note").textContent = `${lb.items} items, answers graded automatically against rule-derived keys. Updated ${lb.updated}.`;
+    lb.rows.filter(r => r.note).forEach(r => { $("lb-note").textContent += " * " + r.note; });
     $("results").hidden = false;
   }).catch(() => {});
   function getJSON(url) { return cache[url] || (cache[url] = fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.json(); })); }

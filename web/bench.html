@@ -393,12 +393,14 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
     const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
     const keys = ["tinanta", "subanta", "analyze", "gita", "meter"];
     document.querySelector("#lb tbody").innerHTML = lb.rows.map(r =>
-      `<tr><td>${esc(r.model)}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
+      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
     $("lb-note").textContent = `${lb.items} questions, graded automatically against rule-derived answers. Updated ${lb.updated}.`;
+    lb.rows.filter(r => r.note).forEach(r => { $("lb-note").textContent += " * " + r.note; });
     $("lb-wrap").hidden = false; $("lb-pending").hidden = true;
   }).catch(() => {});
   const NAMES = { "anthropic/claude-opus-5.5": "Claude Opus 5.5", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5",
-    "google/gemini-4-argon": "Gemini 4 Argon", "google/gemini-3.8-flash": "Gemini 3.8 Flash", "openai/gpt-6-sol": "GPT-6 Sol" };
+    "google/gemini-4-argon": "Gemini 4 Argon", "google/gemini-3.8-flash": "Gemini 3.8 Flash", "openai/gpt-6-sol": "GPT-6 Sol",
+    "sarvam-105b": "Sarvam-105B (reasoning off)" };
   fetch("/data/results-v0/index.json").then(r => r.ok ? r.json() : null).then(list => {
     if (!list || !list.length) return;
     $("rawlinks").innerHTML = list.map(x => `<a href="/data/results-v0/${encodeURIComponent(x.file)}" download>${esc(NAMES[x.model] || x.model)}</a>`).join(", ");

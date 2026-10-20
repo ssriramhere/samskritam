@@ -28,5 +28,11 @@
   "file": "openrouter__openai_gpt-6-sol.jsonl",
   "correct": 463,
   "n": 487
+ },
+ {
+  "model": "sarvam-105b",
+  "file": "sarvam__sarvam-105b.jsonl",
+  "correct": 148,
+  "n": 487
  }
 ]

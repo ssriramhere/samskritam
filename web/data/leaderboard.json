@@ -62,6 +62,19 @@
     "subanta": 0.9894,
     "tinanta": 0.9067
    }
+  },
+  {
+   "model": "Sarvam-105B (reasoning off)",
+   "id": "sarvam-105b",
+   "overall": 0.3039,
+   "tasks": {
+    "analyze": 0.03,
+    "gita": 0.6237,
+    "meter": 0.0,
+    "subanta": 0.6596,
+    "tinanta": 0.1667
+   },
+   "note": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. Sanskrit is not among the languages Sarvam lists for this model."
   }
  ]
 }

@@ -15,7 +15,10 @@ NAMES = {"anthropic/claude-opus-5.5": "Claude Opus 5.5",
          "google/gemini-4-argon": "Gemini 4 Argon",
          "google/gemini-3.8-flash": "Gemini 3.8 Flash",
          "openai/gpt-6-sol": "GPT-6 Sol",
-         "sarvam-105b": "Sarvam-105B"}
+         "sarvam-105b": "Sarvam-105B (reasoning off)"}
+
+# Shown under the table, for runs that differ from the default setup.
+NOTES = {"sarvam-105b": "Sarvam-105B ran through Sarvam's own API with reasoning turned off. With reasoning on, it used its whole 8,192-token budget before answering most questions. Sanskrit is not among the languages Sarvam lists for this model."}
 
 items = grade.load_items(os.path.join(ROOT, "bench/data/v0.jsonl"))
 rows = []
@@ -32,7 +35,8 @@ for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
     s = grade.score(items, results)
     model = next((r.get("model") for r in results if r.get("model")), os.path.basename(path))
     rows.append({"model": NAMES.get(model, model), "id": model, "overall": s["overall"]["acc"],
-                 "tasks": {k: v["acc"] for k, v in s["by_task"].items()}})
+                 "tasks": {k: v["acc"] for k, v in s["by_task"].items()},
+                 **({"note": NOTES[model]} if model in NOTES else {})})
     with open(path.replace(".jsonl", ".graded.json"), "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False)
 rows.sort(key=lambda r: -r["overall"])
