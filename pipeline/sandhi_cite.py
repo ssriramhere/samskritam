@@ -95,6 +95,8 @@ def main():
     ap.add_argument("--rpm", type=float, default=18)
     ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--fallback-model", default="google/gemini-4-argon",
+                    help="model to ask when the main model's content filter refuses a join ('' for none)")
     ap.add_argument("--provider", default=None,
                     help="OpenRouter provider to use only, e.g. anthropic (see the model's page on openrouter.ai)")
     a = ap.parse_args()
@@ -122,12 +124,12 @@ def main():
     def work(key):
         fa, ib, res = key.split("|")
         ex = "\n".join(f"- {l} + {r} -> {j}  ({ref})" for l, r, j, ref in types[key]["ex"])
-        prompt = PROMPT.format(fa=iast(fa), ib=iast(ib), res=iast(res), examples=ex)
-        got = None
-        for attempt in range(6):
+        full = prompt = PROMPT.format(fa=iast(fa), ib=iast(ib), res=iast(res), examples=ex)
+        model, provider, got = a.model, a.provider, None
+        for attempt in range(8):
             pace()
             try:
-                why, steps = ask(a.model, prompt, a.provider)
+                why, steps = ask(model, prompt, provider)
             except urllib.error.HTTPError as e:
                 if e.code in (429, 500, 502, 503) and attempt < 5:
                     time.sleep(int(e.headers.get("Retry-After") or 10 * (attempt + 1)))
@@ -141,6 +143,10 @@ def main():
                     # example words, which are the likeliest trigger.
                     prompt = re.sub(r"Examples from the texts:\n.*?\n\n", "", prompt, flags=re.S)
                     continue
+                if "content_filter" in str(e) and a.fallback_model and model != a.fallback_model:
+                    # Still refused: ask the fallback model instead, with the examples.
+                    model, provider, prompt = a.fallback_model, None, full
+                    continue
                 if attempt < (0 if "content_filter" in str(e) else 5):
                     continue
                 errors.append((key, repr(e)))
@@ -153,6 +159,8 @@ def main():
             prompt += f"\n\nNote: {', '.join(bad)} is not a sūtra number in the Aṣṭādhyāyī. Check the numbering."
         why, steps, bad = got
         rec = {"why": why, "s": [[c, sutras.get(c, ""), r] for c, r in steps]}
+        if model != a.model:
+            rec["m"] = model  # answered by the fallback model
         if bad:
             rec["bad"] = bad
         with lock:
@@ -174,7 +182,8 @@ def main():
     ex.shutdown()
     save(out_path, out)
     flagged = [k for k, v in out["r"].items() if v.get("bad")]
-    print(f"{len(out['r'])}/{len(types)} cited -> {out_path}; {len(flagged)} with a sūtra number not found")
+    fb = sum(1 for v in out["r"].values() if v.get("m"))
+    print(f"{len(out['r'])}/{len(types)} cited -> {out_path}; {len(flagged)} with a sūtra number not found; {fb} by the fallback model")
     for k, err in errors:
         print("  failed", k, err, "(re-run to retry)")
 

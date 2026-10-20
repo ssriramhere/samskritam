@@ -569,7 +569,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     const rev = reviewed && reviewed._sandhi && reviewed._sandhi[key];
     if (rev) return { ...rev, label: `Reviewed, suggested by ${rev.by}` };
     const ai = sandhiRules && sandhiRules.r[key];
-    if (ai) return { ...ai, label: `Citation by ${modelNames[sandhiRules.model] || sandhiRules.model} (AI), not reviewed` };
+    if (ai) { const m = ai.m || sandhiRules.model; return { ...ai, label: `Citation by ${modelNames[m] || m} (AI), not reviewed` }; }
     return null;
   }
   function renderSandhi(v) {
