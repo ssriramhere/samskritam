@@ -58,6 +58,23 @@ site shows them in place of the AI translation, with the AI one a click away.
 Needs `GITHUB_TOKEN` in Vercel: a fine-grained token for this repository only, with
 Contents and Pull requests set to read and write.
 
+## Sandhi: how the words join
+
+`python pipeline/build_sandhi.py` traces, for every Library verse, how the scholars'
+word split joins into the printed text, using Vidyut's sandhi table
+(`engine/sandhi.py`). It writes `web/data/<slug>-sandhi.json`, the list of junction
+types (`data/build/sandhi-types.json`) and `web/data/sutras.json` (the sūtrapāṭha).
+Sūtra citations for each junction type come from an AI model, with every sūtra number
+checked against the sūtrapāṭha:
+
+```bash
+export OPENROUTER_API_KEY=...
+python pipeline/sandhi_cite.py          # web/data/sandhi-rules.json; resumable
+```
+
+Readers can suggest corrections; they arrive as pull requests adding
+`reviewed/sandhi/<id>.json`, handled like translation suggestions.
+
 ## Run the benchmark
 
 The runner uses only the Python standard library.

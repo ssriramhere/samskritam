@@ -12,7 +12,7 @@ const out = {};
 let n = 0;
 if (existsSync(SRC)) {
   for (const slug of readdirSync(SRC)) {
-    if (!statSync(join(SRC, slug)).isDirectory()) continue;
+    if (slug === "sandhi" || !statSync(join(SRC, slug)).isDirectory()) continue;
     for (const f of readdirSync(join(SRC, slug))) {
       const m = f.match(/^(\d+\.\d+)\.json$/);
       if (!m) continue;
@@ -24,6 +24,24 @@ if (existsSync(SRC)) {
       } catch (e) {
         console.warn(`skipped reviewed/${slug}/${f}: ${e.message}`);
       }
+    }
+  }
+}
+// Reviewed sandhi citations: reviewed/sandhi/<id>.json {key, why, steps: [[sūtra, junction]], by}
+const sandhiDir = join(SRC, "sandhi");
+if (existsSync(sandhiDir)) {
+  let sutras = {};
+  try { sutras = JSON.parse(readFileSync(join(ROOT, "web/data/sutras.json"), "utf8")); } catch {}
+  for (const f of readdirSync(sandhiDir)) {
+    if (!f.endsWith(".json")) continue;
+    try {
+      const r = JSON.parse(readFileSync(join(sandhiDir, f), "utf8"));
+      if (!r.key || !r.why || !Array.isArray(r.steps) || !r.steps.length) throw new Error("needs key, why and steps");
+      (out._sandhi ||= {})[r.key] = { why: String(r.why).trim(), by: String(r.by || "a reader").trim(),
+        s: r.steps.map(([c, x]) => [String(c), sutras[c] || "", String(x || "")]) };
+      n++;
+    } catch (e) {
+      console.warn(`skipped reviewed/sandhi/${f}: ${e.message}`);
     }
   }
 }

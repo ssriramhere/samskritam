@@ -144,6 +144,25 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 #sugsend:disabled { opacity: .6 }
 .sug .hint { margin: 0 }
 #sugmsg:empty { display: none }
+.sandhi { margin-top: 16px }
+.sandhi summary { cursor: pointer; color: var(--indigo); font-weight: 500 }
+.ch { margin-top: 12px; padding: 12px 14px; background: var(--paper); border-radius: 10px; min-width: 0 }
+.ch .eq { font-family: var(--font-display); font-size: 1.2rem }
+.ch .eqi { font-family: var(--font-display); font-style: italic; color: var(--muted); font-size: .95rem }
+.ch .eqi .j { color: var(--turmeric); font-style: normal; font-weight: 600; border-bottom: 2px solid var(--turmeric) }
+.ch table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: .92rem }
+.ch td { padding: 6px 10px 6px 0; border-top: 1px solid var(--rule); vertical-align: baseline }
+.ch td.jn { font-family: var(--font-display); font-size: 1.02rem; width: 32% }
+.ch td.jn .si { display: block; font-size: .8rem; color: var(--muted); font-style: italic }
+.ch td.why { width: 30% }
+.ch td.su .step { display: block; font-family: var(--font-display); font-style: italic; color: var(--muted); font-size: .88rem }
+.ch td.su .step code { font-family: var(--font-mono); font-style: normal; color: var(--indigo); margin-right: 6px }
+.ch td.su .step b { font-weight: 400; color: var(--ink) }
+.ch td.su .lab { display: block; font-size: .75rem; color: var(--muted); margin-top: 4px }
+.ch td.su .linkbtn { margin-top: 2px; font-size: .8rem }
+.sjrow td { border-top: 0 !important }
+.sendbtn { font: inherit; font-weight: 600; color: var(--leaf); background: var(--indigo); border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer }
+@media (max-width: 700px) { .ch table, .ch tbody, .ch tr, .ch td { display: block } .ch td, .ch td.jn, .ch td.why { width: auto; border-top: 0; padding: 2px 0 } .ch tr { border-top: 1px solid var(--rule); padding: 6px 0 } }
 .textbar .more { font-size: .82rem; color: var(--muted); align-self: center; padding-left: 4px }
 .tagline { color: var(--indigo); margin-bottom: 14px }
 .pitch p.for { font-size: 1rem; margin-top: 14px }
@@ -518,9 +537,83 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       v.w.forEach((x, i) => { const sep = i === v.w.length - 1 ? "" : (/compound member/.test(x.en) ? "-" : " ");
         dev += x.d + sep; iast += x.f + sep; });
       html += `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
+      html += `<details class="sandhi" id="sandhi"${sandhiOpen ? " open" : ""}><summary>How the words join (sandhi)</summary><div id="sandhibody"></div></details>`;
     }
     $("trans").innerHTML = html;
+    if (sandhiOpen) renderSandhi(v);
   }
+
+  // ---- sandhi: how the words join (loaded when first opened) ----
+  let sandhiOpen = false, sandhiRules = null;
+  const sandhiData = {};
+  function loadSandhi() {
+    const slug = text.slug;
+    return Promise.all([
+      sandhiData[slug] ? sandhiData[slug] : getJSON(`data/${slug}-sandhi.json`).then(d => (sandhiData[slug] = d)),
+      sandhiRules ? sandhiRules : getJSON("data/sandhi-rules.json").catch(() => ({ r: {} })).then(d => (sandhiRules = d)),
+    ]);
+  }
+  function citation(key) {
+    const rev = reviewed && reviewed._sandhi && reviewed._sandhi[key];
+    if (rev) return { ...rev, label: `Reviewed, suggested by ${rev.by}` };
+    const ai = sandhiRules && sandhiRules.r[key];
+    if (ai) return { ...ai, label: `Citation by ${modelNames[sandhiRules.model] || sandhiRules.model} (AI), not reviewed` };
+    return null;
+  }
+  function renderSandhi(v) {
+    const body = $("sandhibody"); if (!body) return;
+    if (!sandhiData[text.slug] || !sandhiRules) { body.innerHTML = `<p class="hint">Loading…</p>`; loadSandhi().then(() => { if (current === v) renderSandhi(v); }).catch(() => { body.innerHTML = `<p class="hint">Couldn't load the sandhi analysis. Try again.</p>`; }); return; }
+    const d = sandhiData[text.slug][v.id];
+    const chunks = (d && d.c) || [];
+    const n = chunks.reduce((t, c) => t + c.j.length, 0);
+    $("sandhi").querySelector("summary").textContent = `How the words join (sandhi), ${n} join${n === 1 ? "" : "s"}`;
+    if (!n) { body.innerHTML = `<p class="hint">${d && d.p ? "The joins in this verse could not be traced." : "The words in this verse stand apart without joining."}</p>`; return; }
+    body.innerHTML = chunks.map((c, ci) => `<div class="ch"><div class="eq">${esc(c.d)}</div>
+      <div class="eqi">${c.h.map(([t, on]) => on ? `<span class="j">${esc(t)}</span>` : esc(t)).join("")}</div>
+      <table><tbody>${c.j.map((j, ji) => { const cit = citation(j.k);
+        return `<tr><td class="jn">${esc(j.ad)} + ${esc(j.bd)} → ${esc(j.rd)}<span class="si">${esc(j.a)} + ${esc(j.b)} → ${esc(j.r)}</span></td>
+        <td class="why">${cit ? esc(cit.why) : `<span class="hint">No citation yet.</span>`}</td>
+        <td class="su">${cit ? cit.s.map(([code, txt, r]) => `<span class="step"><code>${esc(code)}</code>${txt ? esc(txt) : "<em>not found in the Aṣṭādhyāyī</em>"}${r ? ` → <b>${esc(r)}</b>` : ""}</span>`).join("") + `<span class="lab">${esc(cit.label)}</span>` : ""}
+          <button type="button" class="linkbtn sjfix" data-c="${ci}" data-j="${ji}">Suggest a correction</button></td></tr>`; }).join("")}</tbody></table></div>`).join("")
+      + `<p class="hint">Words that stand apart unchanged are not listed. Highlighted letters mark where words meet. Each join is traced with Vidyut's sandhi rules${d.p ? "; some joins in this verse could not be traced" : ""}. Sūtra numbers are checked against the Aṣṭādhyāyī; a citation applies to every join of the same kind.</p>`;
+  }
+  $("trans").addEventListener("toggle", e => {
+    if (e.target.id !== "sandhi") return;
+    sandhiOpen = e.target.open;
+    if (sandhiOpen) renderSandhi(current);
+  }, true);
+  $("trans").addEventListener("click", e => {
+    const b = e.target.closest(".sjfix"); if (!b) return;
+    const c = sandhiData[text.slug][current.id].c[+b.dataset.c], j = c.j[+b.dataset.j], cit = citation(j.k);
+    const old = document.getElementById("sjform"); if (old) old.remove();
+    const f = document.createElement("form"); f.className = "sug"; f.id = "sjform";
+    f.innerHTML = `<label class="flabel">How ${esc(j.a)} + ${esc(j.b)} → ${esc(j.r)} comes about</label>
+      <textarea id="sjwhy" rows="2" maxlength="400" placeholder="Plain-English explanation">${esc(cit ? cit.why : "")}</textarea>
+      <label class="flabel">Sūtras, one per line, in order: number → junction after it</label>
+      <textarea id="sjsteps" rows="4" maxlength="800" placeholder="6.1.77 → y e">${esc(cit ? cit.s.map(([code, , r]) => `${code} → ${r}`).join("\n") : "")}</textarea>
+      <div class="sugrow"><input id="sjname" maxlength="80" placeholder="Name to credit (optional)" autocomplete="name"><input id="sjemail" type="email" maxlength="254" placeholder="Email (optional, never shown)" autocomplete="email"></div>
+      <input id="sjnote" maxlength="600" placeholder="What was wrong? (optional)">
+      <div class="sugrow"><button type="submit" class="sendbtn">Send for review</button><button type="button" class="linkbtn" id="sjcancel">Cancel</button></div>
+      <p class="hint">A correction applies to every join of this kind. Suggestions are reviewed in public on GitHub; your email is never published.</p><p class="joinmsg" id="sjmsg" role="status"></p>`;
+    b.closest("tr").after(Object.assign(document.createElement("tr"), { className: "sjrow" }));
+    const td = document.createElement("td"); td.colSpan = 3; td.appendChild(f); b.closest("tr").nextSibling.appendChild(td);
+    f.querySelector("#sjcancel").onclick = () => td.parentNode.remove();
+    f.onsubmit = async ev => {
+      ev.preventDefault();
+      const msg = f.querySelector("#sjmsg"), btn = f.querySelector(".sendbtn");
+      btn.disabled = true; msg.className = "joinmsg"; msg.textContent = "Sending…";
+      try {
+        const r = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind: "sandhi", key: j.k, example: `${j.a} + ${j.b} → ${j.r}`, why: f.querySelector("#sjwhy").value,
+            steps: f.querySelector("#sjsteps").value, name: f.querySelector("#sjname").value, email: f.querySelector("#sjemail").value,
+            note: f.querySelector("#sjnote").value, current: cit ? [cit.why, ...cit.s.map(([code, , r2]) => `${code} → ${r2}`)].join("\n") : "" }) });
+        const out = await r.json().catch(() => null);
+        if (!out || !out.ok) throw new Error((out && out.error) || "We couldn't send that. Please try again.");
+        msg.className = "joinmsg ok"; msg.textContent = "Thank you. Your correction will be reviewed before it appears.";
+        f.querySelectorAll("textarea, input, .sendbtn").forEach(x => (x.disabled = true));
+      } catch (err) { msg.className = "joinmsg err"; msg.textContent = err.message; btn.disabled = false; }
+    };
+  });
 
   $("trans").addEventListener("click", e => {
     if (e.target.id === "sugbtn") { $("sugform").hidden = false; e.target.hidden = true; $("sugmsg").textContent = ""; $("sugtext").focus(); }

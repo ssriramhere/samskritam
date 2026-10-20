@@ -53,6 +53,77 @@ const clean = (s, max) => String(s || "").replace(/\s+/g, " ").trim().slice(0, m
 // Shown inside fenced blocks in the pull request, so links and @mentions stay inert.
 const fence = (s) => "```text\n" + String(s).replace(/`{3,}/g, "``") + "\n```";
 
+async function limited(req) {
+  const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "unknown";
+  const day = new Date().toISOString().slice(0, 10);
+  const [hits, , today] = await redis([
+    ["INCR", `suggest:rl:${ip}`], ["EXPIRE", `suggest:rl:${ip}`, 3600, "NX"],
+    ["INCR", `suggest:day:${day}`], ["EXPIRE", `suggest:day:${day}`, 172800, "NX"]]);
+  if (hits > PER_IP_PER_HOUR) return "That's the hourly limit for suggestions from your network. Try again later.";
+  if (today > PER_DAY) return "We've had many suggestions today. Please try again tomorrow.";
+  return null;
+}
+
+async function openPR({ branch, path, file, message, title, body }) {
+  const main = await gh("GET", "/git/ref/heads/main");
+  await gh("POST", "/git/refs", { ref: `refs/heads/${branch}`, sha: main.object.sha });
+  const existing = await gh("GET", `/contents/${path}?ref=main`);
+  await gh("PUT", `/contents/${path}`, {
+    message, branch,
+    content: Buffer.from(JSON.stringify(file, null, 2) + "\n").toString("base64"),
+    ...(existing ? { sha: existing.sha } : {}),
+  });
+  return gh("POST", "/pulls", { title, head: branch, base: "main", body });
+}
+
+// A correction to the sūtra citation for one junction type (reviewed/sandhi/).
+async function sandhi(req, res, b) {
+  const key = String(b.key || "");
+  if (!/^[A-Za-z~' ]{1,4}\|[A-Za-z~]{1,2}\|[A-Za-z~' ]{1,8}$/.test(key)) {
+    return res.status(400).json({ ok: false, error: "That join wasn't recognised. Reload the page and try again." });
+  }
+  const why = clean(b.why, 400), name = clean(b.name, 80), note = clean(b.note, 600);
+  const email = clean(b.email, 254).toLowerCase(), example = clean(b.example, 200), current = String(b.current || "").slice(0, 1500);
+  const steps = String(b.steps || "").split(/\n/).map((l) => l.trim()).filter(Boolean).slice(0, 12).map((l) => {
+    const m = l.match(/^(\d\.\d\.\d{1,3})\s*(?:→|->|:)?\s*(.*)$/);
+    return m ? [m[1], m[2].slice(0, 60)] : null;
+  });
+  if (!steps.length || steps.some((x) => !x)) {
+    return res.status(400).json({ ok: false, error: "Write one sūtra per line, starting with its number, like: 6.1.77 → y e" });
+  }
+  if (why.length < 10) return res.status(400).json({ ok: false, error: "Add a short explanation of the join." });
+  if ([why, ...steps.map(([c, r]) => `${c} → ${r}`)].join("\n") === current.trim()) {
+    return res.status(400).json({ ok: false, error: "That's the same as the current citation. Edit it first." });
+  }
+  if (email && !EMAIL.test(email)) return res.status(400).json({ ok: false, error: "Check the email address, or leave it empty." });
+  try {
+    const stop = await limited(req);
+    if (stop) return res.status(429).json({ ok: false, error: stop });
+    const id = require("crypto").createHash("sha1").update(key).digest("hex").slice(0, 10);
+    const sid = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    const suggested = [why, ...steps.map(([c, r]) => `${c} → ${r}`)].join("\n");
+    const pr = await openPR({
+      branch: `suggest-sandhi-${id}-${sid}`, path: `reviewed/sandhi/${id}.json`,
+      file: { key, why, steps, by: name || "a reader" },
+      message: `Suggested sandhi citation: ${example || key}`,
+      title: `Sandhi citation suggestion: ${example || key}`,
+      body: [
+        `A reader suggested a correction to how this join is explained. It applies to every join of this type (\`${key}\` in SLP1).`,
+        "", "**Example**", fence(example || key), "", "**Suggested**", fence(suggested), "", "**Current**", fence(current || "(none)"),
+        ...(note ? ["", "**Reader's note**", fence(note)] : []),
+        "", "**Credit**", fence(name || "a reader (no name given)"),
+        email ? "\nThe reader left a contact email; it is stored privately, not here." : "",
+        "", "---", "**Approve:** merge. **Edit:** change `why` or `steps` (each step is `[sūtra number, junction after it]`) in this pull request's file, then merge. **Reject:** close.",
+      ].join("\n"),
+    });
+    if (email) await redis([["HSET", `suggest:pr:${pr.number}`, "email", email, "name", name, "sandhi", key]]);
+    return res.status(200).json({ ok: true });
+  } catch (e) {
+    console.error("suggest sandhi", e);
+    return res.status(502).json({ ok: false, error: "We couldn't save your suggestion just now. Please try again." });
+  }
+}
+
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") {
@@ -63,6 +134,7 @@ module.exports = async (req, res) => {
   const b = readBody(req);
   if (b.website) return res.status(200).json({ ok: true });  // honeypot
 
+  if (b.kind === "sandhi") return sandhi(req, res, b);
   const slug = String(b.slug || ""), id = String(b.id || "");
   if (!TITLES[slug] || !/^\d{1,3}\.\d{1,3}$/.test(id)) {
     return res.status(400).json({ ok: false, error: "That verse wasn't recognised. Reload the page and try again." });
