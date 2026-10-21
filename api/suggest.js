@@ -17,7 +17,7 @@ const PER_IP_PER_HOUR = 10;
 const PER_DAY = 50;
 const EMAIL = /^[^\s@<>()\[\]\\,;:"]+@[^\s@<>()\[\]\\,;:"]+\.[^\s@<>()\[\]\\,;:"]{2,}$/;
 // Texts that accept suggestions; add new Library texts here.
-const TITLES = { gita: "Bhagavad Gītā", meghaduta: "Meghadūta" };
+const TITLES = { gita: "Bhagavad Gītā", meghaduta: "Meghadūta", mahabharata: "Mahābhārata" };
 
 async function redis(commands) {
   const r = await fetch(`${URL_}/pipeline`, {
@@ -136,7 +136,7 @@ module.exports = async (req, res) => {
 
   if (b.kind === "sandhi") return sandhi(req, res, b);
   const slug = String(b.slug || ""), id = String(b.id || "");
-  if (!TITLES[slug] || !/^\d{1,3}\.\d{1,3}$/.test(id)) {
+  if (!TITLES[slug] || !/^\d{1,3}(?:\.\d{1,3}){1,2}$/.test(id)) {
     return res.status(400).json({ ok: false, error: "That verse wasn't recognised. Reload the page and try again." });
   }
   const text = clean(b.text, 1500), name = clean(b.name, 80), note = clean(b.note, 600);

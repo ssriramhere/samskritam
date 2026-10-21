@@ -354,6 +354,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="nav">
           <span class="ref" id="ref">Bhagavad Gītā 2.47</span>
           <div class="controls">
+            <label for="part" class="eyebrow" id="partlabel" style="letter-spacing:.08em" hidden>Parvan</label>
+            <select id="part" aria-label="Parvan" hidden></select>
             <label for="chap" class="eyebrow" id="chaplabel" style="letter-spacing:.08em">Chapter</label>
             <select id="chap" aria-label="Chapter"></select>
             <button id="prev" type="button" aria-label="Previous verse">←</button>
@@ -390,6 +392,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <div class="track">
           <ul>
             <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
+            <li><span class="tag live">Live</span><span>The Mahābhārata, critical edition, chapter by chapter: <a href="/#mahabharata-3.50.1">the Nalopākhyāna</a> (29 adhyāyas, 900 verses) to start</span></li>
             <li><span class="tag live">Live</span><span>AI English translation of every verse, with a way to <a href="/#gita-2.47">suggest a better one</a></span></li>
             <li><span class="tag live">Live</span><span><a href="/read">Verse reader</a>: paste any verse and get a word-by-word reading, checked against Pāṇini's rules</span></li>
             <li><span class="tag soon">Next</span><span>Spoken Samskritam practice partner</span></li>
@@ -508,7 +511,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "not-checked": "Compound members are not checked yet."
   };
   let translations = null, reviewed = null, modelNames = {}, writeHash = location.hash.length > 1;
-  let texts = [], text = null, verses = [], byChapter = new Map(), derivs = null, current = null, selected = -1, loadSeq = 0;
+  // A text is split into chapters (web/data/<slug>/<chapter>.json), loaded as the reader moves.
+  // Chapter ids: "2" (Gītā), "1" (Meghadūta, Pūrvamegha), "3.50" (Mahābhārata, parvan 3, adhyāya 50).
+  let texts = [], text = null, tindex = null, curCh = null, verses = [], derivs = null, current = null, selected = -1, loadSeq = 0;
+  const chapterOf = id => id.slice(0, id.lastIndexOf("."));
+  const verseNo = id => id.slice(id.lastIndexOf(".") + 1);
+  const twoLevels = () => tindex && tindex.levels.length === 2;
+  const chLabel = ch => (tindex.chapters.find(c => c.id === ch) || {}).label || ch;
   const cache = {};
 
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -523,10 +532,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   function renderVerse(v) {
     current = v; selected = -1;
-    const [chs, vs] = v.id.split(".");
     $("ref").textContent = text.slug === "gita"
       ? `Bhagavad Gītā ${v.id}` + (v.ce && v.id.startsWith("13.") ? ` (critical ed. 13.${v.ce})` : "")
-      : `${text.title}, ${text.parts[+chs - 1]} ${vs}`;
+      : text.refStyle === "named" ? `${text.title}, ${chLabel(chapterOf(v.id))} ${verseNo(v.id)}` : `${text.title} ${v.id}`;
     const sp = $("speaker"); sp.hidden = !v.sp; sp.textContent = v.sp || "";
     const padaLen = v.m[0] === "triṣṭubh" ? 11 : 8;
     $("lines").innerHTML = v.dev.map((d, li) => lineHTML(v, li)).join("");
@@ -610,7 +618,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   function loadSandhi() {
     const slug = text.slug;
     return Promise.all([
-      sandhiData[slug] ? sandhiData[slug] : getJSON(`data/${slug}-sandhi.json`).then(d => (sandhiData[slug] = d)),
+      sandhiData[`${slug}/${curCh}`] ? sandhiData[`${slug}/${curCh}`] : getJSON(`data/${slug}/${curCh}-sandhi.json`).catch(() => ({})).then(d => (sandhiData[`${slug}/${curCh}`] = d)),
       sandhiRules ? sandhiRules : getJSON("data/sandhi-rules.json").catch(() => ({ r: {} })).then(d => (sandhiRules = d)),
     ]);
   }
@@ -623,8 +631,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   }
   function renderSandhi(v) {
     const body = $("sandhibody"); if (!body) return;
-    if (!sandhiData[text.slug] || !sandhiRules) { body.innerHTML = `<p class="hint">Loading…</p>`; loadSandhi().then(() => { if (current === v) renderSandhi(v); }).catch(() => { body.innerHTML = `<p class="hint">Couldn't load the sandhi analysis. Try again.</p>`; }); return; }
-    const d = sandhiData[text.slug][v.id];
+    if (!sandhiData[`${text.slug}/${curCh}`] || !sandhiRules) { body.innerHTML = `<p class="hint">Loading…</p>`; loadSandhi().then(() => { if (current === v) renderSandhi(v); }).catch(() => { body.innerHTML = `<p class="hint">Couldn't load the sandhi analysis. Try again.</p>`; }); return; }
+    const d = sandhiData[`${text.slug}/${curCh}`][v.id];
     const chunks = (d && d.c) || [];
     const n = chunks.reduce((t, c) => t + c.j.length, 0);
     $("sandhi").querySelector("summary").textContent = `How the words join (sandhi), ${n} join${n === 1 ? "" : "s"}`;
@@ -645,7 +653,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   }, true);
   $("trans").addEventListener("click", e => {
     const b = e.target.closest(".sjfix"); if (!b) return;
-    const c = sandhiData[text.slug][current.id].c[+b.dataset.c], j = c.j[+b.dataset.j], cit = citation(j.k);
+    const c = sandhiData[`${text.slug}/${curCh}`][current.id].c[+b.dataset.c], j = c.j[+b.dataset.j], cit = citation(j.k);
     const old = document.getElementById("sjform"); if (old) old.remove();
     const f = document.createElement("form"); f.className = "sug sjf"; f.id = "sjform";
     const ex = `${j.a} + ${j.b} → ${j.r}`;
@@ -775,16 +783,42 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   }
 
   function syncSelects() {
-    const ch = +current.id.split(".")[0];
-    $("chap").value = ch;
-    const list = byChapter.get(ch);
-    $("verse").innerHTML = list.map(v => `<option value="${v.id}">${v.id.split(".")[1]}</option>`).join("");
+    if (twoLevels()) {
+      const part = curCh.split(".")[0];
+      $("part").value = part;
+      $("chap").innerHTML = tindex.chapters.filter(c => c.id.split(".")[0] === part).map(c => `<option value="${c.id}">${esc(c.label)}</option>`).join("");
+    }
+    $("chap").value = curCh;
+    $("verse").innerHTML = verses.map(v => `<option value="${v.id}">${verseNo(v.id)}</option>`).join("");
     $("verse").setAttribute("aria-label", "Verse");
     $("verse").value = current.id;
   }
 
-  function go(id) { const v = verses.find(x => x.id === id); if (v) renderVerse(v); }
-  function step(d) { const i = verses.indexOf(current); const v = verses[i + d]; if (v) renderVerse(v); }
+  // Open a verse anywhere in the text, loading its chapter first if needed.
+  function go(id, edge) {
+    const ch = chapterOf(id);
+    if (ch === curCh) { const v = verses.find(x => x.id === id); if (v) renderVerse(v); return Promise.resolve(); }
+    return openChapter(ch, id, edge);
+  }
+  function step(d) {
+    const i = verses.indexOf(current), v = verses[i + d];
+    if (v) return renderVerse(v);
+    const k = tindex.chapters.findIndex(c => c.id === curCh) + d, c = tindex.chapters[k];
+    if (c) openChapter(c.id, null, d > 0 ? "first" : "last");
+  }
+
+  function openChapter(ch, vid, edge) {
+    const seq = ++loadSeq, slug = text.slug, base = `data/${slug}/${ch}`;
+    $("words").innerHTML = `<span class="hint">Loading…</span>`;
+    return getJSON(`${base}.json`).then(data => {
+      if (seq !== loadSeq) return;
+      curCh = ch; verses = data.verses; derivs = null; translations = null;
+      const v = verses.find(x => x.id === vid) || (edge === "last" ? verses[verses.length - 1] : verses[0]);
+      renderVerse(v);
+      getJSON(`${base}-translations.json`).then(tr => { if (seq === loadSeq) { translations = tr; renderTrans(current); } }).catch(() => {});
+      getJSON(`${base}-derivations.json`).then(d => { if (seq === loadSeq) { derivs = d; if (selected >= 0) renderDetail(selected); } }).catch(() => {});
+    }).catch(() => { if (seq === loadSeq) $("words").innerHTML = `<span class="hint">This chapter could not load. Reload the page to try again.</span>`; });
+  }
 
   $("words").addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) renderDetail(+b.dataset.i); });
   $("lines").addEventListener("click", e => {
@@ -804,36 +838,59 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     try { navigator.clipboard.writeText(url).then(() => done(true), fallback); } catch (err) { fallback(); }
   });
 
-  // ---- search: verse numbers and word forms/lemmas in the current text
+  // ---- search: verse numbers, and word forms or lemmas across the whole text.
+  // Each text has one or more search files (one per parvan for the Mahābhārata),
+  // loaded the first time a word is searched.
   const fold = x => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  let index = null, hits = [], active = -1;
-  function buildIndex() {
-    index = verses.map(v => ({ v, words: v.w.map(w => ({ f: fold(w.f), l: fold(w.l), d: w.d, raw: w.f })) }));
+  let hits = [], active = -1, searchSeq = 0;
+  const searchRows = {};
+  function loadSearch(file) {
+    const key = `${text.slug}/${file}`;
+    return searchRows[key] || (searchRows[key] = getJSON(`data/${key}`).then(rows => rows.map(([id, line, f, l, d]) => {
+      const fs = f.split(" ");
+      return { id, line, raw: fs, f: fs.map(fold), l: l.split(" ").map(fold), d: d.split(" ") };
+    })));
   }
-  function refLabel(v) { const [c, n] = v.id.split("."); return text.slug === "gita" ? v.id : `${text.parts[+c - 1]} ${n}`; }
+  function refLabel(id) { return text.refStyle === "named" ? `${chLabel(chapterOf(id))} ${verseNo(id)}` : id; }
+  function verseQuery(q) {
+    const m = q.match(/^\d+(?:\s*[.:]\s*\d+){1,2}$/); if (!m) return null;
+    const parts = q.split(/\s*[.:]\s*/).map(Number), need = tindex.levels.length + 1;
+    if (parts.length === need) return parts.join(".");
+    if (parts.length === need - 1 && twoLevels()) return [curCh.split(".")[0], ...parts].join(".");  // "50.1" within this parvan
+    return null;
+  }
   let lastQ = null;
-  function runSearch(q) {
+  async function runSearch(q) {
     lastQ = q; q = q.trim(); hits = []; active = -1;
-    const box = $("results");
+    const box = $("results"), seq = ++searchSeq;
     if (!q) { box.hidden = true; return; }
-    const num = q.match(/^(\d+)\s*[.:]\s*(\d+)$/);
-    if (num) { const v = verses.find(x => x.id === `${+num[1]}.${+num[2]}`); if (v) hits.push({ v, why: "Verse" }); }
-    if (!num && q.length >= 2) {
-      if (!index) buildIndex();
+    const vq = verseQuery(q);
+    if (vq) {
+      if (tindex.chapters.some(c => c.id === chapterOf(vq))) hits.push({ id: vq, line: "", why: "Verse" });
+    } else if (q.length >= 2) {
       const isDev = /[\u0900-\u097F]/.test(q), fq = fold(q);
-      for (const { v, words } of index) {
-        const m = words.find(w => isDev ? w.d.startsWith(q) : (w.f.startsWith(fq) || w.l.startsWith(fq)));
-        if (m) hits.push({ v, why: m.raw });
+      const here = curCh.split(".")[0];
+      const files = [...tindex.search].sort((a, b) => (b.part === here) - (a.part === here));  // this parvan first
+      box.innerHTML = `<div class="r-none">Searching…</div>`; box.hidden = false;
+      for (const fdesc of files) {
+        let rows; try { rows = await loadSearch(fdesc.file); } catch (e) { continue; }
+        if (seq !== searchSeq) return;
+        for (const r of rows) {
+          const k = isDev ? r.d.findIndex(w => w.startsWith(q)) : r.f.findIndex((w, x) => w.startsWith(fq) || r.l[x].startsWith(fq));
+          if (k >= 0) hits.push({ id: r.id, line: r.line, why: isDev ? r.d[k] : r.raw[k] });
+          if (hits.length >= 40) break;
+        }
         if (hits.length >= 40) break;
       }
     }
+    if (seq !== searchSeq) return;
     box.innerHTML = hits.length
-      ? hits.map((h, i) => `<button type="button" role="option" data-i="${i}" aria-selected="false"><span class="r-ref">${esc(refLabel(h.v))}</span><span class="r-txt">${esc(h.v.dev[0])}</span><span class="r-why">${h.why === "Verse" ? "Go to verse" : "contains " + esc(h.why)}</span></button>`).join("")
+      ? hits.map((h, i) => `<button type="button" role="option" data-i="${i}" aria-selected="false"><span class="r-ref">${esc(refLabel(h.id))}</span><span class="r-txt">${esc(h.line)}</span><span class="r-why">${h.why === "Verse" ? "Go to verse" : "contains " + esc(h.why)}</span></button>`).join("")
         + (hits.length >= 40 ? `<div class="r-none">Showing the first 40 verses. Type more letters to narrow it.</div>` : "")
       : `<div class="r-none">No verse or word matches “${esc(q)}” in the ${esc(text.title)}.</div>`;
     box.hidden = false;
   }
-  function pick(i) { const h = hits[i]; if (!h) return; $("results").hidden = true; $("q").value = ""; renderVerse(h.v); $("lines").scrollIntoView({ block: "nearest" }); }
+  function pick(i) { const h = hits[i]; if (!h) return; $("results").hidden = true; $("q").value = ""; go(h.id).then(() => $("lines").scrollIntoView({ block: "nearest" })); }
   let tmr = null;
   $("q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(() => runSearch(e.target.value), 120); });
   $("q").addEventListener("keydown", e => {
@@ -844,8 +901,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       opts.forEach((o, i) => o.setAttribute("aria-selected", i === active ? "true" : "false")); opts[active].scrollIntoView({ block: "nearest" });
     } else if (e.key === "Enter") {
       e.preventDefault(); clearTimeout(tmr);
-      if (lastQ !== e.target.value) runSearch(e.target.value);  // typed faster than the debounce
-      pick(active >= 0 ? active : 0);
+      const done = lastQ !== e.target.value ? runSearch(e.target.value) : Promise.resolve();  // typed faster than the debounce
+      done.then(() => pick(active >= 0 ? active : 0));
     }
     else if (e.key === "Escape") { $("results").hidden = true; $("q").blur(); }
   });
@@ -858,7 +915,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   $("prev").addEventListener("click", () => step(-1));
   $("next").addEventListener("click", () => step(1));
-  $("chap").addEventListener("change", e => go(byChapter.get(+e.target.value)[0].id));
+  $("chap").addEventListener("change", e => openChapter(e.target.value, null, "first"));
+  $("part").addEventListener("change", e => { const c = tindex.chapters.find(x => x.id.split(".")[0] === e.target.value); if (c) openChapter(c.id, null, "first"); });
   $("verse").addEventListener("change", e => go(e.target.value));
 
 
@@ -910,21 +968,28 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   function loadText(slug, vid) {
     const t = texts.find(x => x.slug === slug) || texts[0];
     const seq = ++loadSeq;
-    text = t; derivs = null; translations = null;
+    text = t; tindex = null; curCh = null; derivs = null; translations = null;
     document.querySelectorAll("#texts button").forEach(b => b.setAttribute("aria-pressed", b.dataset.slug === t.slug ? "true" : "false"));
-    $("chaplabel").textContent = t.partLabel;
-    $("chap").setAttribute("aria-label", t.partLabel);
     $("words").innerHTML = `<span class="hint">Loading the word analysis…</span>`;
     showStats(t);
-    return getJSON(`data/${t.slug}.json`).then(data => {
+    $("q").placeholder = ({ gita: "Go to 2.47, or find a word: karma, कर्म", meghaduta: "Go to 1.5, or find a word: megha, मेघ",
+      mahabharata: "Go to 3.60.5 (or 60.5), or find a word: nala, नल" })[t.slug] || "Go to a verse, or find a word";
+    getJSON("data/reviewed.json").then(r => { reviewed = r; if (current) renderTrans(current); }).catch(() => {});
+    return getJSON(`data/${t.slug}/index.json`).then(ix => {
       if (seq !== loadSeq) return;
-      verses = data.verses; byChapter = new Map(); index = null;
-      verses.forEach(v => { const ch = +v.id.split(".")[0]; if (!byChapter.has(ch)) byChapter.set(ch, []); byChapter.get(ch).push(v); });
-      $("chap").innerHTML = [...byChapter.keys()].map(c => `<option value="${c}">${esc(t.parts[c - 1] || c)}</option>`).join("");
-      go(verses.some(v => v.id === vid) ? vid : t.default);
-      getJSON("data/reviewed.json").then(r => { reviewed = r; if (current) renderTrans(current); }).catch(() => {});
-      getJSON(`data/${t.slug}-translations.json`).then(tr => { if (seq !== loadSeq) return; translations = tr; if (current) renderTrans(current); }).catch(() => {});
-      return getJSON(`data/${t.slug}-derivations.json`).then(d => { if (seq !== loadSeq) return; derivs = d; if (selected >= 0) renderDetail(selected); });
+      tindex = ix;
+      const two = ix.levels.length === 2;
+      $("chaplabel").textContent = ix.levels[ix.levels.length - 1];
+      $("chap").setAttribute("aria-label", ix.levels[ix.levels.length - 1]);
+      $("part").hidden = $("partlabel").hidden = !two;
+      if (two) {
+        $("partlabel").textContent = ix.levels[0];
+        $("part").innerHTML = Object.entries(ix.parts).map(([k, name]) => `<option value="${k}">${k} · ${esc(name)}</option>`).join("");
+      } else {
+        $("chap").innerHTML = ix.chapters.map(c => `<option value="${c.id}">${esc(c.label)}</option>`).join("");
+      }
+      const want = vid && ix.chapters.some(c => c.id === chapterOf(vid)) ? vid : t.default;
+      return openChapter(chapterOf(want), want);
     }).catch(() => { $("words").innerHTML = `<span class="hint">The word analysis could not load. Reload the page to try again.</span>`; });
   }
 
@@ -935,15 +1000,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     $("texts").innerHTML = texts.map(t => `<button type="button" data-slug="${t.slug}" aria-pressed="false">${esc(t.title)}</button>`).join("")
       + `<span class="more">More texts coming</span>`;
     window.addEventListener("hashchange", () => {
-      const m2 = (location.hash || "").slice(1).match(/^([a-z]+)-(\d+\.\d+)$/);
+      const m2 = (location.hash || "").slice(1).match(/^([a-z]+)-(\d+(?:\.\d+){1,2})$/);
       if (!m2) return;
-      if (m2[1] === text.slug) { if (!current || current.id !== m2[2]) go(m2[2]); }
+      if (m2[1] === text.slug && tindex) { if (!current || current.id !== m2[2]) go(m2[2]); }
       else loadText(m2[1], m2[2]);
       $("reader").scrollIntoView({ behavior: "smooth" });
     });
     const h = (location.hash || "").slice(1);
     let slug = "gita", vid = null;
-    const m = h.match(/^([a-z]+)-(\d+\.\d+)$/);
+    const m = h.match(/^([a-z]+)-(\d+(?:\.\d+){1,2})$/);
     if (m) { slug = m[1]; vid = m[2]; }
     else if (/^v\d+\.\d+$/.test(h)) vid = h.slice(1);  // older #v2.47 links
     loadText(slug, vid);

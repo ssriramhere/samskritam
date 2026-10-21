@@ -20,6 +20,24 @@ sys.path.insert(0, ROOT)
 from engine import dcs, labels, meter, verify  # noqa: E402
 
 TEXTS = {
+    # The critical edition of the Mahābhārata, one CoNLL-U file per adhyāya
+    # (data/sources/dcs-mahabharata/mbh-<parvan>-<adhyāya>.conllu). For now
+    # the Nalopākhyāna, Āraṇyakaparvan 3.50-78; add files to grow it.
+    "mahabharata": {
+        "title": "Mahābhārata",
+        "author": "Vyāsa (critical edition)",
+        "source_dir": "data/sources/dcs-mahabharata",
+        "levels": ["Parvan", "Adhyāya"],
+        "parvans": {1: "Ādiparvan", 2: "Sabhāparvan", 3: "Āraṇyakaparvan", 4: "Virāṭaparvan",
+                    5: "Udyogaparvan", 6: "Bhīṣmaparvan", 7: "Droṇaparvan", 8: "Karṇaparvan",
+                    9: "Śalyaparvan", 10: "Sauptikaparvan", 11: "Strīparvan", 12: "Śāntiparvan",
+                    13: "Anuśāsanaparvan", 14: "Āśvamedhikaparvan", 15: "Āśramavāsikaparvan",
+                    16: "Mausalaparvan", 17: "Mahāprasthānikaparvan", 18: "Svargārohaṇaparvan"},
+        "speakers": True,
+        "prose": False,
+        "note": "So far the Nalopākhyāna (Āraṇyakaparvan, adhyāyas 50–78), with more of the "
+                "epic to follow. Numbering follows the critical edition.",
+    },
     "meghaduta": {
         "title": "Meghadūta",
         "author": "Kālidāsa",
@@ -62,15 +80,38 @@ def analyse(half, stats, derivations):
     return groups
 
 
+def speaker_of(half: dict):
+    """A short line like "bṛhadaśva uvāca" that introduces the speaker."""
+    toks = [t for g in half["groups"] for t in g["tokens"]]
+    if toks and toks[-1]["lemma"] == "vac" and len(toks) <= 4:
+        return half["text"]
+    return None
+
+
+def chapter_ids(cfg, files):
+    """Chapter id for each file: "1", "2", ... or, for texts with two levels
+    (parvan and adhyāya), "3.50" from mbh-3-050.conllu."""
+    if len(cfg.get("levels", [])) == 2:
+        import re
+        return [".".join(str(int(x)) for x in re.findall(r"(\d+)-(\d+)\.conllu$", f)[0]) for f in files]
+    return [str(i) for i in range(1, len(files) + 1)]
+
+
 def build(slug: str):
     cfg = TEXTS[slug]
     files = sorted(glob.glob(os.path.join(ROOT, cfg["source_dir"], "*.conllu")))
+    ids = chapter_ids(cfg, files)
+    order = sorted(range(len(files)), key=lambda i: [int(x) for x in ids[i].split(".")])
     chapters, derivations, stats = [], {}, Counter()
-    for part_no, path in enumerate(files, 1):
-        verses = defaultdict(list)
+    for fi in order:
+        path, ch_id = files[fi], ids[fi]
+        verses, speakers, pending = defaultdict(list), {}, None
         for half in dcs.read(path):
             if "counter" not in half:
-                print("WARN unnumbered:", part_no, half["text"][:60])
+                print("WARN unnumbered:", ch_id, half["text"][:60])
+                continue
+            if cfg.get("speakers") and speaker_of(half):
+                speakers.setdefault(half["counter"], half["text"])
                 continue
             verses[half["counter"]].append(
                 {"pos": half.get("sub", 1), "text": half["text"],
@@ -82,11 +123,15 @@ def build(slug: str):
             m = ({"name": "prose", "variant": None, "check": "none"}
                  if cfg["prose"] else meter.identify(lines))
             stats["meter:" + m["name"] + (" / " + m["variant"] if m.get("variant") else "")] += 1
-            out.append({"id": f"{part_no}.{n}", "ch": part_no, "v": n, "ce": None,
-                        "speaker": None, "lines": lines, "halves": halves,
+            out.append({"id": f"{ch_id}.{n}", "ch": ch_id, "v": n, "ce": None,
+                        "speaker": speakers.get(n), "lines": lines, "halves": halves,
                         "meter": m, "layer": "dcs"})
-        chapters.append({"ch": part_no, "name": cfg["parts"][part_no - 1],
-                         "verses": out, "missing": []})
+        if len(cfg.get("levels", [])) == 2:
+            p, a = ch_id.split(".")
+            name = f"{cfg['parvans'][int(p)]} {a}"
+        else:
+            name = cfg["parts"][int(ch_id) - 1]
+        chapters.append({"ch": ch_id, "name": name, "verses": out, "missing": []})
 
     ids = {k: f"d{i}" for i, k in enumerate(k for k, v in derivations.items() if v)}
     for c in chapters:
@@ -98,7 +143,8 @@ def build(slug: str):
                             t["derivation"] = ids[t["derivation"]]
     deriv_out = {ids[k]: v for k, v in derivations.items() if v}
     meta = {"title": cfg["title"], "author": cfg["author"],
-            "part_label": cfg["part_label"], "note": cfg["note"],
+            "part_label": cfg.get("part_label"), "levels": cfg.get("levels"),
+            "parvans": {str(k): v for k, v in cfg.get("parvans", {}).items()}, "note": cfg["note"],
             "sources": {"analysis": "Digital Corpus of Sanskrit, Oliver Hellwig, "
                                     "CC BY 4.0, github.com/OliverHellwig/sanskrit",
                         "engine": "Vidyut 0.4.0 (Ambuda), github.com/ambuda-org/vidyut"},

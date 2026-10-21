@@ -20,7 +20,7 @@ Learn Sanskrit using AI, with every word checked against Pāṇini's rules.
 | `data/sources/` | Source annotations (DCS, CC BY 4.0) and verse text (public domain) |
 | `data/build/` | Built datasets: Gītā (`gita.json`) and Meghadūta (`meghaduta.json`), with derivations |
 | `bench/` | Benchmark generator, runner, grader; items in `bench/data/v0.jsonl` |
-| `web/` | The static site served at samskritam.ai |
+| `web/` | The static site served at samskritam.ai. Each text lives in `web/data/<slug>/`: `index.json` (chapters, labels, search files), `<chapter>.json` (verses and words), and per-chapter derivations, translations and sandhi, loaded as the reader moves. Chapter ids are `2` (Gītā) or `3.50` (Mahābhārata parvan 3, adhyāya 50); verse ids add the verse: `3.50.1`. |
 | `api/waitlist.js` | Sign-up endpoint (Vercel function, Upstash Redis) |
 | `api/suggest.js` | Translation suggestions, opened as GitHub pull requests (`reviewed/`) |
 | `api/read.py` | Verse reader: an AI model analyses a pasted verse, `engine/reader.py` checks each word (needs `OPENROUTER_API_KEY` and Upstash; optional `READER_MODEL` (default), `READER_MODELS` (the models people can pick), `READER_DAILY_CAP`) |
@@ -32,8 +32,9 @@ Learn Sanskrit using AI, with every word checked against Pāṇini's rules.
 pip install -r pipeline/requirements.txt
 python -c "import vidyut; vidyut.download_data('vidyut-data')"
 python pipeline/build_gita.py     # data/build/*.json
-python pipeline/build_text.py     # data/build/meghaduta*.json (and any text in TEXTS)
-python pipeline/build_web.py      # web/data/*.json
+python pipeline/build_text.py     # data/build/<slug>*.json for each text in TEXTS (Meghadūta, Mahābhārata)
+python pipeline/build_web.py      # web/data/<slug>/: index, one file per chapter, search files
+python pipeline/build_sandhi.py   # web/data/<slug>/<chapter>-sandhi.json
 python pipeline/audit_gita.py     # agreement report
 ```
 
@@ -45,7 +46,7 @@ and unchecked.
 
 ```bash
 export OPENROUTER_API_KEY=...
-python pipeline/translate.py gita meghaduta     # web/data/<slug>-translations.json; resumable
+python pipeline/translate.py mahabharata         # web/data/<slug>/<chapter>-translations.json; resumable
 ```
 
 Default model `anthropic/claude-opus-5.5`; change with `--model`.

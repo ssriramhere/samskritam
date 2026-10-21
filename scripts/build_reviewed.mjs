@@ -14,7 +14,7 @@ if (existsSync(SRC)) {
   for (const slug of readdirSync(SRC)) {
     if (slug === "sandhi" || !statSync(join(SRC, slug)).isDirectory()) continue;
     for (const f of readdirSync(join(SRC, slug))) {
-      const m = f.match(/^(\d+\.\d+)\.json$/);
+      const m = f.match(/^(\d+(?:\.\d+){1,2})\.json$/);
       if (!m) continue;
       try {
         const r = JSON.parse(readFileSync(join(SRC, slug, f), "utf8"));

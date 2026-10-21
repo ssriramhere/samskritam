@@ -1,8 +1,15 @@
-"""Compact the built datasets for the website.
+"""Compact the built datasets for the website, one file per chapter.
 
-For each text: web/data/<slug>.json (verses and word analyses, with
-Devanagari added) and web/data/<slug>-derivations.json. Also writes
-web/data/texts.json, the list of texts the reader offers.
+For each text, in web/data/<slug>/:
+  index.json              chapters, labels and search files
+  <chapter>.json          verses and word analyses, with Devanagari added
+  <chapter>-derivations.json   the derivations those verses use
+  search[-<part>].json    per verse: id, first line, word forms, lemmas and
+                          Devanagari forms, for search
+                          (one file per parvan for texts with two levels)
+Also web/data/texts.json, the list of texts the reader offers. Chapter ids are
+"2" (Gītā chapter 2) or "3.50" (Mahābhārata, parvan 3, adhyāya 50); verse ids
+add the verse number: "2.47", "3.50.1".
 """
 import json
 import os
@@ -38,10 +45,11 @@ def pada_breaks(lines: list, n: int):
         out.append(breaks)
     return out
 
-# slug, built dataset, built derivations, default verse, chapter label
+# slug, built dataset, built derivations, default verse, chapter label, how to name a verse
 TEXTS = [
-    ("gita", "gita.json", "derivations.json", "2.47", "Chapter"),
-    ("meghaduta", "meghaduta.json", "meghaduta-derivations.json", "1.1", None),
+    ("gita", "gita.json", "derivations.json", "2.47", "Chapter", "id"),
+    ("meghaduta", "meghaduta.json", "meghaduta-derivations.json", "1.1", None, "named"),
+    ("mahabharata", "mahabharata.json", "mahabharata-derivations.json", "3.50.1", None, "id"),
 ]
 
 
@@ -100,43 +108,99 @@ def compact(src: dict) -> list:
     return verses
 
 
+def fold(x: str) -> str:
+    """Lower case without diacritics, as the reader's search does."""
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", x) if not unicodedata.combining(c)).lower()
+
+
+def chapter_of(vid: str) -> str:
+    return vid.rsplit(".", 1)[0]
+
+
+def dump(obj, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
+
+
 def main():
+    import shutil
     out_dir = os.path.join(ROOT, "web/data")
-    os.makedirs(out_dir, exist_ok=True)
     index = []
-    for slug, data_file, deriv_file, default, ch_label in TEXTS:
-        src = json.load(open(os.path.join(ROOT, "data/build", data_file), encoding="utf-8"))
+    for slug, data_file, deriv_file, default, ch_label, ref_style in TEXTS:
+        src_path = os.path.join(ROOT, "data/build", data_file)
+        if not os.path.exists(src_path):
+            print("skip", slug, "(not built)")
+            continue
+        src = json.load(open(src_path, encoding="utf-8"))
         verses = compact(src)
         st = src["meta"]["stats"]
         checkable = st["agree"] + st["form-known"] + st["unknown"]
         meta = src["meta"]
+        levels = meta.get("levels") or [ch_label or meta.get("part_label") or "Part"]
         der = json.load(open(os.path.join(ROOT, "data/build", deriv_file), encoding="utf-8"))
+
         def dev_step(slp):
             return transliterate(slp.replace("\\", "").replace("^", ""), Scheme.Slp1, Scheme.Devanagari)
         slim = {k: {"f": v["form"], "s": [[s["sutra"], s["text"], s["result"], dev_step(s["result_slp"])]
                                           for s in v["steps"]]}
                 for k, v in der.items()}
-        json.dump({"verses": verses},
-                  open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8"),
-                  ensure_ascii=False, separators=(",", ":"))
-        json.dump(slim, open(os.path.join(out_dir, f"{slug}-derivations.json"), "w", encoding="utf-8"),
-                  ensure_ascii=False, separators=(",", ":"))
+
+        tdir = os.path.join(out_dir, slug)
+        if os.path.isdir(tdir):  # rebuild from scratch, but keep files made by other steps
+            for f in os.listdir(tdir):
+                if not f.endswith(("-translations.json", "-sandhi.json")):
+                    os.remove(os.path.join(tdir, f))
+        os.makedirs(tdir, exist_ok=True)
+        by_ch = {}
+        for v in verses:
+            by_ch.setdefault(chapter_of(v["id"]), []).append(v)
+        names = {str(c["ch"]): c.get("name") for c in src["chapters"]}
+        chapters, search = [], {}
+        for ch, vs in by_ch.items():
+            dump({"verses": vs}, os.path.join(tdir, f"{ch}.json"))
+            used = {w["x"] for v in vs for w in v["w"] if w.get("x")}
+            dump({k: slim[k] for k in used if k in slim}, os.path.join(tdir, f"{ch}-derivations.json"))
+            label = ch.split(".")[-1] if len(levels) == 2 else (names.get(ch) or ch)
+            chapters.append({"id": ch, "label": label, "n": len(vs)})
+            part = ch.split(".")[0] if len(levels) == 2 else ""
+            for v in vs:
+                search.setdefault(part, []).append([
+                    v["id"], v["dev"][0] if v["dev"] else "",
+                    " ".join(w["f"] for w in v["w"]), " ".join(w["l"] for w in v["w"]),
+                    " ".join(w["d"] for w in v["w"])])
+        files = []
+        for part, rows in search.items():
+            name = f"search-{part}.json" if part else "search.json"
+            dump(rows, os.path.join(tdir, name))
+            files.append({"file": name, "part": part})
+        tindex = {"slug": slug, "levels": levels, "chapters": chapters, "search": files}
+        if len(levels) == 2:
+            tindex["parts"] = {p: meta["parvans"][p] for p in sorted({c["id"].split(".")[0] for c in chapters}, key=int)}
+        dump(tindex, os.path.join(tdir, "index.json"))
+
+        # One-off move of translations from the old one-file layout.
+        old_tr = os.path.join(out_dir, f"{slug}-translations.json")
+        if os.path.exists(old_tr):
+            tr = json.load(open(old_tr, encoding="utf-8"))
+            for ch in by_ch:
+                part = {k: v for k, v in tr["t"].items() if chapter_of(k) == ch}
+                if part:
+                    dump({"model": tr["model"], "t": part}, os.path.join(tdir, f"{ch}-translations.json"))
+            os.remove(old_tr)
+        for old in (f"{slug}.json", f"{slug}-derivations.json"):
+            if os.path.exists(os.path.join(out_dir, old)):
+                os.remove(os.path.join(out_dir, old))
+
         index.append({
             "slug": slug, "title": meta["title"], "author": meta.get("author"),
-            "partLabel": ch_label or meta.get("part_label", "Part"),
-            "parts": [c.get("name") or str(c["ch"]) for c in src["chapters"]],
-            "default": default, "note": meta.get("note"),
+            "levels": levels, "refStyle": ref_style, "default": default, "note": meta.get("note"),
             "verses": len(verses), "agree": st["agree"], "checkable": checkable,
             "notChecked": st["not-checked"], "derivations": len(slim)})
-        print(slug, len(verses), "verses,",
-              os.path.getsize(os.path.join(out_dir, f"{slug}.json")) // 1024, "KB")
-    json.dump(index, open(os.path.join(out_dir, "texts.json"), "w", encoding="utf-8"),
-              ensure_ascii=False, indent=1)
-    import shutil
+        size = sum(os.path.getsize(os.path.join(tdir, f)) for f in os.listdir(tdir))
+        print(f"{slug}: {len(verses)} verses in {len(chapters)} chapter files, {size // 1024} KB")
+    dump(index, os.path.join(out_dir, "texts.json"))
     shutil.copyfile(os.path.join(ROOT, "bench/data/v0.jsonl"), os.path.join(out_dir, "bench-v0.jsonl"))
-    old = os.path.join(out_dir, "derivations.json")
-    if os.path.exists(old):
-        os.remove(old)  # renamed to gita-derivations.json
 
 
 if __name__ == "__main__":

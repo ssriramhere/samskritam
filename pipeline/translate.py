@@ -5,10 +5,10 @@ reader shows), so the translation follows the same parsing. The output is
 labelled on the site as the model's translation, not checked.
 
     export OPENROUTER_API_KEY=...
-    python pipeline/translate.py gita meghaduta              # default model
+    python pipeline/translate.py mahabharata               # default model
     python pipeline/translate.py gita --model google/gemini-4-argon --limit 5
 
-Writes web/data/<slug>-translations.json. Re-running resumes: verses already
+Writes web/data/<slug>/<chapter>-translations.json. Re-running resumes: verses already
 translated by the same model are skipped.
 """
 import argparse
@@ -23,7 +23,8 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, wait
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TITLES = {"gita": "the Bhagavad Gītā", "meghaduta": "Kālidāsa's Meghadūta"}
+TITLES = {"gita": "the Bhagavad Gītā", "meghaduta": "Kālidāsa's Meghadūta",
+          "mahabharata": "the Mahābhārata (critical edition)"}
 
 PROMPT = """Translate this verse from {title} ({ref}) into English.
 
@@ -39,9 +40,9 @@ diacritics (Arjuna, Kṛṣṇa, Yakṣa). No commentary, notes or brackets.
 Answer with JSON only: {{"translation": "..."}}"""
 
 
-def prompt_for(slug, v, part_names):
-    ch, n = v["id"].split(".")
-    ref = f"{ch}.{n}" if slug == "gita" else f"{part_names[int(ch) - 1]} {n}"
+def prompt_for(slug, v, labels):
+    ch, n = v["id"].rsplit(".", 1)
+    ref = f"{labels[ch]} {n}" if slug == "meghaduta" else v["id"]
     words = "\n".join(f"- {w['f']} ({w['l']}): {w['en']}" for w in v["w"]) or "(none)"
     speaker = f"Speaker: {v['sp']}\n" if v.get("sp") else ""
     return PROMPT.format(title=TITLES.get(slug, slug), ref=ref, speaker=speaker,
@@ -76,16 +77,20 @@ def main():
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
-    texts = {t["slug"]: t for t in json.load(open(os.path.join(ROOT, "web/data/texts.json"), encoding="utf-8"))}
-
     for slug in a.slugs:
-        verses = json.load(open(os.path.join(ROOT, f"web/data/{slug}.json"), encoding="utf-8"))["verses"]
-        out_path = os.path.join(ROOT, f"web/data/{slug}-translations.json")
+        tdir = os.path.join(ROOT, "web/data", slug)
+        tindex = json.load(open(os.path.join(tdir, "index.json"), encoding="utf-8"))
+        labels = {c["id"]: c["label"] for c in tindex["chapters"]}
+        verses = [v for c in tindex["chapters"]
+                  for v in json.load(open(os.path.join(tdir, f"{c['id']}.json"), encoding="utf-8"))["verses"]]
+        out_path = tdir  # one <chapter>-translations.json per chapter
         out = {"model": a.model, "t": {}}
-        if os.path.exists(out_path):
-            old = json.load(open(out_path, encoding="utf-8"))
-            if old.get("model") == a.model:
-                out = old
+        for c in tindex["chapters"]:
+            f = os.path.join(tdir, f"{c['id']}-translations.json")
+            if os.path.exists(f):
+                old = json.load(open(f, encoding="utf-8"))
+                if old.get("model") == a.model:
+                    out["t"].update(old["t"])
         todo = [v for v in verses if v["id"] not in out["t"]][:a.limit]
         print(f"{slug}: {len(todo)} to translate, {len(out['t'])} done, model {a.model}")
         lock, pace_lock, next_slot, errors = threading.Lock(), threading.Lock(), [time.monotonic()], []
@@ -98,7 +103,7 @@ def main():
                 time.sleep(wait)
 
         def work(v):
-            p = prompt_for(slug, v, texts[slug]["parts"])
+            p = prompt_for(slug, v, labels)
             for attempt in range(5):
                 pace()
                 try:
@@ -140,10 +145,16 @@ def main():
             print("  failed", vid, err, "(re-run to retry)")
 
 
-def save(path, out):
-    with open(path + ".part", "w", encoding="utf-8") as f:
-        json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
-    os.replace(path + ".part", path)
+def save(tdir, out):
+    """Write one <chapter>-translations.json per chapter that has translations."""
+    by_ch = {}
+    for vid, t in out["t"].items():
+        by_ch.setdefault(vid.rsplit(".", 1)[0], {})[vid] = t
+    for ch, part in by_ch.items():
+        path = os.path.join(tdir, f"{ch}-translations.json")
+        with open(path + ".part", "w", encoding="utf-8") as f:
+            json.dump({"model": out["model"], "t": part}, f, ensure_ascii=False, separators=(",", ":"))
+        os.replace(path + ".part", path)
 
 
 if __name__ == "__main__":

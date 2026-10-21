@@ -3,7 +3,7 @@
     python pipeline/build_sandhi.py
 
 Writes
-  web/data/<slug>-sandhi.json   per verse: the printed chunks that contain joins,
+  web/data/<slug>/<chapter>-sandhi.json   per verse: the printed chunks that contain joins,
                                 each join (left word + right word -> joined text)
                                 and its junction type
   data/build/sandhi-types.json  each junction type with examples, the input
@@ -23,7 +23,7 @@ from vidyut.lipi import Scheme, transliterate  # noqa: E402
 from engine import sandhi  # noqa: E402
 from engine.verify import DATA, to_slp1  # noqa: E402
 
-TEXTS = [("gita", "gita.json"), ("meghaduta", "meghaduta.json")]
+TEXTS = [("gita", "gita.json"), ("meghaduta", "meghaduta.json"), ("mahabharata", "mahabharata.json")]
 
 
 def iast(slp: str) -> str:
@@ -137,6 +137,8 @@ def pick_examples(cands, k=3):
 def main():
     types = defaultdict(lambda: {"n": 0, "all": []})
     for slug, src in TEXTS:
+        if not os.path.exists(os.path.join(ROOT, "data/build", src)):
+            continue
         data = json.load(open(os.path.join(ROOT, "data/build", src), encoding="utf-8"))
         out, lines = {}, [0, 0, 0]
         for c in data["chapters"]:
@@ -158,8 +160,21 @@ def main():
                         verse += render(ws, gs, ln, js, types, f"{slug} {v['id']}")
                 if verse or partial:
                     out[v["id"]] = {"c": verse, **({"p": 1} if partial else {})}
-        json.dump(out, open(os.path.join(ROOT, f"web/data/{slug}-sandhi.json"), "w", encoding="utf-8"),
-                  ensure_ascii=False, separators=(",", ":"))
+        # one file per chapter, next to the chapter's verses (web/data/<slug>/<chapter>-sandhi.json)
+        by_ch = defaultdict(dict)
+        for vid, rec in out.items():
+            by_ch[vid.rsplit(".", 1)[0]][vid] = rec
+        tdir = os.path.join(ROOT, "web/data", slug)
+        os.makedirs(tdir, exist_ok=True)
+        for f in os.listdir(tdir):
+            if f.endswith("-sandhi.json"):
+                os.remove(os.path.join(tdir, f))
+        for ch, recs in by_ch.items():
+            json.dump(recs, open(os.path.join(tdir, f"{ch}-sandhi.json"), "w", encoding="utf-8"),
+                      ensure_ascii=False, separators=(",", ":"))
+        old = os.path.join(ROOT, f"web/data/{slug}-sandhi.json")
+        if os.path.exists(old):
+            os.remove(old)
         print(f"{slug}: {lines[1]}/{lines[0]} half-lines fully traced, {lines[2]} partly")
     for t in types.values():
         t["ex"] = pick_examples(t.pop("all"))
