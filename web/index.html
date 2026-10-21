@@ -216,7 +216,7 @@ section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
 #joinbtn:disabled { opacity: .6; cursor: default }
 .joinmsg { margin: 0; min-height: 1.4em; font-size: .95rem }
 .joinmsg.ok { color: var(--ok) } .joinmsg.err { color: var(--warn) }
-#results .sub { color: var(--muted); margin: 10px 0 0; max-width: 70ch }
+#benchresults .sub { color: var(--muted); margin: 10px 0 0; max-width: 70ch }
 #lb td.n, #lb th.n { text-align: right }
 #lb td.top { font-weight: 600 }
 .textbar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px }
@@ -286,6 +286,19 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 }
 .steps td.code a.sl, .ch code a.sl { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px }
 .steps td.code a.sl:hover, .ch code a.sl:hover { text-decoration-color: currentColor }
+.heatlegend { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .82rem; color: var(--muted); margin-top: 10px }
+.heatlegend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--rule) }
+#lb .s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) }
+#lb .s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
+#lb .s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) }
+#lb .s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
+.heatlegend .s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) } .heatlegend .s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
+.heatlegend .s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) } .heatlegend .s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
+#lb a.hc { display: block; color: var(--ink); text-decoration: none; border-radius: 6px; padding: 4px 8px; font-variant-numeric: tabular-nums }
+#lb a.hc:hover { outline: 2px solid var(--indigo); outline-offset: -2px }
+#lb td.n:has(a.hc) { padding-right: 4px }
+#lb td.ov { white-space: nowrap; padding-right: 8px }
+#lb td.ov .pm { font-weight: 400; font-size: .78rem; color: var(--muted); margin-left: 4px }
 </style>
 </head>
 <body>
@@ -399,12 +412,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       </div>
     </section>
 
-    <section class="band" id="results" hidden>
+    <section class="band" id="benchresults" hidden>
       <div class="eyebrow">Benchmark v0 results</div>
       <h2>How today's models handle Pāṇini</h2>
       <p class="sub"><a href="/bench">Method, sample questions and the full item set</a></p>
       <p class="sub" id="lb-note"></p>
       <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
+      <div class="heatlegend"><span class="sw s4"></span>98% or more <span class="sw s3"></span>90–98% <span class="sw s2"></span>75–90% <span class="sw s1"></span>below 75%</div>
     </section>
 
     <section class="band" id="numbers">
@@ -847,11 +861,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     if (current) renderTrans(current);
     const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
     const keys = ["tinanta", "subanta", "analyze", "gita", "meter"];
+    const N = { tinanta: 150, subanta: 94, analyze: 100, gita: 93, meter: 50 };
+    const band = p => p >= .98 ? "s4" : p >= .9 ? "s3" : p >= .75 ? "s2" : "s1";
+    const pm = (p, n) => { const m = 196 * Math.sqrt(Math.max(p * (1 - p), 0.0004) / n); return m < 1 ? m.toFixed(1) : m.toFixed(0); };
     document.querySelector("#lb tbody").innerHTML = lb.rows.map(r =>
-      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
-    $("lb-note").textContent = `${lb.items} items, answers graded automatically against rule-derived keys. Updated ${lb.updated}.`;
+      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td><td class="n top ov ${band(r.overall)}" title="Margin about ±${pm(r.overall, lb.items)} points">${pct(r.overall)}<span class="pm">±${pm(r.overall, lb.items)}</span></td>${keys.map(k =>
+        `<td class="n"><a class="hc ${band(r.tasks[k])}" href="/bench?m=${encodeURIComponent(r.id)}&t=${k}#results" title="Margin about ±${pm(r.tasks[k], N[k])} points. See the mistakes">${pct(r.tasks[k])}</a></td>`).join("")}</tr>`).join("");
+    $("lb-note").textContent = `${lb.items} questions, graded automatically against rule-derived answers. Updated ${lb.updated}. Tap a score to see that model's mistakes on that task.`;
     lb.rows.filter(r => r.note).forEach(r => { $("lb-note").textContent += " * " + r.note; });
-    $("results").hidden = false;
+    $("benchresults").hidden = false;
   }).catch(() => {});
   function getJSON(url) { return cache[url] || (cache[url] = fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.json(); })); }
 

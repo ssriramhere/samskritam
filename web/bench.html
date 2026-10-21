@@ -227,6 +227,41 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   .verse, .words, .detail { animation: rise .35s ease both }
   @keyframes rise { from { opacity: .35; transform: translateY(4px) } to { opacity: 1; transform: none } }
 }
+.heat th .qn { display: block; font-size: .68rem; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--muted) }
+.heat td.n button { font: inherit; font-variant-numeric: tabular-nums; color: var(--ink); border: 0; border-radius: 6px; padding: 4px 8px; cursor: pointer; width: 100%; text-align: right }
+.heat td.n button:hover, .heat td.n button[aria-pressed="true"] { outline: 2px solid var(--indigo); outline-offset: -2px }
+.heat td.n { padding-right: 4px }
+.heat td.ov { font-weight: 600; white-space: nowrap }
+.heat td.ov .pm { font-weight: 400; font-size: .78rem; color: var(--muted); margin-left: 4px }
+.s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) }
+.s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
+.s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) }
+.s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
+.legendrow { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .82rem; color: var(--muted); margin-top: 10px }
+.legendrow .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--rule) }
+.legendrow b { color: var(--ink); font-weight: 600 }
+.mistakes { margin-top: 18px; background: var(--leaf); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 20px }
+.mistakes h3 { font-size: 1.1rem; margin: 0 }
+.mistakes .mhead { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap }
+.mistakes .mclose { font: inherit; font-size: .85rem; color: var(--indigo); background: none; border: 0; cursor: pointer; text-decoration: underline }
+.mistakes ol { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px }
+.mistakes li { border-top: 1px solid var(--rule); padding-top: 10px; display: grid; gap: 4px }
+.mistakes .mq { font-size: .9rem }
+.mistakes .mq .sa { font-family: var(--font-display); font-style: italic; font-size: 1.02rem }
+.mistakes .ans { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 2px 10px; font-size: .9rem }
+.mistakes .ans dt { color: var(--muted) } .mistakes .ans dd { margin: 0; overflow-wrap: anywhere }
+.mistakes .pat { font-family: var(--font-mono); letter-spacing: .12em }
+.mistakes .pat i { font-style: normal; color: var(--muted) }
+.mistakes .pat b { color: #c0392b; background: color-mix(in srgb, #c0392b 15%, transparent); border-radius: 2px; font-weight: 600 }
+.mistakes .bad { color: #c0392b; font-weight: 600 }
+.mistakes .none { color: var(--muted); margin-top: 10px }
+.mistakes .more { font: inherit; color: var(--indigo); background: none; border: 0; cursor: pointer; text-decoration: underline; justify-self: start; padding: 0 }
+.boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 32px }
+.box { background: var(--leaf); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 20px; min-width: 0 }
+.box pre { background: var(--paper); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: .8rem; line-height: 1.5; margin: 10px 0 0 }
+.box code { font-family: var(--font-mono) }
+.box .small { font-size: .82rem; margin-top: 10px }
+@media (max-width: 860px) { .boxes { grid-template-columns: minmax(0, 1fr) } }
 </style>
 <style>
 .bhero { padding-block: 34px 10px; max-width: 860px }
@@ -284,11 +319,40 @@ pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10p
       <h2>How today's models do</h2>
       <div id="lb-wrap" hidden>
         <p class="sub muted" id="lb-note"></p>
-        <p class="sub muted">How to read it: with 487 questions, an overall score carries a margin of roughly ±2 points, and a task with 50 questions roughly ±12. Gaps smaller than that, such as the order of the four models between 95% and 97%, are not meaningful. Each model was run once, at its provider's default settings.</p>
-        <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
+        <div class="tasks"><table id="lb" class="heat"><thead><tr><th>Model</th><th class="n">Overall<span class="qn">487 qs</span></th>
+          <th class="n">Tiṅanta<span class="qn">150</span></th><th class="n">Subanta<span class="qn">94</span></th><th class="n">Analysis<span class="qn">100</span></th><th class="n">Gītā<span class="qn">93</span></th><th class="n">Chandas<span class="qn">50</span></th></tr></thead><tbody></tbody></table></div>
+        <div class="legendrow"><span class="sw s4"></span>98% or more <span class="sw s3"></span>90–98% <span class="sw s2"></span>75–90% <span class="sw s1"></span>below 75% <span class="lgsep">·</span> <b>Tap a score</b> to see that model's mistakes on that task.</div>
+        <p class="sub muted">How to read it: an overall score is good to about ±2 points, and a task score to about ±3 points for the larger tasks and ±12 for Chandas (50 questions); hover a score for its margin. Gaps smaller than that are not meaningful. Each model was run once.</p>
+        <div id="mistakes" class="mistakes" hidden></div>
       </div>
       <p class="sub muted" id="raw" hidden>Every model's answers, graded question by question: <span id="rawlinks"></span>.</p>
       <p class="pending" id="lb-pending">The first results will appear here once the runs are complete and the wrong answers have been checked by hand for grading mistakes.</p>
+
+      <div class="boxes">
+        <div class="box">
+          <div class="eyebrow">Run it on your model</div>
+          <p class="muted">Any model on OpenRouter, in about 30 minutes. The runner and grader need only Python.</p>
+<pre><code>git clone https://github.com/ssriramhere/samskritam
+cd samskritam && pip install -r pipeline/requirements.txt
+export OPENROUTER_API_KEY=...
+python bench/run.py --provider openrouter --model vendor/model
+python bench/grade.py bench/results/openrouter__vendor_model.jsonl</code></pre>
+          <p class="muted small">Send us the results file and we'll review the wrong answers and add the model. Other providers: <code>--provider anthropic|openai|google|sarvam</code>.</p>
+        </div>
+        <div class="box">
+          <div class="eyebrow">How to cite</div>
+          <p class="muted">Items and answers are CC BY 4.0; the code is Apache 2.0.</p>
+<pre><code>@misc{samskritam-bench-v0,
+  title  = {Samskritam Bench v0: a Sanskrit grammar
+            benchmark graded by rule},
+  author = {Subramanian, Sriram},
+  year   = {2026},
+  url    = {https://samskritam.ai/bench},
+  note   = {487 items; answer keys from Vidyut and the
+            Digital Corpus of Sanskrit}
+}</code></pre>
+        </div>
+      </div>
     </section>
 
     <section class="band" id="tasks">
@@ -388,24 +452,85 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
 (() => {
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  fetch("/data/leaderboard.json").then(r => r.ok ? r.json() : null).then(lb => {
+  // ---- results: heat table, margins, and each model's mistakes per task ----
+  const TASKS = [["tinanta", "Tiṅanta"], ["subanta", "Subanta"], ["analyze", "Analysis"], ["gita", "Gītā"], ["meter", "Chandas"]];
+  const N = { tinanta: 150, subanta: 94, analyze: 100, gita: 93, meter: 50 };
+  const band = p => p >= .98 ? "s4" : p >= .9 ? "s3" : p >= .75 ? "s2" : "s1";
+  const margin = (p, n) => 100 * 1.96 * Math.sqrt(Math.max(p * (1 - p), 0.0004) / n);
+  const pct = x => (100 * x).toFixed(1) + "%";
+  let files = {}, items = null;
+  const cache = {};
+  const getText = url => cache[url] || (cache[url] = fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.text(); }));
+  const jsonl = t => t.split("\n").filter(Boolean).map(l => JSON.parse(l));
+  const parse = s => { try { const m = String(s || "").replace(/```(?:json)?/g, "").match(/\{[^{}]*\}/); return m ? JSON.parse(m[0]) : null; } catch (e) { return null; } };
+  const pm = (p, n) => { const m = margin(p, n); return m < 1 ? m.toFixed(1) : m.toFixed(0); };
+  // The question, shortened to what a reader needs.
+  function q(it) {
+    const body = it.prompt.split(/Answer with JSON/)[0].trim();
+    if (it.task === "meter") { const line = body.split("\n")[1].trim();
+      return `Gītā ${esc(it.meta.verse)}<br><span class="sa">${esc(line)}</span>`; }
+    if (it.task === "gita") { const line = body.split("\n")[1].trim(), m = body.match(/occurs in '([^']+)'/);
+      return `<span class="sa">${esc(line)}</span><br>The word <b>${esc(it.meta.form)}</b>${m && m[1] !== it.meta.form ? ` in <i>${esc(m[1])}</i>` : ""}`; }
+    return esc(body.replace(/\s*If the root takes both[^.]*\.[^.]*\./, "").replace(/\s*Use IAST[^.]*\./, ""));
+  }
+
+  Promise.all([fetch("/data/leaderboard.json").then(r => r.json()), fetch("/data/results-v0/index.json").then(r => r.json()).catch(() => [])]).then(([lb, list]) => {
     if (!lb || !lb.rows || !lb.rows.length) return;
-    const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
-    const keys = ["tinanta", "subanta", "analyze", "gita", "meter"];
+    list.forEach(x => { files[x.model] = x.file; });
     document.querySelector("#lb tbody").innerHTML = lb.rows.map(r =>
-      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td><td class="n top">${pct(r.overall)}</td>${keys.map(k => `<td class="n">${pct(r.tasks[k])}</td>`).join("")}</tr>`).join("");
+      `<tr><td>${esc(r.model)}${r.note ? "<sup>*</sup>" : ""}</td>
+        <td class="n ov ${band(r.overall)}" title="Margin about ±${pm(r.overall, lb.items)} points">${pct(r.overall)}<span class="pm">±${pm(r.overall, lb.items)}</span></td>
+        ${TASKS.map(([k]) => `<td class="n"><button type="button" class="${band(r.tasks[k])}" data-m="${esc(r.id)}" data-t="${k}" data-name="${esc(r.model)}"
+          title="Margin about ±${pm(r.tasks[k], N[k])} points. Show the mistakes" aria-pressed="false">${pct(r.tasks[k])}</button></td>`).join("")}</tr>`).join("");
     $("lb-note").textContent = `${lb.items} questions, graded automatically against rule-derived answers. Updated ${lb.updated}.`;
     lb.rows.filter(r => r.note).forEach(r => { $("lb-note").textContent += " * " + r.note; });
     $("lb-wrap").hidden = false; $("lb-pending").hidden = true;
+    $("rawlinks").innerHTML = list.map(x => `<a href="/data/results-v0/${encodeURIComponent(x.file)}" download>${esc(lb.rows.find(r => r.id === x.model)?.model || x.model)}</a>`).join(", ");
+    $("raw").hidden = !list.length;
+    const qs = new URLSearchParams(location.search), want = qs.get("m"), wt = qs.get("t");
+    const btn = want && [...document.querySelectorAll("#lb button[data-m]")].find(x => x.dataset.m === want && x.dataset.t === wt);
+    if (btn) btn.click();
   }).catch(() => {});
-  const NAMES = { "anthropic/claude-opus-5.5": "Claude Opus 5.5", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5",
-    "google/gemini-4-argon": "Gemini 4 Argon", "google/gemini-3.8-flash": "Gemini 3.8 Flash", "openai/gpt-6-sol": "GPT-6 Sol",
-    "sarvam-105b": "Sarvam-105B (reasoning off)" };
-  fetch("/data/results-v0/index.json").then(r => r.ok ? r.json() : null).then(list => {
-    if (!list || !list.length) return;
-    $("rawlinks").innerHTML = list.map(x => `<a href="/data/results-v0/${encodeURIComponent(x.file)}" download>${esc(NAMES[x.model] || x.model)}</a>`).join(", ");
-    $("raw").hidden = false;
-  }).catch(() => {});
+
+  $("lb").addEventListener("click", e => {
+    const b = e.target.closest("button[data-m]"); if (!b) return;
+    document.querySelectorAll("#lb button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    showMistakes(b.dataset.m, b.dataset.t, b.dataset.name);
+  });
+
+  function patDiff(key, got, anceps) {
+    return [...got].map((c, i) => anceps.includes(i) ? `<i>${c}</i>` : c === key[i] ? c : `<b>${c}</b>`).join("");
+  }
+  function row(it, r) {
+    const out = r.output, a = parse(out) || {}, k = it.accept[0], t = it.task;
+    let ans;
+    if (t === "tinanta" || t === "subanta") ans = `<dt>Answer key</dt><dd>${esc(it.accept.join(" or "))}</dd><dt>Model said</dt><dd class="bad">${esc(a.form ?? out ?? "")}</dd>`;
+    else if (t === "analyze") ans = `<dt>Answer key</dt><dd>${esc([k.lakara, k.purusha, k.vacana].join(", "))}</dd><dt>Model said</dt><dd>${["lakara", "purusha", "vacana"].map(f => String(a[f] || "").toLowerCase().replace(/ṅ/g, "n") === k[f] ? esc(a[f]) : `<span class="bad">${esc(a[f] ?? "—")}</span>`).join(", ")}</dd>`;
+    else if (t === "gita") { const fs = ["lemma", "pos", "case", "number", "gender", "tense_mood", "person", "voice"].filter(f => k[f] != null), bad = new Set(r.wrong || []);
+      ans = `<dt>Answer key</dt><dd>${fs.map(f => esc(k[f])).join(", ")}</dd><dt>Model said</dt><dd>${fs.map(f => bad.has(f) ? `<span class="bad">${esc(a[f] ?? "—")}</span>` : esc(a[f] ?? "—")).join(", ")}</dd>`; }
+    else if (t === "meter") { const got = String(a.pattern || "").toUpperCase().replace(/[^GL]/g, ""), an = it.meta.anceps || [];
+      ans = `<dt>Answer key</dt><dd class="pat">${[...k].map((c, i) => an.includes(i) ? `<i>${c}</i>` : c).join("")}</dd><dt>Model said</dt><dd class="pat">${got ? patDiff(k, got.slice(0, 60), an) + (got.length > 60 ? "…" : "") : "—"}</dd>
+        <dt></dt><dd class="muted small">${got.length === k.length ? "Right length; red marks the wrong syllables." : `${got.length} syllables where the line has ${k.length}.`}</dd>`; }
+    return `<li><div class="mq">${q(it)}</div><dl class="ans">${ans}</dl></li>`;
+  }
+  async function showMistakes(model, task, name) {
+    const box = $("mistakes"); box.hidden = false;
+    const label = TASKS.find(([k]) => k === task)[1];
+    box.innerHTML = `<div class="mhead"><h3>${esc(name)} · ${label}</h3><button type="button" class="mclose">Close</button></div><p class="none">Loading…</p>`;
+    box.querySelector(".mclose").onclick = () => { box.hidden = true; document.querySelectorAll("#lb button").forEach(x => x.setAttribute("aria-pressed", "false")); };
+    try {
+      if (!items) items = Object.fromEntries(jsonl(await getText("/data/bench-v0.jsonl")).map(it => [it.id, it]));
+      const res = jsonl(await getText(`/data/results-v0/${encodeURIComponent(files[model])}`));
+      const wrong = res.filter(r => r.task === task && !r.correct && items[r.id]);
+      const head = `<div class="mhead"><h3>${esc(name)} · ${label}: ${wrong.length} wrong of ${N[task]}</h3><button type="button" class="mclose">Close</button></div>`;
+      const show = n => wrong.slice(0, n).map(r => row(items[r.id], r)).join("");
+      const note = task === "gita" ? `<p class="muted small">Red marks what the grader rejected; equivalent spellings and tense names are accepted.</p>` : task === "meter" ? `<p class="muted small">Grey syllables end a pāda and may be either weight, so they are not graded.</p>` : "";
+      box.innerHTML = head + note + (wrong.length ? `<ol>${show(20)}</ol>` + (wrong.length > 20 ? `<button type="button" class="more">Show all ${wrong.length}</button>` : "") : `<p class="none">No mistakes on this task.</p>`);
+      box.querySelector(".mclose").onclick = () => { box.hidden = true; document.querySelectorAll("#lb button").forEach(x => x.setAttribute("aria-pressed", "false")); };
+      const more = box.querySelector(".more"); if (more) more.onclick = () => { box.querySelector("ol").innerHTML = show(wrong.length); more.remove(); };
+      box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch (e) { box.querySelector(".none").textContent = "Couldn't load the answers. Try again."; }
+  }
 })();
 </script>
 <script>
