@@ -5,6 +5,7 @@ converted to IAST, and anusvāra vs homorganic nasal spellings
 (saṃjaya / sañjaya) are treated as equal. Nothing else is forgiven.
 
     python bench/grade.py bench/results/<model>.jsonl
+    python bench/grade.py --bench bench/private/v1-pool.jsonl bench/results/<model>.v1-pool.jsonl
 """
 import json
 import os
@@ -105,7 +106,7 @@ def grade_item(item: dict, answer_text: str) -> dict:
         got = {k: str(ans.get(k, "")).strip().lower().replace("ṅ", "n")
                for k in ("lakara", "purusha", "vacana")}
         return {"correct": any(got == a for a in item["accept"])}
-    if task == "gita":
+    if task in ("gita", "context"):  # v1's context task uses v0's Gītā format
         gold = item["accept"][0]
         lem = lemma_equal(ans.get("lemma"), gold["lemma"]) or \
             str(ans.get("lemma", "")).strip() in LEMMA_EQUIV.get(gold["lemma"], set())
@@ -114,6 +115,25 @@ def grade_item(item: dict, answer_text: str) -> dict:
                             "person", "voice")}
         return {"correct": lem and all(fields.values()), "lemma": lem,
                 "grammar": all(fields.values()), "fields": fields}
+    if task == "split":
+        gold = item["accept"][0]
+        got = ans.get("words")
+        if not isinstance(got, list):
+            return {"correct": False, "reason": "no word list"}
+        got = [w for w in got if isinstance(w, str) and w.strip()]
+        if len(got) != len(gold):
+            return {"correct": False, "reason": f"{len(got)} words != {len(gold)}"}
+        return {"correct": all(_same_word(g, w) for g, w in zip(gold, got))}
+    if task == "join":
+        flat = lambda x: norm_form(re.sub(r"[\s'’ʼ‘-]", "", x if isinstance(x, str) else ""))
+        return {"correct": flat(ans.get("form")) in {flat(a) for a in item["accept"]}}
+    if task == "rule":
+        need = set(item["accept"][0])
+        got = ans.get("sutras")
+        if not isinstance(got, list):
+            return {"correct": False, "reason": "no sūtra list"}
+        cited = {m.group(0) for x in got for m in [re.search(r"\d\.\d\.\d{1,3}", str(x))] if m}
+        return {"correct": need <= cited, "missing": sorted(need - cited)}
     if task == "meter":
         gold = item["accept"][0]
         got = re.sub(r"[^GL]", "", str(ans.get("pattern", "")).upper())
@@ -123,6 +143,18 @@ def grade_item(item: dict, answer_text: str) -> dict:
         ok = all(g == w for i, (g, w) in enumerate(zip(got, gold)) if i not in skip)
         return {"correct": ok}
     raise ValueError(task)
+
+
+def _same_word(gold: str, got: str) -> bool:
+    """Same word up to the spelling of its final sound: visarga or s, anusvāra
+    or m, a final voiced or voiceless stop (kaścid / kaścit)."""
+    try:
+        if detect(got) == Scheme.Devanagari:
+            got = transliterate(got, Scheme.Devanagari, Scheme.Iast)
+    except Exception:
+        pass
+    got = got.strip().strip(".,;:!?\"'।॥ ").replace("ṁ", "ṃ").lower()
+    return bool(set(map(verify.canon, verify.kosha_keys(gold))) & set(map(verify.canon, verify.kosha_keys(got))))
 
 
 def score(items: dict, results: list) -> dict:
@@ -146,9 +178,12 @@ def load_items(path):
 
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
     bench = os.path.join(ROOT, "bench/data/v0.jsonl")
+    if args[:1] == ["--bench"]:
+        bench, args = args[1], args[2:]
     items = load_items(bench)
-    for path in sys.argv[1:]:
+    for path in args:
         latest = {}
         with open(path, encoding="utf-8") as f:
             for r in map(json.loads, f):  # retries append; keep the last answer

@@ -9,6 +9,7 @@ bench/results-v0/<model>.jsonl and web/data/results-v0/<model>.jsonl.
 import glob
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -23,6 +24,8 @@ os.makedirs(out_dir, exist_ok=True)
 os.makedirs(web_dir, exist_ok=True)
 index = []
 for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
+    if re.search(r"\.v\d", os.path.basename(path)):
+        continue  # results for other item sets (v1...) never enter the v0 leaderboard
     latest = {}
     for r in map(json.loads, open(path, encoding="utf-8")):
         if r.get("output") is not None or r["id"] not in latest:

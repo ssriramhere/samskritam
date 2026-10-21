@@ -5,3 +5,4 @@ bench/results/
 .env*
 .vercel/
 web/data/reviewed.json
+bench/private/

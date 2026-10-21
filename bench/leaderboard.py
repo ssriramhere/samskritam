@@ -3,6 +3,7 @@ import datetime
 import glob
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,8 @@ NOTES = {"sarvam-105b": "Sarvam-105B ran through Sarvam's own API with reasoning
 items = grade.load_items(os.path.join(ROOT, "bench/data/v0.jsonl"))
 rows = []
 for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
+    if re.search(r"\.v\d", os.path.basename(path)):
+        continue  # results for other item sets (v1...) never enter the v0 leaderboard
     latest = {}
     for r in map(json.loads, open(path, encoding="utf-8")):
         if r.get("output") is not None or r["id"] not in latest:

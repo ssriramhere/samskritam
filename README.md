@@ -98,6 +98,27 @@ Published results: `web/data/leaderboard.json` (scores) and `bench/results-v0/`
 (each model's final answer to every question, with its grade), written by
 `python bench/leaderboard.py` and `python bench/publish_results.py`.
 
+## Benchmark v1 (in progress)
+
+v0 stays as published: its items, scores and leaderboard are frozen. v1 is
+built from the Mahābhārata (for now the Nalopākhyāna) with five tasks:
+grammar in context, sandhi split, sandhi join, sūtra citation and meter
+(see the top of `bench/generate_v1.py` for how each answer key is fixed).
+
+```
+python bench/generate_v1.py                       # candidate pool -> bench/private/v1-pool.jsonl
+python bench/run_all.py --bench bench/private/v1-pool.jsonl --models <file of pilot models>
+export BENCH_SECRET=...                           # private; the same secret gives the same split
+python bench/calibrate_v1.py bench/results/*.v1-pool.jsonl
+```
+
+Calibration drops items every pilot model gets right, lists items no model
+gets right in `bench/private/v1-review.tsv` (read these: they are the likeliest
+bad keys), and splits the rest into `bench/data/v1-dev.jsonl` (published) and
+`bench/private/v1-test.jsonl` (never committed). `bench/private/` holds the
+test items, so it is git-ignored. Results for v1 never enter the v0
+leaderboard.
+
 ## Deploy
 
 Vercel serves `web/` as static files and `api/` as functions (`vercel.json`).

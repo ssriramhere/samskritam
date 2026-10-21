@@ -126,7 +126,10 @@ def main():
     if a.limit:
         items = items[:a.limit]
     os.makedirs(os.path.join(ROOT, "bench/results"), exist_ok=True)
+    stem = os.path.splitext(os.path.basename(a.bench))[0]
     tag = f".{a.tag}" if a.tag else ""
+    if stem != "v0":
+        tag = f".{stem}{tag}"  # e.g. openrouter__vendor_model.v1-pool.jsonl; v0 file names unchanged
     out_path = os.path.join(ROOT, "bench/results",
                             f"{a.provider}__{a.model.replace('/', '_')}{tag}.jsonl")
     done = set()
