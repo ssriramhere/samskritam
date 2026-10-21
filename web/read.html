@@ -244,6 +244,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .ex button { font: inherit; font-size: .85rem; color: var(--muted); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 3px 12px; cursor: pointer }
 .ex button:hover { border-color: var(--indigo); color: var(--ink) }
 #msg:empty { display: none }
+.limits { font-size: .82rem; color: var(--muted); margin: 0 }
+.limits.over { color: var(--warn) }
 #out { margin-top: 18px; padding-top: 4px; border-top: 1px dashed var(--rule) }
 .warnline { color: var(--warn) }
 .trans { margin-top: 18px }
@@ -277,7 +279,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <article class="folio" aria-live="polite">
         <form id="f" autocomplete="off">
           <label for="t" class="flabel">Sanskrit, in Devanagari or IAST · one verse</label>
-          <textarea id="t" rows="4" maxlength="600" spellcheck="false" placeholder="वागर्थाविव संपृक्तौ वागर्थप्रतिपत्तये।&#10;जगतः पितरौ वन्दे पार्वतीपरमेश्वरौ॥"></textarea>
+          <textarea id="t" rows="4" maxlength="400" spellcheck="false" placeholder="वागर्थाविव संपृक्तौ वागर्थप्रतिपत्तये।&#10;जगतः पितरौ वन्दे पार्वतीपरमेश्वरौ॥"></textarea>
+          <p class="limits" id="limits">One verse: up to 4 lines and 400 characters (<span id="count">0</span>/400). 10 new readings an hour; verses someone has already read open instantly and don't count.</p>
           <div class="formrow">
             <button id="go" type="submit">Read</button>
             <label class="msel"><span class="eyebrow" style="letter-spacing:.08em">Model</span>
@@ -352,8 +355,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   $("ex").innerHTML = EXAMPLES.map((e, i) => `<button type="button" data-i="${i}">${esc(e[0])}</button>`).join("");
   $("ex").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
-    $("t").value = EXAMPLES[+b.dataset.i][1]; submit(); });
+    $("t").value = EXAMPLES[+b.dataset.i][1]; countUp(); submit(); });
   $("f").addEventListener("submit", e => { e.preventDefault(); submit(); });
+  const countUp = () => { const v = $("t").value, n = v.length, lines = v.split(/\n|[।॥|]+/).filter(x => x.trim()).length;
+    $("count").textContent = n; $("limits").classList.toggle("over", n > 380 || lines > 4); };
+  $("t").addEventListener("input", countUp);
   $("t").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); submit(); } });
 
   async function submit() {

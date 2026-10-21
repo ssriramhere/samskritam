@@ -175,6 +175,19 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .sjstep .sjt.ok { color: var(--ok) } .sjstep .sjt.bad { color: var(--warn); font-style: normal; font-family: var(--font-ui) }
 .sjstep .sjx { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 1.1rem }
 @media (max-width: 700px) { .sjhd .sjtl { display: none } .sjstep { grid-template-columns: 1.6em 6.5em minmax(0, 1fr) 1.6em } .sjstep .sjt { grid-column: 2 / 4; grid-row: 2 } .sjstep .sjr { grid-column: 3; grid-row: 1 } .sjstep .sjx { grid-column: 4; grid-row: 1 } }
+.parts { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 0 }
+.parts a { display: inline-flex; align-items: center; gap: 8px; font-size: .9rem; font-weight: 600; color: var(--ink); text-decoration: none;
+  border: 1px solid var(--rule); border-radius: 999px; padding: 5px 14px 5px 6px; background: var(--leaf) }
+.parts a:hover { border-color: var(--indigo); color: var(--indigo) }
+.pn { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--indigo); color: var(--leaf); font-size: .85em; font-weight: 600; flex: none }
+.parthead { display: flex; gap: 16px; align-items: flex-start; padding-block: 34px 0; border-bottom: 2px solid var(--indigo); padding-bottom: 14px; margin-bottom: 4px }
+.parthead .pn { width: 2.4rem; height: 2.4rem; font-size: 1.2rem; margin-top: 4px }
+.parthead h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); line-height: 1.1; color: var(--indigo) }
+.parthead p { margin: 6px 0 0; color: var(--muted); max-width: 60ch }
+.part2 { background: var(--indigo-soft); box-shadow: 0 0 0 100vmax var(--indigo-soft); clip-path: inset(0 -100vmax); margin-top: 40px; padding-bottom: 8px }
+.part2 .band { border-top-color: color-mix(in srgb, var(--indigo) 18%, transparent) }
+.part2 .parthead { padding-top: 40px }
+#whatsnew .track ul, #benchabout .track { max-width: 760px }
 .textbar .more { font-size: .82rem; color: var(--muted); align-self: center; padding-left: 4px }
 .tagline { color: var(--indigo); margin-bottom: 14px }
 .pitch p.for { font-size: 1rem; margin-top: 14px }
@@ -310,9 +323,16 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 
   <main>
     <p class="launch" id="launch">Opening on <strong>Vijayadaśamī, 20 October 2026</strong>, the traditional day to begin learning.</p>
+    <nav class="parts" aria-label="The two halves of this site">
+      <a href="#part-learn"><span class="pn">1</span>AI for Sanskrit</a>
+      <a href="#part-ai"><span class="pn">2</span>Sanskrit for AI</a>
+    </nav>
+    <header class="parthead" id="part-learn">
+      <span class="pn">1</span>
+      <div><h2>AI for Sanskrit</h2><p>Read and learn Sanskrit, with AI doing the reading and Pāṇini's rules checking every word.</p></div>
+    </header>
     <section class="hero" id="reader">
       <div class="pitch">
-        <div class="eyebrow tagline">AI for Sanskrit, Sanskrit for AI</div>
         <h1>Learn Sanskrit <em>using AI</em>.</h1>
         <p>Read Sanskrit texts such as the Bhagavad Gītā and Kālidāsa's Meghadūta word by word, with an English translation of every verse, or <a href="/read">paste a verse of your own</a>. Every word's analysis is checked against Pāṇini's rules. Tap any word to see why it is what it is.</p>
         <p class="for">For anyone learning or teaching Sanskrit, and for people building and testing AI. <a href="#start">New to Sanskrit? Start here.</a></p>
@@ -364,6 +384,32 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       </ol>
     </section>
 
+    <section class="band" id="whatsnew">
+      <div class="eyebrow">What you can do here</div>
+      <h2>Read, check, and suggest.</h2>
+      <div class="track">
+          <ul>
+            <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
+            <li><span class="tag live">Live</span><span>AI English translation of every verse, with a way to <a href="/#gita-2.47">suggest a better one</a></span></li>
+            <li><span class="tag live">Live</span><span><a href="/read">Verse reader</a>: paste any verse and get a word-by-word reading, checked against Pāṇini's rules</span></li>
+            <li><span class="tag soon">Next</span><span>Spoken Samskritam practice partner</span></li>
+            <li><span class="tag soon">Next</span><span>Recitation coach for meter and pronunciation</span></li>
+          </ul>
+      </div>
+    </section>
+
+    <section class="band" id="numbers">
+      <div class="eyebrow" id="n-title">The Bhagavad Gītā, checked</div>
+      <h2>How the annotation fares against the rules</h2>
+      <div class="figures">
+        <div class="fig"><div class="num" id="f-verses">701</div><div class="lab">verses in the reader</div></div>
+        <div class="fig"><div class="num" id="f-checked">8,982</div><div class="lab">words checked against Pāṇini's rules</div></div>
+        <div class="fig"><div class="num" id="f-agree">93.0%</div><div class="lab">where the rules allow the scholars' analysis</div></div>
+        <div class="fig"><div class="num" id="f-deriv">782</div><div class="lab">step-by-step sūtra derivations</div></div>
+      </div>
+      <p class="sub" id="n-note">Compound members are not yet checked, so they are left out of the agreement figure.</p>
+    </section>
+
     <section class="band" id="start">
       <div class="eyebrow">New to Sanskrit?</div>
       <h2>Start here.</h2>
@@ -376,24 +422,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       </ul>
     </section>
 
-    <section class="band" id="tracks">
-      <div class="eyebrow">Two directions, one engine</div>
-      <h2>AI that teaches Sanskrit, and Sanskrit that tests AI.</h2>
-      <div class="tracks">
-        <div class="track">
-          <div class="eyebrow">Learn</div>
-          <h3>Read classical texts word by word</h3>
-          <p>Each word's analysis comes from scholars who annotated the corpus and is then tested against a working implementation of the Aṣṭādhyāyī. Where the rules disagree, the reader says so.</p>
-          <ul>
-            <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
-            <li><span class="tag live">Live</span><span>AI English translation of every verse, with a way to <a href="/#gita-2.47">suggest a better one</a></span></li>
-            <li><span class="tag live">Live</span><span><a href="/read">Verse reader</a>: paste any verse and get a word-by-word reading, checked against Pāṇini's rules</span></li>
-            <li><span class="tag soon">Next</span><span>Spoken Samskritam practice partner</span></li>
-            <li><span class="tag soon">Next</span><span>Recitation coach for meter and pronunciation</span></li>
-          </ul>
-        </div>
-        <div class="track">
-          <div class="eyebrow">Improve AI</div>
+
+    <div class="part2" id="part-ai">
+    <header class="parthead">
+      <span class="pn">2</span>
+      <div><h2>Sanskrit for AI</h2><p>An open test of how well AI models know Sanskrit grammar, with every answer checked by rule.</p></div>
+    </header>
+    <section class="band" id="benchabout">
+      <div class="eyebrow">The benchmark</div>
+      <div class="track">
           <h3>A grammar benchmark graded by rule, not by another model</h3>
           <p>Every answer is an exact form or analysis, checked by rule. The answer key comes from Pāṇini's rules and a scholarly corpus, reviewed by hand. Items and grader are open. <a href="/bench">How the benchmark works</a></p>
           <div class="tasks">
@@ -409,7 +446,6 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
             </table>
           </div>
         </div>
-      </div>
     </section>
 
     <section class="band" id="benchresults" hidden>
@@ -420,24 +456,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
       <div class="heatlegend"><span class="sw s4"></span>98% or more <span class="sw s3"></span>90–98% <span class="sw s2"></span>75–90% <span class="sw s1"></span>below 75%</div>
     </section>
-
-    <section class="band" id="numbers">
-      <div class="eyebrow" id="n-title">The Bhagavad Gītā, checked</div>
-      <h2>How the annotation fares against the rules</h2>
-      <div class="figures">
-        <div class="fig"><div class="num" id="f-verses">701</div><div class="lab">verses in the reader</div></div>
-        <div class="fig"><div class="num" id="f-checked">8,982</div><div class="lab">words checked against Pāṇini's rules</div></div>
-        <div class="fig"><div class="num" id="f-agree">93.0%</div><div class="lab">where the rules allow the scholars' analysis</div></div>
-        <div class="fig"><div class="num" id="f-deriv">782</div><div class="lab">step-by-step sūtra derivations</div></div>
-      </div>
-      <p class="sub" id="n-note">Compound members are not yet checked, so they are left out of the agreement figure.</p>
-    </section>
+    </div>
 
     <section class="band" id="join">
       <div class="joinbox">
         <div>
           <div class="eyebrow">Join the list</div>
-          <h2>Hear when new texts, voice and the benchmark results arrive.</h2>
+          <h2>Hear when new texts, features and benchmark results arrive.</h2>
           <p class="sub">One email when there is something real to show. No sharing, and you can ask to be removed any time.</p>
         </div>
         <form id="joinform" novalidate>

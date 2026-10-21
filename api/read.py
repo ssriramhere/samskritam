@@ -10,6 +10,7 @@ Env:
   READER_MODELS                              comma-separated models people may pick;
                                              default: the five models on the leaderboard
   READER_DAILY_CAP                           default 500 model calls a day
+  READER_PER_HOUR                            default 10 new readings per network per hour
   UPSTASH_REDIS_REST_URL / _TOKEN            required (or KV_REST_API_URL / _TOKEN)
 """
 import hashlib
@@ -40,7 +41,7 @@ MODELS = [m.strip() for m in os.environ.get("READER_MODELS", ",".join([
 if MODEL not in MODELS:
     MODELS.insert(0, MODEL)
 DAILY_CAP = int(os.environ.get("READER_DAILY_CAP", "500"))
-PER_IP_PER_HOUR = 20
+PER_IP_PER_HOUR = int(os.environ.get("READER_PER_HOUR", "10"))  # new readings; saved ones are free
 CACHE_DAYS = 30
 VERSION = "r1"  # bump when the prompt or checks change, so old answers are not reused
 REDIS_URL = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
@@ -121,7 +122,7 @@ class handler(BaseHTTPRequestHandler):
         except Exception:
             return self._send(503, {"ok": False, "error": "The reader is unavailable. Try again shortly."})
         if hits > PER_IP_PER_HOUR:
-            return self._send(429, {"ok": False, "error": "That's the hourly limit for your network. Try again in an hour."})
+            return self._send(429, {"ok": False, "error": f"That's {PER_IP_PER_HOUR} new readings this hour from your network, the hourly limit. Verses already read still open; try a new one in an hour."})
         if today > DAILY_CAP:
             return self._send(429, {"ok": False, "error": "The reader has reached today's limit. Try again tomorrow, or read the Gītā and Meghadūta on the home page."})
 

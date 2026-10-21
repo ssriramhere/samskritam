@@ -18,7 +18,8 @@ from vidyut.lipi import Scheme, detect, transliterate
 
 from . import labels, meter, verify
 
-MAX_CHARS = 600
+MAX_CHARS = 400   # one verse: even a long sragdharā fits in about 300
+MAX_LINES = 4     # four pādas, or two half-verses
 
 PROMPT = """You are a careful Sanskrit grammarian. Analyse this text word by word.
 
@@ -84,7 +85,7 @@ def clean_input(raw: str) -> list[str]:
     if not raw or not raw.strip():
         raise ReaderError("Paste a verse or a line of Sanskrit first.")
     if len(raw) > MAX_CHARS:
-        raise ReaderError(f"That is longer than {MAX_CHARS} characters. Paste one verse at a time.")
+        raise ReaderError(f"That is {len(raw)} characters; the limit is {MAX_CHARS}. Paste one verse at a time.")
     # Daṇḍas and verse numbers end a line; strip them before transliterating
     # (IAST renders a daṇḍa as ".", which would look like text).
     text = re.sub(r"(?:[|।॥]+\s*[\d०-९]*[\d०-९.\s]*[|।॥]*)", "\n", raw)
@@ -97,6 +98,8 @@ def clean_input(raw: str) -> list[str]:
     text = to_iast_text(text)
     lines = [re.sub(r"\s+", " ", l).strip(" ,;") for l in text.splitlines()]
     lines = [l for l in lines if l]
+    if len(lines) > MAX_LINES:
+        raise ReaderError(f"That has {len(lines)} lines. Paste one verse at a time, up to {MAX_LINES} lines.")
     if not any(re.search(r"[a-zāīūṛṝḷṃḥśṣṭḍṇñṅ]", l) for l in lines):
         raise ReaderError("That doesn't look like Sanskrit in Devanagari or IAST.")
     return lines
