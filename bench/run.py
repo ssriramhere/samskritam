@@ -153,7 +153,11 @@ def main():
         if wait > 0:
             time.sleep(wait)
 
+    stop = []  # set on an error that every later request would hit too (no credits, bad key)
+
     def work(it):
+        if stop:
+            return {"id": it["id"], "output": None, "error": stop[0], "skipped": True}
         for attempt in range(6):
             try:
                 pace()
@@ -188,6 +192,8 @@ def main():
                     time.sleep(min(delay, 120))
                     continue
                 rec = {"id": it["id"], "output": None, "error": f"HTTP {e.code}: {msg}"}
+                if e.code in (401, 402):
+                    stop.append(rec["error"])
                 break
             except Exception as e:  # network hiccup; retry
                 if attempt < 5:
@@ -205,7 +211,10 @@ def main():
             errors += int(rec.get("output") is None)
             if i % 25 == 0 or i == len(todo):
                 print(f"  {i}/{len(todo)} (errors: {errors})", flush=True)
-    if errors:
+    if stop:
+        print(f"Stopped: {stop[0]}\nFix that (for HTTP 402, add OpenRouter credits), then re-run "
+              "the same command; finished items are kept.", file=sys.stderr)
+    elif errors:
         print(f"{errors} items failed; re-run the same command to retry them.",
               file=sys.stderr)
 

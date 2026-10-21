@@ -169,6 +169,7 @@ def score(items: dict, results: list) -> dict:
     return {"by_task": {k: {"correct": c, "n": n, "acc": round(c / n, 4)}
                         for k, (c, n) in sorted(by_task.items())},
             "overall": {"correct": total[0], "n": total[1],
+                        "no_answer": sum(r.get("output") is None for r in results),
                         "acc": round(total[0] / total[1], 4) if total[1] else 0}}
 
 
