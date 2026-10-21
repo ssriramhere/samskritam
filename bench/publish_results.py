@@ -35,9 +35,13 @@ for path in sorted(glob.glob(os.path.join(ROOT, "bench/results/*.jsonl"))):
             rows = None
             break
         g = grade.grade_item(it, r["output"])
-        rows.append({"id": iid, "task": it["task"], "model": r.get("model"),
-                     "provider": r.get("provider"), "output": r["output"],
-                     "correct": bool(g["correct"])})
+        row = {"id": iid, "task": it["task"], "model": r.get("model"),
+               "provider": r.get("provider"), "output": r["output"],
+               "correct": bool(g["correct"])}
+        if it["task"] == "gita" and not g["correct"] and "fields" in g:
+            # which parts the grader rejected, so the site can show them exactly
+            row["wrong"] = (["lemma"] if not g["lemma"] else []) + [k for k, ok in g["fields"].items() if not ok]
+        rows.append(row)
     if rows is None:
         continue
     name = os.path.basename(path)
