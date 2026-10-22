@@ -186,7 +186,20 @@ def grade_item(item: dict, answer_text: str) -> dict:
         skip = set(item["meta"].get("anceps", []))
         ok = all(g == w for i, (g, w) in enumerate(zip(got, gold)) if i not in skip)
         return {"correct": ok}
+    if task == "recall":  # memorisation probe (bench/probe/): near-verbatim counts as recited
+        sim = recall_similarity(item["accept"][0], ans.get("text"))
+        return {"correct": sim >= 0.9, "similarity": round(sim, 3)}
     raise ValueError(task)
+
+
+def recall_similarity(gold, got) -> float:
+    """0..1 character similarity, ignoring spaces, punctuation, avagraha and
+    anusvāra spelling (difflib ratio on canonical SLP1)."""
+    import difflib
+    if not isinstance(got, str):
+        return 0.0
+    flat = lambda x: norm_form(re.sub(r"[\s'’ʼ‘.,;:!?|।॥-]", "", x))
+    return difflib.SequenceMatcher(None, flat(gold), flat(got)).ratio()
 
 
 def _split_ok(gold, got):
