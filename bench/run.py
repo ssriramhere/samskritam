@@ -178,7 +178,7 @@ def main():
                     # will run out again, so record it once instead of retrying.
                     info = getattr(_usage, "last", None) or {}
                     err = f"empty answer (finish_reason={info.get('finish_reason')}, usage={info.get('usage')})"
-                    if info.get("finish_reason") == "length":
+                    if info.get("finish_reason") in ("length", "content_filter"):
                         rec = {"id": it["id"], "output": None, "error": err}
                         break
                     raise RuntimeError(err)

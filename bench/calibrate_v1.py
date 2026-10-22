@@ -47,12 +47,15 @@ def main():
 
     items = grade.load_items(POOL)
     right = collections.defaultdict(list)  # id -> [True/False per model]
+    filtered = set()  # a provider's content filter blocked the question: dropped, it can't measure that model
     for path in a.results:
         latest = {}
         for r in map(json.loads, open(path, encoding="utf-8")):
-            if r.get("output") is not None or r["id"] not in latest:
+            if r.get("output") is not None or latest.get(r["id"], {}).get("output") is None:
                 latest[r["id"]] = r
         for iid, r in latest.items():
+            if r.get("output") is None and "content_filter" in str(r.get("error")):
+                filtered.add(iid)
             if iid in items:
                 right[iid].append(grade.grade_item(items[iid], r.get("output"))["correct"])
     models = len(a.results)
@@ -66,7 +69,7 @@ def main():
         by_task[items[i]["task"]].append(i)
     for ids in by_task.values():
         keep_easy |= set(rng.sample(sorted(ids), min(a.keep_easy, len(ids))))
-    keep = [i for i in items if i not in easy or i in keep_easy]
+    keep = [i for i in items if (i not in easy or i in keep_easy) and i not in filtered]
 
     def in_test(iid):
         h = hmac.new(secret.encode(), iid.encode(), hashlib.sha256).digest()
@@ -89,6 +92,8 @@ def main():
 
     count = lambda rows: dict(sorted(collections.Counter(r["task"] for r in rows).items()))
     print(f"pool {len(items)}; pilot models {models}")
+    if filtered:
+        print(f"  dropped {len(filtered)} blocked by a provider's content filter: {' '.join(sorted(filtered))}")
     if models:
         print(f"  every model right: {len(easy)} (kept {len(keep_easy)}), every model wrong: {len(hard)}"
               f" -> review bench/private/v1-review.tsv")
