@@ -61,7 +61,7 @@ def main():
     models = len(a.results)
 
     easy = [i for i in items if models and len(right[i]) == models and all(right[i])]
-    hard = [i for i in items if models and len(right[i]) == models and not any(right[i])]
+    hard = [i for i in items if models and len(right[i]) == models and not any(right[i]) and i not in filtered]
     rng = random.Random(secret)
     keep_easy = set()
     by_task = collections.defaultdict(list)
