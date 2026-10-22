@@ -221,8 +221,9 @@ def main():
             if i % 25 == 0 or i == len(todo):
                 print(f"  {i}/{len(todo)} (errors: {errors})", flush=True)
     if stop:
-        print(f"Stopped: {stop[0]}\nFix that (for HTTP 402, add OpenRouter credits), then re-run "
-              "the same command; finished items are kept.", file=sys.stderr)
+        where = {"openrouter": "OpenRouter", "sarvam": "Sarvam (dashboard.sarvam.ai)"}.get(a.provider, a.provider)
+        print(f"Stopped: {stop[0]}\nFix that (for HTTP 402, add credits at {where}; for 401, check the API key), "
+              "then re-run the same command; finished items are kept.", file=sys.stderr)
     elif errors:
         print(f"{errors} items failed; re-run the same command to retry them.",
               file=sys.stderr)
