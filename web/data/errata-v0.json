@@ -1,0 +1,50 @@
+{
+ "updated": "2026-10-23",
+ "reviewed": 0,
+ "questions": 487,
+ "changes": [],
+ "scores": [
+  {
+   "model": "Claude Opus 5.5",
+   "id": "anthropic/claude-opus-5.5",
+   "published": 0.9979,
+   "corrected": 0.9979,
+   "n": 487
+  },
+  {
+   "model": "Claude Sonnet 5.5",
+   "id": "anthropic/claude-sonnet-5.5",
+   "published": 0.9548,
+   "corrected": 0.9548,
+   "n": 487
+  },
+  {
+   "model": "Gemini 3.8 Flash",
+   "id": "google/gemini-3.8-flash",
+   "published": 0.9671,
+   "corrected": 0.9671,
+   "n": 487
+  },
+  {
+   "model": "Gemini 4 Argon",
+   "id": "google/gemini-4-argon",
+   "published": 0.9589,
+   "corrected": 0.9589,
+   "n": 487
+  },
+  {
+   "model": "GPT-6 Sol",
+   "id": "openai/gpt-6-sol",
+   "published": 0.9507,
+   "corrected": 0.9507,
+   "n": 487
+  },
+  {
+   "model": "Sarvam-105B (reasoning off)",
+   "id": "sarvam-105b",
+   "published": 0.3039,
+   "corrected": 0.3039,
+   "n": 487
+  }
+ ]
+}

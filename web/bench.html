@@ -288,6 +288,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; overflow-x: auto; line-height: 1.5 }
 .dl { display: inline-block; margin-top: 8px; font-weight: 600; color: var(--leaf); background: var(--indigo); border-radius: 8px; padding: 9px 16px; text-decoration: none }
 .pending { color: var(--muted); border: 1px dashed var(--rule); border-radius: 10px; padding: 16px 18px; margin-top: 16px; max-width: 70ch }
+#errata .tasks { max-width: 640px }
+#errata .tasks th.n { text-align: right }
+.errata-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; max-width: 80ch }
+.errata-list li { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; background: var(--leaf) }
+.errata-list .what { font-weight: 600 }
+.errata-list .id { font-family: var(--font-mono); font-size: .85rem; color: var(--muted) }
+.errata-list .kv { font-family: var(--font-display); }
+.errata-list .old { text-decoration: line-through; color: var(--muted) }
+.errata-list .note { color: var(--muted); font-size: .92rem; margin-top: 4px }
 @media (max-width: 860px) {
   .task { grid-template-columns: minmax(0, 1fr) }
   .bhero h1 { font-size: 2.3rem }
@@ -355,6 +364,13 @@ python bench/grade.py bench/results/openrouter__vendor_model.jsonl</code></pre>
       </div>
     </section>
 
+    <section class="band" id="errata">
+      <div class="eyebrow">Errata</div>
+      <h2>Corrections to the answer keys</h2>
+      <p class="muted prose">The answer keys are being reviewed question by question, including the 13 questions removed before publishing. v0 stays as published: the scores above don't change. Corrections are listed here, with each model's score re-graded from its published answers using the corrected keys.</p>
+      <div id="errata-body"><p class="pending">Loading…</p></div>
+    </section>
+
     <section class="band" id="tasks">
       <div class="eyebrow">The five tasks</div>
       <h2>What the model is asked</h2>
@@ -393,7 +409,7 @@ python bench/grade.py bench/results/openrouter__vendor_model.jsonl</code></pre>
           <li><b>Verb questions</b> use 54 common roots, each pinned to its dhātupāṭha entry so the gaṇa and meaning are unambiguous, across seven lakāras: laṭ, laṅ, loṭ, vidhiliṅ, lṛṭ, liṭ and luṅ.</li>
           <li><b>Noun questions</b> use the most frequent noun and adjective stems of the Bhagavad Gītā.</li>
           <li><b>Answers for verbs and nouns</b> are derived by <a href="https://github.com/ambuda-org/vidyut" target="_blank" rel="noopener">Vidyut</a>, an implementation of more than 2,000 sūtras of the Aṣṭādhyāyī. Where Pāṇini allows more than one form, every form is accepted. Each noun answer is also checked against Vidyut's dictionary of inflected forms; two questions failed that check (the dual of <i>mahat</i> and the feminine of <i>bhagavat</i>) and were removed.</li>
-          <li><b>Hand review.</b> Before publishing, every question that any model got wrong was reviewed by hand. Eleven answer keys turned out to be wrong or genuinely disputable, for example the feminine of <i>rājasa</i> (it is <i>rājasī</i>) and the gender of <i>dhṛti</i> in 18.34. Those eleven were removed, leaving 487. Each removal and its reason is listed in <a href="https://github.com/ssriramhere/samskritam/blob/main/bench/generate.py" target="_blank" rel="noopener"><code>bench/generate.py</code></a>. Reviewing only the questions models missed can favour the models, so the full set is open for anyone to check.</li>
+          <li><b>Hand review.</b> Before publishing, every question that any model got wrong was reviewed by hand. Eleven answer keys turned out to be wrong or genuinely disputable, for example the feminine of <i>rājasa</i> (it is <i>rājasī</i>) and the gender of <i>dhṛti</i> in 18.34. Those eleven were removed, leaving 487. Each removal and its reason is listed in <a href="https://github.com/ssriramhere/samskritam/blob/main/bench/generate.py" target="_blank" rel="noopener"><code>bench/generate.py</code></a>. Reviewing only the questions models missed can favour the models, so the full set is open for anyone to check. The keys, and these removals, are now being reviewed question by question; see <a href="#errata">Errata</a>.</li>
           <li><b>Answers for the Gītā questions</b> are the hand annotations of the <a href="https://github.com/OliverHellwig/sanskrit" target="_blank" rel="noopener">Digital Corpus of Sanskrit</a>, used only where Vidyut's rules allow the same analysis. The rules confirm the analysis is possible for the form; the choice in context is the annotators'.</li>
           <li><b>Answers for meter</b> are computed from the rules of prosody. The last syllable of each pāda is not graded, since either weight is allowed there.</li>
         </ul>
@@ -531,6 +547,47 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
       box.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } catch (e) { box.querySelector(".none").textContent = "Couldn't load the answers. Try again."; }
   }
+})();
+</script>
+<script>
+(() => {
+  const el = document.getElementById("errata-body");
+  const t = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const pct = x => x == null ? "—" : (100 * x).toFixed(1) + "%";
+  const TASK = { tinanta: "Tiṅanta", subanta: "Subanta", analyze: "Analysis", gita: "Gītā", meter: "Chandas" };
+  const WHAT = { corrected: "Key corrected", dropped: "Question dropped (ambiguous)", restored: "Removed question restored",
+    "restored with a corrected key": "Removed question restored with a corrected key" };
+  fetch("/data/errata-v0.json").then(r => r.ok ? r.json() : null).then(e => {
+    el.replaceChildren();
+    if (!e || !e.changes.length) {
+      el.append(t("p", "pending", e && e.reviewed
+        ? `${e.reviewed} question${e.reviewed > 1 ? "s" : ""} reviewed so far; no keys needed correcting.`
+        : "No corrections yet. The review has started; corrections will be listed here as they are approved."));
+      return;
+    }
+    el.append(t("p", "sub muted", `${e.reviewed} questions reviewed so far; ${e.changes.length} change${e.changes.length > 1 ? "s" : ""}. Updated ${e.updated}.`));
+    const wrap = t("div", "tasks"), tb = t("table"), head = t("tr");
+    ["Model", "Published", "With corrections"].forEach((h, i) => { const th = t("th", i ? "n" : "", h); head.append(th); });
+    tb.append(t("thead")); tb.firstChild.append(head);
+    const body = t("tbody");
+    e.scores.forEach(s => { const tr = t("tr"); tr.append(t("td", "", s.model), t("td", "n", pct(s.published)), t("td", "n", pct(s.corrected))); body.append(tr); });
+    tb.append(body); wrap.append(tb); el.append(wrap);
+    const ul = t("ul", "errata-list");
+    e.changes.forEach(c => {
+      const li = t("li");
+      const top = t("div"); top.append(t("span", "what", WHAT[c.change] || c.change), " · ", t("span", "id", `${c.id} · ${TASK[c.task] || c.task}`));
+      const kv = t("div", "kv");
+      if (c.change === "dropped") kv.append(t("span", "old", c.before));
+      else if (c.change === "restored") kv.append(c.before);
+      else kv.append(t("span", "old", c.before), " → ", c.after);
+      li.append(top, kv);
+      if (c.removed_because) li.append(t("div", "note", "Removed before publishing because: " + c.removed_because));
+      li.append(t("div", "note", `Reviewed by ${c.by}, ${c.at}` + (c.note ? `: ${c.note}` : "")));
+      if (c.not_regraded_for) li.append(t("div", "note", "Not re-graded for " + c.not_regraded_for.join(", ") + " (no answer on record)."));
+      ul.append(li);
+    });
+    el.append(ul);
+  }).catch(() => { el.replaceChildren(t("p", "pending", "The errata couldn't be loaded.")); });
 })();
 </script>
 <script>

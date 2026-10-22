@@ -135,7 +135,12 @@ python bench/review_admin.py pull               # all decisions -> bench/private
 ```
 
 Merged decisions (`bench/reviews/*.json`) and pulled private ones are applied by
-`bench/generate_v1.py`. v0 keys stay frozen; its reviews are errata.
+`bench/generate_v1.py`. v0 keys stay frozen; its reviews are errata: after merging
+a review pull request, run `python bench/build_errata.py` and commit
+`web/data/errata-v0.json`. The /bench page lists each correction and every
+model's score re-graded with the corrected keys next to the published one.
+v0's 13 removed questions are in `bench/data/v0-removed.jsonl` and can be
+reviewed (and restored) like the rest.
 
 ## Deploy
 

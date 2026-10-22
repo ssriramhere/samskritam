@@ -14,7 +14,7 @@ Sets
   v1-test  bench/private/v1-test.jsonl (private: the queue file stays in
            bench/private/ and only invited reviewers see it on the site)
 Questions dropped by hand review are included too, so the drop itself can be
-reviewed.
+reviewed: v1's, and v0's removed questions (bench/data/v0-removed.jsonl).
 
 Tags (one per question, first that applies)
   fix      the key was corrected or the question dropped by hand
@@ -91,6 +91,19 @@ def lines_after(prompt, start, stop):
     return [l.strip() for l in body.split("\n") if l.startswith("  ") and l.strip()]
 
 
+_GITA = {}
+
+
+def gita_lines():
+    if not _GITA:
+        d = json.load(open(os.path.join(ROOT, "data/build/gita.json"), encoding="utf-8"))
+        for c in d["chapters"]:
+            for v in c["verses"]:
+                for h in v.get("halves", []):
+                    _GITA[h["text"].strip()] = v["id"]
+    return _GITA
+
+
 def record(it, set_name, models, fixes):
     task, meta, key = it["task"], it.get("meta", {}), it["accept"]
     r = {"id": it["id"], "set": set_name, "task": task, "kind": KIND[task],
@@ -154,8 +167,14 @@ def record(it, set_name, models, fixes):
         r["wordsDev"] = [dev(x) for x in r["words"]]
     if r.get("joined"):
         r["joinedDev"] = dev(r["joined"])
-    if meta.get("verse"):
-        r["ref"] = ("Mahābhārata " if set_name.startswith("v1") else "Bhagavad Gītā ") + str(meta["verse"])
+    if set_name.startswith("v1") and meta.get("verse"):
+        r["ref"] = "Mahābhārata " + str(meta["verse"])
+    elif task == "meter" and meta.get("verse"):
+        r["ref"] = "Bhagavad Gītā " + str(meta["verse"])
+    elif task == "gita" and verse:
+        # v0's Gītā questions store only the verse number; find the chapter from the line.
+        vid = gita_lines().get(verse[0])
+        r["ref"] = "Bhagavad Gītā " + (vid or str(meta.get("verse", "")))
     fix = fixes.get(it["id"])
     if meta.get("dropped"):
         r["fix"] = {"what": "dropped", "why": meta["dropped"]}
@@ -183,6 +202,15 @@ def main():
     v0 = grade.load_items(os.path.join(ROOT, "bench/data/v0.jsonl"))
     v0_ans = answers(sorted(glob.glob(os.path.join(ROOT, "bench/results-v0/*.jsonl"))), v0)
     queue += [record(it, "v0", v0_ans.get(i, []), {}) for i, it in v0.items()]
+    # v0's removed questions, so each removal can be confirmed or overturned. The
+    # published answers don't cover them; your own v0 runs in bench/results/ do.
+    removed = grade.load_items(os.path.join(ROOT, "bench/data/v0-removed.jsonl"))
+    raw = [f for f in glob.glob(os.path.join(ROOT, "bench/results/*.jsonl")) if not re.search(r"\.v\d", f)]
+    rm_ans = answers(sorted(raw), removed)
+    for i, it in removed.items():
+        r = record(it, "v0", rm_ans.get(i, []), {})
+        r["fix"] = {"what": "dropped", "why": it["meta"]["removed"] + " (removed from v0 before publishing)"}
+        queue.append(r)
 
     pool_path = os.path.join(ROOT, "bench/private/v1-pool.jsonl")
     if os.path.exists(pool_path):

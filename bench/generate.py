@@ -379,6 +379,14 @@ def main():
         it["id"] = f"{it['task']}-{i:04d}"
     # Ids are fixed before filtering, so dropping an item never renumbers others.
     dropped = [it["id"] for it in items if not confirmed(it) or it["id"] in EXCLUDED]
+    # The removed questions are kept in their own file so their removal can be reviewed.
+    with open(os.path.join(os.path.dirname(a.out), "v0-removed.jsonl"), "w", encoding="utf-8") as fh:
+        for it in items:
+            if it["id"] in dropped:
+                it["meta"]["removed"] = EXCLUDED.get(it["id"]) or (
+                    "Vidyut's dictionary of inflected forms doesn't list every accepted form "
+                    "for this stem, gender, case and number")
+                fh.write(json.dumps(it, ensure_ascii=False) + "\n")
     items = [it for it in items if it["id"] not in dropped]
     if dropped:
         print("dropped after dictionary cross-check:", ", ".join(dropped))

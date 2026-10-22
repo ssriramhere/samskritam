@@ -328,28 +328,8 @@ def gen_meter(rng, n):
 
 
 def load_reviews():
-    """Decisions from samskritam.ai/review: merged public ones (bench/reviews/)
-    and private ones pulled by bench/review_admin.py pull. id -> decision."""
-    import glob
-    recs = {}
-    for f in sorted(glob.glob(os.path.join(ROOT, "bench/reviews/*.json"))):
-        r = json.load(open(f, encoding="utf-8"))
-        recs[r["id"]] = r
-    priv = os.path.join(ROOT, "bench/private/reviews.json")
-    if os.path.exists(priv):
-        for iid, r in json.load(open(priv, encoding="utf-8")).items():
-            recs.setdefault(iid, r)
-    out = {}
-    for iid, r in recs.items():
-        ds = r.get("decisions", [])
-        owner = [d for d in ds if d.get("reviewer") == "owner"]
-        if owner:
-            out[iid] = owner[-1]  # the owner's ruling settles it
-        elif ds and len({(d["decision"], json.dumps(d.get("fix"), sort_keys=True)) for d in ds}) == 1:
-            out[iid] = ds[-1]  # reviewers agree
-        elif ds:
-            print(f"  review of {iid}: reviewers disagree and the owner hasn't ruled; key unchanged")
-    return out
+    from review_decisions import settled
+    return settled()
 
 
 def apply_reviews(items, reviews):
@@ -373,9 +353,8 @@ def apply_reviews(items, reviews):
         if d["decision"] == "ambiguous":
             m["dropped"] = f"Ambiguous in review ({d['by']}){': ' + d['note'] if d.get('note') else ''}"
         elif d["decision"] == "wrong" and d.get("fix"):
-            fix, t = d["fix"], it["task"]
-            it["accept"] = ([{k: v for k, v in fix.items() if v is not None}] if t == "context" else
-                            [fix] if t in ("split", "meter") else [sorted(fix)] if t == "rule" else list(fix))
+            from review_decisions import fixed_accept
+            it["accept"] = fixed_accept(it["task"], d["fix"])
             m["gold_source"] = f"corrected in review ({d['by']})" + (f": {d['note']}" if d.get("note") else "")
             m.pop("dropped", None)
         elif d["decision"] == "right":
