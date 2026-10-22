@@ -49,6 +49,10 @@ from check_sandhi_cites import family  # noqa: E402
 from generate import FORMAT_GITA, FORMAT_METER, UD_CASE, UD_GEN, UD_NUM, UD_TM  # noqa: E402
 
 SOURCE = "data/build/mahabharata.json"
+FIXES = {k: v for k, v in json.load(open(os.path.join(ROOT, "bench/v1-key-fixes.json"), encoding="utf-8")).items()
+         if not k.startswith("_")}
+# The corpus gives sa/eṣa/syaḥ... in their sandhi shape before a consonant; standing alone they are saḥ, eṣaḥ.
+PAUSA = {"sa": "saḥ", "eṣa": "eṣaḥ"}
 TITLE = "the Mahābhārata (critical edition"
 FORMAT_SPLIT = ('Answer with JSON only: {"words": ["<word 1 in IAST>", "<word 2>", ...]}')
 FORMAT_JOIN = 'Answer with JSON only: {"form": "<the joined text in IAST>"}'
@@ -131,14 +135,21 @@ def gen_context(rng, n):
             seen.add(key)
             k += 1
             text = "\n  ".join(v["lines"])
+            # Hand fixes are applied after sampling so question ids stay stable.
+            fix = FIXES.get(f"{v['id']}|{t['form']}", {})
+            meta = {"verse": v["id"], "form": t["form"], "stratum": s,
+                    "gold_source": "DCS annotation confirmed by Vidyut"}
+            if "accept" in fix:
+                ans, meta["gold_source"] = fix["accept"], "hand-corrected: " + fix["why"]
+            if "drop" in fix:
+                meta["dropped"] = fix["drop"]
             items.append({
                 "task": "context",
                 "prompt": (f"In this verse of {where(v['id'])}:\n  {text}\n"
                            f"analyse the word '{t['form']}' (as it stands before sandhi), which occurs in "
                            f"'{g['surface']}'. Give its lemma and grammar in this context. {FORMAT_GITA}"),
                 "accept": [ans],
-                "meta": {"verse": v["id"], "form": t["form"], "stratum": s,
-                         "gold_source": "DCS annotation confirmed by Vidyut"}})
+                "meta": meta})
     return items
 
 
@@ -209,7 +220,9 @@ def gen_split_join(rng, n_split, n_join):
         if g["surface"] in seen:
             continue
         seen.add(g["surface"])
-        words = [t["form"] for t in g["tokens"]]
+        # only the pronouns: sa- in sāgnikāḥ is the prefix 'with'
+        words = [PAUSA.get(t["form"], t["form"]) if t["lemma"] in ("tad", "etad") else t["form"]
+                 for t in g["tokens"]]
         split.append({
             "task": "split",
             "prompt": (f"In this line of {where(v['id'])}:\n  {h['text']}\n"
@@ -279,7 +292,9 @@ def gen_rule(rng, n):
             "task": "rule",
             "prompt": (f"In {where(vid)}, '{a}' and '{b}' join as '{j}'. Which sūtras of Pāṇini's "
                        f"Aṣṭādhyāyī produce this join? {FORMAT_RULE}"),
-            "accept": [sorted(need)],
+            # Starting from the pausa form (-ḥ), the visarga-to-s route needs only
+            # 8.3.34 and what follows; 8.2.66 (s to ru) is upstream of the question.
+            "accept": [sorted(set(need) - {"8.2.66"} if "8.3.34" in need else need)],
             "meta": {"verse": vid, "junction": k, "family": fam,
                      "gold_source": "core sūtras of the rule family; extra sūtras are allowed"}})
     return items

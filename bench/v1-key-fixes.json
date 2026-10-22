@@ -1,0 +1,12 @@
+{
+  "_about": "Hand corrections to v1 answer keys, by 'verse|word'. 'accept' replaces the key; 'drop' removes the question (its key can't be settled from the form and context). Applied by bench/generate_v1.py.",
+  "3.51.4|jajñuḥ": {"accept": {"lemma": "jñā", "pos": "verb", "number": "pl", "tense_mood": "perfect", "person": "3", "voice": "active"},
+                    "why": "sakhyas tā jajñur iṅgitaiḥ: the friends knew (her state) from her gestures. Perfect of jñā; the corpus has jan."},
+  "3.71.21|abhijajñe": {"accept": {"lemma": "abhijñā", "pos": "verb", "number": "sg", "tense_mood": "perfect", "person": "3", "voice": "active"},
+                        "why": "nābhijajñe sa nṛpatiḥ: the king did not recognise (him). Perfect of abhi-jñā; the corpus has abhi-jan, 'was born'."},
+  "3.61.98|agamaḥ": {"accept": {"lemma": "agama", "pos": "noun", "number": "sg", "case": "nom", "gender": "m"},
+                     "why": "aho batāyam agamaḥ śrīmān: 'this splendid mountain' (a-gama, 'not moving'), Damayantī addressing the mountain. The corpus has an aorist of gam."},
+  "3.71.3|samahṛṣyanta": {"drop": "Ātmanepada imperfect of a fourth-class root: middle and passive look the same, and the answer format only offers active or passive."},
+  "3.74.15|tārābhyām": {"drop": "Final member of the bahuvrīhi kṛṣṇatāra qualifying netra: lemma (tārā or tāra), gender (that of the head) and case (ablative or instrumental) are all arguable."},
+  "3.78.19|varebhyaḥ": {"drop": "-bhyaḥ is dative or ablative; the corpus says dative and every model says ablative. Needs a reading of the passage before it can be a question."}
+}

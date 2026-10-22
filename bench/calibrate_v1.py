@@ -61,7 +61,8 @@ def main():
     models = len(a.results)
 
     easy = [i for i in items if models and len(right[i]) == models and all(right[i])]
-    hard = [i for i in items if models and len(right[i]) == models and not any(right[i]) and i not in filtered]
+    hard = [i for i in items if models and len(right[i]) == models and not any(right[i]) and i not in filtered
+            and not items[i].get("meta", {}).get("dropped")]
     rng = random.Random(secret)
     keep_easy = set()
     by_task = collections.defaultdict(list)
@@ -69,7 +70,8 @@ def main():
         by_task[items[i]["task"]].append(i)
     for ids in by_task.values():
         keep_easy |= set(rng.sample(sorted(ids), min(a.keep_easy, len(ids))))
-    keep = [i for i in items if (i not in easy or i in keep_easy) and i not in filtered]
+    dropped = {i for i, it in items.items() if it.get("meta", {}).get("dropped")}
+    keep = [i for i in items if (i not in easy or i in keep_easy) and i not in filtered | dropped]
 
     def in_test(iid):
         h = hmac.new(secret.encode(), iid.encode(), hashlib.sha256).digest()
