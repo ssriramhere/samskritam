@@ -28,6 +28,8 @@ rule:
 The pool is calibrated by bench/calibrate_v1.py (drop what every pilot model
 gets right) and split into a public dev set and a private test set. The pool
 stays in bench/private/ (not committed): it contains the test items.
+Decisions from the answer-key review (samskritam.ai/review) are applied last:
+bench/reviews/*.json (public, merged pull requests) and bench/private/reviews.json.
 """
 import argparse
 import itertools
@@ -325,6 +327,63 @@ def gen_meter(rng, n):
     return items
 
 
+def load_reviews():
+    """Decisions from samskritam.ai/review: merged public ones (bench/reviews/)
+    and private ones pulled by bench/review_admin.py pull. id -> decision."""
+    import glob
+    recs = {}
+    for f in sorted(glob.glob(os.path.join(ROOT, "bench/reviews/*.json"))):
+        r = json.load(open(f, encoding="utf-8"))
+        recs[r["id"]] = r
+    priv = os.path.join(ROOT, "bench/private/reviews.json")
+    if os.path.exists(priv):
+        for iid, r in json.load(open(priv, encoding="utf-8")).items():
+            recs.setdefault(iid, r)
+    out = {}
+    for iid, r in recs.items():
+        ds = r.get("decisions", [])
+        owner = [d for d in ds if d.get("reviewer") == "owner"]
+        if owner:
+            out[iid] = owner[-1]  # the owner's ruling settles it
+        elif ds and len({(d["decision"], json.dumps(d.get("fix"), sort_keys=True)) for d in ds}) == 1:
+            out[iid] = ds[-1]  # reviewers agree
+        elif ds:
+            print(f"  review of {iid}: reviewers disagree and the owner hasn't ruled; key unchanged")
+    return out
+
+
+def apply_reviews(items, reviews):
+    """Right: mark reviewed. Wrong: the reviewer's answer becomes the key.
+    Ambiguous: drop the question. A sūtra ruling marked for the whole join
+    type applies to every rule question of that junction without its own."""
+    family = {}
+    by_id = {it["id"]: it for it in items}
+    for iid, d in reviews.items():
+        it = by_id.get(iid)
+        if it and it["task"] == "rule" and d.get("family"):
+            family[it["meta"]["junction"]] = d
+    n = Counter()
+    for it in items:
+        d = reviews.get(it["id"]) or (family.get(it["meta"].get("junction")) if it["task"] == "rule" else None)
+        if not d:
+            continue
+        m = it["meta"]
+        m["reviewed"] = f"{d['by']}: {d['decision']}"
+        n[d["decision"]] += 1
+        if d["decision"] == "ambiguous":
+            m["dropped"] = f"Ambiguous in review ({d['by']}){': ' + d['note'] if d.get('note') else ''}"
+        elif d["decision"] == "wrong" and d.get("fix"):
+            fix, t = d["fix"], it["task"]
+            it["accept"] = ([{k: v for k, v in fix.items() if v is not None}] if t == "context" else
+                            [fix] if t in ("split", "meter") else [sorted(fix)] if t == "rule" else list(fix))
+            m["gold_source"] = f"corrected in review ({d['by']})" + (f": {d['note']}" if d.get("note") else "")
+            m.pop("dropped", None)
+        elif d["decision"] == "right":
+            m.pop("dropped", None)  # a reviewer kept a question the hand review had dropped
+    if n:
+        print("reviews applied:", dict(n))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=1008)
@@ -339,6 +398,7 @@ def main():
     for it in items:
         it["id"] = f"v1-{it['task']}-{counts[it['task']]:04d}"
         counts[it["task"]] += 1
+    apply_reviews(items, load_reviews())
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as fh:
         for it in items:

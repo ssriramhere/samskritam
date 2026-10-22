@@ -119,6 +119,24 @@ bad keys), and splits the rest into `bench/data/v1-dev.jsonl` (published) and
 test items, so it is git-ignored. Results for v1 never enter the v0
 leaderboard.
 
+### Answer-key review (samskritam.ai/review, invite-only)
+
+Reviewers check answer keys question by question: the key laid out readably,
+where it came from, any hand correction, and each model's answer. Random-sample
+questions hide the model answers until the reviewer decides.
+
+```
+export REVIEW_OWNER_TOKEN=...                   # same value as in Vercel
+python bench/build_review_queue.py              # v0 + v1 dev + v1 test -> bench/private/review-queue.json
+python bench/review_admin.py upload             # to the site (Upstash); test questions never enter the repo
+python bench/review_admin.py invite "Name"      # prints a personal link
+python bench/review_admin.py publish            # one pull request for decisions on public questions
+python bench/review_admin.py pull               # all decisions -> bench/private/reviews.json
+```
+
+Merged decisions (`bench/reviews/*.json`) and pulled private ones are applied by
+`bench/generate_v1.py`. v0 keys stay frozen; its reviews are errata.
+
 ## Deploy
 
 Vercel serves `web/` as static files and `api/` as functions (`vercel.json`).

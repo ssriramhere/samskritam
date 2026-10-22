@@ -38,7 +38,8 @@
   },
   "git": {
     "deploymentEnabled": {
-      "suggest-*": false
+      "suggest-*": false,
+      "review-*": false
     }
   }
 }
