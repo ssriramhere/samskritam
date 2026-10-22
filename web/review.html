@@ -192,7 +192,7 @@ function h(tag, attrs, ...kids) {
     if (v == null || v === false) continue;
     if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v);
   }
-  for (const c of kids.flat()) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  for (const c of kids.flat(Infinity)) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
   return el;
 }
 
@@ -291,12 +291,31 @@ function keyView(it) {
         onclick: (e) => flip(e.currentTarget) }, h("span", {}, s || "·"), h("b", {}, g)))),
       h("div", { class: "legend small" }, h("span", {}, "G guru (heavy)"), h("span", {}, "L laghu (light)"), h("span", {}, "Dashed: pāda-final, not graded"))];
   }
+  if (it.kind === "padas") {
+    return [h("div", { class: "chips" }, it.key.map((w, i) => chip(w, it.keyDev && it.keyDev[i]))),
+      h("p", { class: "small" }, "Compounds are shown with hyphens between members; a model may write them whole or hyphenated.")];
+  }
+  if (it.kind === "table") {
+    const cols = ["lemma", "pos", "case", "number", "gender", "tense_mood", "person", "voice"];
+    return h("div", { style: "overflow-x:auto" }, h("table", {}, h("tr", {}, h("th", {}, "Word"), cols.map((c) => h("th", {}, FIELD_LABEL[c]))),
+      it.key.map((k, i) => h("tr", {}, h("td", { class: "m" }, h("b", {}, (it.words || [])[i] || "")), cols.map((c) => h("td", {}, k[c] ?? "—"))))));
+  }
+  if (it.kind === "lines") {
+    return [it.key.lines.map((row, li) => h("div", { class: "sylls", style: "margin-bottom:8px" }, row.map(([s, g, anc], i) =>
+      h("button", { type: "button", class: `syl ${g}${anc ? " anc" : ""}${anc && i < row.length - 1 ? " gap" : ""}`, "data-l": li, "data-i": i, tabindex: "-1",
+        onclick: (e) => flip(e.currentTarget) }, h("span", {}, s || "·"), h("b", {}, g))))),
+      h("p", {}, "Meter: ", h("b", {}, it.key.meter), it.key.variant ? ` (${it.key.variant})` : ""),
+      h("div", { class: "legend small" }, h("span", {}, "G guru (heavy)"), h("span", {}, "L laghu (light)"), h("span", {}, "Dashed: pāda-final, not graded"))];
+  }
   return h("pre", { class: "v" }, JSON.stringify(it.key, null, 1));
 }
+function keyLines(it) { return it.key.lines.map((row) => row.map((x) => x[1]).join("")) }
 function sameAsKey(it, fix) {
   if (it.kind === "fields") return Object.entries(fix).every(([f, v]) => String(v ?? "") === String(it.key[f] ?? ""));
   if (it.kind === "syllables") return fix === it.key.map((k) => k[1]).join("");
   if (it.kind === "sutras") return fix.join(" ") === it.key.map((k) => k[0]).join(" ");
+  if (it.kind === "table") return JSON.stringify(fix) === JSON.stringify(it.key.map((k) => Object.fromEntries(Object.entries(k).filter(([, v]) => v != null))));
+  if (it.kind === "lines") return fix.lines.join("|") === keyLines(it).join("|") && fix.meter === it.key.meter;
   return fix.join(" ") === it.key.join(" ");
 }
 function chip(iast, dev) { return h("span", { class: "chip" }, dev ? h("span", { class: "d" }, dev) : null, h("span", { class: "i" }, iast)) }
@@ -305,12 +324,16 @@ function flip(btn) {
   if (!btn.closest(".editing")) return;
   const g = btn.classList.contains("G") ? "L" : "G";
   btn.classList.remove("G", "L"); btn.classList.add(g); btn.querySelector("b").textContent = g;
-  btn.classList.toggle("flip", g !== current.key[+btn.dataset.i][1]);
+  const orig = btn.dataset.l != null ? current.key.lines[+btn.dataset.l][+btn.dataset.i][1] : current.key[+btn.dataset.i][1];
+  btn.classList.toggle("flip", g !== orig);
 }
 
 function pretty(ans) {
   try {
     const o = JSON.parse(ans);
+    if (o && Array.isArray(o.words) && o.words.some((w) => w && typeof w === "object"))  // parse answers
+      return o.words.map((w) => [w.lemma, w.case, w.number, w.gender, w.tense_mood, w.person, w.voice].filter((x) => x != null).join(" ")).join(" | ");
+    if (o && Array.isArray(o.lines)) return o.lines.join(" / ") + (o.meter ? ` · ${o.meter}` : "");
     if (o && typeof o === "object") return Object.entries(o).filter(([, v]) => v != null)
       .map(([k, v]) => Array.isArray(v) ? v.join(" + ") : (["form", "pattern"].includes(k) ? String(v) : `${k}: ${v}`)).join(" · ");
   } catch {}
@@ -325,9 +348,18 @@ function fixForm(it, prev) {
       h("input", { id: "f-" + f, "data-f": f, value: (p ? p[f] : it.key[f]) ?? "", placeholder: "—" }))));
   }
   if (it.kind === "syllables") return h("p", { class: "small", style: "margin:0" }, "Click syllables in the answer key above to flip them between G and L. Flipped ones are outlined.");
+  if (it.kind === "lines") return [h("p", { class: "small", style: "margin:0" }, "Click syllables in the answer key above to flip them; flipped ones are outlined."),
+    h("label", { for: "fixMeter" }, "Meter"), h("input", { id: "fixMeter", value: p ? p.meter : it.key.meter })];
+  if (it.kind === "table") {
+    const cols = ["lemma", "pos", "case", "number", "gender", "tense_mood", "person", "voice"];
+    return h("div", { style: "overflow-x:auto" }, h("table", { id: "fixTable" }, h("tr", {}, h("th", {}, "Word"), cols.map((c) => h("th", {}, FIELD_LABEL[c]))),
+      it.key.map((k, i) => h("tr", {}, h("td", { class: "m" }, (it.words || [])[i] || ""), cols.map((c) =>
+        h("td", {}, h("input", { "data-r": i, "data-c": c, value: ((p && p[i]) ? p[i][c] : k[c]) ?? "", placeholder: "—", style: "min-width:70px" })))))));
+  }
   const lines = p || (it.kind === "sutras" ? it.key.map((k) => k[0]) : it.key);
   const ta = h("textarea", { id: "fixList", class: it.kind === "sutras" ? "v" : "", oninput: () => it.kind === "sutras" && sutraHint() }, lines.join("\n"));
-  const label = { forms: "Accepted forms, one per line (IAST)", words: "The words in order, one per line (IAST, pausa form)", sutras: "Required sūtras, one per line" }[it.kind];
+  const label = { forms: "Accepted forms, one per line (IAST)", words: "The words in order, one per line (IAST, pausa form)",
+    padas: "Every word in order, one per line (IAST, pausa form; hyphens between compound members)", sutras: "Required sūtras, one per line" }[it.kind];
   return [h("label", { for: "fixList" }, label), ta, it.kind === "sutras" ? h("div", { class: "hint", id: "sutraHint" }) : null,
     it.kind === "sutras" ? h("label", { style: "font-weight:400;display:flex;gap:8px;align-items:center" },
       h("input", { type: "checkbox", id: "family", style: "width:auto" }), "Same ruling for every question of this join type") : null];
@@ -347,9 +379,14 @@ function card(it, decisions, reviewers, minePrev) {
   const buttons = [["right", "Key is right", "Keep as shown"], ["wrong", "Key is wrong", "Give the right answer"], ["ambiguous", "Ambiguous", "Drop the question"]]
     .map(([d, t, s]) => h("button", { type: "button", "data-d": d, "aria-pressed": String(choice === d), onclick: () => {
       choice = d; buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.d === d)));
-      fixWrap.hidden = d !== "wrong"; keyBox.classList.toggle("editing", d === "wrong" && it.kind === "syllables");
+      fixWrap.hidden = d !== "wrong"; keyBox.classList.toggle("editing", d === "wrong" && ["syllables", "lines"].includes(it.kind));
       if (d === "wrong" && it.kind === "sutras") sutraHint();
     } }, t, h("span", {}, s)));
+  if (choice === "wrong" && it.kind === "lines") {
+    keyBox.classList.add("editing");
+    if (minePrev.fix) minePrev.fix.lines.forEach((pat, li) => [...pat].forEach((g, i) => {
+      const b = keyBox.querySelector(`[data-l="${li}"][data-i="${i}"]`); if (b && b.querySelector("b").textContent !== g) flip(b) }));
+  }
   if (choice === "wrong" && it.kind === "syllables") {
     keyBox.classList.add("editing");
     if (minePrev.fix) [...minePrev.fix].forEach((g, i) => { const b = keyBox.querySelector(`[data-i="${i}"]`); if (b && b.querySelector("b").textContent !== g) flip(b) });
@@ -360,6 +397,10 @@ function card(it, decisions, reviewers, minePrev) {
     if (choice === "wrong") {
       if (it.kind === "fields") { fix = {}; fixWrap.querySelectorAll("[data-f]").forEach((i) => fix[i.dataset.f] = i.value.trim() || null) }
       else if (it.kind === "syllables") fix = [...keyBox.querySelectorAll(".syl b")].map((b) => b.textContent).join("");
+      else if (it.kind === "lines") fix = { lines: it.key.lines.map((_, li) => [...keyBox.querySelectorAll(`[data-l="${li}"] b`)].map((b) => b.textContent).join("")),
+        meter: document.getElementById("fixMeter").value.trim() };
+      else if (it.kind === "table") { fix = it.key.map(() => ({}));
+        fixWrap.querySelectorAll("[data-r]").forEach((i) => { if (i.value.trim()) fix[+i.dataset.r][i.dataset.c] = i.value.trim() }) }
       else fix = document.getElementById("fixList").value.split("\n").map((s) => s.trim()).filter(Boolean);
     }
     if (choice === "wrong" && sameAsKey(it, fix)) { msg.className = "msg err"; msg.textContent = "That's the same as the key. Change it, or choose Key is right."; return }

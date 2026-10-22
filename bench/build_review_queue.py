@@ -49,7 +49,8 @@ FIELDS = {"context": ["lemma", "pos", "case", "number", "gender", "tense_mood", 
           "gita": ["lemma", "pos", "case", "number", "gender", "tense_mood", "person", "voice"],
           "analyze": ["lakara", "purusha", "vacana"]}
 KIND = {"context": "fields", "gita": "fields", "analyze": "fields", "tinanta": "forms", "subanta": "forms",
-        "join": "forms", "split": "words", "rule": "sutras", "meter": "syllables"}
+        "join": "forms", "split": "words", "rule": "sutras", "meter": "syllables",
+        "generate": "forms", "padapatha": "padas", "parse": "table", "scan": "lines"}
 SAMPLE_PER_SET = {"v0": 50, "v1-dev": 25, "v1-test": 25}
 
 
@@ -122,8 +123,35 @@ def record(it, set_name, models, fixes):
         r["key"] = {f: key[0].get(f) for f in FIELDS[task]}
         r["also"] = [{f: k.get(f) for f in FIELDS[task]} for k in key[1:]]
         r["source"] = "Vidyut's derivation of every form of the root"
-    elif task in ("tinanta", "subanta"):
-        r["title"] = "Form the word" if task == "tinanta" else "Decline the stem"
+    elif task == "padapatha":
+        verse = lines_after(it["prompt"], ":\n", "\nUndo")
+        r["title"] = "Padapāṭha of this verse"
+        # a compound is shown with hyphens between its members
+        r["key"] = [w if isinstance(w, str) else "-".join(w["members"]) for w in key[0]]
+        r["source"] = meta.get("gold_source", "")
+    elif task == "parse":
+        verse = lines_after(it["prompt"], ":\n", "\ngive")
+        r["title"] = "Grammar of every word in this verse"
+        r["words"] = meta.get("words", [])
+        r["key"] = [{f: k.get(f) for f in FIELDS["context"] if f in k} for k in key[0]]
+        r["source"] = meta.get("gold_source", "")
+    elif task == "scan":
+        verse = lines_after(it["prompt"], ":\n", "\nGive")
+        r["title"] = "Scan this verse and name its meter"
+        rows = []
+        for li, (line, pat) in enumerate(zip(verse, key[0]["lines"])):
+            try:
+                sylls = [transliterate(x, Scheme.Slp1, Scheme.Iast) for x, _ in meter.weights(line)]
+            except BaseException:
+                sylls = []
+            if len(sylls) != len(pat):
+                sylls = [""] * len(pat)
+            anc = set(meta.get("anceps", [[]] * len(verse))[li])
+            rows.append([[s_, g, int(i in anc)] for i, (s_, g) in enumerate(zip(sylls, pat))])
+        r["key"] = {"lines": rows, "meter": key[0]["meter"], "variant": key[0].get("variant")}
+        r["source"] = meta.get("gold_source", "")
+    elif task in ("tinanta", "subanta", "generate"):
+        r["title"] = "Decline the stem" if task == "subanta" else "Form the word"
         r["key"] = key
         r["source"] = "Vidyut's derivation; every form it allows is accepted"
     elif task == "join":
@@ -162,13 +190,15 @@ def record(it, set_name, models, fixes):
         r["verse"] = {"iast": verse, "dev": [dev(l) for l in verse]}
     if r.get("mark"):
         r["markDev"] = dev(r["mark"])
-    if r["kind"] in ("forms", "words"):
+    if r["kind"] in ("forms", "words", "padas"):
         r["keyDev"] = [dev(x) for x in r["key"]]
     if r.get("words"):
         r["wordsDev"] = [dev(x) for x in r["words"]]
     if r.get("joined"):
         r["joinedDev"] = dev(r["joined"])
-    if set_name.startswith("v1") and meta.get("verse"):
+    if meta.get("text") and meta.get("ref"):
+        r["ref"] = f"{meta['text']} {meta['ref'].replace(', verse ', '.')}"
+    elif set_name.startswith("v1") and meta.get("verse"):
         r["ref"] = "Mahābhārata " + str(meta["verse"])
     elif task == "meter" and meta.get("verse"):
         r["ref"] = "Bhagavad Gītā " + str(meta["verse"])
@@ -225,6 +255,15 @@ def main():
                 keep.append(i)
         pilot_ans = answers(sorted(glob.glob(os.path.join(ROOT, "bench/results/*.v1-pool.jsonl"))), pool)
         queue += [record(pool[i], "v1-pilot", pilot_ans.get(i, []), {}) for i in keep]
+
+    # v1: every question, as dev or test once calibration has split them (test until then)
+    v1_path = os.path.join(ROOT, "bench/private/v1.jsonl")
+    if os.path.exists(v1_path):
+        v1 = grade.load_items(v1_path)
+        dev_path = os.path.join(ROOT, "bench/data/v1-dev.jsonl")
+        dev_ids = set(grade.load_items(dev_path)) if os.path.exists(dev_path) else set()
+        v1_ans = answers(sorted(glob.glob(os.path.join(ROOT, "bench/results/*.v1.jsonl"))), v1)
+        queue += [record(it, "v1-dev" if i in dev_ids else "v1-test", v1_ans.get(i, []), {}) for i, it in v1.items()]
 
     rng = random.Random(108)
     for r in queue:

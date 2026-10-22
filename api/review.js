@@ -98,8 +98,24 @@ function cleanFix(kind, fix) {
     const p = String(fix).toUpperCase();
     return /^[GL]{1,40}$/.test(p) ? p : null;
   }
+  if (kind === "lines") {
+    if (!fix || typeof fix !== "object" || !Array.isArray(fix.lines)) return null;
+    const lines = fix.lines.slice(0, 8).map((l) => String(l).toUpperCase());
+    if (lines.some((l) => !/^[GL]{1,80}$/.test(l))) return null;
+    return { lines, meter: clean(fix.meter, 60) };
+  }
+  if (kind === "table") {
+    if (!Array.isArray(fix)) return null;
+    return fix.slice(0, 16).map((row) => {
+      const o = {};
+      for (const [k, v] of Object.entries(row && typeof row === "object" ? row : {}).slice(0, 12)) {
+        if (/^[a-z_]{1,20}$/.test(k) && v != null && v !== "") o[k] = clean(v, 60);
+      }
+      return o;
+    });
+  }
   if (!Array.isArray(fix)) return null;
-  const list = fix.map((x) => clean(x, 80)).filter(Boolean).slice(0, 30);
+  const list = fix.map((x) => clean(x, 80)).filter(Boolean).slice(0, 60);
   if (kind === "sutras" && list.some((x) => !/^\d\.\d\.\d{1,3}$/.test(x))) return null;
   return list.length ? list : null;
 }

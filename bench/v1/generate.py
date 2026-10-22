@@ -11,7 +11,8 @@ saturated. Every question is a whole unit the model must produce itself:
              written whole or with hyphens between members
   parse      lemma and grammar of every inflected word of a verse (the words
              are listed); one wrong word fails the verse
-             key: the corpus annotation, kept only where Vidyut confirms it
+             key: the corpus annotation, kept only where Vidyut confirms every
+             word and the corpus split rebuilds the printed verse
   scan       scan every line of a verse into heavy and light syllables and
              name the meter
              key: Vidyut's prosody module, only verses whose meter it
@@ -122,7 +123,15 @@ def where(v):
 PAUSA = {"sa": "saḥ", "eṣa": "eṣaḥ"}
 
 
+# The corpus gives the enclitic pronouns me, te, naḥ, vaḥ, mā, tvā their full
+# forms (mama, tava...); the verse has the enclitic, so use what's printed.
+ENCLITIC = {"me": "me", "te": "te", "mā": "mā", "tvā": "tvā", "naḥ": "naḥ", "no": "naḥ", "vaḥ": "vaḥ", "vo": "vaḥ",
+            "nau": "nau", "vām": "vām"}
+
+
 def pausa(t):
+    if t["lemma"] in ("mad", "tvad", "asmad", "yuṣmad") and t.get("surface") in ENCLITIC:
+        return ENCLITIC[t["surface"]]
     return PAUSA.get(t["form"], t["form"]) if t["lemma"] in ("tad", "etad") else t["form"]
 
 
@@ -135,7 +144,7 @@ def pada_key(halves):
         forms, groups = [], []
         for gi, g in enumerate(h["groups"]):
             for t in g["tokens"]:
-                forms.append(t["form"])
+                forms.append(pausa(t))
                 groups.append(gi)
         if sandhi.explain_line(forms, groups, h["text"]) is None:
             return None
@@ -204,6 +213,8 @@ def gen_parse(rng, pool, n):
     for v in pool:
         if len(items) >= n:
             break
+        if pada_key(v["halves"]) is None:
+            continue  # the corpus split doesn't rebuild the printed verse: its word forms can't be trusted
         words, keys, skip = [], [], False
         for h in v["halves"]:
             for g in h["groups"]:
@@ -348,6 +359,22 @@ def main():
     for it in items:
         it["id"] = f"v1-{it['task']}-{counts[it['task']]:04d}"
         counts[it["task"]] += 1
+    # Decisions from the answer-key review (samskritam.ai/review), applied last
+    from review_decisions import fixed_accept, settled
+    applied, decisions = Counter(), settled(quiet=True)
+    for it in items:
+        d = decisions.get(it["id"])
+        if not d:
+            continue
+        it["meta"]["reviewed"] = f"{d['by']}: {d['decision']}"
+        applied[d["decision"]] += 1
+        if d["decision"] == "ambiguous":
+            it["meta"]["dropped"] = f"Ambiguous in review ({d['by']})" + (f": {d['note']}" if d.get("note") else "")
+        elif d["decision"] == "wrong" and d.get("fix"):
+            it["accept"] = fixed_accept(it["task"], d["fix"])
+            it["meta"]["gold_source"] = f"corrected in review ({d['by']})" + (f": {d['note']}" if d.get("note") else "")
+    if applied:
+        print("reviews applied:", dict(applied))
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as fh:
         for it in items:

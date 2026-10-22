@@ -56,4 +56,11 @@ def fixed_accept(task, fix):
         return [fix]
     if task == "rule":
         return [sorted(fix)]
-    return list(fix)  # tinanta, subanta, join: every accepted form
+    if task == "padapatha":  # hyphens mark a compound's members
+        return [[w if "-" not in w else {"members": [m for m in w.split("-") if m], "accept": [w.replace("-", "")]}
+                 for w in fix]]
+    if task == "parse":
+        return [[{k: v for k, v in row.items() if v is not None} for row in fix]]
+    if task == "scan":
+        return [{"lines": fix["lines"], "meter": fix["meter"], "variant": None}]
+    return list(fix)  # tinanta, subanta, join, generate: every accepted form
