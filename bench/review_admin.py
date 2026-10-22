@@ -16,25 +16,42 @@ import json
 import os
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.environ.get("REVIEW_URL", "https://samskritam.ai").rstrip("/")
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None  # handled below, keeping the method, body and token
+
+
+_open = urllib.request.build_opener(_NoRedirect).open
+
+
 def call(method, params="", body=None):
     tok = os.environ.get("REVIEW_OWNER_TOKEN")
     if not tok:
         sys.exit("Set REVIEW_OWNER_TOKEN first (the same value as in Vercel).")
-    req = urllib.request.Request(f"{BASE}/api/review{params}", method=method,
-                                 data=json.dumps(body).encode() if body is not None else None,
-                                 headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json",
-                                          "User-Agent": "samskritam-review-admin"})
-    try:
-        with urllib.request.urlopen(req, timeout=120) as r:
-            return json.loads(r.read())
-    except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP {e.code}: {e.read().decode(errors='replace')[:300]}")
+    url = f"{BASE}/api/review{params}"
+    for _ in range(3):
+        req = urllib.request.Request(url, method=method,
+                                     data=json.dumps(body).encode() if body is not None else None,
+                                     headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json",
+                                              "User-Agent": "samskritam-review-admin"})
+        try:
+            with _open(req, timeout=120) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            loc = e.headers.get("Location") if e.code in (301, 302, 307, 308) else None
+            if loc:
+                # e.g. samskritam.ai -> www.samskritam.ai: follow it, same request.
+                url = urllib.parse.urljoin(url, loc)
+                continue
+            sys.exit(f"HTTP {e.code}: {e.read().decode(errors='replace')[:300]}")
+    sys.exit(f"Too many redirects (last: {url}). Set REVIEW_URL to the site's address.")
 
 
 def main():
