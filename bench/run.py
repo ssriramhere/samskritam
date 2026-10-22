@@ -67,8 +67,12 @@ def call_openai(model, prompt, a):
 
 
 def call_openrouter(model, prompt, a):
+    # Without max_tokens OpenRouter reserves credit for the model's full output
+    # limit (65,536 tokens for some) on every request in flight, and refuses
+    # requests with HTTP 402 long before the balance is actually spent.
+    extra = {"max_tokens": a.openrouter_max_tokens} if a.openrouter_max_tokens else None
     return _openai_compatible("https://openrouter.ai/api/v1/chat/completions",
-                              os.environ["OPENROUTER_API_KEY"], model, prompt, a)
+                              os.environ["OPENROUTER_API_KEY"], model, prompt, a, extra)
 
 
 def call_sarvam(model, prompt, a):
@@ -109,6 +113,9 @@ def main():
     ap.add_argument("--bench", default=os.path.join(ROOT, "bench/data/v0.jsonl"))
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--max-tokens", type=int, default=2048)
+    ap.add_argument("--openrouter-max-tokens", type=int, default=None,
+                    help="output cap incl. reasoning for OpenRouter; default none for v0 "
+                         "(as published), 16000 for other item sets")
     ap.add_argument("--temperature", type=float, default=None,
                     help="omit for the provider default (some reasoning models reject it)")
     ap.add_argument("--limit", type=int, default=None, help="first N items, for a smoke test")
@@ -128,6 +135,8 @@ def main():
     os.makedirs(os.path.join(ROOT, "bench/results"), exist_ok=True)
     stem = os.path.splitext(os.path.basename(a.bench))[0]
     tag = f".{a.tag}" if a.tag else ""
+    if stem != "v0" and a.openrouter_max_tokens is None:
+        a.openrouter_max_tokens = 16000
     if stem != "v0":
         tag = f".{stem}{tag}"  # e.g. openrouter__vendor_model.v1-pool.jsonl; v0 file names unchanged
     out_path = os.path.join(ROOT, "bench/results",
