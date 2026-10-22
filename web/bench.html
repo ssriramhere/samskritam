@@ -562,7 +562,7 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
     if (!e || !e.changes.length) {
       el.append(t("p", "pending", e && e.reviewed
         ? `${e.reviewed} question${e.reviewed > 1 ? "s" : ""} reviewed so far; no keys needed correcting.`
-        : "No corrections yet. The review has started; corrections will be listed here as they are approved."));
+        : "No corrections yet. They will be listed here as they are approved."));
       return;
     }
     el.append(t("p", "sub muted", `${e.reviewed} questions reviewed so far; ${e.changes.length} change${e.changes.length > 1 ? "s" : ""}. Updated ${e.updated}.`));
