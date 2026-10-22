@@ -20,10 +20,17 @@ from vidyut.lipi import Scheme, detect, transliterate  # noqa: E402
 from engine import verify  # noqa: E402
 
 
-def extract_json(text: str):
+def extract_json(text: str, nested: bool = False):
     if text is None:
         return None
     text = re.sub(r"```(?:json)?", "", text)
+    if nested:  # answers with objects inside (v1 parse): the outermost {...}
+        i, j = text.find("{"), text.rfind("}")
+        if 0 <= i < j:
+            try:
+                return json.loads(text[i:j + 1])
+            except json.JSONDecodeError:
+                pass
     for m in re.finditer(r"\{[^{}]*\}", text, re.S):
         try:
             return json.loads(m.group())
@@ -133,11 +140,11 @@ def _joins(parts):
 
 
 def grade_item(item: dict, answer_text: str) -> dict:
-    ans = extract_json(answer_text)
     task = item["task"]
+    ans = extract_json(answer_text, nested=task == "parse")
     if ans is None:
         return {"correct": False, "reason": "no-json"}
-    if task in ("tinanta", "subanta"):
+    if task in ("tinanta", "subanta", "generate"):
         accept = {norm_form(a) for a in item["accept"]}
         raw = ans.get("form")
         # "buddheḥ / buddhyāḥ": several forms count only if every one is right.
@@ -186,6 +193,34 @@ def grade_item(item: dict, answer_text: str) -> dict:
         skip = set(item["meta"].get("anceps", []))
         ok = all(g == w for i, (g, w) in enumerate(zip(got, gold)) if i not in skip)
         return {"correct": ok}
+    if task == "padapatha":
+        got = ans.get("words")
+        if not isinstance(got, list):
+            return {"correct": False, "reason": "no word list"}
+        got = [w.strip() for w in got if isinstance(w, str) and w.strip()]
+        return {"correct": _pada_ok(item["accept"][0], got)}
+    if task == "parse":
+        gold, got = item["accept"][0], ans.get("words")
+        if not isinstance(got, list):
+            return {"correct": False, "reason": "no word list", "right": 0, "n": len(gold)}
+        right = 0
+        for i, g in enumerate(gold):
+            a = got[i] if i < len(got) and isinstance(got[i], dict) else {}
+            right += _parse_word_ok(a, g)
+        return {"correct": right == len(gold) and len(got) == len(gold), "right": right, "n": len(gold)}
+    if task == "scan":
+        gold, anc = item["accept"][0], item["meta"].get("anceps", [])
+        lines = ans.get("lines")
+        if not isinstance(lines, list) or len(lines) != len(gold["lines"]):
+            return {"correct": False, "reason": "wrong number of lines"}
+        lines_ok = True
+        for i, (want, raw) in enumerate(zip(gold["lines"], lines)):
+            got = re.sub(r"[^GL]", "", str(raw).upper())
+            skip = set(anc[i]) if i < len(anc) else set()
+            if len(got) != len(want) or any(g != w for j, (g, w) in enumerate(zip(got, want)) if j not in skip):
+                lines_ok = False
+        meter_ok = _meter_name_ok(ans.get("meter"), gold["meter"], gold.get("variant"))
+        return {"correct": lines_ok and meter_ok, "lines": lines_ok, "meter": meter_ok}
     if task == "recall":  # memorisation probe (bench/probe/): near-verbatim counts as recited
         sim = recall_similarity(item["accept"][0], ans.get("text"))
         return {"correct": sim >= 0.9, "similarity": round(sim, 3)}
@@ -215,6 +250,74 @@ def _split_ok(gold, got):
         if norm_form(merged) == norm_form(got[0]) and _split_ok(gold[k:], got[1:]):
             return True
     return False
+
+
+def _parse_word_ok(ans: dict, gold: dict) -> bool:
+    """One word of a parse question, with v1's allowances."""
+    lem = _lemma_ok(ans.get("lemma"), gold["lemma"], gold.get("gender"))
+    return lem and all(_field_ok(k, ans.get(k), gold.get(k), gold["lemma"], gold.get("case"))
+                       for k in ("pos", "case", "number", "gender", "tense_mood", "person", "voice"))
+
+
+def _flat(x) -> str:
+    return norm_form(re.sub(r"[\s'’ʼ‘-]", "", x)) if isinstance(x, str) else ""
+
+
+def _pada_ok(gold, got) -> bool:
+    """Padapāṭha: every word, in order. A compound may be written whole (any
+    joined spelling), with hyphens between members, or member by member; a
+    negative a- or prefix the corpus splits off may stay attached."""
+    if not gold:
+        return not got
+    if not got:
+        return False
+    g, w = gold[0], got[0]
+    if isinstance(g, dict):
+        if _flat(w) in {_flat(x) for x in g["accept"]} and _pada_ok(gold[1:], got[1:]):
+            return True
+        parts = [p for p in w.split("-") if p]
+        if len(parts) == len(g["members"]) and all(_member_ok(m, p) for m, p in zip(g["members"], parts)) \
+                and _pada_ok(gold[1:], got[1:]):
+            return True
+        k = len(g["members"])
+        if len(got) >= k and all(_member_ok(m, p) for m, p in zip(g["members"], got[:k])) and _pada_ok(gold[1:], got[k:]):
+            return True
+        return False
+    if _same_word(g, w) and _pada_ok(gold[1:], got[1:]):
+        return True
+    # several corpus words written as one (a-parāṅmukhāḥ, ati-dīrgham)
+    for k in range(2, min(4, len(gold)) + 1):
+        if any(isinstance(x, dict) for x in gold[:k]):
+            break
+        merged = "".join(x.rstrip("ḥ") for x in gold[:k - 1]) + gold[k - 1]
+        if _flat(merged) == _flat(w) and _pada_ok(gold[k:], got[1:]):
+            return True
+    return False
+
+
+def _member_ok(member: str, got: str) -> bool:
+    return _flat(member) == _flat(got) or _same_word(member, got)
+
+
+def _meter_key(name) -> str:
+    import unicodedata
+    s = unicodedata.normalize("NFD", str(name or "")).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z]", "", s)
+
+
+METER_ALIASES = {"anustubh": {"sloka", "anustup", "anushtubh", "shloka"},
+                 "tristubh": {"tristup", "trishtubh"}}
+
+
+def _meter_name_ok(got, gold, variant=None) -> bool:
+    g, w = _meter_key(gold), _meter_key(got)
+    if not w:
+        return False
+    # "anuṣṭubh (pathyā)" or "mandākrāntā meter": the name may come with extras
+    names = {g} | METER_ALIASES.get(g, set())
+    if variant and g == "tristubh":  # the triṣṭubh form may be named instead: upajāti, indravajrā
+        names |= {_meter_key(variant)}
+    return any(w == n or w.startswith(n) or n in w for n in names if n)
 
 
 def _same_word(gold: str, got: str) -> bool:

@@ -153,6 +153,7 @@ label { font-size: .88rem; font-weight: 600 }
         <option value="">All sets</option>
         <option value="v1-test">v1 test (private)</option>
         <option value="v1-dev">v1 dev</option>
+        <option value="v1-pilot">v1 pilot (not published)</option>
         <option value="v0">v0 (published, frozen)</option>
       </select>
       <label style="display:flex;gap:8px;align-items:center;font-weight:400;margin-top:10px">
@@ -173,7 +174,7 @@ const TAGS = [["fix", "Hand corrections"], ["missed", "Most models missed"], ["s
   ["sample", "Random sample (blind)"], ["ok", "All models agreed"]];
 const TAG_LABEL = { fix: "Hand-corrected", missed: "Most models disagreed with the key", some: "Some models disagreed",
   sample: "Random sample: model answers hidden", ok: "All models agreed" };
-const SET_LABEL = { v0: "v0", "v1-dev": "v1 dev", "v1-test": "v1 test · private" };
+const SET_LABEL = { v0: "v0", "v1-pilot": "v1 pilot", "v1-dev": "v1 dev", "v1-test": "v1 test · private" };
 const FIELD_LABEL = { lemma: "Lemma", pos: "Part of speech", case: "Case", number: "Number", gender: "Gender",
   tense_mood: "Tense / mood", person: "Person", voice: "Voice", lakara: "Lakāra", purusha: "Puruṣa", vacana: "Vacana" };
 const FIELDS = { context: ["lemma", "pos", "case", "number", "gender", "tense_mood", "person", "voice"],

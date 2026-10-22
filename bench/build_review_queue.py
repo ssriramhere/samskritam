@@ -10,7 +10,8 @@ shape, where the key came from, any hand correction, and every model's answer.
 Sets
   v0       the published benchmark (bench/data/v0.jsonl), with the published
            model answers (bench/results-v0/)
-  v1-dev   bench/data/v1-dev.jsonl, if calibration has written it
+  v1-pilot the v1 pilot's hand corrections (bench/private/v1-pool.jsonl; not published)
+  v1-dev   bench/data/v1-dev.jsonl, if calibration has written it (v1 proper: not yet)
   v1-test  bench/private/v1-test.jsonl (private: the queue file stays in
            bench/private/ and only invited reviewers see it on the site)
 Questions dropped by hand review are included too, so the drop itself can be
@@ -212,22 +213,18 @@ def main():
         r["fix"] = {"what": "dropped", "why": it["meta"]["removed"] + " (removed from v0 before publishing)"}
         queue.append(r)
 
+    # The v1 pilot (not published): only its hand corrections and drops are reviewed.
     pool_path = os.path.join(ROOT, "bench/private/v1-pool.jsonl")
     if os.path.exists(pool_path):
         pool = grade.load_items(pool_path)
-        sets = {}
-        for name, path in (("v1-dev", "bench/data/v1-dev.jsonl"), ("v1-test", "bench/private/v1-test.jsonl")):
-            if os.path.exists(os.path.join(ROOT, path)):
-                for i in grade.load_items(os.path.join(ROOT, path)):
-                    sets[i] = name
-        # hand-fixed or dropped questions are reviewed even when calibration left them out
+        keep = []
         for i, it in pool.items():
             m = it.get("meta", {})
             relaxed = it["task"] == "rule" and "8.3.34" in it["accept"][0]
-            if i not in sets and (m.get("dropped") or relaxed or str(m.get("gold_source", "")).startswith("hand")):
-                sets[i] = "v1-test"
-        v1_ans = answers(sorted(glob.glob(os.path.join(ROOT, "bench/results/*.v1-pool.jsonl"))), pool)
-        queue += [record(pool[i], s, v1_ans.get(i, []), {}) for i, s in sets.items()]
+            if m.get("dropped") or relaxed or str(m.get("gold_source", "")).startswith("hand"):
+                keep.append(i)
+        pilot_ans = answers(sorted(glob.glob(os.path.join(ROOT, "bench/results/*.v1-pool.jsonl"))), pool)
+        queue += [record(pool[i], "v1-pilot", pilot_ans.get(i, []), {}) for i in keep]
 
     rng = random.Random(108)
     for r in queue:
@@ -236,7 +233,7 @@ def main():
         ok = [r for r in queue if r["set"] == s and r["tag"] == "ok"]
         for r in rng.sample(ok, min(n, len(ok))):
             r["tag"] = "sample"
-    sets, tags = ["v1-test", "v1-dev", "v0"], ["fix", "missed", "some", "sample", "ok"]
+    sets, tags = ["v1-test", "v1-dev", "v1-pilot", "v0"], ["fix", "missed", "some", "sample", "ok"]
     queue.sort(key=lambda r: (tags.index(r["tag"]), sets.index(r["set"]), r["id"]))
     for n, r in enumerate(queue):
         r["order"] = n
@@ -245,7 +242,7 @@ def main():
         json.dump(queue, f, ensure_ascii=False)
     from collections import Counter
     c = Counter((r["set"], r["tag"]) for r in queue)
-    for s in ("v0", "v1-dev", "v1-test"):
+    for s in ("v0", "v1-pilot", "v1-dev", "v1-test"):
         print(s, {t: c[(s, t)] for t in ("fix", "missed", "some", "sample", "ok") if c[(s, t)]})
     print(f"{len(queue)} questions, {os.path.getsize(OUT) // 1024} KB -> {OUT}")
 

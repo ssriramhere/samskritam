@@ -1,10 +1,11 @@
 """Turn the v1 item pool into the published dev set and the private test set.
 
     # 1. pilot run: a few models on the whole pool (see bench/README.md)
-    python bench/run.py --provider openrouter --model <id> --bench bench/private/v1-pool.jsonl
+    python bench/run.py --provider openrouter --model <id> --bench bench/private/v1.jsonl
     # 2. calibrate and split
     export BENCH_SECRET=...        # keep it private; the same secret gives the same split
-    python bench/calibrate_v1.py bench/results/*.v1-pool.jsonl
+    python bench/calibrate_v1.py bench/results/*.v1.jsonl
+    (the v1 pilot: --pool bench/private/v1-pool.jsonl --name v1-pilot with its *.v1-pool.jsonl results)
 
 What it does
   * drops items every pilot model got right (they no longer separate models),
@@ -31,13 +32,15 @@ sys.path.insert(0, os.path.join(ROOT, "bench"))
 sys.path.insert(0, ROOT)
 import grade  # noqa: E402
 
-POOL = os.path.join(ROOT, "bench/private/v1-pool.jsonl")
+POOL = os.path.join(ROOT, "bench/private/v1.jsonl")
 PRIVATE = os.path.join(ROOT, "bench/private")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("results", nargs="*", help="pilot result files for the v1 pool")
+    ap.add_argument("--pool", default=POOL, help="the question pool (the v1 pilot's: bench/private/v1-pool.jsonl)")
+    ap.add_argument("--name", default="v1", help="output names: <name>-dev.jsonl, <name>-test.jsonl (v1-pilot for the pilot)")
     ap.add_argument("--test-share", type=float, default=0.5)
     ap.add_argument("--keep-easy", type=int, default=10, help="items per task kept even if every model got them right")
     a = ap.parse_args()
@@ -45,7 +48,7 @@ def main():
     if not secret:
         sys.exit("Set BENCH_SECRET first (any long random string; keep it private).")
 
-    items = grade.load_items(POOL)
+    items = grade.load_items(a.pool)
     right = collections.defaultdict(list)  # id -> [True/False per model]
     filtered = set()  # a provider's content filter blocked the question: dropped, it can't measure that model
     for path in a.results:
@@ -80,12 +83,12 @@ def main():
     os.makedirs(PRIVATE, exist_ok=True)
     dev = [items[i] for i in keep if not in_test(i)]
     test = [items[i] for i in keep if in_test(i)]
-    for path, rows in ((os.path.join(ROOT, "bench/data/v1-dev.jsonl"), dev),
-                       (os.path.join(PRIVATE, "v1-test.jsonl"), test)):
+    for path, rows in ((os.path.join(ROOT, f"bench/data/{a.name}-dev.jsonl"), dev),
+                       (os.path.join(PRIVATE, f"{a.name}-test.jsonl"), test)):
         with open(path, "w", encoding="utf-8") as f:
             for it in rows:
                 f.write(json.dumps(it, ensure_ascii=False) + "\n")
-    with open(os.path.join(PRIVATE, "v1-review.tsv"), "w", encoding="utf-8") as f:
+    with open(os.path.join(PRIVATE, f"{a.name}-review.tsv"), "w", encoding="utf-8") as f:
         f.write("id\ttask\tkey\tmeta\n")
         for i in hard:
             it = items[i]
@@ -98,9 +101,9 @@ def main():
         print(f"  dropped {len(filtered)} blocked by a provider's content filter: {' '.join(sorted(filtered))}")
     if models:
         print(f"  every model right: {len(easy)} (kept {len(keep_easy)}), every model wrong: {len(hard)}"
-              f" -> review bench/private/v1-review.tsv")
-    print(f"dev  {len(dev)} {count(dev)} -> bench/data/v1-dev.jsonl (publish)")
-    print(f"test {len(test)} {count(test)} -> bench/private/v1-test.jsonl (keep private)")
+              f" -> review bench/private/{a.name}-review.tsv")
+    print(f"dev  {len(dev)} {count(dev)} -> bench/data/{a.name}-dev.jsonl")
+    print(f"test {len(test)} {count(test)} -> bench/private/{a.name}-test.jsonl (keep private)")
 
 
 if __name__ == "__main__":
