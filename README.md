@@ -142,6 +142,18 @@ model's score re-graded with the corrected keys next to the published one.
 v0's 13 removed questions are in `bench/data/v0-removed.jsonl` and can be
 reviewed (and restored) like the rest.
 
+### Publishing v1 scores
+
+```
+python bench/v1/publish.py        # grades bench/results/*.v1.jsonl -> web/data/bench-v1.json
+git add web/data/bench-v1.json && git commit -m "v1 scores" && git push
+```
+
+Only scores are published (the questions stay private), with the memorisation
+probe's results when they're there. After correcting keys through the review
+page: `bench/review_admin.py pull`, `bench/v1/generate.py` (same BENCH_SECRET),
+then publish again.
+
 ## Deploy
 
 Vercel serves `web/` as static files and `api/` as functions (`vercel.json`).

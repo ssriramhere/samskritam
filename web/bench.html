@@ -264,6 +264,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 @media (max-width: 860px) { .boxes { grid-template-columns: minmax(0, 1fr) } }
 </style>
 <style>
+.vtabs { display: flex; gap: 6px; margin-top: 22px; flex-wrap: wrap }
+.vtabs a { text-decoration: none; color: var(--ink); border: 1px solid var(--rule); background: var(--leaf); padding: 6px 14px; border-radius: 999px; font-size: .92rem }
+.vtabs a[aria-current="true"] { background: var(--indigo); border-color: var(--indigo); color: var(--leaf) }
+.vtabs .tagp { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; margin-left: 6px; opacity: .85 }
+.status { border-left: 3px solid var(--turmeric); background: var(--leaf); padding: 10px 14px; border-radius: 0 8px 8px 0; max-width: 75ch; margin-top: 14px; font-size: .95rem }
+.probe td.n { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap }
+.probe tr.used td:first-child::after { content: "v1"; font-size: .68rem; font-weight: 600; letter-spacing: .06em; color: var(--ok); border: 1px solid currentColor; border-radius: 999px; padding: 0 6px; margin-left: 8px }
+.probe tr.control td:first-child { color: var(--muted) }
+.ex { font-family: var(--font-display) }
 .bhero { padding-block: 34px 10px; max-width: 860px }
 .bhero h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.08 }
 .bhero h1 em { color: var(--indigo) }
@@ -311,6 +320,82 @@ pre { background: var(--leaf); border: 1px solid var(--rule); border-radius: 10p
   </header>
 
   <main>
+    <nav class="vtabs" aria-label="Benchmark version"><a href="#v1" data-v="v1">v1<span class="tagp">preview</span></a><a href="#v0" data-v="v0">v0</a></nav>
+    <div id="v1-view">
+    <section class="bhero">
+      <div class="eyebrow">Samskritam benchmark v1 · preview</div>
+      <h1>Whole verses, from texts models <em>haven't memorised</em>.</h1>
+      <p class="lead">v0's questions turned out too easy for today's models: one word or one form at a time, from texts they can recite. v1 asks for whole verses from texts they can't recite (we tested), plus verb forms that rarely occur in any text. Every answer key still comes from the corpus and from Pāṇini's rules, never from a model.</p>
+      <div class="facts" id="v1-facts"></div>
+    </section>
+
+    <section class="band" id="v1-results">
+      <div class="eyebrow">Results</div>
+      <h2>How today's models do</h2>
+      <p class="status" id="v1-status">Preview results. The test questions are private, so these scores can't be trained on; the answer keys are being reviewed question by question, and scores are updated as keys are corrected.</p>
+      <div class="tasks"><table id="lb1" class="heat"><thead></thead><tbody></tbody></table></div>
+      <div class="legendrow"><span class="sw s4"></span>98% or more <span class="sw s3"></span>90–98% <span class="sw s2"></span>75–90% <span class="sw s1"></span>below 75% <span class="lgsep">·</span> Hover a score for its margin.</div>
+      <p class="sub muted" id="lb1-note"></p>
+    </section>
+
+    <section class="band" id="v1-probe">
+      <div class="eyebrow">Choosing the texts</div>
+      <h2>What models can recite</h2>
+      <p class="muted prose">We gave each model the first half of 30 verses from each of 23 texts and asked for the second half. A model that returns it almost word for word has memorised the text, and questions from that text would test memory more than Sanskrit. v1 uses only texts the strongest model recited 10% of the time or less.</p>
+      <div class="tasks"><table class="probe" id="probe"><thead></thead><tbody></tbody></table></div>
+      <p class="sub muted">Share of verses whose second half was reproduced near-verbatim (character similarity of 0.9 or more). Grey rows are well-known texts tested for comparison; <b>v1</b> marks the texts v1 uses.</p>
+    </section>
+
+    <section class="band" id="v1-tasks">
+      <div class="eyebrow">The four tasks</div>
+      <h2>What the model is asked</h2>
+      <p class="muted prose">The examples below use well-known verses so the private questions stay private. A verse counts only if every part of the answer is right.</p>
+      <div class="taskgrid">
+        <div class="task">
+          <div><h3>Padapāṭha</h3><div class="count" id="c-padapatha"></div><p class="what">Undo all the sandhi of a verse: every word in its stand-alone form, in order. Compounds may be written whole or with hyphens.</p></div>
+          <div class="q"><div class="ql">Example</div><p><span class="vline">dharmakṣetre kurukṣetre samavetā yuyutsavaḥ</span></p><div class="ans">dharma-kṣetre kuru-kṣetre samavetāḥ yuyutsavaḥ</div></div>
+        </div>
+        <div class="task">
+          <div><h3>Parse</h3><div class="count" id="c-parse"></div><p class="what">The lemma and grammar, in context, of every inflected word of a verse. One wrong word fails the verse.</p></div>
+          <div class="q"><div class="ql">Example</div><p><span class="vline">māmakāḥ pāṇḍavāś caiva kim akurvata sañjaya</span>: <i>akurvata</i></p><div class="ans">kṛ · imperfect · 3rd plural · ātmanepada</div></div>
+        </div>
+        <div class="task">
+          <div><h3>Scan</h3><div class="count" id="c-scan"></div><p class="what">Mark every syllable of a verse heavy or light, and name the meter: anuṣṭubh, mandākrāntā, śikhariṇī, vasantatilakā and others.</p></div>
+          <div class="q"><div class="ql">Example</div><p><span class="vline">kaścit kāntāvirahaguruṇā svādhikārāt pramattaḥ</span></p><div class="ans"><code>GGGG LLLLLG GLGGLGG</code> · mandākrāntā</div></div>
+        </div>
+        <div class="task">
+          <div><h3>Generate</h3><div class="count" id="c-generate"></div><p class="what">Produce a verb form that rarely occurs in texts: desideratives, causatives and intensives, the precative, conditional and periphrastic future, the passive.</p></div>
+          <div class="q"><div class="ql">Example</div><p>The desiderative of √gam, laṭ, 3rd singular, active.</p><div class="ans">jigamiṣati</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="v1-method">
+      <div class="eyebrow">Method</div>
+      <h2>Where the questions and answers come from</h2>
+      <div class="prose"><ul>
+        <li><b>Texts</b> from the <a href="https://github.com/OliverHellwig/sanskrit" target="_blank" rel="noopener">Digital Corpus of Sanskrit</a>, chosen by the recitation test above: <span id="v1-texts"></span>.</li>
+        <li><b>Padapāṭha</b> keys are the corpus's word split, kept only where <a href="https://github.com/ambuda-org/vidyut" target="_blank" rel="noopener">Vidyut</a>'s sandhi rules rebuild exactly the printed verse from it.</li>
+        <li><b>Parse</b> keys are the corpus's annotation, kept only where Vidyut confirms every word and the split rebuilds the verse. Forms that look the same in two readings (masculine and neuter outside the nominative, for example) are accepted either way.</li>
+        <li><b>Scan</b> keys come from Vidyut's prosody module, only for verses whose meter it identifies by rule. The last syllable of each pāda isn't graded.</li>
+        <li><b>Generate</b> keys are every form Vidyut derives from Pāṇini's rules; where several are allowed, each counts.</li>
+        <li><b>Private test set.</b> The questions are drawn with a secret seed and not published, so they can't be trained on. Models are run by Samskritam.ai; to have a model added, get in touch.</li>
+        <li><b>Review.</b> Reviewers check the answer keys question by question on an invitation-only page. Corrections are applied and the scores recomputed; what changed is listed here.</li>
+      </ul></div>
+    </section>
+
+    <section class="band" id="v1-limits">
+      <div class="eyebrow">Limits</div>
+      <h2>What this does not measure yet</h2>
+      <div class="prose"><ul>
+        <li>Meaning, translation, commentary and śāstric reasoning.</li>
+        <li>Keys are only as good as the corpus and Vidyut; that is why they are reviewed, and why this is a preview.</li>
+        <li>One run per model. Differences of a few points are within the margin shown on each score.</li>
+      </ul></div>
+    </section>
+    </div>
+
+    <div id="v0-view" hidden>
     <section class="bhero">
       <div class="eyebrow">Samskritam benchmark v0</div>
       <h1>A Sanskrit grammar test <em>graded by rule</em>, not by another model.</h1>
@@ -457,6 +542,7 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
         <p class="muted">Items and results are licensed CC BY 4.0. Please credit Samskritam.ai, the Digital Corpus of Sanskrit (Oliver Hellwig) and Vidyut (Ambuda).</p>
       </div>
     </section>
+    </div>
   </main>
 
   <footer>
@@ -588,6 +674,58 @@ python bench/grade.py bench/results/&lt;file&gt;.jsonl</pre>
     });
     el.append(ul);
   }).catch(() => { el.replaceChildren(t("p", "pending", "The errata couldn't be loaded.")); });
+})();
+</script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+  // version tabs: #v1 (default) and #v0; v0's own links (#results, ?m=) open v0
+  function show() {
+    const qs = new URLSearchParams(location.search);
+    const h = location.hash;
+    const v = h === "#v0" || (h && !h.startsWith("#v1")) || qs.get("m") ? "v0" : "v1";
+    $("v1-view").hidden = v !== "v1"; $("v0-view").hidden = v !== "v0";
+    document.querySelectorAll(".vtabs a").forEach(a => a.setAttribute("aria-current", String(a.dataset.v === v)));
+  }
+  window.addEventListener("hashchange", show); show();
+
+  const TASKS = [["padapatha", "Padapāṭha"], ["parse", "Parse"], ["scan", "Scan"], ["generate", "Generate"]];
+  const band = p => p >= .98 ? "s4" : p >= .9 ? "s3" : p >= .75 ? "s2" : "s1";
+  const pm = (p, n) => { const m = 100 * 1.96 * Math.sqrt(Math.max(p * (1 - p), 0.0004) / n); return m < 1 ? m.toFixed(1) : m.toFixed(0); };
+  const pct = x => (100 * x).toFixed(1) + "%";
+  fetch("/data/bench-v1.json").then(r => r.ok ? r.json() : null).then(d => {
+    if (!d) {  // not published yet: show v0 only
+      document.querySelector(".vtabs").hidden = true; $("v1-view").hidden = true; $("v0-view").hidden = false; return; }
+    const f = $("v1-facts");
+    [[d.items, "questions"], [TASKS.length, "tasks"], [d.texts.length, "texts, picked by a recitation test"], [0, "answers written by a model"]].forEach(([n, l]) => {
+      const sp = el("span"); sp.append(el("b", "", String(n)), l); f.append(sp); });
+    TASKS.forEach(([k]) => { const c = $("c-" + k); if (c && d.tasks[k]) c.textContent = d.tasks[k] + " questions"; });
+    $("v1-texts").textContent = d.texts.join(", ");
+    const head = el("tr"); head.append(el("th", "", "Model"));
+    const ov = el("th", "n", "Overall"); ov.append(el("span", "qn", d.items + " qs")); head.append(ov);
+    TASKS.forEach(([k, l]) => { const th = el("th", "n", l); th.append(el("span", "qn", String(d.tasks[k] || ""))); head.append(th); });
+    $("lb1").tHead.append(head);
+    const tb = $("lb1").tBodies[0];
+    d.rows.forEach(r => {
+      const tr = el("tr"); tr.append(el("td", "", r.model + (d.notes[r.id] ? " *" : "")));
+      const o = el("td", "n ov " + band(r.overall), pct(r.overall)); o.title = `Margin about ±${pm(r.overall, d.items)} points`;
+      o.append(el("span", "pm", "±" + pm(r.overall, d.items))); tr.append(o);
+      TASKS.forEach(([k]) => { const v = r.tasks[k]; const td = el("td", "n");
+        const b = el("span", band(v), v == null ? "—" : pct(v)); b.style.cssText = "display:block;padding:4px 8px;border-radius:6px;text-align:right";
+        b.title = `Margin about ±${pm(v, d.tasks[k])} points`; td.append(b); tr.append(td); });
+      tb.append(tr);
+    });
+    const notes = Object.entries(d.notes).filter(([id]) => d.rows.some(r => r.id === id)).map(([, n]) => "* " + n);
+    $("lb1-note").textContent = `Run once per model; updated ${d.updated}. ` +
+      (d.review.reviewed ? `${d.review.reviewed} questions reviewed so far, ${d.review.changed} keys corrected or dropped. ` : "Key review has started. ") + notes.join(" ");
+    if (d.probe && d.probe.texts.length) {
+      const h = el("tr"); h.append(el("th", "", "Text")); d.probe.models.forEach(m => h.append(el("th", "n", m))); $("probe").tHead.append(h);
+      d.probe.texts.forEach(t => { const tr = el("tr", (t.in_v1 ? "used " : "") + (t.control ? "control" : ""));
+        tr.append(el("td", "", t.text)); d.probe.models.forEach(m => tr.append(el("td", "n", t.recited[m] == null ? "—" : Math.round(100 * t.recited[m]) + "%")));
+        $("probe").tBodies[0] ? $("probe").tBodies[0].append(tr) : $("probe").append(tr); });
+    } else $("v1-probe").hidden = true;
+  }).catch(() => { $("v1-status").textContent = "Results couldn't be loaded."; });
 })();
 </script>
 <script>
