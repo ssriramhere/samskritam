@@ -1,0 +1,331 @@
+{
+ "benchmark": "samskritam-bench v1",
+ "status": "preview",
+ "updated": "2026-10-23",
+ "items": 340,
+ "tasks": {
+  "padapatha": 90,
+  "parse": 90,
+  "scan": 70,
+  "generate": 90
+ },
+ "texts": [
+  "Kathāsaritsāgara",
+  "Bṛhatkathāślokasaṃgraha",
+  "Bhāratamañjarī",
+  "Skandapurāṇa (Revākhaṇḍa)",
+  "Kālikāpurāṇa",
+  "Liṅgapurāṇa",
+  "Harivaṃśa",
+  "Rasaratnākara",
+  "Kokilasaṃdeśa",
+  "Haṃsadūta",
+  "Narmamālā"
+ ],
+ "rows": [
+  {
+   "id": "anthropic/claude-opus-5.5",
+   "model": "Claude Opus 5.5",
+   "overall": 0.8941,
+   "tasks": {
+    "padapatha": 0.8111,
+    "parse": 0.9,
+    "scan": 0.9286,
+    "generate": 0.9444
+   }
+  },
+  {
+   "id": "google/gemini-3.8-flash",
+   "model": "Gemini 3.8 Flash",
+   "overall": 0.7882,
+   "tasks": {
+    "padapatha": 0.8111,
+    "parse": 0.9333,
+    "scan": 0.5429,
+    "generate": 0.8111
+   }
+  },
+  {
+   "id": "openai/gpt-6-sol",
+   "model": "GPT-6 Sol",
+   "overall": 0.7794,
+   "tasks": {
+    "padapatha": 0.7667,
+    "parse": 0.8333,
+    "scan": 0.9,
+    "generate": 0.6444
+   }
+  },
+  {
+   "id": "anthropic/claude-sonnet-5.5",
+   "model": "Claude Sonnet 5.5",
+   "overall": 0.7294,
+   "tasks": {
+    "padapatha": 0.7667,
+    "parse": 0.8333,
+    "scan": 0.4571,
+    "generate": 0.8
+   }
+  },
+  {
+   "id": "google/gemini-4-argon",
+   "model": "Gemini 4 Argon",
+   "overall": 0.7176,
+   "tasks": {
+    "padapatha": 0.7778,
+    "parse": 0.9333,
+    "scan": 0.2429,
+    "generate": 0.8111
+   }
+  },
+  {
+   "id": "sarvam-105b",
+   "model": "Sarvam-105B (reasoning off)",
+   "overall": 0.1441,
+   "tasks": {
+    "padapatha": 0.1889,
+    "parse": 0.3444,
+    "scan": 0.0,
+    "generate": 0.0111
+   }
+  }
+ ],
+ "probe": {
+  "texts": [
+   {
+    "text": "Meghadūta",
+    "control": true,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 1.0,
+     "Gemini 4 Argon": 0.967,
+     "GPT-6 Sol": 0.833
+    }
+   },
+   {
+    "text": "Bhāgavatapurāṇa",
+    "control": true,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.967,
+     "Gemini 4 Argon": 0.467,
+     "GPT-6 Sol": 0.7
+    }
+   },
+   {
+    "text": "Kumārasaṃbhava",
+    "control": true,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.967,
+     "Gemini 4 Argon": 0.6,
+     "GPT-6 Sol": 0.267
+    }
+   },
+   {
+    "text": "Mahābhārata",
+    "control": true,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.867,
+     "Gemini 4 Argon": 0.133,
+     "GPT-6 Sol": 0.067
+    }
+   },
+   {
+    "text": "Rāmāyaṇa",
+    "control": true,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.7,
+     "Gemini 4 Argon": 0.167,
+     "GPT-6 Sol": 0.133
+    }
+   },
+   {
+    "text": "Saundarānanda",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.7,
+     "Gemini 4 Argon": 0.2
+    }
+   },
+   {
+    "text": "Kirātārjunīya",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.567,
+     "Gemini 4 Argon": 0.033
+    }
+   },
+   {
+    "text": "Matsyapurāṇa",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.5,
+     "Gemini 4 Argon": 0.1,
+     "GPT-6 Sol": 0.033
+    }
+   },
+   {
+    "text": "Aṣṭāṅgahṛdayasaṃhitā",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.5,
+     "Gemini 4 Argon": 0.033
+    }
+   },
+   {
+    "text": "Kūrmapurāṇa",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.367,
+     "Gemini 4 Argon": 0.067,
+     "GPT-6 Sol": 0.1
+    }
+   },
+   {
+    "text": "Haribhaktivilāsa",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.167,
+     "Gemini 4 Argon": 0.0
+    }
+   },
+   {
+    "text": "Garuḍapurāṇa",
+    "control": false,
+    "in_v1": false,
+    "recited": {
+     "Claude Opus 5.5": 0.133,
+     "Gemini 4 Argon": 0.033,
+     "GPT-6 Sol": 0.067
+    }
+   },
+   {
+    "text": "Haṃsadūta",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.1,
+     "Gemini 4 Argon": 0.0
+    }
+   },
+   {
+    "text": "Liṅgapurāṇa",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.067,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Harivaṃśa",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.067,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Rasaratnākara",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.067,
+     "Gemini 4 Argon": 0.067
+    }
+   },
+   {
+    "text": "Bhāratamañjarī",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.033,
+     "Gemini 4 Argon": 0.033,
+     "GPT-6 Sol": 0.033
+    }
+   },
+   {
+    "text": "Kathāsaritsāgara",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Bṛhatkathāślokasaṃgraha",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Skandapurāṇa (Revākhaṇḍa)",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Kālikāpurāṇa",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0,
+     "GPT-6 Sol": 0.0
+    }
+   },
+   {
+    "text": "Kokilasaṃdeśa",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0
+    }
+   },
+   {
+    "text": "Narmamālā",
+    "control": false,
+    "in_v1": true,
+    "recited": {
+     "Claude Opus 5.5": 0.0,
+     "Gemini 4 Argon": 0.0
+    }
+   }
+  ],
+  "models": [
+   "Claude Opus 5.5",
+   "Gemini 4 Argon",
+   "GPT-6 Sol"
+  ]
+ },
+ "review": {
+  "reviewed": 0,
+  "changed": 0
+ },
+ "notes": {
+  "sarvam-105b": "Run through Sarvam's own API with reasoning off, as in v0."
+ }
+}
