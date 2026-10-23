@@ -8,6 +8,7 @@ converted to IAST, and anusvāra vs homorganic nasal spellings
     python bench/grade.py --bench bench/private/v1-pool.jsonl bench/results/<model>.v1-pool.jsonl
 """
 import json
+from functools import lru_cache
 import os
 import re
 import sys
@@ -147,6 +148,8 @@ def grade_item(item: dict, answer_text: str) -> dict:
     if task in ("tinanta", "subanta", "generate"):
         accept = {norm_form(a) for a in item["accept"]}
         raw = ans.get("form")
+        if task == "generate" and isinstance(raw, str):  # īpsāṃ cakratuḥ = īpsāñcakratuḥ
+            raw = re.sub(r"(ām|āṃ|āñ|āṅ)\s+", r"āṃ", raw.strip())
         # "buddheḥ / buddhyāḥ": several forms count only if every one is right.
         parts = [p for p in re.split(r"\s*(?:/|,|\bor\b)\s*", raw)] if isinstance(raw, str) else [raw]
         parts = [p for p in parts if p]
@@ -201,24 +204,35 @@ def grade_item(item: dict, answer_text: str) -> dict:
         return {"correct": _pada_ok(item["accept"][0], got)}
     if task == "parse":
         gold, got = item["accept"][0], ans.get("words")
+        words = item["meta"].get("words", [""] * len(gold))
         if not isinstance(got, list):
             return {"correct": False, "reason": "no word list", "right": 0, "n": len(gold)}
-        right = 0
-        for i, g in enumerate(gold):
-            a = got[i] if i < len(got) and isinstance(got[i], dict) else {}
-            right += _parse_word_ok(a, g)
-        return {"correct": right == len(gold) and len(got) == len(gold), "right": right, "n": len(gold)}
+        got = [g for g in got if isinstance(g, dict)]
+        used, right = set(), 0
+        for i, (w, g) in enumerate(zip(words, gold)):
+            # the entry that names this word, else the one in the same position
+            k = next((j for j, a in enumerate(got) if j not in used and _fin(_flat(str(a.get("word", "")))) == _fin(_flat(w))), None)
+            if k is None and i < len(got) and i not in used:
+                k = i
+            if k is not None:
+                used.add(k)
+            right += _parse_word_ok(got[k] if k is not None else {}, g, w)
+        return {"correct": right == len(gold), "right": right, "n": len(gold)}
     if task == "scan":
         gold, anc = item["accept"][0], item["meta"].get("anceps", [])
         lines = ans.get("lines")
-        if not isinstance(lines, list) or len(lines) != len(gold["lines"]):
-            return {"correct": False, "reason": "wrong number of lines"}
-        lines_ok = True
-        for i, (want, raw) in enumerate(zip(gold["lines"], lines)):
-            got = re.sub(r"[^GL]", "", str(raw).upper())
-            skip = set(anc[i]) if i < len(anc) else set()
-            if len(got) != len(want) or any(g != w for j, (g, w) in enumerate(zip(got, want)) if j not in skip):
-                lines_ok = False
+        if isinstance(lines, str):
+            lines = [lines]
+        if not isinstance(lines, list) or not lines:
+            return {"correct": False, "reason": "no lines"}
+        # Compare the whole verse: an answer may give one line per pāda or per half-verse.
+        want = "".join(gold["lines"])
+        got = "".join(re.sub(r"[^GL]", "", str(l).upper()) for l in lines)
+        skip, off = set(), 0
+        for i, line in enumerate(gold["lines"]):
+            skip |= {off + j for j in (anc[i] if i < len(anc) else [])}
+            off += len(line)
+        lines_ok = len(got) == len(want) and all(g == w for j, (g, w) in enumerate(zip(got, want)) if j not in skip)
         meter_ok = _meter_name_ok(ans.get("meter"), gold["meter"], gold.get("variant"))
         return {"correct": lines_ok and meter_ok, "lines": lines_ok, "meter": meter_ok}
     if task == "recall":  # memorisation probe (bench/probe/): near-verbatim counts as recited
@@ -252,51 +266,108 @@ def _split_ok(gold, got):
     return False
 
 
-def _parse_word_ok(ans: dict, gold: dict) -> bool:
+def _parse_word_ok(ans: dict, gold: dict, word: str = "") -> bool:
     """One word of a parse question, with v1's allowances."""
-    lem = _lemma_ok(ans.get("lemma"), gold["lemma"], gold.get("gender"))
-    return lem and all(_field_ok(k, ans.get(k), gold.get(k), gold["lemma"], gold.get("case"))
-                       for k in ("pos", "case", "number", "gender", "tense_mood", "person", "voice"))
+    got = ans.get("lemma")
+    lem = _lemma_ok(got, gold["lemma"], gold.get("gender"))
+    if not lem and isinstance(got, str):
+        g, m = _flat(gold["lemma"]).replace("M", "m"), _flat(got).replace("M", "m")
+        # puṃs/pums; or the lemma of the whole compound the word ends (mahāratha for rathaḥ)
+        lem = m == g or (len(m) > len(g) and m.endswith(g))
+    def field_ok(k):
+        if k == "gender" and gold.get("case") == "acc" and gold.get("number") == "sg" \
+                and word.endswith("am") and {str(ans.get(k)).lower(), gold.get(k)} <= {"m", "n"}:
+            return True  # vanam, sainyam: masculine and neuter accusatives are the same form
+        return _field_ok(k, ans.get(k), gold.get(k), gold["lemma"], gold.get("case"))
+    return lem and all(field_ok(k) for k in ("pos", "case", "number", "gender", "tense_mood", "person", "voice"))
 
 
 def _flat(x) -> str:
     return norm_form(re.sub(r"[\s'’ʼ‘-]", "", x)) if isinstance(x, str) else ""
 
 
+# Word-final sounds a pausa form may be written with: punar/punaḥ, tatas/tataḥ,
+# tvac/tvak, tad/tat, dig/dik.
+_FINAL = {"r": "H", "s": "H", "g": "k", "c": "k", "j": "k", "S": "k", "d": "t", "b": "p", "q": "w"}
+
+
+def _fin(x: str) -> str:
+    return x[:-1] + _FINAL[x[-1]] if x and x[-1] in _FINAL else x
+
+
+@lru_cache(maxsize=20000)
+def _joined(parts: tuple) -> frozenset:
+    """Every way of joining these pieces with sandhi, normalised (plus plain concatenation)."""
+    parts = tuple(p for p in parts if p)
+    if not parts:
+        return frozenset()
+    outs = {"".join(parts)}
+    if len(parts) > 1:
+        outs |= set(_joins(list(parts)))
+    return frozenset(_fin(_flat(o)) for o in outs)
+
+
+def _ans_forms(w: str) -> frozenset:
+    """A written answer word: hyphens may separate a compound's members."""
+    return _joined(tuple(p for p in w.split("-")))
+
+
+def _key_forms(e) -> frozenset:
+    if isinstance(e, str):
+        return _joined((e,))
+    return frozenset({_fin(_flat(a)) for a in e["accept"]}) | _joined(tuple(e["members"]))
+
+
+def _key_text(e) -> str:
+    return e if isinstance(e, str) else e["accept"][0]
+
+
+_JOINERS = {"a", "an", "su", "dus", "dur", "nis", "nir", "sa", "sam", "ati", "anu", "abhi", "pra", "pari", "vi", "ā"}
+
+
+def _joins_on(e) -> bool:
+    """A key entry the corpus split off that grammars write joined to the next word:
+    a negative a-, or a prefix (also as the last member of a corpus compound: cāru-su + acchā)."""
+    last = e if isinstance(e, str) else e["members"][-1]
+    return last in _JOINERS
+
+
 def _pada_ok(gold, got) -> bool:
     """Padapāṭha: every word, in order. A compound may be written whole (any
-    joined spelling), with hyphens between members, or member by member; a
-    negative a- or prefix the corpus splits off may stay attached."""
-    if not gold:
-        return not got
-    if not got:
+    joined spelling), with hyphens between members, or member by member; a word
+    the corpus treats as one may be analysed with hyphens (siddha-ādeśān); a
+    negative a- or a prefix the corpus splits off may stay attached; a
+    periphrastic perfect may be written apart (prārthayām āsa); final r/s and
+    visarga, and final stops, are spelled either way (punar/punaḥ, tvac/tvak)."""
+    gold, got = list(gold), [w.strip() for w in got if w.strip()]
+
+    @lru_cache(maxsize=None)
+    def f(i, j):
+        if i == len(gold):
+            return j == len(got)
+        if j == len(got):
+            return False
+        e, a = gold[i], got[j]
+        if (_key_forms(e) & _ans_forms(a) or (isinstance(e, str) and _same_word(e, a))) and f(i + 1, j + 1):
+            return True
+        if not isinstance(e, str):  # member by member, as separate words
+            k = len(e["members"])
+            if len(got) - j >= k and all(_member_ok(m, p) for m, p in zip(e["members"], got[j:j + k])) and f(i + 1, j + k):
+                return True
+        for k in (2, 3):  # corpus pieces written as one word: a-paricita, cāru-su + acchā
+            if i + k <= len(gold) and all(_joins_on(x) for x in gold[i:i + k - 1]):
+                if _joined(tuple(_key_text(x) for x in gold[i:i + k])) & _ans_forms(a) and f(i + k, j + 1):
+                    return True
+        if j + 1 < len(got) and _flat(a).endswith("Am"):  # prārthayām āsa
+            if _key_forms(e) & _joined((a, got[j + 1])) and f(i + 1, j + 2):
+                return True
         return False
-    g, w = gold[0], got[0]
-    if isinstance(g, dict):
-        if _flat(w) in {_flat(x) for x in g["accept"]} and _pada_ok(gold[1:], got[1:]):
-            return True
-        parts = [p for p in w.split("-") if p]
-        if len(parts) == len(g["members"]) and all(_member_ok(m, p) for m, p in zip(g["members"], parts)) \
-                and _pada_ok(gold[1:], got[1:]):
-            return True
-        k = len(g["members"])
-        if len(got) >= k and all(_member_ok(m, p) for m, p in zip(g["members"], got[:k])) and _pada_ok(gold[1:], got[k:]):
-            return True
-        return False
-    if _same_word(g, w) and _pada_ok(gold[1:], got[1:]):
-        return True
-    # several corpus words written as one (a-parāṅmukhāḥ, ati-dīrgham)
-    for k in range(2, min(4, len(gold)) + 1):
-        if any(isinstance(x, dict) for x in gold[:k]):
-            break
-        merged = "".join(x.rstrip("ḥ") for x in gold[:k - 1]) + gold[k - 1]
-        if _flat(merged) == _flat(w) and _pada_ok(gold[k:], got[1:]):
-            return True
-    return False
+
+    return f(0, 0)
 
 
 def _member_ok(member: str, got: str) -> bool:
-    return _flat(member) == _flat(got) or _same_word(member, got)
+    return _fin(_flat(member)) == _fin(_flat(got)) or _same_word(member, got)
 
 
 def _meter_key(name) -> str:
