@@ -1,0 +1,7 @@
+# v1 pilot: the five leaderboard models and Sarvam (reasoning off, through Sarvam's API: needs SARVAM_API_KEY).
+anthropic/claude-opus-5.5
+anthropic/claude-sonnet-5.5
+google/gemini-4-argon
+google/gemini-3.8-flash
+openai/gpt-6-sol
+sarvam:sarvam-105b

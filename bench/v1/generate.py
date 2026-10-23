@@ -27,7 +27,7 @@ probe (bench/probe/) shows models can't recite.
 
     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/OliverHellwig/sanskrit data/dcs-repo
     export BENCH_SECRET=...      # also seeds the sampling, so the pool can't be regenerated without it
-    python bench/v1/generate.py --texts "Kathāsaritsāgara,Matsyapurāṇa,..."
+    python bench/v1/generate.py                  # the probe-chosen texts (TEXTS below)
     -> bench/private/v1.jsonl (private: it contains the test questions)
 """
 import argparse
@@ -53,6 +53,14 @@ from generate import (FORMAT_GITA, LAKARA_NAME, PURUSHA_NAME, UD_CASE, UD_GEN, U
 from generate_v1 import all_joins  # noqa: E402  (the pilot's sandhi joiner)
 
 REPO = os.path.join(ROOT, "data/dcs-repo")
+# Chosen by the memorisation probe (bench/probe/, 23 Oct 2026): texts whose verses
+# Claude Opus 5.5, the strongest reciter, completed near-verbatim at most 10% of
+# the time (mean similarity 0.43 or less; an unrelated line scores about 0.3).
+# Left out for being recited: the Nalopākhyāna (87%), Saundarānanda (70%),
+# Kirātārjunīya (57%), Matsya Purāṇa and Aṣṭāṅgahṛdaya (50%), Kūrma Purāṇa (37%),
+# Haribhaktivilāsa (17%), Garuḍa Purāṇa (13%).
+TEXTS = ["Kathāsaritsāgara", "Bṛhatkathāślokasaṃgraha", "Bhāratamañjarī", "Skandapurāṇa (Revākhaṇḍa)",
+         "Kālikāpurāṇa", "Liṅgapurāṇa", "Harivaṃśa", "Rasaratnākara", "Kokilasaṃdeśa", "Haṃsadūta", "Narmamālā"]
 OUT = os.path.join(ROOT, "bench/private/v1.jsonl")
 FILES_PER_TEXT = 10
 
@@ -318,7 +326,7 @@ def gen_generate(rng, n):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--texts", required=True, help="comma-separated DCS text names")
+    ap.add_argument("--texts", default=",".join(TEXTS), help="comma-separated DCS text names")
     ap.add_argument("--sizes", default="padapatha=90,parse=90,scan=70,generate=90")
     ap.add_argument("--out", default=OUT)
     a = ap.parse_args()

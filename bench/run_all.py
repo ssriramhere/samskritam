@@ -38,7 +38,8 @@ def main():
         prov, model = m.split(":", 1) if ":" in m and m.split(":", 1)[0] in ("sarvam", "anthropic", "openai", "google") else ("openrouter", m)
         return [sys.executable, os.path.join(ROOT, "bench", "run.py"),
                 "--provider", prov, "--model", model,
-                "--workers", a.workers, "--rpm", a.rpm] + (["--bench", a.bench] if a.bench else [])
+                "--workers", a.workers, "--rpm", a.rpm] + (["--bench", a.bench] if a.bench else []) \
+            + (["--reasoning-effort", "none"] if prov == "sarvam" else [])  # as in its v0 run
     failed = []
     if a.sequential:
         for m in models:
