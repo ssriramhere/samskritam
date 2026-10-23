@@ -37,12 +37,15 @@ def flat_key(w):
 
 
 def where_pada(key, got):
-    """First position where the answer's words leave the key."""
-    for i in range(min(len(key), len(got)) + 1):
-        if not grade._pada_ok(key[i:], got[i:]):
-            k = [flat_key(w) for w in key[i:i + 3]]
-            return f"from word {i + 1}: key {' '.join(k)} | answer {' '.join(got[i:i + 3])}"
-    return "?"
+    """The longest stretch of the key the answer matches, and where it parts ways."""
+    best = (0, 0)
+    for i in range(len(key) + 1):
+        for j in range(max(0, i - 3), min(len(got), i + 6) + 1):
+            if grade._pada_ok(key[:i], got[:j]):
+                best = max(best, (i, j))
+    i, j = best
+    k = [flat_key(w) for w in key[i:i + 3]]
+    return f"word {i + 1} of {len(key)}: key {' '.join(k) or '(end)'} | answer {' '.join(got[j:j + 3]) or '(end)'}"
 
 
 out = []
