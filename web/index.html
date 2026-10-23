@@ -230,8 +230,8 @@ section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
 .joinmsg { margin: 0; min-height: 1.4em; font-size: .95rem }
 .joinmsg.ok { color: var(--ok) } .joinmsg.err { color: var(--warn) }
 #benchresults .sub { color: var(--muted); margin: 10px 0 0; max-width: 70ch }
-#lb td.n, #lb th.n { text-align: right }
-#lb td.top { font-weight: 600 }
+#lb td.n, #lb th.n, #lb1 td.n, #lb1 th.n { text-align: right }
+#lb td.top, #lb1 td.top { font-weight: 600 }
 .textbar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px }
 .textbar button { font: inherit; font-size: .9rem; color: var(--muted); background: transparent; border: 1px solid var(--rule);
   border-radius: 999px; padding: 4px 14px; cursor: pointer }
@@ -301,15 +301,23 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .steps td.code a.sl:hover, .ch code a.sl:hover { text-decoration-color: currentColor }
 .heatlegend { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .82rem; color: var(--muted); margin-top: 10px }
 .heatlegend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--rule) }
-#lb .s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) }
-#lb .s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
-#lb .s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) }
-#lb .s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
+#lb .s4, #lb1 .s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) }
+#lb .s3, #lb1 .s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
+#lb .s2, #lb1 .s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) }
+#lb .s1, #lb1 .s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
 .heatlegend .s4 { background: color-mix(in srgb, var(--ok) 22%, transparent) } .heatlegend .s3 { background: color-mix(in srgb, var(--ok) 9%, transparent) }
 .heatlegend .s2 { background: color-mix(in srgb, var(--warn) 22%, transparent) } .heatlegend .s1 { background: color-mix(in srgb, #c0392b 26%, transparent) }
+.btabs { display: flex; gap: 6px; margin-top: 14px }
+.btabs button { font: inherit; font-size: .92rem; border: 1px solid var(--rule); background: var(--leaf); color: var(--ink); padding: 6px 14px; border-radius: 999px; cursor: pointer }
+.btabs button[aria-selected="true"] { background: var(--indigo); border-color: var(--indigo); color: var(--leaf) }
+.btabs .tagp { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; opacity: .85 }
+#lb1 a.hc { display: block; color: var(--ink); text-decoration: none; border-radius: 6px; padding: 4px 8px; font-variant-numeric: tabular-nums }
+#lb1 a.hc:hover { outline: 2px solid var(--indigo); outline-offset: -2px }
+#lb1 td.ov { white-space: nowrap; padding-right: 8px }
+#lb1 td.ov .pm { font-weight: 400; font-size: .78rem; color: var(--muted); margin-left: 4px }
 #lb a.hc { display: block; color: var(--ink); text-decoration: none; border-radius: 6px; padding: 4px 8px; font-variant-numeric: tabular-nums }
 #lb a.hc:hover { outline: 2px solid var(--indigo); outline-offset: -2px }
-#lb td.n:has(a.hc) { padding-right: 4px }
+#lb td.n:has(a.hc), #lb1 td.n:has(a.hc) { padding-right: 4px }
 #lb td.ov { white-space: nowrap; padding-right: 8px }
 #lb td.ov .pm { font-weight: 400; font-size: .78rem; color: var(--muted); margin-left: 4px }
 </style>
@@ -453,11 +461,22 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     </section>
 
     <section class="band" id="benchresults" hidden>
-      <div class="eyebrow">Benchmark v0 results</div>
+      <div class="eyebrow">Benchmark results</div>
       <h2>How today's models handle Pāṇini</h2>
-      <p class="sub"><a href="/bench">Method, sample questions and the full item set</a></p>
+      <div class="btabs" role="tablist" aria-label="Benchmark version">
+        <button type="button" role="tab" data-v="v1" aria-selected="true" hidden>v1 <span class="tagp">preview</span></button>
+        <button type="button" role="tab" data-v="v0" aria-selected="false">v0</button>
+      </div>
+      <div id="bv1" hidden>
+        <p class="sub">Whole verses from texts the models can't recite, plus rare verb forms. The test questions are private and the answer keys are under review. <a href="/bench#v1">Method and the recitation test</a></p>
+        <p class="sub" id="lb1-note"></p>
+        <div class="tasks"><table id="lb1"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Padapāṭha</th><th class="n">Parse</th><th class="n">Scan</th><th class="n">Generate</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div id="bv0">
+      <p class="sub">One word or form at a time, mostly from the Bhagavad Gītā. <a href="/bench#v0">Method, sample questions and the full item set</a></p>
       <p class="sub" id="lb-note"></p>
       <div class="tasks"><table id="lb"><thead><tr><th>Model</th><th class="n">Overall</th><th class="n">Tiṅanta</th><th class="n">Subanta</th><th class="n">Analysis</th><th class="n">Gītā</th><th class="n">Chandas</th></tr></thead><tbody></tbody></table></div>
+      </div>
       <div class="heatlegend"><span class="sw s4"></span>98% or more <span class="sw s3"></span>90–98% <span class="sw s2"></span>75–90% <span class="sw s1"></span>below 75%</div>
     </section>
     </div>
@@ -953,6 +972,28 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         `<td class="n"><a class="hc ${band(r.tasks[k])}" href="/bench?m=${encodeURIComponent(r.id)}&t=${k}#results" title="Margin about ±${pm(r.tasks[k], N[k])} points. See the mistakes">${pct(r.tasks[k])}</a></td>`).join("")}</tr>`).join("");
     $("lb-note").textContent = `${lb.items} questions, graded automatically against rule-derived answers. Updated ${lb.updated}. Tap a score to see that model's mistakes on that task.`;
     lb.rows.filter(r => r.note).forEach(r => { $("lb-note").textContent += " * " + r.note; });
+    $("benchresults").hidden = false;
+  }).catch(() => {});
+
+  // v1 (preview) next to v0, with tabs; v1 shows first once it's published
+  function benchTab(v) {
+    document.querySelectorAll(".btabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.v === v)));
+    $("bv1").hidden = v !== "v1"; $("bv0").hidden = v !== "v0";
+  }
+  document.querySelectorAll(".btabs button").forEach(b => b.addEventListener("click", () => benchTab(b.dataset.v)));
+  fetch("data/bench-v1.json").then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !d.rows || !d.rows.length) return;
+    const pct = x => (x == null ? "–" : (100 * x).toFixed(1) + "%");
+    const band = p => p >= .98 ? "s4" : p >= .9 ? "s3" : p >= .75 ? "s2" : "s1";
+    const pm = (p, n) => { const m = 196 * Math.sqrt(Math.max(p * (1 - p), 0.0004) / n); return m < 1 ? m.toFixed(1) : m.toFixed(0); };
+    const keys = ["padapatha", "parse", "scan", "generate"];
+    document.querySelector("#lb1 tbody").innerHTML = d.rows.map(r =>
+      `<tr><td>${esc(r.model)}${d.notes && d.notes[r.id] ? "<sup>*</sup>" : ""}</td><td class="n top ov ${band(r.overall)}" title="Margin about ±${pm(r.overall, d.items)} points">${pct(r.overall)}<span class="pm">±${pm(r.overall, d.items)}</span></td>${keys.map(k =>
+        `<td class="n"><a class="hc ${band(r.tasks[k])}" href="/bench#v1-results" title="Margin about ±${pm(r.tasks[k], d.tasks[k])} points">${pct(r.tasks[k])}</a></td>`).join("")}</tr>`).join("");
+    $("lb1-note").textContent = `${d.items} questions from ${d.texts.length} texts, graded automatically. Updated ${d.updated}.` +
+      Object.entries(d.notes || {}).filter(([id]) => d.rows.some(r => r.id === id)).map(([, n]) => " * " + n).join("");
+    document.querySelector('.btabs [data-v="v1"]').hidden = false;
+    benchTab("v1");
     $("benchresults").hidden = false;
   }).catch(() => {});
   function getJSON(url) { return cache[url] || (cache[url] = fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.json(); })); }
