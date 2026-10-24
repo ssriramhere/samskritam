@@ -229,14 +229,15 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   .verse, .words, .detail { animation: rise .35s ease both }
   @keyframes rise { from { opacity: .35; transform: translateY(4px) } to { opacity: 1; transform: none } }
 }
-#f { display: grid; gap: 8px }
+#f { display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr) }
 #t { font: inherit; font-family: var(--font-display); font-size: 1.2rem; line-height: 1.5; width: 100%; color: var(--ink); background: var(--paper);
   border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; resize: vertical }
 #t:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft) }
 .formrow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
 #go { font: inherit; font-weight: 600; color: var(--leaf); background: var(--indigo); border: 0; border-radius: 8px; padding: 8px 20px; cursor: pointer }
 #go:disabled { opacity: .6; cursor: progress }
-.msel { display: inline-flex; gap: 8px; align-items: center }
+.msel { display: inline-flex; gap: 8px; align-items: center; min-width: 0; max-width: 100% }
+.msel select { min-width: 0; max-width: 100%; text-overflow: ellipsis }
 #model { font: inherit; font-size: .9rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 8px; max-width: 100% }
 .split { margin-top: 14px; font-family: var(--font-display); font-size: 1.12rem; line-height: 1.5 }
 .split .si { display: block; font-size: .92rem; color: var(--muted); font-style: italic }
@@ -253,6 +254,39 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .caveat { font-size: .92rem !important; margin-top: 22px !important }
 .steps td.code a.sl, .ch code a.sl { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px }
 .steps td.code a.sl:hover, .ch code a.sl:hover { text-decoration-color: currentColor }
+
+/* Rasa panel: the model's reading of the verse's rasa, with the words behind each element. */
+:root { --c-al: #333f99; --c-ud: #2d7a57; --c-an: #b07800; --c-sa: #6b4fb3; --c-vy: #a3446e }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-al: #9ea8ff; --c-ud: #6cc79a; --c-an: #f0b840; --c-sa: #b9a3f0; --c-vy: #e892b8 } }
+:root[data-theme="dark"] { --c-al: #9ea8ff; --c-ud: #6cc79a; --c-an: #f0b840; --c-sa: #b9a3f0; --c-vy: #e892b8 }
+.rasa { margin-top: 20px; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; background: var(--paper); min-width: 0 }
+.rasa .rh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap }
+.rasa .nine { font: inherit; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--indigo);
+  background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px }
+.rasa .ninelist[hidden] { display: none }
+.rasa .ninelist { margin: 10px 0 4px; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 16px; font-size: .9rem }
+.rasa .ninelist b { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem }
+.rasa .ninelist span { color: var(--muted) }
+.rasa .verdict { display: flex; align-items: baseline; gap: 12px; margin: 10px 0 2px; flex-wrap: wrap }
+.rasa .verdict b { font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); color: var(--indigo); line-height: 1.1 }
+.rasa .verdict span { color: var(--muted) }
+.rasa .note { color: var(--muted); font-size: .95rem; margin: 6px 0 0 }
+.rasa .pill { display: inline-block; font-size: .85rem; font-weight: 500; background: var(--indigo-soft); color: var(--indigo);
+  border-radius: 999px; padding: 0 9px; margin: 0 4px 3px 0 }
+.rasa table { width: 100%; border-collapse: collapse; margin-top: 12px }
+.rasa td { padding: 8px 6px; border-top: 1px solid var(--rule); vertical-align: top }
+.rasa td:first-child { width: 34%; max-width: 190px; padding-left: 0 }
+.rasa tr[data-at] { cursor: pointer }
+.rasa .k { font-weight: 600 } .rasa .k i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 8px; vertical-align: -1px }
+.rasa .k small { display: block; font-weight: 400; color: var(--muted); font-size: .82rem; margin-left: 19px }
+.rasa .w { font-family: var(--font-display); font-style: italic }
+.rasa .ctx { font-size: .85rem; color: var(--muted); font-style: italic }
+.rasa .foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 12px; font-size: .88rem; color: var(--muted) }
+.tk { border-bottom: 3px solid transparent; padding-bottom: 1px; transition: opacity .15s }
+.tk.al { border-color: var(--c-al) } .tk.ud { border-color: var(--c-ud) } .tk.an { border-color: var(--c-an) }
+.tk.sa { border-color: var(--c-sa) } .tk.vy { border-color: var(--c-vy) }
+.verse.focus .tk:not(.on) { opacity: .3 }
+@media (max-width: 560px) { .rasa td:first-child { width: 40% } }
 </style>
 </head>
 <body>
@@ -295,6 +329,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
           <div class="meter" id="meter"></div>
           <div class="hint warnline" id="cover" hidden></div>
           <div class="trans" id="trans"></div>
+          <div class="rasa" id="rasa" hidden></div>
           <div class="words" id="words"></div>
           <div class="detail" id="detail" hidden></div>
           <div class="hint" id="tally"></div>
@@ -370,7 +405,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       const r = await fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, model: $("model").value || undefined }) });
       const b = await r.json().catch(() => ({ ok: false, error: "The reader did not answer. Try again." }));
       if (!b.ok) { $("msg").textContent = b.error || "Something went wrong. Try again."; return; }
-      $("msg").textContent = ""; render(b);
+      $("msg").textContent = ""; render(b); loadRasa(text, $("model").value || undefined);
       try { history.replaceState(null, "", "#" + encodeURIComponent(text)); } catch (e) {}
     } catch (e) { $("msg").textContent = "Could not reach the reader. Check your connection and try again."; }
     finally { $("go").disabled = false; }
@@ -396,6 +431,70 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     $("trans").innerHTML = (b.translation ? `<div><span class="eyebrow">English translation by ${esc(modelName(b.model))} (AI), not checked</span><p>${esc(b.translation)}</p></div>` : "") + padapatha(b.w);
     const s = b.stats;
     $("tally").textContent = `${s.agree} of ${s.checkable} checkable words: the rules allow the model's analysis. ${s["form-known"]} analysed differently by the rules, ${s.unknown} not in the rule engine. Model: ${modelName(b.model)}${b.cached ? ", saved reading" : ""}.`;
+  }
+
+
+  // Rasa: a second model call, after the reading is on screen.
+  const NINE = [["śṛṅgāra","love","rati"],["hāsya","the comic","hāsa"],["karuṇa","compassion, grief","śoka"],["raudra","fury","krodha"],
+    ["vīra","the heroic","utsāha"],["bhayānaka","terror","bhaya"],["bībhatsa","the loathsome","jugupsā"],["adbhuta","wonder","vismaya"],["śānta","peace","śama"]];
+  const ROWS = [["alambana","al","ālambana","whom it is about"],["uddipana","ud","uddīpana","what stirs it"],["anubhava","an","anubhāva","visible signs"],
+    ["sattvika","sa","sāttvika-bhāva","involuntary, from the 8"],["vyabhicari","vy","vyabhicāri-bhāva","passing feelings, from the 33"]];
+  let rasaSeq = 0;
+  async function loadRasa(text, model) {
+    const box = $("rasa"), seq = ++rasaSeq;
+    box.hidden = false; box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Reading the rasa… a second model call, a few seconds more.</p>`;
+    try {
+      const r = await fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, model, task: "rasa" }) });
+      const b = await r.json().catch(() => ({ ok: false }));
+      if (seq !== rasaSeq) return;
+      if (!b.ok) { box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">${esc(b.error || "The rasa could not be read this time.")} <button type="button" class="nine" id="rasaRetry">Try again</button></p>`;
+        $("rasaRetry").onclick = () => loadRasa(text, model); return; }
+      renderRasa(b, text);
+    } catch (e) { if (seq === rasaSeq) box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Could not reach the reader for the rasa.</p>`; }
+  }
+  function renderRasa(r, text) {
+    const word = k => { const [i, j] = k.split(".").map(Number); return (r.toks[i] || [])[j] ? r.toks[i][j][0] : ""; };
+    const words = at => at && at.length ? ` <span class="w">${esc(at.map(word).join(" "))}</span>` : "";
+    const ctx = e => e.context ? ` <span class="ctx">not in this verse; from the work it belongs to</span>` : "";
+    const cls = {};
+    ROWS.forEach(([f, c]) => [].concat(r[f] || []).forEach(e => e && (e.at || []).forEach(k => { cls[k] = cls[k] || c; })));
+    // Re-draw the verse word by word so the words behind each element can be underlined.
+    document.querySelectorAll("#lines .line .dev").forEach((el, i) => {
+      if (!r.toks[i]) return;
+      el.innerHTML = r.toks[i].map((t, j) => `<span class="tk ${cls[i + "." + j] || ""}" data-k="${i}.${j}">${esc(t[1])}</span>`).join(" ");
+    });
+    let verdict;
+    if (r.kind === "rasa") verdict = `<div class="verdict"><b>${esc(r.rasa)}</b><span>${esc(r.rasa_en)}${r.variety ? " · " + esc(r.variety) : ""}</span></div>
+      <p class="note">Underlying emotion (<i>sthāyi-bhāva</i>): <span class="pill">${esc(r.sthayi)}</span>${esc(r.sthayi_en || "")}</p>`;
+    else if (r.kind === "bhava") verdict = `<div class="verdict"><b>bhāva</b><span>no full rasa in this verse${r.sthayi ? " · " + esc(r.sthayi) : ""}</span></div>`;
+    else verdict = `<div class="verdict"><b>no rasa</b><span>this verse doesn't convey an emotion</span></div>`;
+    const rows = ROWS.map(([f, c, name, sub]) => {
+      const v = r[f]; if (!v || (Array.isArray(v) && !v.length)) return "";
+      const list = [].concat(v);
+      const at = list.flatMap(e => e.at || []);
+      const body = list.map(e => e.name ? `<span class="pill">${esc(e.name)}</span>${esc(e.gloss)}${words(e.at)}` : `${esc(e.text)}${words(e.at)}${ctx(e)}`).join(" · ");
+      return `<tr${at.length ? ` data-at="${at.join(" ")}"` : ""}><td class="k"><i style="background:var(--c-${c})"></i>${name}<small>${sub}</small></td><td>${body}</td></tr>`;
+    }).join("");
+    const subject = encodeURIComponent("Rasa reading on Samskritam.ai");
+    const mail = encodeURIComponent(`Verse:\n${text}\n\nThe reader said: ${r.kind === "rasa" ? r.rasa : r.kind}\n\nWhat I think it should be, and why:\n`);
+    $("rasa").innerHTML = `<div class="rh"><span class="eyebrow">Rasa · suggested by ${esc(modelName(cur.model))} (AI), not checked</span>
+        <button type="button" class="nine" id="nineBtn" aria-expanded="false">Out of nine rasas</button></div>
+      <div class="ninelist" id="nineList" hidden>${NINE.map(n => `<div><b>${n[0]}</b> <span>${n[1]} · sthāyi-bhāva ${n[2]}</span></div>`).join("")}</div>
+      ${verdict}
+      ${r.summary ? `<p class="note">${esc(r.summary)}</p>` : ""}${r.why ? `<p class="note">${esc(r.why)}</p>` : ""}
+      ${rows ? `<table><tbody>${rows}</tbody></table>` : ""}
+      ${r.considered && r.considered.length ? `<p class="note">Also considered: ${r.considered.map(c => `<i>${esc(c.rasa)}</i>, ${esc(c.why_not)}`).join("; ")}</p>` : ""}
+      <div class="foot"><span>${rows ? "Underlined words carry the elements above. Point to a row, or tap it, to light up its words." : ""}</span>
+        <a href="mailto:sriram@sriramhere.com?subject=${subject}&body=${mail}">Disagree? Tell us</a></div>`;
+    $("nineBtn").onclick = () => { const l = $("nineList"); l.hidden = !l.hidden; $("nineBtn").setAttribute("aria-expanded", String(!l.hidden)); };
+    const verse = $("lines");
+    const light = keys => { verse.classList.toggle("focus", !!keys);
+      verse.querySelectorAll(".tk").forEach(t => t.classList.toggle("on", !!keys && keys.includes(t.dataset.k))); };
+    $("rasa").querySelectorAll("tr[data-at]").forEach(tr => {
+      const keys = tr.dataset.at.split(" ");
+      tr.addEventListener("mouseenter", () => light(keys)); tr.addEventListener("mouseleave", () => light(null));
+      tr.addEventListener("click", () => light(verse.classList.contains("focus") ? null : keys));
+    });
   }
 
   function modelName(id) { const o = [...$("model").options].find(o => o.value === id); return o ? o.textContent.split(" · ")[0] : id; }

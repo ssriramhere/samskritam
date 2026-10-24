@@ -1,4 +1,5 @@
 """POST /api/read  {"text": "<a verse in Devanagari or IAST>"}
+POST /api/read  {"text": "...", "task": "rasa"}   the verse's rasa (engine/rasa.py)
 
 A language model proposes the word-by-word analysis; Vidyut checks each word
 against Pāṇini's rules (engine/reader.py). Results are cached by text, and
@@ -32,7 +33,7 @@ if not os.environ.get("VIDYUT_DATA"):
 from engine import fetch_data  # noqa: E402
 
 fetch_data.ensure(os.environ["VIDYUT_DATA"])
-from engine import reader  # noqa: E402
+from engine import rasa, reader  # noqa: E402
 
 MODEL = os.environ.get("READER_MODEL", "google/gemini-3.8-flash")
 MODELS = [m.strip() for m in os.environ.get("READER_MODELS", ",".join([
@@ -43,6 +44,7 @@ if MODEL not in MODELS:
 DAILY_CAP = int(os.environ.get("READER_DAILY_CAP", "500"))
 PER_IP_PER_HOUR = int(os.environ.get("READER_PER_HOUR", "10"))  # new readings; saved ones are free
 CACHE_DAYS = 30
+RASA_VERSION = "a1"  # the rasa prompt's version, separate from the reading's
 VERSION = "r1"  # bump when the prompt or checks change, so old answers are not reused
 REDIS_URL = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
 REDIS_TOKEN = os.environ.get("UPSTASH_REDIS_REST_TOKEN") or os.environ.get("KV_REST_API_TOKEN")
@@ -101,6 +103,7 @@ class handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(min(n, 8000)) or b"{}")
             raw = str(body.get("text") or "")
             model = str(body.get("model") or MODEL)
+            task = "rasa" if body.get("task") == "rasa" else "read"
             if model not in MODELS:
                 return self._send(400, {"ok": False, "error": "That model isn't available here."})
             lines = reader.clean_input(raw)
@@ -109,7 +112,8 @@ class handler(BaseHTTPRequestHandler):
         except Exception:
             return self._send(400, {"ok": False, "error": "Send JSON like {\"text\": \"...\"}."})
 
-        key = "reader:" + VERSION + ":" + hashlib.sha256(
+        prefix = "reader:" + VERSION if task == "read" else "rasa:" + RASA_VERSION
+        key = prefix + ":" + hashlib.sha256(
             (model + "\n" + "\n".join(lines)).encode()).hexdigest()[:32]
         try:
             (cached,) = redis(["GET", key])
@@ -117,7 +121,8 @@ class handler(BaseHTTPRequestHandler):
                 return self._send(200, {"ok": True, "cached": True, **json.loads(cached)})
             ip = (self.headers.get("x-forwarded-for") or "unknown").split(",")[0].strip()
             day = time.strftime("%Y%m%d", time.gmtime())
-            hits, _, today, _ = redis(["INCR", f"reader:rl:{ip}"], ["EXPIRE", f"reader:rl:{ip}", 3600, "NX"],
+            rl = f"reader:rl:{ip}" if task == "read" else f"rasa:rl:{ip}"
+            hits, _, today, _ = redis(["INCR", rl], ["EXPIRE", rl, 3600, "NX"],
                                       ["INCR", f"reader:day:{day}"], ["EXPIRE", f"reader:day:{day}", 172800, "NX"])
         except Exception:
             return self._send(503, {"ok": False, "error": "The reader is unavailable. Try again shortly."})
@@ -127,7 +132,8 @@ class handler(BaseHTTPRequestHandler):
             return self._send(429, {"ok": False, "error": "The reader has reached today's limit. Try again tomorrow, or read the Gītā and Meghadūta on the home page."})
 
         try:
-            result = reader.read(raw, lambda p: ask_model(p, model))
+            run = reader.read if task == "read" else rasa.analyse
+            result = run(raw, lambda p: ask_model(p, model))
         except reader.ReaderError as e:
             return self._send(422, {"ok": False, "error": str(e)})
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError):
