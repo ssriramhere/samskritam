@@ -255,6 +255,22 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .steps td.code a.sl, .ch code a.sl { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px }
 .steps td.code a.sl:hover, .ch code a.sl:hover { text-decoration-color: currentColor }
 
+.sandhi { margin-top: 16px }
+.sandhi summary { cursor: pointer; color: var(--indigo); font-weight: 500 }
+.ch { margin-top: 12px; padding: 12px 14px; background: var(--paper); border-radius: 10px; min-width: 0 }
+.ch .eq { font-family: var(--font-display); font-size: 1.2rem }
+.ch .eqi { font-family: var(--font-display); font-style: italic; color: var(--muted); font-size: .95rem }
+.ch .eqi .j { color: var(--turmeric); font-style: normal; font-weight: 600; border-bottom: 2px solid var(--turmeric) }
+.ch table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: .92rem }
+.ch td { padding: 6px 10px 6px 0; border-top: 1px solid var(--rule); vertical-align: baseline }
+.ch td.jn { font-family: var(--font-display); font-size: 1.02rem; width: 32% }
+.ch td.jn .si { display: block; font-size: .8rem; color: var(--muted); font-style: italic }
+.ch td.why { width: 30% }
+.ch td.su .step { display: block; font-family: var(--font-display); font-style: italic; color: var(--muted); font-size: .88rem }
+.ch td.su .step code { font-family: var(--font-mono); font-style: normal; color: var(--indigo); margin-right: 6px }
+.ch td.su .step b { font-weight: 400; color: var(--ink) }
+.ch td.su .lab { display: block; font-size: .75rem; color: var(--muted); margin-top: 4px }
+@media (max-width: 700px) { .ch table, .ch tbody, .ch tr, .ch td { display: block } .ch td, .ch td.jn, .ch td.why { width: auto; border-top: 0; padding: 2px 0 } .ch tr { border-top: 1px solid var(--rule); padding: 6px 0 } }
 /* Rasa panel: the model's reading of the verse's rasa, with the words behind each element. */
 :root { --c-al: #333f99; --c-ud: #2d7a57; --c-an: #b07800; --c-sa: #6b4fb3; --c-vy: #a3446e }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-al: #9ea8ff; --c-ud: #6cc79a; --c-an: #f0b840; --c-sa: #b9a3f0; --c-vy: #e892b8 } }
@@ -453,7 +469,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       g.items.map(i => `<button type="button" class="chip s-${b.w[i].s}" data-i="${i}" aria-pressed="false"><span class="dot"></span>${esc(b.w[i].d)}</button>`).join("")}</div></div>`).join("")
       + `<span class="hint" style="flex-basis:100%">Words appear before sandhi, as the model split them. Tap one for its grammar and, where the rules can build it, its derivation.</span>`;
     $("detail").hidden = true;
-    $("trans").innerHTML = (b.translation ? `<div><span class="eyebrow">English translation by ${esc(modelName(b.model))} (AI), not checked</span><p>${esc(b.translation)}</p></div>` : "") + padapatha(b.w);
+    $("trans").innerHTML = (b.translation ? `<div><span class="eyebrow">English translation by ${esc(modelName(b.model))} (AI), not checked</span><p>${esc(b.translation)}</p></div>` : "") + padapatha(b.w)
+      + `<details class="sandhi" id="sandhi"${sandhiOpen ? " open" : ""}><summary>How the words join (sandhi)</summary><div id="sandhibody"></div></details>`;
+    if (sandhiOpen) renderSandhi();
     const s = b.stats;
     $("tally").textContent = `${s.agree} of ${s.checkable} checkable words: the rules allow the model's analysis. ${s["form-known"]} analysed differently by the rules, ${s.unknown} not in the rule engine. Model: ${modelName(b.model)}${b.cached ? ", saved reading" : ""}.`;
   }
@@ -464,11 +482,40 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     ["vīra","the heroic","utsāha"],["bhayānaka","terror","bhaya"],["bībhatsa","the loathsome","jugupsā"],["adbhuta","wonder","vismaya"],["śānta","peace","śama"]];
   const ROWS = [["alambana","al","ālambana","whom it is about"],["uddipana","ud","uddīpana","what stirs it"],["anubhava","an","anubhāva","visible signs"],
     ["sattvika","sa","sāttvika-bhāva","involuntary, from the 8"],["vyabhicari","vy","vyabhicāri-bhāva","passing feelings, from the 33"]];
-  let rasaSeq = 0, reviewedRasa = null, allModels = [];
+  let rasaSeq = 0, reviewedDoc = null, allModels = [];
   // Up to three models may read the rasa of one verse; each reading is a tab.
   const RASA_MAX = 3;
   const rasa = { text: "", runs: [], active: 0, rev: null, asking: null, err: "" };
-  const loadReviewed = () => reviewedRasa || (reviewedRasa = fetch("/data/reviewed.json").then(r => r.json()).then(d => d._rasa || {}).catch(() => ({})));
+  const loadReviewedDoc = () => reviewedDoc || (reviewedDoc = fetch("/data/reviewed.json").then(r => r.json()).catch(() => ({})));
+  const loadReviewed = () => loadReviewedDoc().then(d => d._rasa || {});
+
+  // How the words join: traced on the server with Vidyut's sandhi table over the model's split;
+  // sūtra citations are the Library's, shared by every join of the same kind.
+  let sandhiOpen = false, sandhiRules = null;
+  const loadCitations = () => sandhiRules ? Promise.resolve(sandhiRules)
+    : fetch("/data/sandhi-rules.json").then(r => r.json()).catch(() => ({ r: {} })).then(d => (sandhiRules = d));
+  async function renderSandhi() {
+    const body = $("sandhibody"); if (!body || !cur) return;
+    const d = cur.sandhi;
+    if (d === null || d === undefined) { body.innerHTML = `<p class="hint">${d === null ? "The model's word split doesn't follow the printed words, so the joins can't be traced." : "Read the verse again to see how its words join."}</p>`; return; }
+    const n = d.c.reduce((t, c) => t + c.j.length, 0);
+    $("sandhi").querySelector("summary").textContent = `How the words join (sandhi), ${n} join${n === 1 ? "" : "s"}`;
+    if (!n) { body.innerHTML = `<p class="hint">${d.p ? "The joins in this verse could not be traced with the rules in the table." : "The words in this verse stand apart without joining."}</p>`; return; }
+    body.innerHTML = `<p class="hint">Loading…</p>`;
+    const [rules, rev] = await Promise.all([loadCitations(), loadReviewedDoc()]);
+    const citation = key => {
+      const r = rev._sandhi && rev._sandhi[key]; if (r) return { ...r, label: `Reviewed, suggested by ${r.by}` };
+      const ai = rules.r && rules.r[key]; if (ai) { const m = ai.m || rules.model; return { ...ai, label: `Citation by ${modelName(m)} (AI), not reviewed` }; }
+      return null; };
+    body.innerHTML = d.c.map(c => `<div class="ch"><div class="eq">${esc(c.d)}</div>
+      <div class="eqi">${c.h.map(([t, on]) => on ? `<span class="j">${esc(t)}</span>` : esc(t)).join("")}</div>
+      <table><tbody>${c.j.map(j => { const cit = citation(j.k);
+        return `<tr><td class="jn">${esc(j.ad)} + ${esc(j.bd)} → ${esc(j.rd)}<span class="si">${esc(j.a)} + ${esc(j.b)} → ${esc(j.r)}</span></td>
+        <td class="why">${cit ? esc(cit.why) : `<span class="hint">No sūtra citation yet for this kind of join.</span>`}</td>
+        <td class="su">${cit ? cit.s.map(([code, txt, r]) => `<span class="step"><code>${sutraLink(code)}</code>${txt ? esc(txt) : "<em>not found in the Aṣṭādhyāyī</em>"}${r ? ` → <b>${esc(r)}</b>` : ""}</span>`).join("") + `<span class="lab">${esc(cit.label)}</span>` : ""}</td></tr>`; }).join("")}</tbody></table></div>`).join("")
+      + `<p class="hint">The joins follow the model's word split, traced with Vidyut's sandhi rules${d.p ? "; some joins in this verse could not be traced" : ""}. If the split is wrong, so are these. Sūtra citations are shared with the Library, where they can be corrected.</p>`;
+  }
+  $("trans").addEventListener("toggle", e => { if (e.target.id !== "sandhi") return; sandhiOpen = e.target.open; if (sandhiOpen) renderSandhi(); }, true);
   const askRasa = (text, model) => fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text, model, task: "rasa" }) }).then(r => r.json()).catch(() => ({ ok: false, error: "Could not reach the reader for the rasa." }));
   async function loadRasa(text, model) {

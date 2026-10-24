@@ -119,7 +119,10 @@ class handler(BaseHTTPRequestHandler):
         try:
             (cached,) = redis(["GET", key])
             if cached:
-                return self._send(200, {"ok": True, "cached": True, **json.loads(cached)})
+                result = json.loads(cached)
+                if task == "read" and "sandhi" not in result:  # saved before joins were traced
+                    result["sandhi"] = reader.joins(result)
+                return self._send(200, {"ok": True, "cached": True, **result})
             ip = (self.headers.get("x-forwarded-for") or "unknown").split(",")[0].strip()
             day = time.strftime("%Y%m%d", time.gmtime())
             rl = f"reader:rl:{ip}" if task == "read" else f"rasa:rl:{ip}"
@@ -149,6 +152,8 @@ class handler(BaseHTTPRequestHandler):
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError):
             return self._send(502, {"ok": False, "error": "The model did not answer. Try again."})
         result["model"] = model
+        if task == "read":
+            result["sandhi"] = reader.joins(result)
         if task == "rasa":
             try:
                 redis(["SADD", seen, model], ["EXPIRE", seen, 86400])

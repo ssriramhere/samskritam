@@ -16,7 +16,7 @@ import re
 
 from vidyut.lipi import Scheme, detect, transliterate
 
-from . import labels, meter, verify
+from . import labels, meter, sandhi, verify
 
 MAX_CHARS = 400   # one verse: even a long sragdharā fits in about 300
 MAX_LINES = 4     # four pādas, or two half-verses
@@ -215,3 +215,37 @@ def read(raw: str, ask_model) -> dict:
         "translation": str(data.get("translation") or "")[:400],
         "stats": {**stats, "checkable": checkable},
     }
+
+
+def joins(result: dict):
+    """How the words join, traced with Vidyut's sandhi table over the model's
+    split, in the shape the Library uses: {"c": [chunk, ...], "p": 1 if some
+    joins couldn't be traced}. None when the model's chunks don't follow the
+    printed words, so its split can't be laid over the line."""
+    chunks = result.get("chunks") or []
+    by_chunk = {}
+    for w in result.get("w") or []:
+        by_chunk.setdefault(int(str(w.get("k", "c-1"))[1:]), []).append(w["f"])
+    out, partial, ci = [], False, 0
+    for line in result.get("iast") or []:
+        toks = line.split(" ")
+        if ci + len(toks) > len(chunks) or any(
+                _letters(t) != _letters(chunks[ci + i]) for i, t in enumerate(toks)):
+            return None
+        words, groups = [], []
+        for i in range(len(toks)):
+            for f in by_chunk.get(ci + i, []):
+                words.append(f)
+                groups.append(i)
+        ci += len(toks)
+        if len(words) < 2:
+            continue
+        try:
+            parts, complete = sandhi.trace(words, groups, line)
+        except Exception:
+            parts, complete = [], False
+        partial |= not complete
+        for ws, gs, ln, js in parts:
+            out += sandhi.render(ws, gs, ln, js)
+    return {"c": out, **({"p": 1} if partial else {})}
+
