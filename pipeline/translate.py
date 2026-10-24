@@ -24,7 +24,10 @@ from concurrent.futures import ThreadPoolExecutor, wait
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TITLES = {"gita": "the Bhagavad Gītā", "meghaduta": "Kālidāsa's Meghadūta",
-          "mahabharata": "the Mahābhārata (critical edition)"}
+          "mahabharata": "the Mahābhārata (critical edition)",
+          "kumarasambhava": "Kālidāsa's Kumārasaṃbhava", "rtusamhara": "the Ṛtusaṃhāra",
+          "ramayana": "Vālmīki's Rāmāyaṇa", "kathopanisad": "the Kaṭha Upaniṣad",
+          "astavakragita": "the Aṣṭāvakragītā"}
 
 PROMPT = """Translate this verse from {title} ({ref}) into English.
 

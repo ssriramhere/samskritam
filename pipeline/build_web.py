@@ -50,6 +50,11 @@ TEXTS = [
     ("gita", "gita.json", "derivations.json", "2.47", "Chapter", "id"),
     ("meghaduta", "meghaduta.json", "meghaduta-derivations.json", "1.1", None, "named"),
     ("mahabharata", "mahabharata.json", "mahabharata-derivations.json", "3.50.1", None, "id"),
+    ("kumarasambhava", "kumarasambhava.json", "kumarasambhava-derivations.json", "1.1", None, "id"),
+    ("rtusamhara", "rtusamhara.json", "rtusamhara-derivations.json", "1.1", None, "id"),
+    ("ramayana", "ramayana.json", "ramayana-derivations.json", "1.2.14", None, "id"),
+    ("kathopanisad", "kathopanisad.json", "kathopanisad-derivations.json", "1.1.1", None, "id"),
+    ("astavakragita", "astavakragita.json", "astavakragita-derivations.json", "1.1", None, "id"),
 ]
 
 

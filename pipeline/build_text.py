@@ -48,6 +48,57 @@ TEXTS = {
         "note": "Verse numbers follow the Digital Corpus of Sanskrit, counted "
                 "separately in each part.",
     },
+    "kumarasambhava": {
+        "title": "Kumārasaṃbhava",
+        "author": "Kālidāsa",
+        "source_dir": "data/sources/dcs-kumarasambhava",
+        "levels": ["Sarga"],
+        "prose": False,
+        "note": "Sargas 1–8, the part of the poem generally held to be Kālidāsa's. "
+                "Verse numbers follow the Digital Corpus of Sanskrit.",
+    },
+    "rtusamhara": {
+        "title": "Ṛtusaṃhāra",
+        "author": "attributed to Kālidāsa",
+        "source_dir": "data/sources/dcs-rtusamhara",
+        "levels": ["Sarga"],
+        "parts": ["1 · Grīṣma (summer)", "2 · Varṣā (rains)", "3 · Śarad (autumn)",
+                  "4 · Hemanta (early winter)", "5 · Śiśira (late winter)", "6 · Vasanta (spring)"],
+        "prose": False,
+        "note": "One sarga for each of the six seasons. Verse numbers follow the Digital Corpus of Sanskrit.",
+    },
+    "ramayana": {
+        "title": "Rāmāyaṇa",
+        "author": "Vālmīki",
+        "source_dir": "data/sources/dcs-ramayana",
+        "levels": ["Kāṇḍa", "Sarga"],
+        "parvans": {1: "Bālakāṇḍa", 2: "Ayodhyākāṇḍa", 3: "Araṇyakāṇḍa", 4: "Kiṣkindhākāṇḍa",
+                    5: "Sundarakāṇḍa", 6: "Yuddhakāṇḍa", 7: "Uttarakāṇḍa"},
+        "speakers": True,
+        "prose": False,
+        "note": "So far Bālakāṇḍa sargas 1–4: Nārada's account of Rāma, the krauñca birds and "
+                "the first śloka. More to follow. Numbering follows the Digital Corpus of Sanskrit.",
+    },
+    "kathopanisad": {
+        "title": "Kaṭhopaniṣad",
+        "author": None,
+        "source_dir": "data/sources/dcs-kathopanisad",
+        "levels": ["Adhyāya", "Vallī"],
+        "parvans": {1: "Adhyāya 1", 2: "Adhyāya 2"},
+        "speakers": True,
+        "prose": False,
+        "note": "Cited as adhyāya.vallī.verse. Vedic forms are common, and Pāṇini's rules as "
+                "implemented cover them less fully than classical Sanskrit.",
+    },
+    "astavakragita": {
+        "title": "Aṣṭāvakragītā",
+        "author": None,
+        "source_dir": "data/sources/dcs-astavakragita",
+        "levels": ["Chapter"],
+        "speakers": True,
+        "prose": False,
+        "note": "Janaka asks, Aṣṭāvakra teaches. Verse numbers follow the Digital Corpus of Sanskrit.",
+    },
 }
 
 
@@ -129,8 +180,10 @@ def build(slug: str):
         if len(cfg.get("levels", [])) == 2:
             p, a = ch_id.split(".")
             name = f"{cfg['parvans'][int(p)]} {a}"
-        else:
+        elif cfg.get("parts"):
             name = cfg["parts"][int(ch_id) - 1]
+        else:
+            name = ch_id
         chapters.append({"ch": ch_id, "name": name, "verses": out, "missing": []})
 
     ids = {k: f"d{i}" for i, k in enumerate(k for k, v in derivations.items() if v)}

@@ -13,7 +13,8 @@ def read(path: str) -> list[dict]:
     Each group is one surface (sandhied) chunk with its analysed tokens."""
     out, cur, group_span = [], None, None
     for raw in open(path, encoding="utf-8"):
-        line = raw.rstrip("\n")
+        # Some files spell vocalic ḷ (kḷp) with a stray halfwidth character.
+        line = raw.rstrip("\n").replace("\uffb1", "ḷ")
         if line.startswith("# text = "):
             cur = {"text": line[9:], "groups": []}
             out.append(cur)

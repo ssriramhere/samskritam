@@ -18,7 +18,9 @@ const PER_IP_PER_HOUR = 10;
 const PER_DAY = 50;
 const EMAIL = /^[^\s@<>()\[\]\\,;:"]+@[^\s@<>()\[\]\\,;:"]+\.[^\s@<>()\[\]\\,;:"]{2,}$/;
 // Texts that accept suggestions; add new Library texts here.
-const TITLES = { gita: "Bhagavad Gītā", meghaduta: "Meghadūta", mahabharata: "Mahābhārata" };
+const TITLES = { gita: "Bhagavad Gītā", meghaduta: "Meghadūta", mahabharata: "Mahābhārata",
+  kumarasambhava: "Kumārasaṃbhava", rtusamhara: "Ṛtusaṃhāra", ramayana: "Rāmāyaṇa",
+  kathopanisad: "Kaṭhopaniṣad", astavakragita: "Aṣṭāvakragītā" };
 
 async function redis(commands) {
   const r = await fetch(`${URL_}/pipeline`, {

@@ -23,7 +23,9 @@ from vidyut.lipi import Scheme, transliterate  # noqa: E402
 from engine import sandhi  # noqa: E402
 from engine.verify import DATA, to_slp1  # noqa: E402
 
-TEXTS = [("gita", "gita.json"), ("meghaduta", "meghaduta.json"), ("mahabharata", "mahabharata.json")]
+TEXTS = [("gita", "gita.json"), ("meghaduta", "meghaduta.json"), ("mahabharata", "mahabharata.json"),
+         ("kumarasambhava", "kumarasambhava.json"), ("rtusamhara", "rtusamhara.json"), ("ramayana", "ramayana.json"),
+         ("kathopanisad", "kathopanisad.json"), ("astavakragita", "astavakragita.json")]
 
 
 def iast(slp: str) -> str:
