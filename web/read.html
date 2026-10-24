@@ -263,6 +263,24 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .rasa .rh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap }
 .rasa .nine { font: inherit; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--indigo);
   background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px }
+.linkbtn { font: inherit; font-size: .88rem; color: var(--indigo); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px }
+.sug { display: grid; gap: 8px; margin-top: 12px; background: var(--leaf); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px }
+.sug[hidden] { display: none }
+.sug textarea, .sug input, .sug select { font: inherit; font-size: .95rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 7px 10px; width: 100%; min-width: 0 }
+.sug textarea:focus, .sug input:focus, .sug select:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft) }
+.sug fieldset { border: 0; padding: 0; margin: 0; display: flex; gap: 14px; flex-wrap: wrap; font-size: .95rem }
+.sug fieldset label { display: inline-flex; gap: 6px; align-items: center }
+.sug input[type=radio] { width: auto; padding: 0; margin: 0; accent-color: var(--indigo) }
+.sug select:disabled, .sug input:disabled { opacity: .45 }
+.sugrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.sugrow > * { flex: 1 1 200px }
+.sugrow button { flex: 0 0 auto }
+#rsend { font: inherit; font-weight: 600; color: var(--leaf); background: var(--indigo); border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer }
+#rsend:disabled { opacity: .6 }
+.sug .hint { margin: 0 }
+.rasa .reviewed { border-left: 3px solid var(--ok); padding: 2px 0 2px 12px; margin: 10px 0 14px }
+.rasa .reviewed .verdict b { color: var(--ok) }
+#rmsg:empty { display: none }
 .rasa .ninelist[hidden] { display: none }
 .rasa .ninelist { margin: 10px 0 4px; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 16px; font-size: .9rem }
 .rasa .ninelist b { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem }
@@ -439,7 +457,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     ["vīra","the heroic","utsāha"],["bhayānaka","terror","bhaya"],["bībhatsa","the loathsome","jugupsā"],["adbhuta","wonder","vismaya"],["śānta","peace","śama"]];
   const ROWS = [["alambana","al","ālambana","whom it is about"],["uddipana","ud","uddīpana","what stirs it"],["anubhava","an","anubhāva","visible signs"],
     ["sattvika","sa","sāttvika-bhāva","involuntary, from the 8"],["vyabhicari","vy","vyabhicāri-bhāva","passing feelings, from the 33"]];
-  let rasaSeq = 0;
+  let rasaSeq = 0, reviewedRasa = null;
+  const loadReviewed = () => reviewedRasa || (reviewedRasa = fetch("/data/reviewed.json").then(r => r.json()).then(d => d._rasa || {}).catch(() => ({})));
   async function loadRasa(text, model) {
     const box = $("rasa"), seq = ++rasaSeq;
     box.hidden = false; box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Reading the rasa… a second model call, a few seconds more.</p>`;
@@ -449,10 +468,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       if (seq !== rasaSeq) return;
       if (!b.ok) { box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">${esc(b.error || "The rasa could not be read this time.")} <button type="button" class="nine" id="rasaRetry">Try again</button></p>`;
         $("rasaRetry").onclick = () => loadRasa(text, model); return; }
-      renderRasa(b, text);
+      const rev = (await loadReviewed())[b.vid] || null;
+      if (seq === rasaSeq) renderRasa(b, rev);
     } catch (e) { if (seq === rasaSeq) box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Could not reach the reader for the rasa.</p>`; }
   }
-  function renderRasa(r, text) {
+  function renderRasa(r, rev) {
     const word = k => { const [i, j] = k.split(".").map(Number); return (r.toks[i] || [])[j] ? r.toks[i][j][0] : ""; };
     const words = at => at && at.length ? ` <span class="w">${esc(at.map(word).join(" "))}</span>` : "";
     const ctx = e => e.context ? ` <span class="ctx">not in this verse; from the work it belongs to</span>` : "";
@@ -475,17 +495,59 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       const body = list.map(e => e.name ? `<span class="pill">${esc(e.name)}</span>${esc(e.gloss)}${words(e.at)}` : `${esc(e.text)}${words(e.at)}${ctx(e)}`).join(" · ");
       return `<tr${at.length ? ` data-at="${at.join(" ")}"` : ""}><td class="k"><i style="background:var(--c-${c})"></i>${name}<small>${sub}</small></td><td>${body}</td></tr>`;
     }).join("");
-    const subject = encodeURIComponent("Rasa reading on Samskritam.ai");
-    const mail = encodeURIComponent(`Verse:\n${text}\n\nThe reader said: ${r.kind === "rasa" ? r.rasa : r.kind}\n\nWhat I think it should be, and why:\n`);
+    const said = r.kind === "rasa" ? `${r.rasa}${r.variety ? ` (${r.variety})` : ""}` : r.kind === "bhava" ? `bhāva only${r.sthayi ? `: ${r.sthayi}` : ""}` : "no rasa";
+    const revBlock = rev ? `<div class="reviewed"><span class="eyebrow">Reviewed reading, suggested by ${esc(rev.by)}</span>
+        <div class="verdict"><b>${esc(rev.kind === "rasa" ? rev.rasa : rev.kind === "bhava" ? "bhāva" : "no rasa")}</b><span>${esc([rev.variety, rev.sthayi].filter(Boolean).join(" · "))}</span></div>
+        <p class="note">${esc(rev.why)}</p></div><span class="eyebrow">The AI's reading</span>` : "";
     $("rasa").innerHTML = `<div class="rh"><span class="eyebrow">Rasa · suggested by ${esc(modelName(cur.model))} (AI), not checked</span>
         <button type="button" class="nine" id="nineBtn" aria-expanded="false">Out of nine rasas</button></div>
       <div class="ninelist" id="nineList" hidden>${NINE.map(n => `<div><b>${n[0]}</b> <span>${n[1]} · sthāyi-bhāva ${n[2]}</span></div>`).join("")}</div>
-      ${verdict}
+      ${revBlock}${verdict}
       ${r.summary ? `<p class="note">${esc(r.summary)}</p>` : ""}${r.why ? `<p class="note">${esc(r.why)}</p>` : ""}
       ${rows ? `<table><tbody>${rows}</tbody></table>` : ""}
       ${r.considered && r.considered.length ? `<p class="note">Also considered: ${r.considered.map(c => `<i>${esc(c.rasa)}</i>, ${esc(c.why_not)}`).join("; ")}</p>` : ""}
       <div class="foot"><span>${rows ? "Underlined words carry the elements above. Point to a row, or tap it, to light up its words." : ""}</span>
-        <a href="mailto:sriram@sriramhere.com?subject=${subject}&body=${mail}">Disagree? Tell us</a></div>`;
+        <button type="button" class="linkbtn" id="rbtn">Suggest a correction</button></div>
+      <form class="sug" id="rform" hidden>
+        <span class="eyebrow">Your reading of this verse</span>
+        <fieldset><legend class="visually-hidden">What the verse conveys</legend>
+          <label><input type="radio" name="rk" value="rasa" checked> a rasa</label>
+          <label><input type="radio" name="rk" value="bhava"> a bhāva only</label>
+          <label><input type="radio" name="rk" value="none"> no rasa</label></fieldset>
+        <div class="sugrow"><select id="rrasa" aria-label="Rasa">${NINE.map(n => `<option${n[0] === r.rasa ? " selected" : ""}>${n[0]}</option>`).join("")}</select>
+          <input id="rvar" maxlength="80" placeholder="Sub-type (optional), e.g. vipralambha"></div>
+        <input id="rsth" maxlength="100" placeholder="Sthāyi-bhāva, or the bhāva present (optional)">
+        <textarea id="rwhy" rows="3" maxlength="800" placeholder="Why: which words carry the emotion, and what they build"></textarea>
+        <div class="sugrow"><input id="rname" maxlength="80" placeholder="Name to credit (optional)" autocomplete="name">
+          <input id="remail" type="email" maxlength="254" placeholder="Email (optional, never shown)" autocomplete="email"></div>
+        <input class="hp" id="rweb" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="sugrow"><button type="submit" id="rsend">Send for review</button><button type="button" class="linkbtn" id="rcancel">Cancel</button></div>
+        <p class="hint">Suggestions are reviewed in public on GitHub before anything changes here, with the name you give. Your email is kept private and never published.</p>
+      </form><p class="joinmsg" id="rmsg" role="status"></p>`;
+    const form = $("rform"), msg = $("rmsg");
+    const syncKind = () => { const k = form.querySelector("input[name=rk]:checked").value; $("rrasa").disabled = $("rvar").disabled = k !== "rasa"; $("rsth").disabled = k === "none"; };
+    form.querySelectorAll("input[name=rk]").forEach(x => x.addEventListener("change", syncKind));
+    $("rbtn").onclick = () => { form.hidden = false; $("rbtn").hidden = true; msg.textContent = ""; $("rwhy").focus(); };
+    $("rcancel").onclick = () => { form.hidden = true; $("rbtn").hidden = false; };
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const fail = t => { msg.className = "joinmsg err"; msg.textContent = t; };
+      if ($("rwhy").value.trim().length < 10) return fail("Say briefly why: which words carry the emotion, and what they build.");
+      const verdict = form.querySelector("input[name=rk]:checked").value;
+      $("rsend").disabled = true; msg.className = "joinmsg"; msg.textContent = "Sending…";
+      try {
+        const res = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind: "rasa", lines: r.iast, verdict, rasa: verdict === "rasa" ? $("rrasa").value : null,
+            variety: verdict === "rasa" ? $("rvar").value : "", sthayi: verdict === "none" ? "" : $("rsth").value, why: $("rwhy").value,
+            name: $("rname").value, email: $("remail").value, website: $("rweb").value,
+            current: [said, r.summary, r.why].filter(Boolean).join(" | ") }) });
+        const out = await res.json().catch(() => null);
+        if (!out || !out.ok) throw new Error((out && out.error) || "We couldn't send that. Please try again.");
+        form.hidden = true; $("rbtn").hidden = false;
+        msg.className = "joinmsg ok"; msg.textContent = "Thank you. Your reading will be reviewed before it appears.";
+      } catch (err) { fail(err.message); }
+      finally { $("rsend").disabled = false; }
+    };
     $("nineBtn").onclick = () => { const l = $("nineList"); l.hidden = !l.hidden; $("nineBtn").setAttribute("aria-expanded", String(!l.hidden)); };
     const verse = $("lines");
     const light = keys => { verse.classList.toggle("focus", !!keys);

@@ -10,6 +10,7 @@ anything else is dropped, so the page never underlines words that aren't there.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 import unicodedata
 
@@ -173,6 +174,12 @@ def _element(x, toks, named=None):
     return out
 
 
+def verse_id(lines) -> str:
+    """A pasted verse's id for reviewed readings (reviewed/rasa/<id>.json).
+    api/suggest.js and scripts/build_reviewed.mjs compute it the same way."""
+    return hashlib.sha1("\n".join(lines).encode()).hexdigest()[:12]
+
+
 def analyse(raw: str, ask_model) -> dict:
     lines = clean_input(raw)
     prompt = PROMPT.format(text="\n".join(lines), rasas=", ".join(r[0] for r in RASAS),
@@ -186,7 +193,7 @@ def analyse(raw: str, ask_model) -> dict:
     rasa = _lookup(data.get("rasa"), RASAS) if kind == "rasa" else None
     if kind == "rasa" and not rasa:
         raise ReaderError("The model named a rasa outside the nine. Try again, or try another model.")
-    out = {"kind": kind, "toks": toks,
+    out = {"kind": kind, "toks": toks, "iast": lines, "vid": verse_id(lines),
            "rasa": rasa[0] if rasa else None, "rasa_en": rasa[1] if rasa else None,
            "variety": str(data.get("variety") or "")[:80] or None,
            "sthayi": rasa[2] if rasa else (str(data.get("sthayi") or "")[:100] or None),

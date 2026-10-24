@@ -3,6 +3,7 @@
 // file is skipped with a warning so it can't break a deploy.
 //   node scripts/build_reviewed.mjs
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +13,7 @@ const out = {};
 let n = 0;
 if (existsSync(SRC)) {
   for (const slug of readdirSync(SRC)) {
-    if (slug === "sandhi" || !statSync(join(SRC, slug)).isDirectory()) continue;
+    if (slug === "sandhi" || slug === "rasa" || !statSync(join(SRC, slug)).isDirectory()) continue;
     for (const f of readdirSync(join(SRC, slug))) {
       const m = f.match(/^(\d+(?:\.\d+){1,2})\.json$/);
       if (!m) continue;
@@ -45,5 +46,27 @@ if (existsSync(sandhiDir)) {
     }
   }
 }
+// Reviewed rasa readings for verses read in the Verse Reader:
+// reviewed/rasa/<id>.json {verse: [IAST lines], kind, rasa, variety, sthayi, why, by}
+const RASAS = ["śṛṅgāra", "hāsya", "karuṇa", "raudra", "vīra", "bhayānaka", "bībhatsa", "adbhuta", "śānta"];
+const rasaDir = join(SRC, "rasa");
+if (existsSync(rasaDir)) {
+  for (const f of readdirSync(rasaDir)) {
+    if (!f.endsWith(".json")) continue;
+    try {
+      const r = JSON.parse(readFileSync(join(rasaDir, f), "utf8"));
+      if (!Array.isArray(r.verse) || !r.verse.length) throw new Error("needs verse");
+      if (!["rasa", "bhava", "none"].includes(r.kind)) throw new Error("kind must be rasa, bhava or none");
+      if (r.kind === "rasa" && !RASAS.includes(r.rasa)) throw new Error("rasa must be one of the nine");
+      if (!r.why) throw new Error("needs why");
+      const id = createHash("sha1").update(r.verse.join("\n")).digest("hex").slice(0, 12);
+      (out._rasa ||= {})[id] = { kind: r.kind, rasa: r.kind === "rasa" ? r.rasa : null, variety: r.variety || null,
+        sthayi: r.sthayi || null, why: String(r.why).trim(), by: String(r.by || "a reader").trim() };
+      n++;
+    } catch (e) {
+      console.warn(`skipped reviewed/rasa/${f}: ${e.message}`);
+    }
+  }
+}
 writeFileSync(join(ROOT, "web/data/reviewed.json"), JSON.stringify(out));
-console.log(`reviewed translations: ${n}`);
+console.log(`reviewed entries: ${n}`);

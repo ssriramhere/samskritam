@@ -44,7 +44,7 @@ if MODEL not in MODELS:
 DAILY_CAP = int(os.environ.get("READER_DAILY_CAP", "500"))
 PER_IP_PER_HOUR = int(os.environ.get("READER_PER_HOUR", "10"))  # new readings; saved ones are free
 CACHE_DAYS = 30
-RASA_VERSION = "a1"  # the rasa prompt's version, separate from the reading's
+RASA_VERSION = "a2"  # the rasa prompt's version, separate from the reading's
 VERSION = "r1"  # bump when the prompt or checks change, so old answers are not reused
 REDIS_URL = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
 REDIS_TOKEN = os.environ.get("UPSTASH_REDIS_REST_TOKEN") or os.environ.get("KV_REST_API_TOKEN")

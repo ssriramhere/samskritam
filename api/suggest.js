@@ -1,6 +1,7 @@
 // POST /api/suggest  {slug, id, text, name, email, note, current, website}
 // Turns a reader's suggested translation into a GitHub pull request that adds
-// reviewed/<slug>/<id>.json. Merging the pull request approves it; editing the
+// reviewed/<slug>/<id>.json. Corrections to a sandhi citation (kind "sandhi")
+// and to the rasa of a verse read in the Verse Reader (kind "rasa") work the same way. Merging the pull request approves it; editing the
 // file in the pull request edits it; closing it rejects it. On deploy,
 // scripts/build_reviewed.mjs folds reviewed/ into web/data/reviewed.json.
 //
@@ -124,6 +125,50 @@ async function sandhi(req, res, b) {
   }
 }
 
+// A correction to the rasa of a verse read in the Verse Reader (reviewed/rasa/<id>.json).
+const RASAS = ["śṛṅgāra", "hāsya", "karuṇa", "raudra", "vīra", "bhayānaka", "bībhatsa", "adbhuta", "śānta"];
+const KINDS = { rasa: "rasa", bhava: "bhāva only", none: "no rasa" };
+async function rasa(req, res, b) {
+  const lines = Array.isArray(b.lines) ? b.lines.map((l) => clean(l, 200)).filter(Boolean) : [];
+  if (!lines.length || lines.length > 4 || !lines.some((l) => /[a-zāīūṛṝḷṃḥśṣṭḍṇñṅ]/.test(l))) {
+    return res.status(400).json({ ok: false, error: "That verse wasn't recognised. Read it again and retry." });
+  }
+  const kind = String(b.verdict || "");
+  if (!KINDS[kind]) return res.status(400).json({ ok: false, error: "Choose rasa, bhāva only, or no rasa." });
+  const r = kind === "rasa" ? String(b.rasa || "") : null;
+  if (kind === "rasa" && !RASAS.includes(r)) return res.status(400).json({ ok: false, error: "Choose one of the nine rasas." });
+  const variety = clean(b.variety, 80), sthayi = clean(b.sthayi, 100), why = clean(b.why, 800);
+  const name = clean(b.name, 80), email = clean(b.email, 254).toLowerCase(), current = clean(b.current, 600);
+  if (why.length < 10) return res.status(400).json({ ok: false, error: "Say briefly why: which words carry the emotion, and what they build." });
+  if (email && !EMAIL.test(email)) return res.status(400).json({ ok: false, error: "Check the email address, or leave it empty." });
+  try {
+    const stop = await limited(req);
+    if (stop) return res.status(429).json({ ok: false, error: stop });
+    const id = require("crypto").createHash("sha1").update(lines.join("\n")).digest("hex").slice(0, 12);
+    const sid = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    const verdict = kind === "rasa" ? `${r}${variety ? ` (${variety})` : ""}` : KINDS[kind];
+    const pr = await openPR({
+      branch: `suggest-rasa-${id}-${sid}`, path: `reviewed/rasa/${id}.json`,
+      file: { verse: lines, kind, rasa: r, variety: variety || null, sthayi: sthayi || null, why, by: name || "a reader" },
+      message: `Suggested rasa: ${lines[0].slice(0, 50)}`,
+      title: `Rasa suggestion: ${lines[0].slice(0, 50)}`,
+      body: [
+        `A reader suggested a reading of the rasa of this verse, read in the Verse Reader: https://samskritam.ai/read#${encodeURIComponent(lines.join("\n"))}`,
+        "", "**Verse**", fence(lines.join("\n")), "", "**Suggested**", fence([verdict, sthayi ? `sthāyi-bhāva or bhāva: ${sthayi}` : "", why].filter(Boolean).join("\n")),
+        "", "**The AI's reading**", fence(current || "(not given)"),
+        "", "**Credit**", fence(name || "a reader (no name given)"),
+        email ? "\nThe reader left a contact email; it is stored privately, not here." : "",
+        "", "---", "**Approve:** merge. **Edit:** change `kind` (rasa, bhava or none), `rasa` (one of the nine), `variety`, `sthayi`, `why` or `by` in this pull request's file, then merge. Don't change `verse`: it identifies the verse. **Reject:** close.",
+      ].join("\n"),
+    });
+    if (email) await redis([["HSET", `suggest:pr:${pr.number}`, "email", email, "name", name, "rasa", id]]);
+    return res.status(200).json({ ok: true });
+  } catch (e) {
+    console.error("suggest rasa", e);
+    return res.status(502).json({ ok: false, error: "We couldn't save your suggestion just now. Please try again." });
+  }
+}
+
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") {
@@ -135,6 +180,7 @@ module.exports = async (req, res) => {
   if (b.website) return res.status(200).json({ ok: true });  // honeypot
 
   if (b.kind === "sandhi") return sandhi(req, res, b);
+  if (b.kind === "rasa") return rasa(req, res, b);
   const slug = String(b.slug || ""), id = String(b.id || "");
   if (!TITLES[slug] || !/^\d{1,3}(?:\.\d{1,3}){1,2}$/.test(id)) {
     return res.status(400).json({ ok: false, error: "That verse wasn't recognised. Reload the page and try again." });
