@@ -513,8 +513,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     const d = cur.sandhi;
     if (d === null || d === undefined) { body.innerHTML = `<p class="hint">${d === null ? "The model's word split doesn't follow the printed words, so the joins can't be traced." : "Read the verse again to see how its words join."}</p>`; return; }
     const n = d.c.reduce((t, c) => t + c.j.length, 0);
-    $("sandhi").querySelector("summary").textContent = `How the words join (sandhi), ${n} join${n === 1 ? "" : "s"}`;
-    if (!n) { body.innerHTML = `<p class="hint">${d.p ? "The joins in this verse could not be traced with the rules in the table." : "The words in this verse stand apart without joining."}</p>`; return; }
+    $("sandhi").querySelector("summary").textContent = !n && d.p ? "How the words join (sandhi): couldn't be traced"
+      : `How the words join (sandhi), ${n} join${n === 1 ? "" : "s"}${d.p ? ", some not traced" : ""}`;
+    if (!n) { body.innerHTML = `<p class="hint">${d.p ? "We couldn't rebuild this verse's printed lines from the model's words using Vidyut's sandhi rules. Either the model split a word differently from how it appears, or a join here isn't in Vidyut's table yet (final consonants voiced before a vowel, as in vāk + artha → vāgartha, are one known gap). The word split above is still the model's best reading." : "The words in this verse stand apart without joining."}</p>`; return; }
     body.innerHTML = `<p class="hint">Loading…</p>`;
     const [rules, rev] = await Promise.all([loadCitations(), loadReviewedDoc()]);
     const citation = key => {
