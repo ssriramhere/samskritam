@@ -44,7 +44,8 @@ if MODEL not in MODELS:
 DAILY_CAP = int(os.environ.get("READER_DAILY_CAP", "500"))
 PER_IP_PER_HOUR = int(os.environ.get("READER_PER_HOUR", "10"))  # new readings; saved ones are free
 CACHE_DAYS = 30
-RASA_VERSION = "a2"  # the rasa prompt's version, separate from the reading's
+RASA_VERSION = "a2"
+RASA_MODELS_PER_VERSE = 3  # the rasa prompt's version, separate from the reading's
 VERSION = "r1"  # bump when the prompt or checks change, so old answers are not reused
 REDIS_URL = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
 REDIS_TOKEN = os.environ.get("UPSTASH_REDIS_REST_TOKEN") or os.environ.get("KV_REST_API_TOKEN")
@@ -126,6 +127,15 @@ class handler(BaseHTTPRequestHandler):
                                       ["INCR", f"reader:day:{day}"], ["EXPIRE", f"reader:day:{day}", 172800, "NX"])
         except Exception:
             return self._send(503, {"ok": False, "error": "The reader is unavailable. Try again shortly."})
+        if task == "rasa":
+            # Up to three models may read the rasa of one verse, per network.
+            seen = f"rasa:models:{ip}:{rasa.verse_id(lines)}"
+            try:
+                member, count = redis(["SISMEMBER", seen, model], ["SCARD", seen])
+            except Exception:
+                member, count = 1, 0
+            if not member and count >= RASA_MODELS_PER_VERSE:
+                return self._send(429, {"ok": False, "error": f"That's {RASA_MODELS_PER_VERSE} models asked about this verse, the limit. Their readings are in the tabs above."})
         if hits > PER_IP_PER_HOUR:
             return self._send(429, {"ok": False, "error": f"That's {PER_IP_PER_HOUR} new readings this hour from your network, the hourly limit. Verses already read still open; try a new one in an hour."})
         if today > DAILY_CAP:
@@ -139,6 +149,11 @@ class handler(BaseHTTPRequestHandler):
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError):
             return self._send(502, {"ok": False, "error": "The model did not answer. Try again."})
         result["model"] = model
+        if task == "rasa":
+            try:
+                redis(["SADD", seen, model], ["EXPIRE", seen, 86400])
+            except Exception:
+                pass
         try:
             redis(["SET", key, json.dumps(result, ensure_ascii=False), "EX", CACHE_DAYS * 86400])
         except Exception:

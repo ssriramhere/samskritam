@@ -281,6 +281,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .rasa .reviewed { border-left: 3px solid var(--ok); padding: 2px 0 2px 12px; margin: 10px 0 14px }
 .rasa .reviewed .verdict b { color: var(--ok) }
 #rmsg:empty { display: none }
+.rasa .rtabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px }
+.rasa .rtabs button { font: inherit; font-size: .88rem; color: var(--muted); background: var(--leaf); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 12px; cursor: pointer }
+.rasa .rtabs button b { font-family: var(--font-display); font-weight: 400; color: var(--ink) }
+.rasa .rtabs button[aria-selected="true"] { border-color: var(--indigo); background: var(--indigo-soft); color: var(--indigo) }
+.rasa .ask { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; font-size: .9rem; color: var(--muted) }
+.rasa .ask select { font: inherit; font-size: .88rem; color: var(--ink); background: var(--leaf); border: 1px solid var(--rule); border-radius: 8px; padding: 3px 8px; max-width: 100%; min-width: 0 }
 .rasa .ninelist[hidden] { display: none }
 .rasa .ninelist { margin: 10px 0 4px; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 16px; font-size: .9rem }
 .rasa .ninelist b { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem }
@@ -392,6 +398,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   Promise.all([fetch("/api/read").then(r => r.json()), fetch("/data/leaderboard.json").then(r => r.json()).catch(() => ({ rows: [] }))])
     .then(([api, lb]) => {
       if (!api.models) return;
+      allModels = api.models;
       const rows = new Map((lb.rows || []).map(r => [r.id, r]));
       const label = id => { const r = rows.get(id); return r ? `${r.model} · ${(r.overall * 100).toFixed(1)}% on our benchmark` : id; };
       $("model").innerHTML = api.models.map(id => `<option value="${esc(id)}">${esc(label(id))}${id === api.default ? " (default)" : ""}</option>`).join("");
@@ -457,22 +464,44 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     ["vīra","the heroic","utsāha"],["bhayānaka","terror","bhaya"],["bībhatsa","the loathsome","jugupsā"],["adbhuta","wonder","vismaya"],["śānta","peace","śama"]];
   const ROWS = [["alambana","al","ālambana","whom it is about"],["uddipana","ud","uddīpana","what stirs it"],["anubhava","an","anubhāva","visible signs"],
     ["sattvika","sa","sāttvika-bhāva","involuntary, from the 8"],["vyabhicari","vy","vyabhicāri-bhāva","passing feelings, from the 33"]];
-  let rasaSeq = 0, reviewedRasa = null;
+  let rasaSeq = 0, reviewedRasa = null, allModels = [];
+  // Up to three models may read the rasa of one verse; each reading is a tab.
+  const RASA_MAX = 3;
+  const rasa = { text: "", runs: [], active: 0, rev: null, asking: null, err: "" };
   const loadReviewed = () => reviewedRasa || (reviewedRasa = fetch("/data/reviewed.json").then(r => r.json()).then(d => d._rasa || {}).catch(() => ({})));
+  const askRasa = (text, model) => fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, model, task: "rasa" }) }).then(r => r.json()).catch(() => ({ ok: false, error: "Could not reach the reader for the rasa." }));
   async function loadRasa(text, model) {
     const box = $("rasa"), seq = ++rasaSeq;
+    Object.assign(rasa, { text, runs: [], active: 0, rev: null, asking: null, err: "" });
     box.hidden = false; box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Reading the rasa… a second model call, a few seconds more.</p>`;
-    try {
-      const r = await fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, model, task: "rasa" }) });
-      const b = await r.json().catch(() => ({ ok: false }));
-      if (seq !== rasaSeq) return;
-      if (!b.ok) { box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">${esc(b.error || "The rasa could not be read this time.")} <button type="button" class="nine" id="rasaRetry">Try again</button></p>`;
-        $("rasaRetry").onclick = () => loadRasa(text, model); return; }
-      const rev = (await loadReviewed())[b.vid] || null;
-      if (seq === rasaSeq) renderRasa(b, rev);
-    } catch (e) { if (seq === rasaSeq) box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">Could not reach the reader for the rasa.</p>`; }
+    const b = await askRasa(text, model);
+    if (seq !== rasaSeq) return;
+    if (!b.ok) { box.innerHTML = `<span class="eyebrow">Rasa</span><p class="note">${esc(b.error || "The rasa could not be read this time.")} <button type="button" class="nine" id="rasaRetry">Try again</button></p>`;
+      $("rasaRetry").onclick = () => loadRasa(text, model); return; }
+    rasa.rev = (await loadReviewed())[b.vid] || null;
+    if (seq !== rasaSeq) return;
+    rasa.runs.push(b); renderRasa();
   }
-  function renderRasa(r, rev) {
+  async function askAnother(model) {
+    const seq = rasaSeq;
+    rasa.asking = model; rasa.err = ""; renderRasa();
+    const b = await askRasa(rasa.text, model);
+    if (seq !== rasaSeq) return;
+    rasa.asking = null;
+    if (b.ok) { rasa.runs.push(b); rasa.active = rasa.runs.length - 1; } else rasa.err = b.error || "That model couldn't read the rasa this time.";
+    renderRasa();
+  }
+  const verdictWord = r => r.kind === "rasa" ? r.rasa : r.kind === "bhava" ? "bhāva" : "no rasa";
+  function renderRasa() {
+    const r = rasa.runs[rasa.active], rev = rasa.rev;
+    const used = rasa.runs.map(x => x.model), left = allModels.filter(m => !used.includes(m));
+    const tabs = rasa.runs.length > 1 ? `<div class="rtabs" role="tablist">${rasa.runs.map((x, i) =>
+      `<button type="button" role="tab" data-i="${i}" aria-selected="${i === rasa.active}">${esc(modelName(x.model))} · <b>${esc(verdictWord(x))}</b></button>`).join("")}</div>` : "";
+    const ask = rasa.asking ? `<p class="note">Asking ${esc(modelName(rasa.asking))}…</p>`
+      : rasa.runs.length < RASA_MAX && left.length ? `<div class="ask"><label for="askSel">Ask another model</label>
+          <select id="askSel">${left.map(m => `<option value="${esc(m)}">${esc(modelName(m))}</option>`).join("")}</select>
+          <button type="button" class="linkbtn" id="askBtn">Ask</button><span class="ctx">up to ${RASA_MAX} models per verse; each is a model call</span></div>` : "";
     const word = k => { const [i, j] = k.split(".").map(Number); return (r.toks[i] || [])[j] ? r.toks[i][j][0] : ""; };
     const words = at => at && at.length ? ` <span class="w">${esc(at.map(word).join(" "))}</span>` : "";
     const ctx = e => e.context ? ` <span class="ctx">not in this verse; from the work it belongs to</span>` : "";
@@ -499,9 +528,10 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     const revBlock = rev ? `<div class="reviewed"><span class="eyebrow">Reviewed reading, suggested by ${esc(rev.by)}</span>
         <div class="verdict"><b>${esc(rev.kind === "rasa" ? rev.rasa : rev.kind === "bhava" ? "bhāva" : "no rasa")}</b><span>${esc([rev.variety, rev.sthayi].filter(Boolean).join(" · "))}</span></div>
         <p class="note">${esc(rev.why)}</p></div><span class="eyebrow">The AI's reading</span>` : "";
-    $("rasa").innerHTML = `<div class="rh"><span class="eyebrow">Rasa · suggested by ${esc(modelName(cur.model))} (AI), not checked</span>
+    $("rasa").innerHTML = `<div class="rh"><span class="eyebrow">Rasa · suggested by ${esc(modelName(r.model))} (AI), not checked</span>
         <button type="button" class="nine" id="nineBtn" aria-expanded="false">Out of nine rasas</button></div>
       <div class="ninelist" id="nineList" hidden>${NINE.map(n => `<div><b>${n[0]}</b> <span>${n[1]} · sthāyi-bhāva ${n[2]}</span></div>`).join("")}</div>
+      ${tabs}${ask}${rasa.err ? `<p class="note" style="color:var(--warn)">${esc(rasa.err)}</p>` : ""}
       ${revBlock}${verdict}
       ${r.summary ? `<p class="note">${esc(r.summary)}</p>` : ""}${r.why ? `<p class="note">${esc(r.why)}</p>` : ""}
       ${rows ? `<table><tbody>${rows}</tbody></table>` : ""}
@@ -548,6 +578,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       } catch (err) { fail(err.message); }
       finally { $("rsend").disabled = false; }
     };
+    if ($("askBtn")) $("askBtn").onclick = () => askAnother($("askSel").value);
+    $("rasa").querySelectorAll(".rtabs button").forEach(b => b.onclick = () => { rasa.active = +b.dataset.i; renderRasa(); });
     $("nineBtn").onclick = () => { const l = $("nineList"); l.hidden = !l.hidden; $("nineBtn").setAttribute("aria-expanded", String(!l.hidden)); };
     const verse = $("lines");
     const light = keys => { verse.classList.toggle("focus", !!keys);
