@@ -271,6 +271,18 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
 .ch td.su .step b { font-weight: 400; color: var(--ink) }
 .ch td.su .lab { display: block; font-size: .75rem; color: var(--muted); margin-top: 4px }
 @media (max-width: 700px) { .ch table, .ch tbody, .ch tr, .ch td { display: block } .ch td, .ch td.jn, .ch td.why { width: auto; border-top: 0; padding: 2px 0 } .ch tr { border-top: 1px solid var(--rule); padding: 6px 0 } }
+.scai { margin-top: 8px; font-size: .88rem }
+.scai .scmp { margin-top: 8px; background: var(--paper); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px }
+.scai .pads { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: start }
+.scai .pad { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; gap: 2px 3px; font-family: var(--font-display); font-size: 1.1rem; line-height: 1.2 }
+.scai .pad span { text-align: center; min-width: .8em; border-radius: 3px }
+.scai .pad .r { color: var(--turmeric) } .scai .pad .a { color: var(--indigo) }
+.scai .pad .lab { font-family: var(--font-ui); font-size: .72rem; color: var(--muted); text-align: right; padding-right: 4px; align-self: center }
+.scai .pad .x { color: var(--warn); background: color-mix(in srgb, var(--warn) 18%, transparent); font-weight: 700 }
+.scai .pad .an { opacity: .45 }
+.scai .sides { color: var(--muted); font-size: .8rem }
+.scai .tally { color: var(--muted); margin: 2px 0 0 }
+.scai .tally b { color: var(--ink); font-weight: 600 }
 /* Rasa panel: the model's reading of the verse's rasa, with the words behind each element. */
 :root { --c-al: #333f99; --c-ud: #2d7a57; --c-an: #b07800; --c-sa: #6b4fb3; --c-vy: #a3446e }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-al: #9ea8ff; --c-ud: #6cc79a; --c-an: #f0b840; --c-sa: #b9a3f0; --c-vy: #e892b8 } }
@@ -367,6 +379,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div id="out" hidden>
           <div class="verse" id="lines"></div>
           <div class="meter" id="meter"></div>
+          <div class="scai" id="scai"></div>
           <div class="hint warnline" id="cover" hidden></div>
           <div class="trans" id="trans"></div>
           <div class="rasa" id="rasa" hidden></div>
@@ -414,7 +427,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   Promise.all([fetch("/api/read").then(r => r.json()), fetch("/data/leaderboard.json").then(r => r.json()).catch(() => ({ rows: [] }))])
     .then(([api, lb]) => {
       if (!api.models) return;
-      allModels = api.models;
+      allModels = api.models; scanModel = api.scan_model || scanModel;
       const rows = new Map((lb.rows || []).map(r => [r.id, r]));
       const label = id => { const r = rows.get(id); return r ? `${r.model} · ${(r.overall * 100).toFixed(1)}% on our benchmark` : id; };
       $("model").innerHTML = api.models.map(id => `<option value="${esc(id)}">${esc(label(id))}${id === api.default ? " (default)" : ""}</option>`).join("");
@@ -460,6 +473,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     $("meter").innerHTML = b.m[0] === "unidentified"
       ? `Meter: not identified. <span style="color:var(--turmeric)">ऽ</span> guru, <span style="color:var(--turmeric)">।</span> laghu.`
       : `Meter: <b>${esc(b.m[0])}</b>${b.m[1] ? ` (${esc(b.m[1])})` : ""}. <span style="color:var(--turmeric)">ऽ</span> guru, <span style="color:var(--turmeric)">।</span> laghu.`;
+    scanState(b);
     const cv = $("cover");
     cv.hidden = b.coverage === "exact";
     cv.textContent = "The model's word split does not spell out exactly the text you pasted, so parts of this reading may belong to a different text. Check the words against your verse.";
@@ -636,6 +650,46 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       tr.addEventListener("mouseenter", () => light(keys)); tr.addEventListener("mouseleave", () => light(null));
       tr.addEventListener("click", () => light(verse.classList.contains("focus") ? null : keys));
     });
+  }
+
+
+  // AI scansion beside the rules (one model, the benchmark's best scanner), on request.
+  let scanModel = "anthropic/claude-opus-5.5", scanSeq = 0;
+  function scanState(b) {
+    scanSeq++;
+    $("scai").innerHTML = `<button type="button" class="linkbtn" id="scbtn">Compare with AI scansion (${esc(modelName(scanModel))})</button>`;
+    $("scbtn").onclick = () => loadScan(b);
+  }
+  async function loadScan(b) {
+    const seq = ++scanSeq, box = $("scai");
+    box.innerHTML = `<p class="tally">Asking ${esc(modelName(scanModel))} to scan the verse…</p>`;
+    let r;
+    try { r = await (await fetch("/api/read", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: b.iast.join("\n"), task: "scan" }) })).json(); } catch (e) { r = { ok: false }; }
+    if (seq !== scanSeq) return;
+    if (!r.ok) { box.innerHTML = `<p class="tally">${esc(r.error || "The AI scansion didn't come back.")} <button type="button" class="linkbtn" id="scbtn">Try again</button></p>`; $("scbtn").onclick = () => loadScan(b); return; }
+    const who = esc(modelName(r.model || scanModel));
+    const ruleMeter = r.meter[0] === "unidentified" ? "no meter identified" : `${r.meter[0]}${r.meter[1] ? ` (${r.meter[1]})` : ""}`;
+    const meterLine = `Meter: the rules say <b>${esc(ruleMeter)}</b>; ${who} says <b>${esc(r.ai_meter || "nothing")}</b>${r.meter[0] === "unidentified" ? "." : r.meter_ok ? ", the same." : ", a different meter."}`;
+    if (!r.ai_padas) {
+      box.innerHTML = `<div class="scmp"><span class="eyebrow">Scansion by ${who} (AI), compared with the rules</span>
+        <span class="sides">The rules, pāda by pāda</span><div class="pads">${r.padas.map(p => `<div class="pad" style="grid-template-rows:auto">${[...p].map(c => `<span class="r">${marks(c)}</span>`).join("")}</div>`).join("")}</div>
+        <span class="sides">The AI, line by line as it answered</span><div class="pads">${r.model_lines.map(p => `<div class="pad" style="grid-template-rows:auto">${[...p].map(c => `<span class="a">${marks(c)}</span>`).join("")}</div>`).join("")}</div>
+        <p class="tally">${who} marked <b>${r.ai_total}</b> syllables where the verse has <b>${r.total}</b>, so the two can't be compared syllable by syllable.</p><p class="tally">${meterLine}</p></div>`;
+      return;
+    }
+    const wrong = new Set(r.wrong), anc = new Set(r.anceps);
+    let k = 0;
+    // One block per pāda: the rules' marks above, the AI's below, syllable by syllable.
+    const pads = r.padas.map((p, pi) => `<div class="pad">${pi === 0 ? `<span class="lab">Rules</span><span class="lab">AI</span>` : ""}${[...p].map((c, j) => {
+      const i = k++, a = r.ai_padas[pi][j];
+      return `<span class="r">${marks(c)}</span><span class="a ${wrong.has(i) ? "x" : anc.has(i) ? "an" : ""}"${anc.has(i) ? ' title="Last syllable of the pāda: either weight is fine"' : ""}>${marks(a)}</span>`; }).join("")}</div>`).join("");
+    const same = r.total - r.wrong.length - r.anceps.length;
+    box.innerHTML = `<div class="scmp"><span class="eyebrow">Scansion by ${who} (AI), compared with the rules</span>
+      <span class="sides">Each pāda: the rules above, the AI below. Red: the AI differs. Faded: a pāda's last syllable, where either weight is fine.</span>
+      <div class="pads">${pads}</div>
+      <p class="tally">${who} agrees with the rules on <b>${same} of ${r.total}</b> syllables${r.wrong.length ? `; <b>${r.wrong.length}</b> ${r.wrong.length === 1 ? "differs" : "differ"}` : ""}${r.anceps.length ? `; ${r.anceps.length} more ${r.anceps.length === 1 ? "differs" : "differ"} only on a pāda's last syllable` : ""}.</p>
+      <p class="tally">${meterLine}</p></div>`;
   }
 
   function modelName(id) { const o = [...$("model").options].find(o => o.value === id); return o ? o.textContent.split(" · ")[0] : id; }
