@@ -88,6 +88,10 @@ def main():
         labels = {c["id"]: c["label"] for c in tindex["chapters"]}
         verses = [v for c in tindex["chapters"]
                   for v in json.load(open(os.path.join(tdir, f"{c['id']}.json"), encoding="utf-8"))["verses"]]
+        for v in verses:  # large texts keep grammar labels in index.json
+            for w in v["w"]:
+                if "lb" in w:
+                    w["sa"], w["en"] = tindex["labels"][w["lb"]]
         out_path = tdir  # one <chapter>-translations.json per chapter
         out = {"model": a.model, "t": {}}
         for c in tindex["chapters"]:

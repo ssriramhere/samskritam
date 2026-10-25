@@ -45,6 +45,9 @@ def pada_breaks(lines: list, n: int):
         out.append(breaks)
     return out
 
+DERIV_SHARD = 200      # derivations per shard file
+SHARD_ABOVE = 5000     # texts with more verses than this use shards
+
 # slug, built dataset, built derivations, default verse, chapter label, how to name a verse
 TEXTS = [
     ("gita", "gita.json", "derivations.json", "2.47", "Chapter", "id"),
@@ -151,7 +154,13 @@ def main():
                                           for s in v["steps"]]}
                 for k, v in der.items()}
 
+        # Large texts keep each derivation once, in shards by id, loaded when a word is
+        # opened; per-chapter files repeat common derivations in every chapter.
+        shard = DERIV_SHARD if len(verses) > SHARD_ABOVE else None
         tdir = os.path.join(out_dir, slug)
+        import shutil
+        if os.path.isdir(os.path.join(tdir, "d")):
+            shutil.rmtree(os.path.join(tdir, "d"))
         if os.path.isdir(tdir):  # rebuild from scratch, but keep files made by other steps
             for f in os.listdir(tdir):
                 if not f.endswith(("-translations.json", "-sandhi.json")):
@@ -162,10 +171,18 @@ def main():
             by_ch.setdefault(chapter_of(v["id"]), []).append(v)
         names = {str(c["ch"]): c.get("name") for c in src["chapters"]}
         chapters, search = [], {}
+        # Large texts also store each word's grammar labels once, in index.json,
+        # and refer to them by number ("lb"); the page and translate.py expand them.
+        label_ids = {}
         for ch, vs in by_ch.items():
+            if shard:
+                vs = [{**v, "w": [{**{k: x for k, x in w.items() if k not in ("sa", "en")},
+                                   "lb": label_ids.setdefault((w["sa"], w["en"]), len(label_ids))}
+                                  for w in v["w"]]} for v in vs]
             dump({"verses": vs}, os.path.join(tdir, f"{ch}.json"))
-            used = {w["x"] for v in vs for w in v["w"] if w.get("x")}
-            dump({k: slim[k] for k in sorted(used) if k in slim}, os.path.join(tdir, f"{ch}-derivations.json"))
+            if not shard:
+                used = {w["x"] for v in vs for w in v["w"] if w.get("x")}
+                dump({k: slim[k] for k in sorted(used) if k in slim}, os.path.join(tdir, f"{ch}-derivations.json"))
             label = ch.split(".")[-1] if len(levels) == 2 else (names.get(ch) or ch)
             chapters.append({"id": ch, "label": label, "n": len(vs)})
             part = ch.split(".")[0] if len(levels) == 2 else ""
@@ -180,6 +197,15 @@ def main():
             dump(rows, os.path.join(tdir, name))
             files.append({"file": name, "part": part})
         tindex = {"slug": slug, "levels": levels, "chapters": chapters, "search": files}
+        if shard:
+            tindex["labels"] = [list(k) for k in label_ids]
+            os.makedirs(os.path.join(tdir, "d"), exist_ok=True)
+            shards = {}
+            for k in slim:
+                shards.setdefault(int(k[1:]) // shard, {})[k] = slim[k]
+            for n, part in shards.items():
+                dump(part, os.path.join(tdir, "d", f"{n}.json"))
+            tindex["dshard"] = shard
         if len(levels) == 2:
             tindex["parts"] = {p: meta["parvans"][p] for p in sorted({c["id"].split(".")[0] for c in chapters}, key=int)}
         dump(tindex, os.path.join(tdir, "index.json"))

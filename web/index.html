@@ -399,7 +399,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <h2>Read, check, and suggest.</h2>
       <div class="track">
           <ul>
-            <li><span class="tag live">Live</span><span>Reader for the Bhagavad Gītā (700 verses) and the Meghadūta (122 verses): word analysis, sūtra derivations, meter</span></li>
+            <li><span class="tag live">Live</span><span>A Library of eight texts, from the Bhagavad Gītā to the whole Rāmāyaṇa: word analysis, sūtra derivations, meter</span></li>
             <li><span class="tag live">Live</span><span>The Mahābhārata, critical edition, chapter by chapter: <a href="/#mahabharata-3.50.1">the Nalopākhyāna</a> (29 adhyāyas, 900 verses) to start</span></li>
             <li><span class="tag live">Live</span><span>AI English translation of every verse, with a way to <a href="/#gita-2.47">suggest a better one</a></span></li>
             <li><span class="tag live">Live</span><span><a href="/read">Verse reader</a>: paste any verse and get a word-by-word reading, checked against Pāṇini's rules</span></li>
@@ -782,6 +782,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     }).join("") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one here or in the verse for its grammar and derivation. Use ← and → to move between verses.</span>`;
   }
 
+  const shardsLoaded = {};
+  function loadShard(x) {
+    const n = Math.floor(+x.slice(1) / tindex.dshard), key = `${text.slug}/${n}`, mine = derivs;
+    shardsLoaded[key] = shardsLoaded[key] || getJSON(`data/${text.slug}/d/${n}.json`).catch(() => ({}));
+    return shardsLoaded[key].then(d => { if (derivs === mine) Object.assign(derivs, d); });
+  }
   function renderDetail(i) {
     const w = current.w[i]; selected = i;
     highlight(w.k);
@@ -794,7 +800,10 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       const d = derivs[w.x];
       html += `<details class="deriv"${window.matchMedia("(min-width: 861px)").matches ? " open" : ""}><summary>Derivation by Pāṇini's sūtras, ${d.s.length} steps</summary>
         <div class="steps"><table><tbody>${d.s.map(s => `<tr><td class="code">${sutraLink(s[0])}</td><td class="text">${esc(s[1] || (/^\d\d\.\d{4}$/.test(s[0]) ? "dhātupāṭha entry" : ""))}</td><td class="res"><span class="rd">${esc(s[3] || "")}</span><span class="ri">${esc(s[2])}</span></td></tr>`).join("")}</tbody></table></div></details>`;
-    } else if (w.x) html += `<div class="hint">Loading derivation…</div>`;
+    } else if (w.x) {
+      html += `<div class="hint">Loading derivation…</div>`;
+      if (tindex && tindex.dshard && derivs) loadShard(w.x).then(() => { if (current && current.w[selected] === w) renderDetail(selected); });
+    }
     else if (w.s === "agree") {
       html += `<div class="hint">${/nipāta|avyaya/.test(w.sa)
         ? "An indeclinable, so there is no inflection to derive."
@@ -834,10 +843,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     return getJSON(`${base}.json`).then(data => {
       if (seq !== loadSeq) return;
       curCh = ch; verses = data.verses; derivs = null; translations = null;
+      if (tindex && tindex.labels) verses.forEach(v => v.w.forEach(w => { if (w.lb != null) [w.sa, w.en] = tindex.labels[w.lb]; }));
       const v = verses.find(x => x.id === vid) || (edge === "last" ? verses[verses.length - 1] : verses[0]);
       renderVerse(v);
       getJSON(`${base}-translations.json`).then(tr => { if (seq === loadSeq) { translations = tr; renderTrans(current); } }).catch(() => {});
-      getJSON(`${base}-derivations.json`).then(d => { if (seq === loadSeq) { derivs = d; if (selected >= 0) renderDetail(selected); } }).catch(() => {});
+      if (tindex && tindex.dshard) derivs = {};  // large texts: fetched per word, from shards
+      else getJSON(`${base}-derivations.json`).then(d => { if (seq === loadSeq) { derivs = d; if (selected >= 0) renderDetail(selected); } }).catch(() => {});
     }).catch(() => { if (seq === loadSeq) $("words").innerHTML = `<span class="hint">This chapter could not load. Reload the page to try again.</span>`; });
   }
 

@@ -21,7 +21,9 @@ def read(path: str) -> list[dict]:
         elif line.startswith("# sent_counter"):
             cur["counter"] = int(line.split("=")[1])
         elif line.startswith("# sent_subcounter"):
-            cur["sub"] = int(line.split("=")[1])
+            v = line.split("=")[1].strip()
+            if v.isdigit():  # a few files leave it empty
+                cur["sub"] = int(v)
         elif not line or line.startswith("#"):
             continue
         else:
