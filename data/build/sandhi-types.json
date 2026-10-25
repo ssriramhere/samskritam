@@ -1,6 +1,6 @@
 {
  "a|a|A": {
-  "n": 3187,
+  "n": 3946,
   "ex": [
    [
     "ca",
@@ -22,31 +22,8 @@
    ]
   ]
  },
- "m|p|M p": {
-  "n": 1291,
-  "ex": [
-   [
-    "dakṣam",
-    "puṣpa",
-    "dakṣaṃ puṣpa",
-    "meghaduta 2.12"
-   ],
-   [
-    "vasatim",
-    "puṣpa",
-    "vasatiṃ puṣpa",
-    "meghaduta 1.47"
-   ],
-   [
-    "tam",
-    "param",
-    "taṃ param",
-    "gita 8.10"
-   ]
-  ]
- },
  "a|A|A": {
-  "n": 1221,
+  "n": 1598,
   "ex": [
    [
     "ca",
@@ -68,8 +45,31 @@
    ]
   ]
  },
+ "m|p|M p": {
+  "n": 1591,
+  "ex": [
+   [
+    "dakṣam",
+    "puṣpa",
+    "dakṣaṃ puṣpa",
+    "meghaduta 2.12"
+   ],
+   [
+    "vasatim",
+    "puṣpa",
+    "vasatiṃ puṣpa",
+    "meghaduta 1.47"
+   ],
+   [
+    "tam",
+    "param",
+    "taṃ param",
+    "gita 8.10"
+   ]
+  ]
+ },
  "m|v|M v": {
-  "n": 1060,
+  "n": 1372,
   "ex": [
    [
     "sānum",
@@ -92,7 +92,7 @@
   ]
  },
  "m|t|M t": {
-  "n": 1003,
+  "n": 1289,
   "ex": [
    [
     "girim",
@@ -115,7 +115,7 @@
   ]
  },
  "m|s|M s": {
-  "n": 972,
+  "n": 1271,
   "ex": [
    [
     "kim",
@@ -138,7 +138,7 @@
   ]
  },
  "a|u|o": {
-  "n": 784,
+  "n": 995,
   "ex": [
    [
     "ca",
@@ -160,8 +160,54 @@
    ]
   ]
  },
+ "m|c|M c": {
+  "n": 918,
+  "ex": [
+   [
+    "tam",
+    "ced",
+    "taṃ ced",
+    "meghaduta 1.57"
+   ],
+   [
+    "yogyam",
+    "ca",
+    "yogyaṃ ca",
+    "meghaduta 2.12"
+   ],
+   [
+    "mām",
+    "ca",
+    "māṃ ca",
+    "gita 14.26"
+   ]
+  ]
+ },
+ "m|m|M m": {
+  "n": 903,
+  "ex": [
+   [
+    "ekam",
+    "muktā",
+    "ekaṃ muktā",
+    "meghaduta 1.50"
+   ],
+   [
+    "jātām",
+    "manye",
+    "jātāṃ manye",
+    "meghaduta 2.23"
+   ],
+   [
+    "iyam",
+    "me",
+    "iyaṃ me",
+    "gita 7.4"
+   ]
+  ]
+ },
  "m|k|M k": {
-  "n": 741,
+  "n": 897,
   "ex": [
    [
     "kāmam",
@@ -184,7 +230,7 @@
   ]
  },
  "as|a|o '": {
-  "n": 739,
+  "n": 881,
   "ex": [
    [
     "anyaḥ",
@@ -206,31 +252,8 @@
    ]
   ]
  },
- "m|c|M c": {
-  "n": 732,
-  "ex": [
-   [
-    "tam",
-    "ced",
-    "taṃ ced",
-    "meghaduta 1.57"
-   ],
-   [
-    "yogyam",
-    "ca",
-    "yogyaṃ ca",
-    "meghaduta 2.12"
-   ],
-   [
-    "mām",
-    "ca",
-    "māṃ ca",
-    "gita 14.26"
-   ]
-  ]
- },
  "as|t|as t": {
-  "n": 694,
+  "n": 871,
   "ex": [
    [
     "cātakaḥ",
@@ -253,7 +276,7 @@
   ]
  },
  "m|n|M n": {
-  "n": 690,
+  "n": 828,
   "ex": [
    [
     "mām",
@@ -275,31 +298,8 @@
    ]
   ]
  },
- "m|m|M m": {
-  "n": 681,
-  "ex": [
-   [
-    "ekam",
-    "muktā",
-    "ekaṃ muktā",
-    "meghaduta 1.50"
-   ],
-   [
-    "jātām",
-    "manye",
-    "jātāṃ manye",
-    "meghaduta 2.23"
-   ],
-   [
-    "iyam",
-    "me",
-    "iyaṃ me",
-    "gita 7.4"
-   ]
-  ]
- },
  "a|e|E": {
-  "n": 669,
+  "n": 796,
   "ex": [
    [
     "iva",
@@ -321,31 +321,8 @@
    ]
   ]
  },
- "A|a|A": {
-  "n": 628,
-  "ex": [
-   [
-    "vā",
-    "anya",
-    "vānya",
-    "meghaduta 2.23"
-   ],
-   [
-    "ātmā",
-    "api",
-    "ātmāpi",
-    "meghaduta 1.44"
-   ],
-   [
-    "vā",
-    "api",
-    "vāpi",
-    "gita 8.6"
-   ]
-  ]
- },
  "m|d|M d": {
-  "n": 592,
+  "n": 754,
   "ex": [
    [
     "tanum",
@@ -367,123 +344,31 @@
    ]
   ]
  },
- "i|a|y a": {
-  "n": 519,
+ "A|a|A": {
+  "n": 754,
   "ex": [
    [
-    "hi",
-    "aṅganānām",
-    "hyaṅganānām",
-    "meghaduta 1.9"
-   ],
-   [
-    "api",
-    "anyasmāt",
-    "apy anyasmāt",
-    "meghaduta 2.4"
-   ],
-   [
-    "hi",
-    "api",
-    "hyapi",
-    "gita 2.60"
-   ]
-  ]
- },
- "as|v|o v": {
-  "n": 478,
-  "ex": [
-   [
-    "tamas",
-    "vṛtti",
-    "tamovṛtti",
-    "meghaduta 2.3"
-   ],
-   [
-    "atas",
-    "vartma",
-    "ato vartma",
-    "meghaduta 1.43"
-   ],
-   [
-    "kaḥ",
     "vā",
-    "ko vā",
-    "ramayana 2.10.9"
-   ]
-  ]
- },
- "as|c|aS c": {
-  "n": 471,
-  "ex": [
-   [
-    "vāmaḥ",
-    "ca",
-    "vāmaśca",
-    "meghaduta 1.10"
+    "anya",
+    "vānya",
+    "meghaduta 2.23"
    ],
    [
-    "vāmaḥ",
-    "ca",
-    "vāmaś ca",
-    "meghaduta 2.36"
+    "ātmā",
+    "api",
+    "ātmāpi",
+    "meghaduta 1.44"
    ],
    [
-    "yaḥ",
-    "ca",
-    "yaśca",
-    "gita 2.19"
-   ]
-  ]
- },
- "m|S|M S": {
-  "n": 450,
-  "ex": [
-   [
-    "purīm",
-    "śrī",
-    "purīṃ śrī",
-    "meghaduta 1.32"
-   ],
-   [
-    "chāyām",
-    "śaśini",
-    "chāyāṃ śaśini",
-    "meghaduta 2.44"
-   ],
-   [
-    "tām",
-    "śṛṇu",
-    "tāṃ śṛṇu",
-    "gita 17.2"
-   ]
-  ]
- },
- "as|m|o m": {
-  "n": 425,
-  "ex": [
-   [
-    "mukharaḥ",
-    "mā",
-    "mukharo mā",
-    "meghaduta 1.41"
-   ],
-   [
-    "naiśaḥ",
-    "mārgaḥ",
-    "naiśo mārgaḥ",
-    "meghaduta 2.11"
-   ],
-   [
-    "yaḥ",
-    "me",
-    "yo me",
-    "gita 9.26"
+    "vā",
+    "api",
+    "vāpi",
+    "gita 8.6"
    ]
   ]
  },
  "m|r|M r": {
-  "n": 421,
+  "n": 623,
   "ex": [
    [
     "rasām",
@@ -505,8 +390,100 @@
    ]
   ]
  },
+ "i|a|y a": {
+  "n": 602,
+  "ex": [
+   [
+    "hi",
+    "aṅganānām",
+    "hyaṅganānām",
+    "meghaduta 1.9"
+   ],
+   [
+    "api",
+    "anyasmāt",
+    "apy anyasmāt",
+    "meghaduta 2.4"
+   ],
+   [
+    "hi",
+    "api",
+    "hyapi",
+    "gita 2.60"
+   ]
+  ]
+ },
+ "as|c|aS c": {
+  "n": 580,
+  "ex": [
+   [
+    "vāmaḥ",
+    "ca",
+    "vāmaśca",
+    "meghaduta 1.10"
+   ],
+   [
+    "vāmaḥ",
+    "ca",
+    "vāmaś ca",
+    "meghaduta 2.36"
+   ],
+   [
+    "yaḥ",
+    "ca",
+    "yaśca",
+    "gita 2.19"
+   ]
+  ]
+ },
+ "as|v|o v": {
+  "n": 578,
+  "ex": [
+   [
+    "tamas",
+    "vṛtti",
+    "tamovṛtti",
+    "meghaduta 2.3"
+   ],
+   [
+    "atas",
+    "vartma",
+    "ato vartma",
+    "meghaduta 1.43"
+   ],
+   [
+    "kaḥ",
+    "vā",
+    "ko vā",
+    "ramayana 2.10.9"
+   ]
+  ]
+ },
+ "m|S|M S": {
+  "n": 570,
+  "ex": [
+   [
+    "purīm",
+    "śrī",
+    "purīṃ śrī",
+    "meghaduta 1.32"
+   ],
+   [
+    "chāyām",
+    "śaśini",
+    "chāyāṃ śaśini",
+    "meghaduta 2.44"
+   ],
+   [
+    "tām",
+    "śṛṇu",
+    "tāṃ śṛṇu",
+    "gita 17.2"
+   ]
+  ]
+ },
  "a|i|e": {
-  "n": 411,
+  "n": 522,
   "ex": [
    [
     "ardha",
@@ -528,8 +505,31 @@
    ]
   ]
  },
+ "as|m|o m": {
+  "n": 516,
+  "ex": [
+   [
+    "mukharaḥ",
+    "mā",
+    "mukharo mā",
+    "meghaduta 1.41"
+   ],
+   [
+    "naiśaḥ",
+    "mārgaḥ",
+    "naiśo mārgaḥ",
+    "meghaduta 2.11"
+   ],
+   [
+    "yaḥ",
+    "me",
+    "yo me",
+    "gita 9.26"
+   ]
+  ]
+ },
  "as|n|o n": {
-  "n": 376,
+  "n": 450,
   "ex": [
    [
     "arthaḥ",
@@ -551,31 +551,8 @@
    ]
   ]
  },
- "m|y|M y": {
-  "n": 352,
-  "ex": [
-   [
-    "jam",
-    "yatra",
-    "jaṃ yatra",
-    "meghaduta 2.2"
-   ],
-   [
-    "tam",
-    "yayāce",
-    "taṃ yayāce",
-    "meghaduta 1.5"
-   ],
-   [
-    "mām",
-    "ye",
-    "māṃ ye",
-    "gita 9.22"
-   ]
-  ]
- },
  "m|B|M B": {
-  "n": 332,
+  "n": 439,
   "ex": [
    [
     "balim",
@@ -597,31 +574,31 @@
    ]
   ]
  },
- "t|a|d a": {
-  "n": 309,
+ "m|y|M y": {
+  "n": 419,
   "ex": [
    [
-    "yat",
-    "api",
-    "yadapi",
-    "meghaduta 1.29"
+    "jam",
+    "yatra",
+    "jaṃ yatra",
+    "meghaduta 2.2"
    ],
    [
-    "anyat",
-    "asti",
-    "anyad asti",
-    "meghaduta 2.4"
+    "tam",
+    "yayāce",
+    "taṃ yayāce",
+    "meghaduta 1.5"
    ],
    [
-    "tat",
-    "a",
-    "tad a",
-    "gita 13.16"
+    "mām",
+    "ye",
+    "māṃ ye",
+    "gita 9.22"
    ]
   ]
  },
  "m|g|M g": {
-  "n": 300,
+  "n": 383,
   "ex": [
    [
     "gām",
@@ -643,8 +620,54 @@
    ]
   ]
  },
+ "t|a|d a": {
+  "n": 348,
+  "ex": [
+   [
+    "yat",
+    "api",
+    "yadapi",
+    "meghaduta 1.29"
+   ],
+   [
+    "anyat",
+    "asti",
+    "anyad asti",
+    "meghaduta 2.4"
+   ],
+   [
+    "tat",
+    "a",
+    "tad a",
+    "gita 13.16"
+   ]
+  ]
+ },
+ "as|r|o r": {
+  "n": 340,
+  "ex": [
+   [
+    "anucaraḥ",
+    "rājarājasya",
+    "anucaro rājarājasya",
+    "meghaduta 1.3"
+   ],
+   [
+    "vaḥ",
+    "rājā",
+    "vo rājā",
+    "ramayana 2.31.8"
+   ],
+   [
+    "naḥ",
+    "rājā",
+    "no rājā",
+    "ramayana 3.1.19"
+   ]
+  ]
+ },
  "As|t|As t": {
-  "n": 264,
+  "n": 326,
   "ex": [
    [
     "sāraṅgāḥ",
@@ -666,54 +689,8 @@
    ]
   ]
  },
- "A|i|e": {
-  "n": 256,
-  "ex": [
-   [
-    "mayā",
-    "iti",
-    "mayeti",
-    "meghaduta 2.52"
-   ],
-   [
-    "saṃgamā",
-    "iva",
-    "saṃgameva",
-    "meghaduta 1.55"
-   ],
-   [
-    "hā",
-    "iti",
-    "heti",
-    "mahabharata 3.51.4"
-   ]
-  ]
- },
- "e|a|e '": {
-  "n": 248,
-  "ex": [
-   [
-    "ke",
-    "api",
-    "kepi",
-    "astavakragita 17.4"
-   ],
-   [
-    "te",
-    "api",
-    "te 'pi",
-    "gita 3.31"
-   ],
-   [
-    "ye",
-    "api",
-    "ye 'pi",
-    "gita 9.23"
-   ]
-  ]
- },
  "As|c|AS c": {
-  "n": 246,
+  "n": 309,
   "ex": [
    [
     "kṛpaṇāḥ",
@@ -735,54 +712,8 @@
    ]
   ]
  },
- "as|r|o r": {
-  "n": 245,
-  "ex": [
-   [
-    "anucaraḥ",
-    "rājarājasya",
-    "anucaro rājarājasya",
-    "meghaduta 1.3"
-   ],
-   [
-    "vaḥ",
-    "rājā",
-    "vo rājā",
-    "ramayana 2.31.8"
-   ],
-   [
-    "naḥ",
-    "rāmaḥ",
-    "no rāmaḥ",
-    "ramayana 2.6.22"
-   ]
-  ]
- },
- "t|v|d v": {
-  "n": 244,
-  "ex": [
-   [
-    "yat",
-    "vimāna",
-    "yadvimāna",
-    "meghaduta 2.8"
-   ],
-   [
-    "paścāt",
-    "vraja",
-    "paścād vraja",
-    "meghaduta 1.16"
-   ],
-   [
-    "yat",
-    "vā",
-    "yadvā",
-    "gita 2.6"
-   ]
-  ]
- },
  "m|h|M h": {
-  "n": 237,
+  "n": 306,
   "ex": [
    [
     "śākham",
@@ -804,8 +735,54 @@
    ]
   ]
  },
+ "t|v|d v": {
+  "n": 297,
+  "ex": [
+   [
+    "yat",
+    "vimāna",
+    "yadvimāna",
+    "meghaduta 2.8"
+   ],
+   [
+    "paścāt",
+    "vraja",
+    "paścād vraja",
+    "meghaduta 1.16"
+   ],
+   [
+    "yat",
+    "vā",
+    "yadvā",
+    "gita 2.6"
+   ]
+  ]
+ },
+ "A|i|e": {
+  "n": 294,
+  "ex": [
+   [
+    "mayā",
+    "iti",
+    "mayeti",
+    "meghaduta 2.52"
+   ],
+   [
+    "saṃgamā",
+    "iva",
+    "saṃgameva",
+    "meghaduta 1.55"
+   ],
+   [
+    "hā",
+    "iti",
+    "heti",
+    "mahabharata 3.51.4"
+   ]
+  ]
+ },
  "as|B|o B": {
-  "n": 236,
+  "n": 289,
   "ex": [
    [
     "kaḥ",
@@ -828,7 +805,7 @@
   ]
  },
  "m|j|M j": {
-  "n": 232,
+  "n": 287,
   "ex": [
    [
     "bālām",
@@ -850,31 +827,31 @@
    ]
   ]
  },
- "as|d|o d": {
-  "n": 214,
+ "e|a|e '": {
+  "n": 276,
   "ex": [
    [
-    "bhāraḥ",
-    "dava",
-    "bhāro dava",
-    "meghaduta 1.57"
+    "ke",
+    "api",
+    "kepi",
+    "astavakragita 17.4"
    ],
    [
-    "tyājitaḥ",
-    "daiva",
-    "tyājito daiva",
-    "meghaduta 2.36"
+    "te",
+    "api",
+    "te 'pi",
+    "gita 3.31"
    ],
    [
-    "vaḥ",
-    "devāḥ",
-    "vo devāḥ",
-    "gita 3.12"
+    "ye",
+    "api",
+    "ye 'pi",
+    "gita 9.23"
    ]
   ]
  },
  "m|b|M b": {
-  "n": 207,
+  "n": 274,
   "ex": [
    [
     "aṅkām",
@@ -896,8 +873,31 @@
    ]
   ]
  },
+ "as|d|o d": {
+  "n": 267,
+  "ex": [
+   [
+    "bhāraḥ",
+    "dava",
+    "bhāro dava",
+    "meghaduta 1.57"
+   ],
+   [
+    "tyājitaḥ",
+    "daiva",
+    "tyājito daiva",
+    "meghaduta 2.36"
+   ],
+   [
+    "naḥ",
+    "deśe",
+    "no deśe",
+    "ramayana 3.14.3"
+   ]
+  ]
+ },
  "as|y|o y": {
-  "n": 207,
+  "n": 247,
   "ex": [
    [
     "janaḥ",
@@ -919,8 +919,31 @@
    ]
   ]
  },
+ "As|v|A v": {
+  "n": 212,
+  "ex": [
+   [
+    "gāḥ",
+    "vai",
+    "gā vai",
+    "ramayana 3.13.28"
+   ],
+   [
+    "tāḥ",
+    "vara",
+    "tā vara",
+    "ramayana 2.59.8"
+   ],
+   [
+    "gajāḥ",
+    "vana",
+    "gajā vana",
+    "rtusamhara 2.19"
+   ]
+  ]
+ },
  "u|a|v a": {
-  "n": 184,
+  "n": 211,
   "ex": [
    [
     "tu",
@@ -942,54 +965,8 @@
    ]
   ]
  },
- "A|e|E": {
-  "n": 176,
-  "ex": [
-   [
-    "ādyā",
-    "eva",
-    "ādyaiva",
-    "meghaduta 2.22"
-   ],
-   [
-    "tvayā",
-    "eva",
-    "tvayaiva",
-    "meghaduta 1.31"
-   ],
-   [
-    "sā",
-    "eva",
-    "saiva",
-    "mahabharata 3.71.32"
-   ]
-  ]
- },
- "As|v|A v": {
-  "n": 174,
-  "ex": [
-   [
-    "tāḥ",
-    "vara",
-    "tā vara",
-    "ramayana 2.59.8"
-   ],
-   [
-    "gajāḥ",
-    "vana",
-    "gajā vana",
-    "rtusamhara 2.19"
-   ],
-   [
-    "doṣāḥ",
-    "vane",
-    "doṣā vane",
-    "ramayana 2.26.2"
-   ]
-  ]
- },
  "t|m|n m": {
-  "n": 170,
+  "n": 202,
   "ex": [
    [
     "tad",
@@ -1011,54 +988,31 @@
    ]
   ]
  },
- "i|e|y e": {
-  "n": 153,
+ "A|e|E": {
+  "n": 197,
   "ex": [
    [
-    "mayāni",
-    "etya",
-    "mayāny etya",
-    "meghaduta 2.5"
+    "ādyā",
+    "eva",
+    "ādyaiva",
+    "meghaduta 2.22"
    ],
    [
-    "hi",
-    "eṣā",
-    "hyeṣā",
-    "gita 7.14"
+    "tvayā",
+    "eva",
+    "tvayaiva",
+    "meghaduta 1.31"
    ],
    [
-    "hi",
-    "ete",
-    "hyete",
-    "gita 8.26"
-   ]
-  ]
- },
- "t|n|n n": {
-  "n": 150,
-  "ex": [
-   [
-    "kūṭāt",
-    "nivṛttaḥ",
-    "kūṭān nivṛttaḥ",
-    "meghaduta 2.54"
-   ],
-   [
-    "paricayāt",
-    "nūnam",
-    "paricayān nūnam",
-    "meghaduta 1.10"
-   ],
-   [
-    "vid",
-    "na",
-    "vinna",
-    "gita 3.29"
+    "sā",
+    "eva",
+    "saiva",
+    "mahabharata 3.71.32"
    ]
   ]
  },
  "as|i|a i": {
-  "n": 149,
+  "n": 191,
   "ex": [
    [
     "stanaḥ",
@@ -1080,31 +1034,31 @@
    ]
   ]
  },
- "i|i|I": {
-  "n": 147,
+ "i|e|y e": {
+  "n": 181,
   "ex": [
    [
-    "cetasi",
-    "iva",
-    "cetasīva",
-    "meghaduta 1.44"
+    "mayāni",
+    "etya",
+    "mayāny etya",
+    "meghaduta 2.5"
    ],
    [
-    "eṣyati",
-    "iti",
-    "eṣyatīti",
-    "meghaduta 2.35"
+    "hi",
+    "eṣā",
+    "hyeṣā",
+    "gita 7.14"
    ],
    [
-    "api",
-    "iha",
-    "apīha",
-    "gita 2.5"
+    "hi",
+    "ete",
+    "hyete",
+    "gita 8.26"
    ]
   ]
  },
  "A|A|A": {
-  "n": 135,
+  "n": 179,
   "ex": [
    [
     "chāyā",
@@ -1126,123 +1080,54 @@
    ]
   ]
  },
- "t|c|c c": {
-  "n": 128,
+ "t|n|n n": {
+  "n": 173,
   "ex": [
    [
-    "śarad",
-    "candrikāsu",
-    "śaraccandrikāsu",
-    "meghaduta 2.51"
+    "kūṭāt",
+    "nivṛttaḥ",
+    "kūṭān nivṛttaḥ",
+    "meghaduta 2.54"
    ],
    [
-    "vat",
-    "ca",
-    "vacca",
-    "gita 2.29"
+    "paricayāt",
+    "nūnam",
+    "paricayān nūnam",
+    "meghaduta 1.10"
    ],
    [
-    "yat",
-    "ca",
-    "yacca",
-    "gita 10.39"
+    "vid",
+    "na",
+    "vinna",
+    "gita 3.29"
    ]
   ]
  },
- "as|h|o h": {
-  "n": 126,
+ "i|i|I": {
+  "n": 167,
   "ex": [
    [
-    "prāyaśas",
-    "hi",
-    "prāyaśo hi",
-    "meghaduta 1.9"
+    "cetasi",
+    "iva",
+    "cetasīva",
+    "meghaduta 1.44"
    ],
    [
-    "kaḥ",
-    "hi",
-    "ko hi",
-    "ramayana 2.47.10"
-   ],
-   [
-    "atas",
-    "hi",
-    "ato hi",
-    "ramayana 2.8.27"
-   ]
-  ]
- },
- "m|D|M D": {
-  "n": 124,
-  "ex": [
-   [
-    "vaktum",
-    "dhīraḥ",
-    "vaktuṃ dhīraḥ",
-    "meghaduta 2.38"
-   ],
-   [
-    "tām",
-    "dharma",
-    "tāṃ dharma",
-    "ramayana 2.109.21"
-   ],
-   [
-    "tvām",
-    "dharma",
-    "tvāṃ dharma",
-    "gita 2.7"
-   ]
-  ]
- },
- "i|u|y u": {
-  "n": 124,
-  "ex": [
-   [
-    "gati",
-    "utkampāt",
-    "gatyutkampāt",
-    "meghaduta 2.11"
-   ],
-   [
-    "tvayi",
-    "upekṣeta",
-    "tvayyupekṣeta",
-    "meghaduta 1.8"
-   ],
-   [
+    "eṣyati",
     "iti",
-    "uta",
-    "ityuta",
-    "gita 14.11"
-   ]
-  ]
- },
- "as|g|o g": {
-  "n": 123,
-  "ex": [
-   [
-    "vijayaḥ",
-    "gīyate",
-    "vijayo gīyate",
-    "meghaduta 1.60"
+    "eṣyatīti",
+    "meghaduta 2.35"
    ],
    [
-    "yaḥ",
-    "guṇa",
-    "yo guṇa",
-    "ramayana 2.110.4"
-   ],
-   [
-    "rajaḥ",
-    "guṇa",
-    "rajoguṇa",
-    "gita 3.37"
+    "api",
+    "iha",
+    "apīha",
+    "gita 2.5"
    ]
   ]
  },
  "n|c|MS c": {
-  "n": 123,
+  "n": 167,
   "ex": [
    [
     "caturān",
@@ -1264,169 +1149,8 @@
    ]
   ]
  },
- "t|S|c C": {
-  "n": 119,
-  "ex": [
-   [
-    "tat",
-    "śrutvā",
-    "tacchrutvā",
-    "meghaduta 1.11"
-   ],
-   [
-    "tat",
-    "śṛṇu",
-    "tacchṛṇu",
-    "gita 7.1"
-   ],
-   [
-    "yat",
-    "śokam",
-    "yacchokam",
-    "gita 2.8"
-   ]
-  ]
- },
- "as|j|o j": {
-  "n": 117,
-  "ex": [
-   [
-    "aṃśaḥ",
-    "jīva",
-    "aṃśo jīva",
-    "gita 15.7"
-   ],
-   [
-    "yatas",
-    "jātā",
-    "yato jātā",
-    "ramayana 2.7.1"
-   ],
-   [
-    "akṣaḥ",
-    "jīva",
-    "akṣo jīva",
-    "ramayana 2.60.8"
-   ]
-  ]
- },
- "A|u|o": {
-  "n": 116,
-  "ex": [
-   [
-    "tathā",
-    "uccais",
-    "tathoccais",
-    "meghaduta 1.17"
-   ],
-   [
-    "śayyā",
-    "utsaṅge",
-    "śayyotsaṅge",
-    "meghaduta 2.33"
-   ],
-   [
-    "sā",
-    "upamā",
-    "sopamā",
-    "gita 6.19"
-   ]
-  ]
- },
- "As|n|A n": {
-  "n": 114,
-  "ex": [
-   [
-    "kalāpāḥ",
-    "nitya",
-    "kalāpā nitya",
-    "meghaduta 2.3"
-   ],
-   [
-    "lokāḥ",
-    "na",
-    "lokā na",
-    "gita 3.24"
-   ],
-   [
-    "devāḥ",
-    "na",
-    "devā na",
-    "gita 10.14"
-   ]
-  ]
- },
- "as|s|aH s": {
-  "n": 113,
-  "ex": [
-   [
-    "sadyas",
-    "sīra",
-    "sadyaḥ sīra",
-    "meghaduta 1.16"
-   ],
-   [
-    "śvas",
-    "sa",
-    "śvaḥ sa",
-    "ramayana 2.78.17"
-   ],
-   [
-    "tatas",
-    "sa",
-    "tataḥ sa",
-    "gita 11.14"
-   ]
-  ]
- },
- "n|t|Ms t": {
-  "n": 113,
-  "ex": [
-   [
-    "tān",
-    "tān",
-    "tāṃs tān",
-    "meghaduta 1.61"
-   ],
-   [
-    "tān",
-    "tu",
-    "tāṃs tu",
-    "ramayana 2.102.15"
-   ],
-   [
-    "kāmān",
-    "tu",
-    "kāmāṃstu",
-    "gita 2.5"
-   ]
-  ]
- },
- "as|b|o b": {
-  "n": 112,
-  "ex": [
-   [
-    "ambhas",
-    "bindu",
-    "ambhobindu",
-    "meghaduta 1.23"
-   ],
-   [
-    "tejas",
-    "bala",
-    "tejobala",
-    "mahabharata 3.69.12"
-   ],
-   [
-    "sutaḥ",
-    "balī",
-    "suto balī",
-    "mahabharata 3.50.1"
-   ]
-  ]
- },
  "Es|c|ES c": {
-  "n": 110,
+  "n": 167,
   "ex": [
    [
     "sūtraiḥ",
@@ -1448,54 +1172,77 @@
    ]
   ]
  },
- "As|m|A m": {
-  "n": 107,
+ "t|c|c c": {
+  "n": 162,
   "ex": [
    [
-    "sevyamānāḥ",
-    "marudbhiḥ",
-    "sevyamānā marudbhiḥ",
-    "meghaduta 2.6"
+    "śarad",
+    "candrikāsu",
+    "śaraccandrikāsu",
+    "meghaduta 2.51"
    ],
    [
-    "mayāḥ",
-    "mām",
-    "mayā mām",
-    "gita 4.10"
+    "vat",
+    "ca",
+    "vacca",
+    "gita 2.29"
    ],
    [
-    "āśāḥ",
-    "mogha",
-    "āśā mogha",
-    "gita 9.12"
+    "yat",
+    "ca",
+    "yacca",
+    "gita 10.39"
    ]
   ]
  },
- "as|p|aH p": {
-  "n": 106,
+ "m|D|M D": {
+  "n": 160,
   "ex": [
    [
-    "sadyas",
-    "pāti",
-    "sadyaḥ pāti",
+    "vaktum",
+    "dhīraḥ",
+    "vaktuṃ dhīraḥ",
+    "meghaduta 2.38"
+   ],
+   [
+    "tām",
+    "dharma",
+    "tāṃ dharma",
+    "ramayana 2.109.21"
+   ],
+   [
+    "tvām",
+    "dharma",
+    "tvāṃ dharma",
+    "gita 2.7"
+   ]
+  ]
+ },
+ "as|h|o h": {
+  "n": 158,
+  "ex": [
+   [
+    "prāyaśas",
+    "hi",
+    "prāyaśo hi",
     "meghaduta 1.9"
    ],
    [
-    "tamas",
-    "pāre",
-    "tamaḥpāre",
-    "kumarasambhava 2.58"
+    "kaḥ",
+    "hi",
+    "ko hi",
+    "ramayana 2.47.10"
    ],
    [
     "atas",
-    "param",
-    "ataḥ param",
-    "gita 2.12"
+    "hi",
+    "ato hi",
+    "ramayana 2.8.27"
    ]
   ]
  },
  "m|l|M l": {
-  "n": 103,
+  "n": 156,
   "ex": [
    [
     "aṅganānām",
@@ -1517,54 +1264,261 @@
    ]
   ]
  },
- "is|a|ir a": {
-  "n": 98,
+ "As|n|A n": {
+  "n": 154,
   "ex": [
    [
-    "vasatiḥ",
-    "alakā",
-    "vasatir alakā",
-    "meghaduta 1.7"
+    "kalāpāḥ",
+    "nitya",
+    "kalāpā nitya",
+    "meghaduta 2.3"
    ],
    [
-    "maṇibhiḥ",
-    "amara",
-    "maṇibhiramara",
-    "meghaduta 2.6"
+    "lokāḥ",
+    "na",
+    "lokā na",
+    "gita 3.24"
    ],
    [
-    "śāntiḥ",
-    "a",
-    "śāntir a",
-    "gita 2.66"
+    "devāḥ",
+    "na",
+    "devā na",
+    "gita 10.14"
    ]
   ]
  },
- "Es|v|Er v": {
-  "n": 96,
+ "i|u|y u": {
+  "n": 152,
   "ex": [
    [
-    "taiḥ",
-    "viśati",
-    "tair viśati",
-    "meghaduta 2.42"
+    "gati",
+    "utkampāt",
+    "gatyutkampāt",
+    "meghaduta 2.11"
    ],
    [
+    "tvayi",
+    "upekṣeta",
+    "tvayyupekṣeta",
+    "meghaduta 1.8"
+   ],
+   [
+    "iti",
+    "uta",
+    "ityuta",
+    "gita 14.11"
+   ]
+  ]
+ },
+ "A|u|o": {
+  "n": 148,
+  "ex": [
+   [
+    "tathā",
     "uccais",
-    "vimānā",
-    "uccair vimānā",
-    "meghaduta 1.67"
+    "tathoccais",
+    "meghaduta 1.17"
    ],
    [
-    "putraiḥ",
-    "vā",
-    "putrair vā",
-    "ramayana 2.42.6"
+    "śayyā",
+    "utsaṅge",
+    "śayyotsaṅge",
+    "meghaduta 2.33"
+   ],
+   [
+    "sā",
+    "upamā",
+    "sopamā",
+    "gita 6.19"
+   ]
+  ]
+ },
+ "t|S|c C": {
+  "n": 144,
+  "ex": [
+   [
+    "tat",
+    "śrutvā",
+    "tacchrutvā",
+    "meghaduta 1.11"
+   ],
+   [
+    "tat",
+    "śṛṇu",
+    "tacchṛṇu",
+    "gita 7.1"
+   ],
+   [
+    "yat",
+    "śokam",
+    "yacchokam",
+    "gita 2.8"
+   ]
+  ]
+ },
+ "n|t|Ms t": {
+  "n": 142,
+  "ex": [
+   [
+    "tān",
+    "tān",
+    "tāṃs tān",
+    "meghaduta 1.61"
+   ],
+   [
+    "tān",
+    "tu",
+    "tāṃs tu",
+    "ramayana 2.102.15"
+   ],
+   [
+    "tān",
+    "te",
+    "tāṃs te",
+    "ramayana 3.24.18"
+   ]
+  ]
+ },
+ "as|g|o g": {
+  "n": 140,
+  "ex": [
+   [
+    "vijayaḥ",
+    "gīyate",
+    "vijayo gīyate",
+    "meghaduta 1.60"
+   ],
+   [
+    "yaḥ",
+    "guṇa",
+    "yo guṇa",
+    "ramayana 2.110.4"
+   ],
+   [
+    "rajaḥ",
+    "guṇa",
+    "rajoguṇa",
+    "gita 3.37"
+   ]
+  ]
+ },
+ "as|j|o j": {
+  "n": 140,
+  "ex": [
+   [
+    "aṃśaḥ",
+    "jīva",
+    "aṃśo jīva",
+    "gita 15.7"
+   ],
+   [
+    "yatas",
+    "jātā",
+    "yato jātā",
+    "ramayana 2.7.1"
+   ],
+   [
+    "akṣaḥ",
+    "jīva",
+    "akṣo jīva",
+    "ramayana 2.60.8"
+   ]
+  ]
+ },
+ "As|m|A m": {
+  "n": 137,
+  "ex": [
+   [
+    "sevyamānāḥ",
+    "marudbhiḥ",
+    "sevyamānā marudbhiḥ",
+    "meghaduta 2.6"
+   ],
+   [
+    "mayāḥ",
+    "mām",
+    "mayā mām",
+    "gita 4.10"
+   ],
+   [
+    "āśāḥ",
+    "mogha",
+    "āśā mogha",
+    "gita 9.12"
+   ]
+  ]
+ },
+ "as|b|o b": {
+  "n": 135,
+  "ex": [
+   [
+    "ambhas",
+    "bindu",
+    "ambhobindu",
+    "meghaduta 1.23"
+   ],
+   [
+    "tejas",
+    "bala",
+    "tejobala",
+    "mahabharata 3.69.12"
+   ],
+   [
+    "sutaḥ",
+    "balī",
+    "suto balī",
+    "mahabharata 3.50.1"
+   ]
+  ]
+ },
+ "as|p|aH p": {
+  "n": 134,
+  "ex": [
+   [
+    "sadyas",
+    "pāti",
+    "sadyaḥ pāti",
+    "meghaduta 1.9"
+   ],
+   [
+    "tamas",
+    "pāre",
+    "tamaḥpāre",
+    "kumarasambhava 2.58"
+   ],
+   [
+    "atas",
+    "param",
+    "ataḥ param",
+    "gita 2.12"
+   ]
+  ]
+ },
+ "as|s|aH s": {
+  "n": 132,
+  "ex": [
+   [
+    "sadyas",
+    "sīra",
+    "sadyaḥ sīra",
+    "meghaduta 1.16"
+   ],
+   [
+    "śvas",
+    "sa",
+    "śvaḥ sa",
+    "ramayana 2.78.17"
+   ],
+   [
+    "tatas",
+    "sa",
+    "tataḥ sa",
+    "gita 11.14"
    ]
   ]
  },
  "Es|a|Er a": {
-  "n": 92,
+  "n": 123,
   "ex": [
    [
     "padaiḥ",
@@ -1586,399 +1540,54 @@
    ]
   ]
  },
- "as|e|a e": {
-  "n": 88,
+ "Es|v|Er v": {
+  "n": 122,
   "ex": [
    [
-    "saḥ",
-    "eva",
-    "sa eva",
-    "gita 4.3"
+    "taiḥ",
+    "viśati",
+    "tair viśati",
+    "meghaduta 2.42"
    ],
    [
-    "kaḥ",
-    "eṣa",
-    "ka eṣa",
-    "mahabharata 3.72.1"
+    "uccais",
+    "vimānā",
+    "uccair vimānā",
+    "meghaduta 1.67"
    ],
    [
-    "saḥ",
-    "eṣa",
-    "sa eṣa",
-    "ramayana 2.78.3"
+    "putraiḥ",
+    "vā",
+    "putrair vā",
+    "ramayana 2.42.6"
    ]
   ]
  },
- "i|A|y A": {
-  "n": 83,
+ "is|a|ir a": {
+  "n": 113,
   "ex": [
    [
-    "ati",
-    "ādityam",
-    "atyādityam",
-    "meghaduta 1.47"
+    "vasatiḥ",
+    "alakā",
+    "vasatir alakā",
+    "meghaduta 1.7"
    ],
    [
-    "rāmagiri",
-    "āśrama",
-    "rāmagiryāśrama",
-    "meghaduta 2.41"
+    "maṇibhiḥ",
+    "amara",
+    "maṇibhiramara",
+    "meghaduta 2.6"
    ],
    [
-    "hi",
-    "āśu",
-    "hyāśu",
-    "gita 2.65"
-   ]
-  ]
- },
- "a|f|ar": {
-  "n": 82,
-  "ex": [
-   [
-    "sa",
-    "ṛkṣa",
-    "sarkṣa",
-    "ramayana 2.95.42"
-   ],
-   [
-    "deva",
-    "ṛṣi",
-    "devarṣi",
-    "ramayana 2.4.14"
-   ],
-   [
-    "deva",
-    "ṛṣiḥ",
-    "devarṣiḥ",
-    "gita 10.13"
-   ]
-  ]
- },
- "t|r|d r": {
-  "n": 81,
-  "ex": [
-   [
-    "yat",
-    "rājā",
-    "yad rājā",
-    "ramayana 2.7.30"
-   ],
-   [
-    "cit",
-    "rūpaḥ",
-    "cidrūpaḥ",
-    "astavakragita 15.4"
-   ],
-   [
-    "āsīt",
-    "rājā",
-    "āsīd rājā",
-    "mahabharata 3.50.1"
-   ]
-  ]
- },
- "As|d|A d": {
-  "n": 81,
-  "ex": [
-   [
-    "lakṣayethāḥ",
-    "dvāra",
-    "lakṣayethā dvāra",
-    "meghaduta 2.20"
-   ],
-   [
-    "śirāḥ",
-    "dīna",
-    "śirā dīna",
-    "ramayana 2.65.27"
-   ],
-   [
-    "kṛśāḥ",
-    "dīnāḥ",
-    "kṛśā dīnāḥ",
-    "ramayana 2.81.5"
-   ]
-  ]
- },
- "t|i|d i": {
-  "n": 80,
-  "ex": [
-   [
-    "jāt",
-    "iṣṭa",
-    "jād iṣṭa",
-    "meghaduta 2.4"
-   ],
-   [
-    "darpāt",
-    "iti",
-    "darpād iti",
-    "meghaduta 1.35"
-   ],
-   [
-    "tat",
-    "iha",
-    "tadiha",
-    "gita 17.18"
-   ]
-  ]
- },
- "t|d|d d": {
-  "n": 80,
-  "ex": [
-   [
-    "vaśāt",
-    "dūra",
-    "vaśāddūra",
-    "meghaduta 1.6"
-   ],
-   [
-    "yat",
-    "dānam",
-    "yaddānam",
-    "gita 17.20"
-   ],
-   [
-    "yat",
-    "deva",
-    "yad deva",
-    "ramayana 2.35.20"
-   ]
-  ]
- },
- "t|e|d e": {
-  "n": 79,
-  "ex": [
-   [
-    "tat",
-    "eva",
-    "tadeva",
-    "gita 3.21"
-   ],
-   [
-    "tat",
-    "eva",
-    "tad eva",
-    "mahabharata 3.61.89"
-   ],
-   [
-    "yat",
-    "eṣa",
-    "yad eṣa",
-    "ramayana 2.14.25"
-   ]
-  ]
- },
- "t|B|d B": {
-  "n": 79,
-  "ex": [
-   [
-    "tat",
-    "bhajethāḥ",
-    "tad bhajethāḥ",
-    "meghaduta 1.52"
-   ],
-   [
-    "acirāt",
-    "bhrātar",
-    "acirād bhrātar",
-    "meghaduta 2.34"
-   ],
-   [
-    "yoṣit",
-    "bhrū",
-    "yoṣidbhrū",
-    "kumarasambhava 2.64"
-   ]
-  ]
- },
- "t|A|d A": {
-  "n": 78,
-  "ex": [
-   [
-    "śailāt",
-    "āśu",
-    "śailād āśu",
-    "meghaduta 2.54"
-   ],
-   [
-    "pratyayāt",
-    "āśvasantyaḥ",
-    "pratyayādāśvasantyaḥ",
-    "meghaduta 1.8"
-   ],
-   [
-    "syāt",
-    "ātma",
-    "syādātma",
-    "gita 3.17"
-   ]
-  ]
- },
- "As|y|A y": {
-  "n": 77,
-  "ex": [
-   [
-    "pāpāḥ",
-    "ye",
-    "pāpā ye",
-    "gita 3.13"
-   ],
-   [
-    "janāḥ",
-    "ye",
-    "janā ye",
-    "mahabharata 3.61.117"
-   ],
-   [
-    "vedāḥ",
-    "ye",
-    "vedā ye",
-    "ramayana 2.40.23"
-   ]
-  ]
- },
- "As|B|A B": {
-  "n": 74,
-  "ex": [
-   [
-    "mūrtyāḥ",
-    "bhuvi",
-    "mūrtyā bhuvi",
-    "meghaduta 1.49"
-   ],
-   [
-    "utkaṇṭhāḥ",
-    "bhuvana",
-    "utkaṇṭhā bhuvana",
-    "meghaduta 2.3"
-   ],
-   [
-    "jāḥ",
-    "bhogāḥ",
-    "jā bhogāḥ",
-    "gita 5.22"
-   ]
-  ]
- },
- "as|D|o D": {
-  "n": 73,
-  "ex": [
-   [
-    "kālaḥ",
-    "dhātā",
-    "kālo dhātā",
-    "gita 10.33"
-   ],
-   [
-    "atas",
-    "dharma",
-    "ato dharma",
-    "ramayana 2.16.48"
-   ],
-   [
-    "jñaḥ",
-    "dharma",
-    "jño dharma",
-    "ramayana 2.25.1"
-   ]
-  ]
- },
- "us|t|us t": {
-  "n": 73,
-  "ex": [
-   [
-    "ūcuḥ",
-    "te",
-    "ūcus te",
-    "mahabharata 3.61.65"
-   ],
-   [
-    "īṣuḥ",
-    "te",
-    "īṣus te",
-    "ramayana 2.60.13"
-   ],
-   [
-    "āyuḥ",
-    "te",
-    "āyus te",
-    "ramayana 2.98.20"
-   ]
-  ]
- },
- "us|a|ur a": {
-  "n": 73,
-  "ex": [
-   [
-    "ājagmuḥ",
+    "śāntiḥ",
     "a",
-    "ājagmur a",
-    "ramayana 2.49.15"
-   ],
-   [
-    "bhṛguḥ",
-    "aham",
-    "bhṛguraham",
-    "gita 10.25"
-   ],
-   [
-    "cakruḥ",
-    "anu",
-    "cakrur anu",
-    "ramayana 2.6.18"
-   ]
-  ]
- },
- "Es|m|Er m": {
-  "n": 68,
-  "ex": [
-   [
-    "madīyaiḥ",
-    "muktā",
-    "madīyair muktā",
-    "meghaduta 2.36"
-   ],
-   [
-    "gandhaiḥ",
-    "mṛgāṇām",
-    "gandhair mṛgāṇām",
-    "meghaduta 1.56"
-   ],
-   [
-    "jaiḥ",
-    "muktam",
-    "jairmuktam",
-    "gita 18.40"
-   ]
-  ]
- },
- "t|j|j j": {
-  "n": 67,
-  "ex": [
-   [
-    "sat",
-    "jana",
-    "sajjana",
-    "ramayana 2.58.11"
-   ],
-   [
-    "sat",
-    "janām",
-    "sajjanām",
-    "ramayana 2.41.33"
-   ],
-   [
-    "sat",
-    "janāḥ",
-    "sajjanāḥ",
-    "ramayana 2.100.6"
+    "śāntir a",
+    "gita 2.66"
    ]
   ]
  },
  "As|r|A r": {
-  "n": 67,
+  "n": 109,
   "ex": [
    [
     "jñāḥ",
@@ -2000,54 +1609,123 @@
    ]
   ]
  },
- "is|v|ir v": {
-  "n": 67,
+ "a|f|ar": {
+  "n": 105,
   "ex": [
    [
-    "upapattiḥ",
-    "vitteśānām",
-    "upapattir vitteśānām",
-    "meghaduta 2.4"
+    "sa",
+    "ṛkṣa",
+    "sarkṣa",
+    "ramayana 2.95.42"
    ],
    [
-    "siddhiḥ",
-    "vā",
-    "siddhir vā",
-    "astavakragita 20.7"
+    "deva",
+    "ṛṣi",
+    "devarṣi",
+    "ramayana 2.4.14"
    ],
    [
-    "gatiḥ",
-    "vīraḥ",
-    "gatir vīraḥ",
-    "ramayana 2.38.6"
+    "na",
+    "ṛṣiṣu",
+    "narṣiṣu",
+    "ramayana 3.53.20"
    ]
   ]
  },
- "us|v|ur v": {
-  "n": 61,
+ "As|d|A d": {
+  "n": 103,
   "ex": [
    [
-    "mātuḥ",
-    "vā",
-    "mātur vā",
-    "ramayana 2.18.34"
+    "lakṣayethāḥ",
+    "dvāra",
+    "lakṣayethā dvāra",
+    "meghaduta 2.20"
    ],
    [
-    "pituḥ",
-    "vā",
-    "pitur vā",
-    "ramayana 2.19.6"
+    "śirāḥ",
+    "dīna",
+    "śirā dīna",
+    "ramayana 2.65.27"
    ],
    [
-    "śatruḥ",
-    "vā",
-    "śatrur vā",
-    "ramayana 2.7.24"
+    "kṛśāḥ",
+    "dīnāḥ",
+    "kṛśā dīnāḥ",
+    "ramayana 2.81.5"
+   ]
+  ]
+ },
+ "t|d|d d": {
+  "n": 101,
+  "ex": [
+   [
+    "vaśāt",
+    "dūra",
+    "vaśāddūra",
+    "meghaduta 1.6"
+   ],
+   [
+    "yat",
+    "dānam",
+    "yaddānam",
+    "gita 17.20"
+   ],
+   [
+    "yat",
+    "deva",
+    "yad deva",
+    "ramayana 2.35.20"
+   ]
+  ]
+ },
+ "t|r|d r": {
+  "n": 99,
+  "ex": [
+   [
+    "yat",
+    "rājā",
+    "yad rājā",
+    "ramayana 2.7.30"
+   ],
+   [
+    "tat",
+    "rājā",
+    "tad rājā",
+    "ramayana 3.38.11"
+   ],
+   [
+    "tat",
+    "rāma",
+    "tad rāma",
+    "ramayana 3.52.21"
+   ]
+  ]
+ },
+ "i|A|y A": {
+  "n": 98,
+  "ex": [
+   [
+    "ati",
+    "ādityam",
+    "atyādityam",
+    "meghaduta 1.47"
+   ],
+   [
+    "rāmagiri",
+    "āśrama",
+    "rāmagiryāśrama",
+    "meghaduta 2.41"
+   ],
+   [
+    "hi",
+    "āśu",
+    "hyāśu",
+    "gita 2.65"
    ]
   ]
  },
  "Es|t|Es t": {
-  "n": 60,
+  "n": 97,
   "ex": [
    [
     "pātaiḥ",
@@ -2069,54 +1747,146 @@
    ]
   ]
  },
- "t|u|d u": {
-  "n": 59,
+ "t|i|d i": {
+  "n": 97,
   "ex": [
    [
-    "vidyut",
-    "unmeṣa",
-    "vidyudunmeṣa",
-    "meghaduta 2.21"
+    "jāt",
+    "iṣṭa",
+    "jād iṣṭa",
+    "meghaduta 2.4"
    ],
    [
-    "paścāt",
-    "uccais",
-    "paścād uccais",
-    "meghaduta 1.40"
+    "darpāt",
+    "iti",
+    "darpād iti",
+    "meghaduta 1.35"
    ],
    [
-    "yat",
-    "uktam",
-    "yaduktam",
-    "gita 11.41"
+    "tat",
+    "iha",
+    "tadiha",
+    "gita 17.18"
    ]
   ]
  },
- "A|f|ar": {
-  "n": 58,
+ "as|D|o D": {
+  "n": 96,
   "ex": [
    [
-    "mahā",
-    "ṛṣi",
-    "maharṣi",
-    "gita 11.21"
+    "kālaḥ",
+    "dhātā",
+    "kālo dhātā",
+    "gita 10.33"
    ],
    [
-    "mahā",
-    "ṛṣiḥ",
-    "maharṣiḥ",
-    "ramayana 2.49.6"
+    "atas",
+    "dharma",
+    "ato dharma",
+    "ramayana 2.16.48"
    ],
    [
-    "mahā",
-    "ṛṣayaḥ",
-    "maharṣayaḥ",
-    "gita 10.2"
+    "jñaḥ",
+    "dharma",
+    "jño dharma",
+    "ramayana 2.25.1"
+   ]
+  ]
+ },
+ "t|B|d B": {
+  "n": 96,
+  "ex": [
+   [
+    "tat",
+    "bhajethāḥ",
+    "tad bhajethāḥ",
+    "meghaduta 1.52"
+   ],
+   [
+    "acirāt",
+    "bhrātar",
+    "acirād bhrātar",
+    "meghaduta 2.34"
+   ],
+   [
+    "yoṣit",
+    "bhrū",
+    "yoṣidbhrū",
+    "kumarasambhava 2.64"
+   ]
+  ]
+ },
+ "as|e|a e": {
+  "n": 95,
+  "ex": [
+   [
+    "saḥ",
+    "eva",
+    "sa eva",
+    "gita 4.3"
+   ],
+   [
+    "kaḥ",
+    "eṣa",
+    "ka eṣa",
+    "mahabharata 3.72.1"
+   ],
+   [
+    "saḥ",
+    "eṣa",
+    "sa eṣa",
+    "ramayana 2.78.3"
+   ]
+  ]
+ },
+ "As|y|A y": {
+  "n": 92,
+  "ex": [
+   [
+    "pāpāḥ",
+    "ye",
+    "pāpā ye",
+    "gita 3.13"
+   ],
+   [
+    "janāḥ",
+    "ye",
+    "janā ye",
+    "mahabharata 3.61.117"
+   ],
+   [
+    "vedāḥ",
+    "ye",
+    "vedā ye",
+    "ramayana 2.40.23"
+   ]
+  ]
+ },
+ "us|t|us t": {
+  "n": 91,
+  "ex": [
+   [
+    "ūcuḥ",
+    "te",
+    "ūcus te",
+    "mahabharata 3.61.65"
+   ],
+   [
+    "īṣuḥ",
+    "te",
+    "īṣus te",
+    "ramayana 2.60.13"
+   ],
+   [
+    "āyuḥ",
+    "te",
+    "āyus te",
+    "ramayana 2.98.20"
    ]
   ]
  },
  "a|I|e": {
-  "n": 57,
+  "n": 91,
   "ex": [
    [
     "yakṣa",
@@ -2126,89 +1896,135 @@
    ],
    [
     "iva",
+    "īśaḥ",
+    "iveśaḥ",
+    "ramayana 3.15.39"
+   ],
+   [
+    "iva",
     "īkṣya",
     "ivekṣya",
     "mahabharata 3.71.7"
-   ],
-   [
-    "ca",
-    "īśvare",
-    "ceśvare",
-    "astavakragita 14.3"
    ]
   ]
  },
- "is|t|is t": {
-  "n": 55,
+ "t|A|d A": {
+  "n": 87,
   "ex": [
    [
-    "gatiḥ",
-    "tad",
-    "gatis tad",
-    "meghaduta 1.19"
+    "śailāt",
+    "āśu",
+    "śailād āśu",
+    "meghaduta 2.54"
    ],
    [
-    "kaliḥ",
-    "tu",
-    "kalis tu",
-    "mahabharata 3.70.34"
+    "pratyayāt",
+    "āśvasantyaḥ",
+    "pratyayādāśvasantyaḥ",
+    "meghaduta 1.8"
    ],
-   [
-    "patiḥ",
-    "te",
-    "patis te",
-    "ramayana 2.9.13"
-   ]
-  ]
- },
- "t|b|d b": {
-  "n": 55,
-  "ex": [
-   [
-    "tat",
-    "buddhi",
-    "tadbuddhi",
-    "gita 6.21"
-   ],
-   [
-    "tat",
-    "brahma",
-    "tadbrahma",
-    "gita 8.1"
-   ],
-   [
-    "āsīt",
-    "bahu",
-    "āsīd bahu",
-    "mahabharata 3.64.12"
-   ]
-  ]
- },
- "t|y|d y": {
-  "n": 54,
-  "ex": [
    [
     "syāt",
-    "yuvatī",
-    "syād yuvatī",
-    "meghaduta 2.22"
+    "ātma",
+    "syādātma",
+    "gita 3.17"
+   ]
+  ]
+ },
+ "As|B|A B": {
+  "n": 86,
+  "ex": [
+   [
+    "mūrtyāḥ",
+    "bhuvi",
+    "mūrtyā bhuvi",
+    "meghaduta 1.49"
    ],
    [
-    "yat",
-    "yat",
-    "yadyat",
+    "utkaṇṭhāḥ",
+    "bhuvana",
+    "utkaṇṭhā bhuvana",
+    "meghaduta 2.3"
+   ],
+   [
+    "jāḥ",
+    "bhogāḥ",
+    "jā bhogāḥ",
+    "gita 5.22"
+   ]
+  ]
+ },
+ "t|e|d e": {
+  "n": 85,
+  "ex": [
+   [
+    "tat",
+    "eva",
+    "tadeva",
     "gita 3.21"
    ],
    [
+    "tat",
+    "eva",
+    "tad eva",
+    "mahabharata 3.61.89"
+   ],
+   [
     "yat",
-    "yā",
-    "yad yā",
-    "ramayana 2.53.19"
+    "eṣa",
+    "yad eṣa",
+    "ramayana 2.14.25"
+   ]
+  ]
+ },
+ "Es|m|Er m": {
+  "n": 84,
+  "ex": [
+   [
+    "madīyaiḥ",
+    "muktā",
+    "madīyair muktā",
+    "meghaduta 2.36"
+   ],
+   [
+    "gandhaiḥ",
+    "mṛgāṇām",
+    "gandhair mṛgāṇām",
+    "meghaduta 1.56"
+   ],
+   [
+    "jaiḥ",
+    "muktam",
+    "jairmuktam",
+    "gita 18.40"
+   ]
+  ]
+ },
+ "us|a|ur a": {
+  "n": 84,
+  "ex": [
+   [
+    "ājagmuḥ",
+    "a",
+    "ājagmur a",
+    "ramayana 2.49.15"
+   ],
+   [
+    "bhṛguḥ",
+    "aham",
+    "bhṛguraham",
+    "gita 10.25"
+   ],
+   [
+    "cakruḥ",
+    "anu",
+    "cakrur anu",
+    "ramayana 2.6.18"
    ]
   ]
  },
  "as|l|o l": {
-  "n": 54,
+  "n": 84,
   "ex": [
    [
     "vimukhaḥ",
@@ -2230,8 +2046,123 @@
    ]
   ]
  },
+ "A|f|ar": {
+  "n": 83,
+  "ex": [
+   [
+    "mahā",
+    "ṛṣi",
+    "maharṣi",
+    "gita 11.21"
+   ],
+   [
+    "mahā",
+    "ṛṣiḥ",
+    "maharṣiḥ",
+    "ramayana 2.49.6"
+   ],
+   [
+    "mahā",
+    "ṛṣayaḥ",
+    "maharṣayaḥ",
+    "gita 10.2"
+   ]
+  ]
+ },
+ "is|v|ir v": {
+  "n": 81,
+  "ex": [
+   [
+    "upapattiḥ",
+    "vitteśānām",
+    "upapattir vitteśānām",
+    "meghaduta 2.4"
+   ],
+   [
+    "ratiḥ",
+    "vā",
+    "ratir vā",
+    "ramayana 3.44.16"
+   ],
+   [
+    "siddhiḥ",
+    "vā",
+    "siddhir vā",
+    "astavakragita 20.7"
+   ]
+  ]
+ },
+ "t|j|j j": {
+  "n": 79,
+  "ex": [
+   [
+    "sat",
+    "jana",
+    "sajjana",
+    "ramayana 2.58.11"
+   ],
+   [
+    "sat",
+    "janām",
+    "sajjanām",
+    "ramayana 2.41.33"
+   ],
+   [
+    "sat",
+    "janāḥ",
+    "sajjanāḥ",
+    "ramayana 2.100.6"
+   ]
+  ]
+ },
+ "us|v|ur v": {
+  "n": 77,
+  "ex": [
+   [
+    "mātuḥ",
+    "vā",
+    "mātur vā",
+    "ramayana 2.18.34"
+   ],
+   [
+    "pituḥ",
+    "vā",
+    "pitur vā",
+    "ramayana 2.19.6"
+   ],
+   [
+    "śatruḥ",
+    "vā",
+    "śatrur vā",
+    "ramayana 2.7.24"
+   ]
+  ]
+ },
+ "t|u|d u": {
+  "n": 73,
+  "ex": [
+   [
+    "vidyut",
+    "unmeṣa",
+    "vidyudunmeṣa",
+    "meghaduta 2.21"
+   ],
+   [
+    "paścāt",
+    "uccais",
+    "paścād uccais",
+    "meghaduta 1.40"
+   ],
+   [
+    "yat",
+    "uktam",
+    "yaduktam",
+    "gita 11.41"
+   ]
+  ]
+ },
  "us|c|uS c": {
-  "n": 53,
+  "n": 70,
   "ex": [
    [
     "dhanus",
@@ -2253,8 +2184,54 @@
    ]
   ]
  },
+ "t|b|d b": {
+  "n": 66,
+  "ex": [
+   [
+    "tat",
+    "buddhi",
+    "tadbuddhi",
+    "gita 6.21"
+   ],
+   [
+    "tat",
+    "brahma",
+    "tadbrahma",
+    "gita 8.1"
+   ],
+   [
+    "āsīt",
+    "bahu",
+    "āsīd bahu",
+    "mahabharata 3.64.12"
+   ]
+  ]
+ },
+ "is|t|is t": {
+  "n": 65,
+  "ex": [
+   [
+    "gatiḥ",
+    "tad",
+    "gatis tad",
+    "meghaduta 1.19"
+   ],
+   [
+    "kaliḥ",
+    "tu",
+    "kalis tu",
+    "mahabharata 3.70.34"
+   ],
+   [
+    "patiḥ",
+    "te",
+    "patis te",
+    "ramayana 2.9.13"
+   ]
+  ]
+ },
  "is|c|iS c": {
-  "n": 52,
+  "n": 64,
   "ex": [
    [
     "vyaktiḥ",
@@ -2276,8 +2253,31 @@
    ]
   ]
  },
+ "t|y|d y": {
+  "n": 64,
+  "ex": [
+   [
+    "syāt",
+    "yuvatī",
+    "syād yuvatī",
+    "meghaduta 2.22"
+   ],
+   [
+    "yat",
+    "yat",
+    "yadyat",
+    "gita 3.21"
+   ],
+   [
+    "yat",
+    "yā",
+    "yad yā",
+    "ramayana 2.53.19"
+   ]
+  ]
+ },
  "n|S|Y S": {
-  "n": 51,
+  "n": 63,
   "ex": [
    [
     "san",
@@ -2292,15 +2292,15 @@
     "ramayana 2.90.14"
    ],
    [
-    "paśyan",
-    "śṛṇvan",
-    "paśyañśṛṇvan",
-    "gita 5.8"
+    "tān",
+    "śabalān",
+    "tāñ śabalān",
+    "ramayana 3.21.24"
    ]
   ]
  },
  "us|m|ur m": {
-  "n": 50,
+  "n": 61,
   "ex": [
    [
     "bhartuḥ",
@@ -2322,31 +2322,8 @@
    ]
   ]
  },
- "as|k|aH k": {
-  "n": 49,
-  "ex": [
-   [
-    "atas",
-    "katham",
-    "ataḥ katham",
-    "meghaduta 1.24"
-   ],
-   [
-    "sadyas",
-    "kaṇṭha",
-    "sadyaḥ kaṇṭha",
-    "meghaduta 2.37"
-   ],
-   [
-    "tatas",
-    "kuru",
-    "tataḥ kuru",
-    "gita 12.11"
-   ]
-  ]
- },
  "As|h|A h": {
-  "n": 48,
+  "n": 59,
   "ex": [
    [
     "ārtāḥ",
@@ -2368,31 +2345,54 @@
    ]
   ]
  },
- "O|a|Av a": {
-  "n": 47,
+ "as|k|aH k": {
+  "n": 58,
   "ex": [
    [
-    "asau",
-    "a",
-    "asāv a",
-    "astavakragita 18.41"
+    "atas",
+    "katham",
+    "ataḥ katham",
+    "meghaduta 1.24"
    ],
    [
-    "tau",
-    "api",
-    "tāv api",
-    "kumarasambhava 7.44"
+    "sadyas",
+    "kaṇṭha",
+    "sadyaḥ kaṇṭha",
+    "meghaduta 2.37"
    ],
    [
-    "ubhau",
-    "a",
-    "ubhāv a",
-    "ramayana 2.10.41"
+    "tatas",
+    "kuru",
+    "tataḥ kuru",
+    "gita 12.11"
+   ]
+  ]
+ },
+ "Es|n|Er n": {
+  "n": 58,
+  "ex": [
+   [
+    "vātaiḥ",
+    "nānā",
+    "vātair nānā",
+    "meghaduta 1.66"
+   ],
+   [
+    "nimittaiḥ",
+    "na",
+    "nimittair na",
+    "meghaduta 2.4"
+   ],
+   [
+    "dānaiḥ",
+    "na",
+    "dānairna",
+    "gita 11.48"
    ]
   ]
  },
  "is|m|ir m": {
-  "n": 47,
+  "n": 56,
   "ex": [
    [
     "vacobhiḥ",
@@ -2414,54 +2414,8 @@
    ]
   ]
  },
- "is|n|ir n": {
-  "n": 46,
-  "ex": [
-   [
-    "udgāribhiḥ",
-    "nāgarāṇām",
-    "udgāribhir nāgarāṇām",
-    "meghaduta 1.27"
-   ],
-   [
-    "ādiḥ",
-    "na",
-    "ādirna",
-    "gita 15.3"
-   ],
-   [
-    "dvis",
-    "na",
-    "dvir na",
-    "ramayana 2.16.19"
-   ]
-  ]
- },
- "is|A|ir A": {
-  "n": 45,
-  "ex": [
-   [
-    "sṛṣṭiḥ",
-    "ādyā",
-    "sṛṣṭir ādyā",
-    "meghaduta 2.22"
-   ],
-   [
-    "gatiḥ",
-    "ā",
-    "gatir ā",
-    "kumarasambhava 7.58"
-   ],
-   [
-    "bhūmiḥ",
-    "āpaḥ",
-    "bhūmirāpaḥ",
-    "gita 7.4"
-   ]
-  ]
- },
  "t|g|d g": {
-  "n": 45,
+  "n": 56,
   "ex": [
    [
     "vidyut",
@@ -2484,7 +2438,7 @@
   ]
  },
  "u|i|v i": {
-  "n": 44,
+  "n": 55,
   "ex": [
    [
     "tu",
@@ -2506,261 +2460,54 @@
    ]
   ]
  },
- "Es|n|Er n": {
-  "n": 42,
+ "is|n|ir n": {
+  "n": 53,
   "ex": [
    [
-    "vātaiḥ",
-    "nānā",
-    "vātair nānā",
-    "meghaduta 1.66"
+    "udgāribhiḥ",
+    "nāgarāṇām",
+    "udgāribhir nāgarāṇām",
+    "meghaduta 1.27"
    ],
    [
-    "nimittaiḥ",
+    "ādiḥ",
     "na",
-    "nimittair na",
-    "meghaduta 2.4"
-   ],
-   [
-    "dānaiḥ",
-    "na",
-    "dānairna",
-    "gita 11.48"
-   ]
-  ]
- },
- "Es|u|Er u": {
-  "n": 40,
-  "ex": [
-   [
-    "siddhaiḥ",
-    "upacita",
-    "siddhair upacita",
-    "meghaduta 1.59"
-   ],
-   [
-    "kaṇṭhaiḥ",
-    "udgāyadbhiḥ",
-    "kaṇṭhair udgāyadbhiḥ",
-    "meghaduta 2.10"
-   ],
-   [
-    "taiḥ",
-    "uktā",
-    "tair uktā",
-    "mahabharata 3.61.67"
-   ]
-  ]
- },
- "u|A|v A": {
-  "n": 39,
-  "ex": [
-   [
-    "puṣkareṣu",
-    "āhateṣu",
-    "puṣkareṣv āhateṣu",
-    "meghaduta 2.5"
-   ],
-   [
-    "tu",
-    "ātma",
-    "tvātma",
-    "gita 3.17"
-   ],
-   [
-    "tu",
-    "ātmā",
-    "tvātmā",
-    "gita 7.18"
-   ]
-  ]
- },
- "is|i|ir i": {
-  "n": 39,
-  "ex": [
-   [
-    "agniḥ",
-    "iva",
-    "agniriva",
-    "gita 18.48"
+    "ādirna",
+    "gita 15.3"
    ],
    [
     "dvis",
-    "iva",
-    "dvir iva",
-    "kumarasambhava 6.64"
-   ],
-   [
-    "ahiḥ",
-    "iva",
-    "ahir iva",
-    "ramayana 2.38.3"
+    "na",
+    "dvir na",
+    "ramayana 2.16.19"
    ]
   ]
  },
- "As|j|A j": {
-  "n": 38,
+ "O|a|Av a": {
+  "n": 52,
   "ex": [
    [
-    "tvādṛśāḥ",
-    "jāla",
-    "tvādṛśā jāla",
-    "meghaduta 2.8"
+    "asau",
+    "a",
+    "asāv a",
+    "astavakragita 18.41"
    ],
    [
-    "mohāḥ",
-    "jita",
-    "mohā jita",
-    "gita 15.5"
+    "tau",
+    "api",
+    "tāv api",
+    "kumarasambhava 7.44"
    ],
    [
-    "tāḥ",
-    "jajñuḥ",
-    "tā jajñuḥ",
-    "mahabharata 3.51.4"
-   ]
-  ]
- },
- "t|h|d D": {
-  "n": 37,
-  "ex": [
-   [
-    "tat",
-    "hi",
-    "taddhi",
-    "meghaduta 1.47"
-   ],
-   [
-    "yat",
-    "hi",
-    "yaddhi",
-    "ramayana 2.27.4"
-   ],
-   [
-    "etat",
-    "hi",
-    "etaddhi",
-    "gita 6.42"
-   ]
-  ]
- },
- "Es|y|Er y": {
-  "n": 36,
-  "ex": [
-   [
-    "śataiḥ",
-    "yatra",
-    "śatair yatra",
-    "meghaduta 1.52"
-   ],
-   [
-    "patitaiḥ",
-    "yatra",
-    "patitair yatra",
-    "meghaduta 2.11"
-   ],
-   [
-    "guṇaiḥ",
-    "yaḥ",
-    "guṇairyaḥ",
-    "gita 14.23"
-   ]
-  ]
- },
- "is|B|ir B": {
-  "n": 36,
-  "ex": [
-   [
-    "gatiḥ",
-    "bhūyas",
-    "gatir bhūyas",
-    "meghaduta 1.16"
-   ],
-   [
-    "ahiḥ",
-    "bhāti",
-    "ahir bhāti",
-    "astavakragita 2.7"
-   ],
-   [
-    "gatiḥ",
-    "bhartā",
-    "gatirbhartā",
-    "gita 9.18"
-   ]
-  ]
- },
- "is|u|ir u": {
-  "n": 35,
-  "ex": [
-   [
-    "bahis",
-    "upavanam",
-    "bahirupavanam",
-    "meghaduta 2.10"
-   ],
-   [
-    "muniḥ",
-    "ucyate",
-    "munirucyate",
-    "gita 2.56"
-   ],
-   [
-    "gatiḥ",
-    "udyāne",
-    "gatir udyāne",
-    "kumarasambhava 2.35"
-   ]
-  ]
- },
- "As|g|A g": {
-  "n": 35,
-  "ex": [
-   [
-    "jāḥ",
-    "go",
-    "jā go",
-    "kathopanisad 2.2.2"
-   ],
-   [
-    "gajāḥ",
-    "gaja",
-    "gajā gaja",
-    "ramayana 2.83.19"
-   ],
-   [
-    "śākhāḥ",
-    "guṇa",
-    "śākhā guṇa",
-    "gita 15.2"
-   ]
-  ]
- },
- "As|b|A b": {
-  "n": 35,
-  "ex": [
-   [
-    "ālāpāḥ",
-    "bahis",
-    "ālāpā bahis",
-    "meghaduta 2.10"
-   ],
-   [
-    "aśvāḥ",
-    "bila",
-    "aśvā bila",
-    "kumarasambhava 6.39"
-   ],
-   [
-    "nadyāḥ",
-    "bahu",
-    "nadyā bahu",
-    "ramayana 2.44.5"
+    "ubhau",
+    "a",
+    "ubhāv a",
+    "ramayana 2.10.41"
    ]
   ]
  },
  "As|i|A i": {
-  "n": 35,
+  "n": 52,
   "ex": [
    [
     "spṛṣṭāḥ",
@@ -2782,31 +2529,54 @@
    ]
   ]
  },
- "ar|p|aH p": {
-  "n": 35,
+ "is|A|ir A": {
+  "n": 50,
   "ex": [
    [
-    "punar",
-    "pitā",
-    "punaḥ pitā",
-    "ramayana 2.20.16"
+    "sṛṣṭiḥ",
+    "ādyā",
+    "sṛṣṭir ādyā",
+    "meghaduta 2.22"
    ],
    [
-    "punar",
-    "punar",
-    "punaḥ punar",
-    "gita 9.8"
+    "gatiḥ",
+    "ā",
+    "gatir ā",
+    "kumarasambhava 7.58"
    ],
    [
-    "punar",
-    "prekṣya",
-    "punaḥ prekṣya",
-    "kumarasambhava 6.94"
+    "bhūmiḥ",
+    "āpaḥ",
+    "bhūmirāpaḥ",
+    "gita 7.4"
+   ]
+  ]
+ },
+ "is|i|ir i": {
+  "n": 49,
+  "ex": [
+   [
+    "agniḥ",
+    "iva",
+    "agniriva",
+    "gita 18.48"
+   ],
+   [
+    "dvis",
+    "iva",
+    "dvir iva",
+    "kumarasambhava 6.64"
+   ],
+   [
+    "ahiḥ",
+    "iva",
+    "ahir iva",
+    "ramayana 2.38.3"
    ]
   ]
  },
  "as|S|aH S": {
-  "n": 34,
+  "n": 48,
   "ex": [
    [
     "koṭiśas",
@@ -2828,31 +2598,353 @@
    ]
   ]
  },
- "u|e|v e": {
-  "n": 34,
+ "Es|u|Er u": {
+  "n": 48,
   "ex": [
    [
-    "divaseṣu",
-    "eṣu",
-    "divaseṣv eṣu",
-    "meghaduta 2.23"
+    "siddhaiḥ",
+    "upacita",
+    "siddhair upacita",
+    "meghaduta 1.59"
    ],
    [
-    "tu",
-    "eva",
-    "tveva",
-    "gita 2.12"
+    "kaṇṭhaiḥ",
+    "udgāyadbhiḥ",
+    "kaṇṭhair udgāyadbhiḥ",
+    "meghaduta 2.10"
    ],
    [
-    "tu",
+    "taiḥ",
+    "uktā",
+    "tair uktā",
+    "mahabharata 3.61.67"
+   ]
+  ]
+ },
+ "m|G|M G": {
+  "n": 46,
+  "ex": [
+   [
+    "tam",
+    "ghaṭam",
+    "taṃ ghaṭam",
+    "ramayana 2.58.2"
+   ],
+   [
+    "tam",
+    "ghoṣam",
+    "taṃ ghoṣam",
+    "ramayana 2.75.4"
+   ],
+   [
+    "evam",
+    "ghora",
+    "evaṃ ghora",
+    "ramayana 3.67.4"
+   ]
+  ]
+ },
+ "a|o|O": {
+  "n": 45,
+  "ex": [
+   [
+    "jala",
+    "oghaḥ",
+    "jalaughaḥ",
+    "meghaduta 1.64"
+   ],
+   [
+    "adhara",
+    "oṣṭhī",
+    "adharauṣṭhī",
+    "meghaduta 2.22"
+   ],
+   [
+    "ca",
+    "ojasā",
+    "caujasā",
+    "ramayana 2.67.13"
+   ]
+  ]
+ },
+ "Es|y|Er y": {
+  "n": 43,
+  "ex": [
+   [
+    "śataiḥ",
+    "yatra",
+    "śatair yatra",
+    "meghaduta 1.52"
+   ],
+   [
+    "patitaiḥ",
+    "yatra",
+    "patitair yatra",
+    "meghaduta 2.11"
+   ],
+   [
+    "guṇaiḥ",
+    "yaḥ",
+    "guṇairyaḥ",
+    "gita 14.23"
+   ]
+  ]
+ },
+ "As|j|A j": {
+  "n": 43,
+  "ex": [
+   [
+    "tvādṛśāḥ",
+    "jāla",
+    "tvādṛśā jāla",
+    "meghaduta 2.8"
+   ],
+   [
+    "mohāḥ",
+    "jita",
+    "mohā jita",
+    "gita 15.5"
+   ],
+   [
+    "tāḥ",
+    "jajñuḥ",
+    "tā jajñuḥ",
+    "mahabharata 3.51.4"
+   ]
+  ]
+ },
+ "Es|d|Er d": {
+  "n": 43,
+  "ex": [
+   [
+    "taiḥ",
+    "dattān",
+    "tairdattān",
+    "gita 3.12"
+   ],
+   [
+    "āhāraiḥ",
+    "dama",
+    "āhārair dama",
+    "mahabharata 3.61.58"
+   ],
+   [
+    "uccais",
+    "dviṣām",
+    "uccairdviṣām",
+    "kumarasambhava 3.14"
+   ]
+  ]
+ },
+ "t|h|d D": {
+  "n": 42,
+  "ex": [
+   [
+    "tat",
+    "hi",
+    "taddhi",
+    "meghaduta 1.47"
+   ],
+   [
+    "yat",
+    "hi",
+    "yaddhi",
+    "ramayana 2.27.4"
+   ],
+   [
     "etat",
-    "tvetat",
-    "gita 3.32"
+    "hi",
+    "etaddhi",
+    "gita 6.42"
+   ]
+  ]
+ },
+ "As|b|A b": {
+  "n": 42,
+  "ex": [
+   [
+    "ālāpāḥ",
+    "bahis",
+    "ālāpā bahis",
+    "meghaduta 2.10"
+   ],
+   [
+    "aśvāḥ",
+    "bila",
+    "aśvā bila",
+    "kumarasambhava 6.39"
+   ],
+   [
+    "nadyāḥ",
+    "bahu",
+    "nadyā bahu",
+    "ramayana 2.44.5"
+   ]
+  ]
+ },
+ "u|A|v A": {
+  "n": 41,
+  "ex": [
+   [
+    "puṣkareṣu",
+    "āhateṣu",
+    "puṣkareṣv āhateṣu",
+    "meghaduta 2.5"
+   ],
+   [
+    "tu",
+    "ātma",
+    "tvātma",
+    "gita 3.17"
+   ],
+   [
+    "tu",
+    "ātmā",
+    "tvātmā",
+    "gita 7.18"
+   ]
+  ]
+ },
+ "Es|i|Er i": {
+  "n": 40,
+  "ex": [
+   [
+    "bhakticchedaiḥ",
+    "iva",
+    "bhakticchedair iva",
+    "meghaduta 1.19"
+   ],
+   [
+    "peśalaiḥ",
+    "indranīlaiḥ",
+    "peśalair indranīlaiḥ",
+    "meghaduta 2.17"
+   ],
+   [
+    "bhaiḥ",
+    "iti",
+    "bhair iti",
+    "mahabharata 3.63.3"
+   ]
+  ]
+ },
+ "us|d|ur d": {
+  "n": 40,
+  "ex": [
+   [
+    "viduḥ",
+    "devāḥ",
+    "vidurdevāḥ",
+    "gita 10.14"
+   ],
+   [
+    "reṇuḥ",
+    "divam",
+    "reṇur divam",
+    "ramayana 2.87.15"
+   ],
+   [
+    "prāhuḥ",
+    "deva",
+    "prāhur deva",
+    "ramayana 2.95.4"
+   ]
+  ]
+ },
+ "an|i|ann i": {
+  "n": 39,
+  "ex": [
+   [
+    "caran",
+    "iva",
+    "carann iva",
+    "mahabharata 3.70.1"
+   ],
+   [
+    "jānan",
+    "iva",
+    "jānann iva",
+    "ramayana 2.2.16"
+   ],
+   [
+    "hasan",
+    "iva",
+    "hasann iva",
+    "ramayana 2.63.9"
+   ]
+  ]
+ },
+ "As|g|A g": {
+  "n": 39,
+  "ex": [
+   [
+    "jāḥ",
+    "go",
+    "jā go",
+    "kathopanisad 2.2.2"
+   ],
+   [
+    "gajāḥ",
+    "gaja",
+    "gajā gaja",
+    "ramayana 2.83.19"
+   ],
+   [
+    "śākhāḥ",
+    "guṇa",
+    "śākhā guṇa",
+    "gita 15.2"
+   ]
+  ]
+ },
+ "is|B|ir B": {
+  "n": 39,
+  "ex": [
+   [
+    "gatiḥ",
+    "bhūyas",
+    "gatir bhūyas",
+    "meghaduta 1.16"
+   ],
+   [
+    "ahiḥ",
+    "bhāti",
+    "ahir bhāti",
+    "astavakragita 2.7"
+   ],
+   [
+    "gatiḥ",
+    "bhartā",
+    "gatirbhartā",
+    "gita 9.18"
+   ]
+  ]
+ },
+ "ar|p|aH p": {
+  "n": 39,
+  "ex": [
+   [
+    "punar",
+    "pitā",
+    "punaḥ pitā",
+    "ramayana 2.20.16"
+   ],
+   [
+    "punar",
+    "punar",
+    "punaḥ punar",
+    "gita 9.8"
+   ],
+   [
+    "punar",
+    "prekṣya",
+    "punaḥ prekṣya",
+    "kumarasambhava 6.94"
    ]
   ]
  },
  "is|y|ir y": {
-  "n": 34,
+  "n": 38,
   "ex": [
    [
     "veśmabhiḥ",
@@ -2875,7 +2967,7 @@
   ]
  },
  "an|a|ann a": {
-  "n": 34,
+  "n": 38,
   "ex": [
    [
     "icchan",
@@ -2897,8 +2989,77 @@
    ]
   ]
  },
+ "Es|b|Er b": {
+  "n": 37,
+  "ex": [
+   [
+    "yodhaiḥ",
+    "bala",
+    "yodhair bala",
+    "ramayana 2.76.24"
+   ],
+   [
+    "muktaiḥ",
+    "bāṇa",
+    "muktair bāṇa",
+    "ramayana 3.60.45"
+   ],
+   [
+    "śataiḥ",
+    "baddhāḥ",
+    "śatairbaddhāḥ",
+    "gita 16.12"
+   ]
+  ]
+ },
+ "u|e|v e": {
+  "n": 36,
+  "ex": [
+   [
+    "divaseṣu",
+    "eṣu",
+    "divaseṣv eṣu",
+    "meghaduta 2.23"
+   ],
+   [
+    "tu",
+    "eva",
+    "tveva",
+    "gita 2.12"
+   ],
+   [
+    "tu",
+    "etat",
+    "tvetat",
+    "gita 3.32"
+   ]
+  ]
+ },
+ "is|u|ir u": {
+  "n": 36,
+  "ex": [
+   [
+    "bahis",
+    "upavanam",
+    "bahirupavanam",
+    "meghaduta 2.10"
+   ],
+   [
+    "muniḥ",
+    "ucyate",
+    "munirucyate",
+    "gita 2.56"
+   ],
+   [
+    "gatiḥ",
+    "udyāne",
+    "gatir udyāne",
+    "kumarasambhava 2.35"
+   ]
+  ]
+ },
  "us|i|ur i": {
-  "n": 31,
+  "n": 36,
   "ex": [
    [
     "bāhuḥ",
@@ -2907,90 +3068,44 @@
     "ramayana 2.91.10"
    ],
    [
+    "setuḥ",
+    "iva",
+    "setur iva",
+    "ramayana 3.54.2"
+   ],
+   [
     "cakruḥ",
     "iva",
     "cakrur iva",
     "kumarasambhava 7.38"
-   ],
-   [
-    "dhenuḥ",
-    "iva",
-    "dhenur iva",
-    "ramayana 2.17.32"
    ]
   ]
  },
- "a|o|O": {
-  "n": 31,
+ "Es|B|Er B": {
+  "n": 36,
   "ex": [
    [
-    "jala",
-    "oghaḥ",
-    "jalaughaḥ",
-    "meghaduta 1.64"
+    "uccais",
+    "bhuja",
+    "uccairbhuja",
+    "meghaduta 1.40"
    ],
    [
-    "adhara",
-    "oṣṭhī",
-    "adharauṣṭhī",
-    "meghaduta 2.22"
+    "kisalayaiḥ",
+    "bhūṣaṇānām",
+    "kisalayair bhūṣaṇānām",
+    "meghaduta 2.12"
    ],
    [
-    "ca",
-    "ojasā",
-    "caujasā",
-    "ramayana 2.67.13"
-   ]
-  ]
- },
- "an|i|ann i": {
-  "n": 30,
-  "ex": [
-   [
-    "caran",
-    "iva",
-    "carann iva",
-    "mahabharata 3.70.1"
-   ],
-   [
-    "jānan",
-    "iva",
-    "jānann iva",
-    "ramayana 2.2.16"
-   ],
-   [
-    "hasan",
-    "iva",
-    "hasann iva",
-    "ramayana 2.63.9"
-   ]
-  ]
- },
- "us|d|ur d": {
-  "n": 30,
-  "ex": [
-   [
-    "viduḥ",
-    "devāḥ",
-    "vidurdevāḥ",
-    "gita 10.14"
-   ],
-   [
-    "reṇuḥ",
-    "divam",
-    "reṇur divam",
-    "ramayana 2.87.15"
-   ],
-   [
-    "prāhuḥ",
-    "deva",
-    "prāhur deva",
-    "ramayana 2.95.4"
+    "taiḥ",
+    "bhinna",
+    "tair bhinna",
+    "ramayana 3.25.19"
    ]
   ]
  },
  "Es|h|Er h": {
-  "n": 29,
+  "n": 35,
   "ex": [
    [
     "puṇyaiḥ",
@@ -3012,8 +3127,31 @@
    ]
   ]
  },
+ "O|u|Av u": {
+  "n": 35,
+  "ex": [
+   [
+    "tau",
+    "uvāca",
+    "tāv uvāca",
+    "ramayana 3.65.24"
+   ],
+   [
+    "karau",
+    "ubhau",
+    "karāvubhau",
+    "gita 5.2"
+   ],
+   [
+    "rātrau",
+    "uda",
+    "rātrāv uda",
+    "ramayana 2.57.19"
+   ]
+  ]
+ },
  "us|A|ur A": {
-  "n": 29,
+  "n": 35,
   "ex": [
    [
     "bandhuḥ",
@@ -3035,8 +3173,31 @@
    ]
   ]
  },
+ "a|U|o": {
+  "n": 35,
+  "ex": [
+   [
+    "cala",
+    "ūrmi",
+    "calormi",
+    "meghaduta 1.26"
+   ],
+   [
+    "ca",
+    "ūcuḥ",
+    "cocuḥ",
+    "ramayana 3.22.27"
+   ],
+   [
+    "atha",
+    "ūru",
+    "athoru",
+    "kumarasambhava 3.11"
+   ]
+  ]
+ },
  "t|D|d D": {
-  "n": 28,
+  "n": 34,
   "ex": [
    [
     "tat",
@@ -3058,353 +3219,8 @@
    ]
   ]
  },
- "us|n|ur n": {
-  "n": 28,
-  "ex": [
-   [
-    "mātuḥ",
-    "na",
-    "mātur na",
-    "ramayana 2.27.15"
-   ],
-   [
-    "manyuḥ",
-    "na",
-    "manyur na",
-    "ramayana 2.29.26"
-   ],
-   [
-    "cakṣuḥ",
-    "na",
-    "cakṣur na",
-    "kathopanisad 2.2.11"
-   ]
-  ]
- },
- "Es|d|Er d": {
-  "n": 28,
-  "ex": [
-   [
-    "taiḥ",
-    "dattān",
-    "tairdattān",
-    "gita 3.12"
-   ],
-   [
-    "āhāraiḥ",
-    "dama",
-    "āhārair dama",
-    "mahabharata 3.61.58"
-   ],
-   [
-    "uccais",
-    "dviṣām",
-    "uccairdviṣām",
-    "kumarasambhava 3.14"
-   ]
-  ]
- },
- "Es|i|Er i": {
-  "n": 28,
-  "ex": [
-   [
-    "bhakticchedaiḥ",
-    "iva",
-    "bhakticchedair iva",
-    "meghaduta 1.19"
-   ],
-   [
-    "peśalaiḥ",
-    "indranīlaiḥ",
-    "peśalair indranīlaiḥ",
-    "meghaduta 2.17"
-   ],
-   [
-    "bhaiḥ",
-    "iti",
-    "bhair iti",
-    "mahabharata 3.63.3"
-   ]
-  ]
- },
- "Es|B|Er B": {
-  "n": 28,
-  "ex": [
-   [
-    "uccais",
-    "bhuja",
-    "uccairbhuja",
-    "meghaduta 1.40"
-   ],
-   [
-    "kisalayaiḥ",
-    "bhūṣaṇānām",
-    "kisalayair bhūṣaṇānām",
-    "meghaduta 2.12"
-   ],
-   [
-    "svaiḥ",
-    "bhavān",
-    "svair bhavān",
-    "mahabharata 3.76.10"
-   ]
-  ]
- },
- "a|U|o": {
-  "n": 28,
-  "ex": [
-   [
-    "cala",
-    "ūrmi",
-    "calormi",
-    "meghaduta 1.26"
-   ],
-   [
-    "atha",
-    "ūru",
-    "athoru",
-    "kumarasambhava 3.11"
-   ],
-   [
-    "vara",
-    "ūru",
-    "varoru",
-    "rtusamhara 5.1"
-   ]
-  ]
- },
- "as|u|a u": {
-  "n": 27,
-  "ex": [
-   [
-    "saḥ",
-    "u",
-    "sa u",
-    "kathopanisad 2.1.13"
-   ],
-   [
-    "saḥ",
-    "ucyate",
-    "sa ucyate",
-    "gita 3.6"
-   ],
-   [
-    "yogaḥ",
-    "ucyate",
-    "yoga ucyate",
-    "gita 2.48"
-   ]
-  ]
- },
- "Es|A|Er A": {
-  "n": 27,
-  "ex": [
-   [
-    "nihitaiḥ",
-    "āgatam",
-    "nihitair āgatam",
-    "meghaduta 2.39"
-   ],
-   [
-    "puruṣaiḥ",
-    "āpta",
-    "puruṣair āpta",
-    "mahabharata 3.57.10"
-   ],
-   [
-    "mukhaiḥ",
-    "āsava",
-    "mukhair āsava",
-    "kumarasambhava 7.62"
-   ]
-  ]
- },
- "os|a|or a": {
-  "n": 26,
-  "ex": [
-   [
-    "hetoḥ",
-    "antar",
-    "hetorantar",
-    "meghaduta 1.3"
-   ],
-   [
-    "indoḥ",
-    "amṛta",
-    "indor amṛta",
-    "meghaduta 2.30"
-   ],
-   [
-    "tayoḥ",
-    "adṛṣṭa",
-    "tayor adṛṣṭa",
-    "mahabharata 3.50.16"
-   ]
-  ]
- },
- "a|C|a cC": {
-  "n": 26,
-  "ex": [
-   [
-    "ratna",
-    "chāyā",
-    "ratnacchāyā",
-    "meghaduta 1.15"
-   ],
-   [
-    "kṣāma",
-    "chāyam",
-    "kṣāmacchāyam",
-    "meghaduta 2.20"
-   ],
-   [
-    "a",
-    "chinna",
-    "acchinna",
-    "kumarasambhava 6.69"
-   ]
-  ]
- },
- "as|A|a A": {
-  "n": 26,
-  "ex": [
-   [
-    "yaḥ",
-    "āste",
-    "ya āste",
-    "gita 3.6"
-   ],
-   [
-    "pūrṇaḥ",
-    "āśā",
-    "pūrṇa āśā",
-    "astavakragita 5.5"
-   ],
-   [
-    "mātraḥ",
-    "ātmā",
-    "mātra ātmā",
-    "astavakragita 2.19"
-   ]
-  ]
- },
- "I|i|I": {
-  "n": 26,
-  "ex": [
-   [
-    "kāminī",
-    "iva",
-    "kāminīva",
-    "meghaduta 1.67"
-   ],
-   [
-    "maithilī",
-    "iva",
-    "maithilīva",
-    "meghaduta 2.40"
-   ],
-   [
-    "śaśī",
-    "iva",
-    "śaśīva",
-    "ramayana 2.5.24"
-   ]
-  ]
- },
- "e|i|a i": {
-  "n": 25,
-  "ex": [
-   [
-    "vyatikare",
-    "iva",
-    "vyatikara iva",
-    "meghaduta 1.15"
-   ],
-   [
-    "te",
-    "iti",
-    "ta iti",
-    "mahabharata 3.61.64"
-   ],
-   [
-    "ye",
-    "iha",
-    "ya iha",
-    "ramayana 2.40.26"
-   ]
-  ]
- },
- "us|y|ur y": {
-  "n": 25,
-  "ex": [
-   [
-    "viduḥ",
-    "yukta",
-    "viduryukta",
-    "gita 7.30"
-   ],
-   [
-    "vāyuḥ",
-    "yamaḥ",
-    "vāyuryamaḥ",
-    "gita 11.39"
-   ],
-   [
-    "viduḥ",
-    "yānti",
-    "viduryānti",
-    "gita 13.35"
-   ]
-  ]
- },
- "is|d|ir d": {
-  "n": 25,
-  "ex": [
-   [
-    "śuciḥ",
-    "dakṣaḥ",
-    "śucirdakṣaḥ",
-    "gita 12.16"
-   ],
-   [
-    "dhṛtiḥ",
-    "dānam",
-    "dhṛtir dānam",
-    "mahabharata 3.55.9"
-   ],
-   [
-    "adbhiḥ",
-    "dattā",
-    "adbhir dattā",
-    "ramayana 2.26.16"
-   ]
-  ]
- },
- "u|u|U": {
-  "n": 24,
-  "ex": [
-   [
-    "tu",
-    "udakam",
-    "tūdakam",
-    "ramayana 2.58.43"
-   ],
-   [
-    "bāhu",
-    "udara",
-    "bāhūdara",
-    "gita 11.16"
-   ],
-   [
-    "khalu",
-    "ugra",
-    "khalūgra",
-    "kumarasambhava 4.24"
-   ]
-  ]
- },
  "t|l|l l": {
-  "n": 24,
+  "n": 34,
   "ex": [
    [
     "dūrāt",
@@ -3426,169 +3242,169 @@
    ]
   ]
  },
- "m|G|M G": {
-  "n": 24,
-  "ex": [
-   [
-    "tam",
-    "ghaṭam",
-    "taṃ ghaṭam",
-    "ramayana 2.58.2"
-   ],
-   [
-    "tam",
-    "ghoṣam",
-    "taṃ ghoṣam",
-    "ramayana 2.75.4"
-   ],
-   [
-    "vanam",
-    "ghora",
-    "vanaṃ ghora",
-    "ramayana 2.87.14"
-   ]
-  ]
- },
- "is|e|ir e": {
-  "n": 22,
-  "ex": [
-   [
-    "dṛṣṭiḥ",
-    "ekam",
-    "dṛṣṭir ekam",
-    "meghaduta 1.50"
-   ],
-   [
-    "ratiḥ",
-    "eva",
-    "ratireva",
-    "gita 3.17"
-   ],
-   [
-    "jyotiḥ",
-    "eva",
-    "jyotireva",
-    "gita 5.24"
-   ]
-  ]
- },
- "O|u|Av u": {
-  "n": 22,
-  "ex": [
-   [
-    "karau",
-    "ubhau",
-    "karāvubhau",
-    "gita 5.2"
-   ],
-   [
-    "rātrau",
-    "uda",
-    "rātrāv uda",
-    "ramayana 2.57.19"
-   ],
-   [
-    "sutau",
-    "ubhau",
-    "sutāv ubhau",
-    "ramayana 2.102.28"
-   ]
-  ]
- },
- "us|g|ur g": {
-  "n": 22,
-  "ex": [
-   [
-    "bandhuḥ",
-    "gataḥ",
-    "bandhurgataḥ",
-    "meghaduta 1.6"
-   ],
-   [
-    "pituḥ",
-    "gṛhe",
-    "pitur gṛhe",
-    "mahabharata 3.66.13"
-   ],
-   [
-    "pituḥ",
-    "gehe",
-    "pitur gehe",
-    "ramayana 2.26.11"
-   ]
-  ]
- },
- "Es|b|Er b": {
-  "n": 22,
-  "ex": [
-   [
-    "yodhaiḥ",
-    "bala",
-    "yodhair bala",
-    "ramayana 2.76.24"
-   ],
-   [
-    "śataiḥ",
-    "baddhāḥ",
-    "śatairbaddhāḥ",
-    "gita 16.12"
-   ],
-   [
-    "jaiḥ",
-    "bahubhiḥ",
-    "jair bahubhiḥ",
-    "ramayana 2.49.11"
-   ]
-  ]
- },
- "Es|j|Er j": {
-  "n": 21,
-  "ex": [
-   [
-    "ceṣṭaiḥ",
-    "jalada",
-    "ceṣṭair jalada",
-    "meghaduta 1.66"
-   ],
-   [
-    "abhinavaiḥ",
-    "jālakaiḥ",
-    "abhinavair jālakaiḥ",
-    "meghaduta 2.38"
-   ],
-   [
-    "taiḥ",
-    "jitaḥ",
-    "tairjitaḥ",
-    "gita 5.19"
-   ]
-  ]
- },
- "os|t|os t": {
-  "n": 21,
+ "os|a|or a": {
+  "n": 33,
   "ex": [
    [
     "hetoḥ",
-    "tvad",
-    "hetos tvad",
-    "meghaduta 1.27"
+    "antar",
+    "hetorantar",
+    "meghaduta 1.3"
    ],
    [
-    "tayoḥ",
-    "tu",
-    "tayostu",
-    "gita 5.2"
+    "indoḥ",
+    "amṛta",
+    "indor amṛta",
+    "meghaduta 2.30"
    ],
    [
-    "tayoḥ",
-    "tau",
-    "tayos tau",
-    "kumarasambhava 7.44"
+    "hetoḥ",
+    "a",
+    "hetor a",
+    "ramayana 3.60.47"
+   ]
+  ]
+ },
+ "us|n|ur n": {
+  "n": 33,
+  "ex": [
+   [
+    "mātuḥ",
+    "na",
+    "mātur na",
+    "ramayana 2.27.15"
+   ],
+   [
+    "manyuḥ",
+    "na",
+    "manyur na",
+    "ramayana 2.29.26"
+   ],
+   [
+    "pituḥ",
+    "naḥ",
+    "pitur naḥ",
+    "ramayana 3.62.8"
+   ]
+  ]
+ },
+ "I|i|I": {
+  "n": 32,
+  "ex": [
+   [
+    "kāminī",
+    "iva",
+    "kāminīva",
+    "meghaduta 1.67"
+   ],
+   [
+    "maithilī",
+    "iva",
+    "maithilīva",
+    "meghaduta 2.40"
+   ],
+   [
+    "śaśī",
+    "iva",
+    "śaśīva",
+    "ramayana 2.5.24"
+   ]
+  ]
+ },
+ "Es|A|Er A": {
+  "n": 32,
+  "ex": [
+   [
+    "nihitaiḥ",
+    "āgatam",
+    "nihitair āgatam",
+    "meghaduta 2.39"
+   ],
+   [
+    "puruṣaiḥ",
+    "āpta",
+    "puruṣair āpta",
+    "mahabharata 3.57.10"
+   ],
+   [
+    "mukhaiḥ",
+    "āsava",
+    "mukhair āsava",
+    "kumarasambhava 7.62"
+   ]
+  ]
+ },
+ "a|C|a cC": {
+  "n": 30,
+  "ex": [
+   [
+    "ratna",
+    "chāyā",
+    "ratnacchāyā",
+    "meghaduta 1.15"
+   ],
+   [
+    "kṣāma",
+    "chāyam",
+    "kṣāmacchāyam",
+    "meghaduta 2.20"
+   ],
+   [
+    "a",
+    "chinna",
+    "acchinna",
+    "kumarasambhava 6.69"
+   ]
+  ]
+ },
+ "is|d|ir d": {
+  "n": 30,
+  "ex": [
+   [
+    "śuciḥ",
+    "dakṣaḥ",
+    "śucirdakṣaḥ",
+    "gita 12.16"
+   ],
+   [
+    "muniḥ",
+    "dṛṣṭa",
+    "munir dṛṣṭa",
+    "ramayana 3.10.15"
+   ],
+   [
+    "dhṛtiḥ",
+    "dānam",
+    "dhṛtir dānam",
+    "mahabharata 3.55.9"
+   ]
+  ]
+ },
+ "as|u|a u": {
+  "n": 28,
+  "ex": [
+   [
+    "saḥ",
+    "u",
+    "sa u",
+    "kathopanisad 2.1.13"
+   ],
+   [
+    "saḥ",
+    "ucyate",
+    "sa ucyate",
+    "gita 3.6"
+   ],
+   [
+    "yogaḥ",
+    "ucyate",
+    "yoga ucyate",
+    "gita 2.48"
    ]
   ]
  },
  "n|j|Y j": {
-  "n": 21,
+  "n": 28,
   "ex": [
    [
     "śiśirān",
@@ -3610,8 +3426,100 @@
    ]
   ]
  },
+ "us|y|ur y": {
+  "n": 28,
+  "ex": [
+   [
+    "viduḥ",
+    "yukta",
+    "viduryukta",
+    "gita 7.30"
+   ],
+   [
+    "vāyuḥ",
+    "yamaḥ",
+    "vāyuryamaḥ",
+    "gita 11.39"
+   ],
+   [
+    "viduḥ",
+    "yānti",
+    "viduryānti",
+    "gita 13.35"
+   ]
+  ]
+ },
+ "as|A|a A": {
+  "n": 27,
+  "ex": [
+   [
+    "yaḥ",
+    "āste",
+    "ya āste",
+    "gita 3.6"
+   ],
+   [
+    "pūrṇaḥ",
+    "āśā",
+    "pūrṇa āśā",
+    "astavakragita 5.5"
+   ],
+   [
+    "mātraḥ",
+    "ātmā",
+    "mātra ātmā",
+    "astavakragita 2.19"
+   ]
+  ]
+ },
+ "e|i|a i": {
+  "n": 26,
+  "ex": [
+   [
+    "vyatikare",
+    "iva",
+    "vyatikara iva",
+    "meghaduta 1.15"
+   ],
+   [
+    "te",
+    "iti",
+    "ta iti",
+    "mahabharata 3.61.64"
+   ],
+   [
+    "ye",
+    "iha",
+    "ya iha",
+    "ramayana 2.40.26"
+   ]
+  ]
+ },
+ "is|e|ir e": {
+  "n": 26,
+  "ex": [
+   [
+    "dṛṣṭiḥ",
+    "ekam",
+    "dṛṣṭir ekam",
+    "meghaduta 1.50"
+   ],
+   [
+    "ratiḥ",
+    "eva",
+    "ratireva",
+    "gita 3.17"
+   ],
+   [
+    "jyotiḥ",
+    "eva",
+    "jyotireva",
+    "gita 5.24"
+   ]
+  ]
+ },
  "Es|g|Er g": {
-  "n": 20,
+  "n": 26,
   "ex": [
    [
     "ārambhaiḥ",
@@ -3633,8 +3541,31 @@
    ]
   ]
  },
+ "u|u|U": {
+  "n": 25,
+  "ex": [
+   [
+    "tu",
+    "udakam",
+    "tūdakam",
+    "ramayana 2.58.43"
+   ],
+   [
+    "bāhu",
+    "udara",
+    "bāhūdara",
+    "gita 11.16"
+   ],
+   [
+    "khalu",
+    "ugra",
+    "khalūgra",
+    "kumarasambhava 4.24"
+   ]
+  ]
+ },
  "As|D|A D": {
-  "n": 20,
+  "n": 25,
   "ex": [
    [
     "deśāḥ",
@@ -3656,8 +3587,31 @@
    ]
   ]
  },
+ "Es|j|Er j": {
+  "n": 24,
+  "ex": [
+   [
+    "ceṣṭaiḥ",
+    "jalada",
+    "ceṣṭair jalada",
+    "meghaduta 1.66"
+   ],
+   [
+    "abhinavaiḥ",
+    "jālakaiḥ",
+    "abhinavair jālakaiḥ",
+    "meghaduta 2.38"
+   ],
+   [
+    "taiḥ",
+    "jitaḥ",
+    "tairjitaḥ",
+    "gita 5.19"
+   ]
+  ]
+ },
  "us|B|ur B": {
-  "n": 19,
+  "n": 24,
   "ex": [
    [
     "laṅghayeyuḥ",
@@ -3679,31 +3633,77 @@
    ]
   ]
  },
- "is|b|ir b": {
-  "n": 19,
+ "m|K|M K": {
+  "n": 24,
   "ex": [
    [
-    "śuciḥ",
-    "bahu",
-    "śucir bahu",
-    "ramayana 2.32.14"
+    "subhagam",
+    "khe",
+    "subhagaṃ khe",
+    "meghaduta 1.10"
    ],
    [
-    "haviḥ",
-    "brahma",
-    "havirbrahma",
-    "gita 4.24"
+    "vām",
+    "khedaḥ",
+    "vāṃ khedaḥ",
+    "ramayana 3.12.2"
    ],
    [
-    "muniḥ",
-    "brahma",
-    "munirbrahma",
-    "gita 5.6"
+    "ādyam",
+    "khalu",
+    "ādyaṃ khalu",
+    "kumarasambhava 5.33"
+   ]
+  ]
+ },
+ "us|g|ur g": {
+  "n": 23,
+  "ex": [
+   [
+    "bandhuḥ",
+    "gataḥ",
+    "bandhurgataḥ",
+    "meghaduta 1.6"
+   ],
+   [
+    "pituḥ",
+    "gṛhe",
+    "pitur gṛhe",
+    "mahabharata 3.66.13"
+   ],
+   [
+    "pituḥ",
+    "gehe",
+    "pitur gehe",
+    "ramayana 2.26.11"
+   ]
+  ]
+ },
+ "os|t|os t": {
+  "n": 22,
+  "ex": [
+   [
+    "hetoḥ",
+    "tvad",
+    "hetos tvad",
+    "meghaduta 1.27"
+   ],
+   [
+    "tayoḥ",
+    "tu",
+    "tayostu",
+    "gita 5.2"
+   ],
+   [
+    "tayoḥ",
+    "tau",
+    "tayos tau",
+    "kumarasambhava 7.44"
    ]
   ]
  },
  "m|P|M P": {
-  "n": 18,
+  "n": 22,
   "ex": [
    [
     "āmandrāṇām",
@@ -3725,8 +3725,100 @@
    ]
   ]
  },
+ "is|b|ir b": {
+  "n": 21,
+  "ex": [
+   [
+    "śuciḥ",
+    "bahu",
+    "śucir bahu",
+    "ramayana 2.32.14"
+   ],
+   [
+    "ebhiḥ",
+    "bāhu",
+    "ebhir bāhu",
+    "ramayana 3.19.15"
+   ],
+   [
+    "haviḥ",
+    "brahma",
+    "havirbrahma",
+    "gita 4.24"
+   ]
+  ]
+ },
+ "es|t|es t": {
+  "n": 21,
+  "ex": [
+   [
+    "nirviśeḥ",
+    "tam",
+    "nirviśes tam",
+    "meghaduta 1.66"
+   ],
+   [
+    "jābāleḥ",
+    "tu",
+    "jābāles tu",
+    "ramayana 2.101.1"
+   ],
+   [
+    "ṛṣeḥ",
+    "tasya",
+    "ṛṣes tasya",
+    "ramayana 3.10.30"
+   ]
+  ]
+ },
+ "O|i|Av i": {
+  "n": 20,
+  "ex": [
+   [
+    "dvau",
+    "imau",
+    "dvāvimau",
+    "gita 15.16"
+   ],
+   [
+    "agnau",
+    "iva",
+    "agnāviva",
+    "mahabharata 3.74.18"
+   ],
+   [
+    "śakyau",
+    "iha",
+    "śakyāviha",
+    "mahabharata 3.65.4"
+   ]
+  ]
+ },
+ "us|D|ur D": {
+  "n": 19,
+  "ex": [
+   [
+    "dhanuḥ",
+    "dharaḥ",
+    "dhanurdharaḥ",
+    "gita 18.78"
+   ],
+   [
+    "bāhuḥ",
+    "dhanus",
+    "bāhur dhanus",
+    "ramayana 2.38.6"
+   ],
+   [
+    "mṛtyuḥ",
+    "dhruvam",
+    "mṛtyur dhruvam",
+    "gita 2.27"
+   ]
+  ]
+ },
  "e|e|a e": {
-  "n": 17,
+  "n": 18,
   "ex": [
    [
     "ye",
@@ -3748,8 +3840,31 @@
    ]
   ]
  },
+ "is|j|ir j": {
+  "n": 18,
+  "ex": [
+   [
+    "bhraṃśibhiḥ",
+    "jīrṇa",
+    "bhraṃśibhirjīrṇa",
+    "meghaduta 1.31"
+   ],
+   [
+    "keliḥ",
+    "jāta",
+    "kelirjāta",
+    "rtusamhara 5.16"
+   ],
+   [
+    "aratiḥ",
+    "jana",
+    "aratirjana",
+    "gita 13.11"
+   ]
+  ]
+ },
  "is|g|ir g": {
-  "n": 17,
+  "n": 18,
   "ex": [
    [
     "gandhibhiḥ",
@@ -3772,7 +3887,7 @@
   ]
  },
  "es|v|er v": {
-  "n": 17,
+  "n": 18,
   "ex": [
    [
     "gireḥ",
@@ -3794,49 +3909,118 @@
    ]
   ]
  },
- "O|i|Av i": {
-  "n": 17,
+ "As|a|A a": {
+  "n": 18,
   "ex": [
    [
-    "dvau",
-    "imau",
-    "dvāvimau",
-    "gita 15.16"
+    "jāḥ",
+    "adri",
+    "jā adri",
+    "kathopanisad 2.2.2"
    ],
    [
-    "agnau",
-    "iva",
-    "agnāviva",
-    "mahabharata 3.74.18"
+    "dhīrāḥ",
+    "a",
+    "dhīrā a",
+    "astavakragita 18.53"
    ],
    [
-    "śakyau",
-    "iha",
-    "śakyāviha",
-    "mahabharata 3.65.4"
+    "devāḥ",
+    "api",
+    "devā api",
+    "gita 11.52"
    ]
   ]
  },
- "es|t|es t": {
+ "us|u|ur u": {
   "n": 17,
   "ex": [
    [
-    "nirviśeḥ",
-    "tam",
-    "nirviśes tam",
-    "meghaduta 1.66"
+    "savituḥ",
+    "udaye",
+    "savitur udaye",
+    "meghaduta 2.11"
    ],
    [
-    "jābāleḥ",
-    "tu",
-    "jābāles tu",
-    "ramayana 2.101.1"
+    "hetuḥ",
+    "ucyate",
+    "heturucyate",
+    "gita 13.21"
    ],
    [
-    "kaveḥ",
-    "tasya",
-    "kaves tasya",
-    "kumarasambhava 2.17"
+    "savituḥ",
+    "udaya",
+    "saviturudaya",
+    "rtusamhara 5.15"
+   ]
+  ]
+ },
+ "n|l|Ml l": {
+  "n": 17,
+  "ex": [
+   [
+    "paśyan",
+    "lalita",
+    "paśyaṃl lalita",
+    "meghaduta 1.36"
+   ],
+   [
+    "imān",
+    "lokān",
+    "imāṃllokān",
+    "gita 18.17"
+   ],
+   [
+    "asmin",
+    "loke",
+    "asmiṃl loke",
+    "ramayana 2.37.8"
+   ]
+  ]
+ },
+ "ar|t|as t": {
+  "n": 17,
+  "ex": [
+   [
+    "antar",
+    "toyam",
+    "antastoyam",
+    "meghaduta 2.1"
+   ],
+   [
+    "punar",
+    "tāni",
+    "punastāni",
+    "gita 9.7"
+   ],
+   [
+    "punar",
+    "tava",
+    "punastava",
+    "gita 11.16"
+   ]
+  ]
+ },
+ "m|C|M C": {
+  "n": 17,
+  "ex": [
+   [
+    "ruhām",
+    "chāyayā",
+    "ruhāṃ chāyayā",
+    "meghaduta 2.6"
+   ],
+   [
+    "utpalānām",
+    "chāyā",
+    "utpalānāṃ chāyā",
+    "meghaduta 1.28"
+   ],
+   [
+    "vīram",
+    "chāyā",
+    "vīraṃ chāyā",
+    "mahabharata 3.62.27"
    ]
   ]
  },
@@ -3863,146 +4047,31 @@
    ]
   ]
  },
- "is|j|ir j": {
-  "n": 16,
+ "os|v|or v": {
+  "n": 17,
   "ex": [
    [
-    "bhraṃśibhiḥ",
-    "jīrṇa",
-    "bhraṃśibhirjīrṇa",
-    "meghaduta 1.31"
+    "nayanayoḥ",
+    "vibhrama",
+    "nayanayor vibhrama",
+    "meghaduta 2.12"
    ],
    [
-    "keliḥ",
-    "jāta",
-    "kelirjāta",
-    "rtusamhara 5.16"
+    "hetoḥ",
+    "vanam",
+    "hetor vanam",
+    "ramayana 2.73.10"
    ],
    [
-    "aratiḥ",
-    "jana",
-    "aratirjana",
-    "gita 13.11"
-   ]
-  ]
- },
- "As|a|A a": {
-  "n": 16,
-  "ex": [
-   [
-    "jāḥ",
-    "adri",
-    "jā adri",
-    "kathopanisad 2.2.2"
-   ],
-   [
-    "dhīrāḥ",
-    "a",
-    "dhīrā a",
-    "astavakragita 18.53"
-   ],
-   [
-    "devāḥ",
-    "api",
-    "devā api",
-    "gita 11.52"
-   ]
-  ]
- },
- "us|u|ur u": {
-  "n": 15,
-  "ex": [
-   [
-    "savituḥ",
-    "udaye",
-    "savitur udaye",
-    "meghaduta 2.11"
-   ],
-   [
-    "hetuḥ",
-    "ucyate",
-    "heturucyate",
-    "gita 13.21"
-   ],
-   [
-    "savituḥ",
-    "udaya",
-    "saviturudaya",
-    "rtusamhara 5.15"
-   ]
-  ]
- },
- "us|D|ur D": {
-  "n": 15,
-  "ex": [
-   [
-    "dhanuḥ",
-    "dharaḥ",
-    "dhanurdharaḥ",
-    "gita 18.78"
-   ],
-   [
-    "bāhuḥ",
-    "dhanus",
-    "bāhur dhanus",
-    "ramayana 2.38.6"
-   ],
-   [
-    "mṛtyuḥ",
-    "dhruvam",
-    "mṛtyur dhruvam",
-    "gita 2.27"
-   ]
-  ]
- },
- "m|C|M C": {
-  "n": 14,
-  "ex": [
-   [
-    "ruhām",
-    "chāyayā",
-    "ruhāṃ chāyayā",
-    "meghaduta 2.6"
-   ],
-   [
-    "utpalānām",
-    "chāyā",
-    "utpalānāṃ chāyā",
-    "meghaduta 1.28"
-   ],
-   [
-    "vīram",
-    "chāyā",
-    "vīraṃ chāyā",
-    "mahabharata 3.62.27"
-   ]
-  ]
- },
- "m|K|M K": {
-  "n": 14,
-  "ex": [
-   [
-    "subhagam",
-    "khe",
-    "subhagaṃ khe",
-    "meghaduta 1.10"
-   ],
-   [
-    "ādyam",
-    "khalu",
-    "ādyaṃ khalu",
-    "kumarasambhava 5.33"
-   ],
-   [
-    "kāmam",
-    "khalu",
-    "kāmaṃ khalu",
-    "ramayana 2.4.26"
+    "guroḥ",
+    "vacaḥ",
+    "guror vacaḥ",
+    "ramayana 2.101.24"
    ]
   ]
  },
  "I|a|y a": {
-  "n": 14,
+  "n": 16,
   "ex": [
    [
     "devī",
@@ -4024,8 +4093,100 @@
    ]
   ]
  },
+ "As|l|A l": {
+  "n": 15,
+  "ex": [
+   [
+    "nayethāḥ",
+    "lakṣmīm",
+    "nayethā lakṣmīm",
+    "meghaduta 1.36"
+   ],
+   [
+    "etāḥ",
+    "loka",
+    "etā loka",
+    "ramayana 3.13.18"
+   ],
+   [
+    "krūrāḥ",
+    "loka",
+    "krūrā loka",
+    "ramayana 3.28.7"
+   ]
+  ]
+ },
+ "is|h|ir h": {
+  "n": 15,
+  "ex": [
+   [
+    "ādiḥ",
+    "hi",
+    "ādirhi",
+    "gita 10.2"
+   ],
+   [
+    "ratiḥ",
+    "hi",
+    "ratir hi",
+    "ramayana 2.43.14"
+   ],
+   [
+    "gatiḥ",
+    "hi",
+    "gatir hi",
+    "ramayana 2.95.22"
+   ]
+  ]
+ },
+ "in|a|inn a": {
+  "n": 15,
+  "ex": [
+   [
+    "tasmin",
+    "adrau",
+    "tasminnadrau",
+    "meghaduta 1.2"
+   ],
+   [
+    "tasmin",
+    "ati",
+    "tasminn ati",
+    "ramayana 2.57.14"
+   ],
+   [
+    "tasmin",
+    "api",
+    "tasminn api",
+    "astavakragita 16.9"
+   ]
+  ]
+ },
+ "is|D|ir D": {
+  "n": 14,
+  "ex": [
+   [
+    "udgāyadbhiḥ",
+    "dhanapati",
+    "udgāyadbhir dhanapati",
+    "meghaduta 2.10"
+   ],
+   [
+    "asiḥ",
+    "dhanuḥ",
+    "asir dhanuḥ",
+    "ramayana 3.42.4"
+   ],
+   [
+    "bhūtiḥ",
+    "dhruvā",
+    "bhūtirdhruvā",
+    "gita 18.78"
+   ]
+  ]
+ },
  "an|e|ann e": {
-  "n": 13,
+  "n": 14,
   "ex": [
    [
     "san",
@@ -4044,6 +4205,98 @@
     "evam",
     "vasann evam",
     "ramayana 2.101.26"
+   ]
+  ]
+ },
+ "os|m|or m": {
+  "n": 13,
+  "ex": [
+   [
+    "pṛthoḥ",
+    "mahā",
+    "pṛthor mahā",
+    "ramayana 2.102.10"
+   ],
+   [
+    "tayoḥ",
+    "madhye",
+    "tayor madhye",
+    "ramayana 3.18.13"
+   ],
+   [
+    "bhruvoḥ",
+    "madhye",
+    "bhruvormadhye",
+    "gita 8.10"
+   ]
+  ]
+ },
+ "Es|e|Er e": {
+  "n": 13,
+  "ex": [
+   [
+    "vibhramaiḥ",
+    "eva",
+    "vibhramair eva",
+    "meghaduta 2.14"
+   ],
+   [
+    "taiḥ",
+    "evam",
+    "tair evam",
+    "ramayana 3.10.58"
+   ],
+   [
+    "etaiḥ",
+    "evam",
+    "etair evam",
+    "astavakragita 12.5"
+   ]
+  ]
+ },
+ "us|e|ur e": {
+  "n": 13,
+  "ex": [
+   [
+    "yajuḥ",
+    "eva",
+    "yajureva",
+    "gita 9.17"
+   ],
+   [
+    "guruḥ",
+    "eva",
+    "gurur eva",
+    "ramayana 2.87.25"
+   ],
+   [
+    "cakruḥ",
+    "eva",
+    "cakrur eva",
+    "ramayana 2.6.16"
+   ]
+  ]
+ },
+ "is|l|ir l": {
+  "n": 13,
+  "ex": [
+   [
+    "jyotis",
+    "lekhā",
+    "jyotirlekhā",
+    "meghaduta 1.48"
+   ],
+   [
+    "ṛṣiḥ",
+    "loka",
+    "ṛṣir loka",
+    "ramayana 3.6.15"
+   ],
+   [
+    "ārtiḥ",
+    "loka",
+    "ārtir loka",
+    "astavakragita 18.60"
    ]
   ]
  },
@@ -4070,95 +4323,118 @@
    ]
   ]
  },
- "is|D|ir D": {
+ "ar|s|aH s": {
   "n": 12,
   "ex": [
    [
-    "udgāyadbhiḥ",
-    "dhanapati",
-    "udgāyadbhir dhanapati",
-    "meghaduta 2.10"
+    "punar",
+    "sve",
+    "punaḥ sve",
+    "mahabharata 3.78.4"
    ],
    [
-    "bhūtiḥ",
-    "dhruvā",
-    "bhūtirdhruvā",
-    "gita 18.78"
+    "punar",
+    "sma",
+    "punaḥ sma",
+    "ramayana 2.15.14"
    ],
-   [
-    "dṛṣṭiḥ",
-    "dhyāna",
-    "dṛṣṭir dhyāna",
-    "mahabharata 3.51.3"
-   ]
-  ]
- },
- "n|l|Ml l": {
-  "n": 12,
-  "ex": [
-   [
-    "paśyan",
-    "lalita",
-    "paśyaṃl lalita",
-    "meghaduta 1.36"
-   ],
-   [
-    "imān",
-    "lokān",
-    "imāṃllokān",
-    "gita 18.17"
-   ],
-   [
-    "asmin",
-    "loke",
-    "asmiṃl loke",
-    "ramayana 2.37.8"
-   ]
-  ]
- },
- "ar|t|as t": {
-  "n": 12,
-  "ex": [
    [
     "antar",
-    "toyam",
-    "antastoyam",
-    "meghaduta 2.1"
-   ],
-   [
-    "punar",
-    "tāni",
-    "punastāni",
-    "gita 9.7"
-   ],
-   [
-    "punar",
-    "tava",
-    "punastava",
-    "gita 11.16"
+    "sukhaḥ",
+    "antaḥsukhaḥ",
+    "gita 5.24"
    ]
   ]
  },
- "is|h|ir h": {
+ "A|I|e": {
   "n": 12,
   "ex": [
    [
-    "ādiḥ",
-    "hi",
-    "ādirhi",
-    "gita 10.2"
+    "mahā",
+    "īśvaram",
+    "maheśvaram",
+    "gita 5.29"
    ],
    [
-    "ratiḥ",
-    "hi",
-    "ratir hi",
-    "ramayana 2.43.14"
+    "yathā",
+    "īritam",
+    "yatheritam",
+    "mahabharata 3.67.22"
    ],
    [
-    "gatiḥ",
+    "mayā",
+    "īpsitāḥ",
+    "mayepsitāḥ",
+    "ramayana 2.4.12"
+   ]
+  ]
+ },
+ "os|i|or i": {
+  "n": 12,
+  "ex": [
+   [
+    "vāyoḥ",
+    "iva",
+    "vāyoriva",
+    "gita 6.34"
+   ],
+   [
+    "guroḥ",
+    "iyam",
+    "guror iyam",
+    "kumarasambhava 5.59"
+   ],
+   [
+    "mṛtyoḥ",
+    "iva",
+    "mṛtyor iva",
+    "ramayana 2.42.25"
+   ]
+  ]
+ },
+ "Es|l|Er l": {
+  "n": 12,
+  "ex": [
+   [
+    "nihitaiḥ",
+    "lakṣaṇaiḥ",
+    "nihitair lakṣaṇaiḥ",
+    "meghaduta 2.20"
+   ],
+   [
+    "kaiḥ",
+    "liṅgaiḥ",
+    "kairliṅgaiḥ",
+    "gita 14.21"
+   ],
+   [
+    "kusumaiḥ",
+    "latā",
+    "kusumair latā",
+    "kumarasambhava 7.21"
+   ]
+  ]
+ },
+ "us|h|ur h": {
+  "n": 12,
+  "ex": [
+   [
+    "mṛduḥ",
     "hi",
-    "gatir hi",
-    "ramayana 2.95.22"
+    "mṛdur hi",
+    "ramayana 2.18.11"
+   ],
+   [
+    "sādhuḥ",
+    "hite",
+    "sādhur hite",
+    "ramayana 3.10.85"
+   ],
+   [
+    "yayuḥ",
+    "hṛṣṭāḥ",
+    "yayur hṛṣṭāḥ",
+    "mahabharata 3.65.5"
    ]
   ]
  },
@@ -4185,77 +4461,31 @@
    ]
   ]
  },
- "in|a|inn a": {
+ "us|r|U r": {
   "n": 12,
   "ex": [
    [
-    "tasmin",
-    "adrau",
-    "tasminnadrau",
-    "meghaduta 1.2"
+    "bāhuḥ",
+    "rāmam",
+    "bāhū rāmam",
+    "ramayana 2.34.3"
    ],
    [
-    "tasmin",
-    "ati",
-    "tasminn ati",
-    "ramayana 2.57.14"
+    "pṛthuḥ",
+    "rājā",
+    "pṛthū rājā",
+    "ramayana 2.102.10"
    ],
    [
-    "tasmin",
-    "api",
-    "tasminn api",
-    "astavakragita 16.9"
-   ]
-  ]
- },
- "os|v|or v": {
-  "n": 12,
-  "ex": [
-   [
-    "nayanayoḥ",
-    "vibhrama",
-    "nayanayor vibhrama",
-    "meghaduta 2.12"
-   ],
-   [
-    "hetoḥ",
-    "vanam",
-    "hetor vanam",
-    "ramayana 2.73.10"
-   ],
-   [
-    "guroḥ",
-    "vacaḥ",
-    "guror vacaḥ",
-    "ramayana 2.101.24"
-   ]
-  ]
- },
- "us|e|ur e": {
-  "n": 11,
-  "ex": [
-   [
-    "yajuḥ",
-    "eva",
-    "yajureva",
-    "gita 9.17"
-   ],
-   [
-    "guruḥ",
-    "eva",
-    "gurur eva",
-    "ramayana 2.87.25"
-   ],
-   [
-    "cakruḥ",
-    "eva",
-    "cakrur eva",
-    "ramayana 2.6.16"
+    "prāhuḥ",
+    "rājñām",
+    "prāhū rājñām",
+    "ramayana 2.88.19"
    ]
   ]
  },
  "a|E|E": {
-  "n": 10,
+  "n": 11,
   "ex": [
    [
     "ca",
@@ -4277,95 +4507,141 @@
    ]
   ]
  },
- "As|l|A l": {
-  "n": 10,
+ "a|O|O": {
+  "n": 11,
   "ex": [
    [
-    "nayethāḥ",
-    "lakṣmīm",
-    "nayethā lakṣmīm",
-    "meghaduta 1.36"
+    "iva",
+    "aurasān",
+    "ivaurasān",
+    "ramayana 2.2.26"
    ],
    [
-    "śyāmāḥ",
-    "latāḥ",
-    "śyāmā latāḥ",
-    "rtusamhara 3.18"
+    "rūpa",
+    "audārya",
+    "rūpaudārya",
+    "mahabharata 3.65.16"
    ],
    [
-    "kāmāḥ",
-    "labhante",
-    "kāmā labhante",
-    "gita 9.21"
+    "iva",
+    "auṣadham",
+    "ivauṣadham",
+    "ramayana 3.38.1"
    ]
   ]
  },
- "Es|l|Er l": {
-  "n": 10,
+ "es|B|er B": {
+  "n": 11,
   "ex": [
    [
-    "nihitaiḥ",
-    "lakṣaṇaiḥ",
-    "nihitair lakṣaṇaiḥ",
-    "meghaduta 2.20"
+    "buddheḥ",
+    "bhedam",
+    "buddherbhedam",
+    "gita 18.29"
    ],
    [
-    "kaiḥ",
-    "liṅgaiḥ",
-    "kairliṅgaiḥ",
-    "gita 14.21"
+    "muneḥ",
+    "bhrātuḥ",
+    "muner bhrātuḥ",
+    "ramayana 3.10.45"
    ],
    [
-    "kusumaiḥ",
-    "latā",
-    "kusumair latā",
-    "kumarasambhava 7.21"
+    "agneḥ",
+    "bhagavataḥ",
+    "agner bhagavataḥ",
+    "ramayana 2.48.5"
    ]
   ]
  },
- "us|h|ur h": {
-  "n": 10,
+ "Es|D|Er D": {
+  "n": 11,
   "ex": [
    [
-    "mṛduḥ",
-    "hi",
-    "mṛdur hi",
-    "ramayana 2.18.11"
+    "mārgaiḥ",
+    "dhūma",
+    "mārgair dhūma",
+    "meghaduta 2.8"
    ],
    [
-    "yayuḥ",
-    "hṛṣṭāḥ",
-    "yayur hṛṣṭāḥ",
-    "mahabharata 3.65.5"
+    "taiḥ",
+    "dhanūṃṣi",
+    "tair dhanūṃṣi",
+    "ramayana 3.24.20"
    ],
    [
-    "babhūvuḥ",
-    "hata",
-    "babhūvur hata",
-    "ramayana 2.41.29"
+    "uccais",
+    "dhvanatā",
+    "uccair dhvanatā",
+    "rtusamhara 2.10"
    ]
   ]
  },
- "Es|e|Er e": {
-  "n": 9,
+ "Is|c|IS c": {
+  "n": 11,
   "ex": [
    [
-    "vibhramaiḥ",
-    "eva",
-    "vibhramair eva",
-    "meghaduta 2.14"
+    "darīḥ",
+    "ca",
+    "darīś ca",
+    "mahabharata 3.61.6"
    ],
    [
-    "etaiḥ",
-    "evam",
-    "etair evam",
-    "astavakragita 12.5"
+    "dāsīḥ",
+    "ca",
+    "dāsīś ca",
+    "ramayana 2.29.14"
    ],
    [
-    "phalaiḥ",
-    "evam",
-    "phalairevam",
-    "gita 9.28"
+    "nadīḥ",
+    "ca",
+    "nadīś ca",
+    "ramayana 2.32.5"
+   ]
+  ]
+ },
+ "us|b|ur b": {
+  "n": 11,
+  "ex": [
+   [
+    "bāhuḥ",
+    "balim",
+    "bāhur balim",
+    "ramayana 3.59.22"
+   ],
+   [
+    "śekuḥ",
+    "bāṣpam",
+    "śekur bāṣpam",
+    "ramayana 2.35.23"
+   ],
+   [
+    "cakruḥ",
+    "bandhu",
+    "cakrur bandhu",
+    "kumarasambhava 7.6"
+   ]
+  ]
+ },
+ "As|G|A G": {
+  "n": 11,
+  "ex": [
+   [
+    "śivāḥ",
+    "ghora",
+    "śivā ghora",
+    "ramayana 3.22.10"
+   ],
+   [
+    "proktāḥ",
+    "ghora",
+    "proktā ghora",
+    "ramayana 3.54.6"
+   ],
+   [
+    "channāḥ",
+    "ghaṭāḥ",
+    "channā ghaṭāḥ",
+    "ramayana 2.13.7"
    ]
   ]
  },
@@ -4392,52 +4668,6 @@
    ]
   ]
  },
- "ar|s|aH s": {
-  "n": 9,
-  "ex": [
-   [
-    "punar",
-    "sve",
-    "punaḥ sve",
-    "mahabharata 3.78.4"
-   ],
-   [
-    "punar",
-    "sma",
-    "punaḥ sma",
-    "ramayana 2.15.14"
-   ],
-   [
-    "antar",
-    "sukhaḥ",
-    "antaḥsukhaḥ",
-    "gita 5.24"
-   ]
-  ]
- },
- "A|I|e": {
-  "n": 9,
-  "ex": [
-   [
-    "mahā",
-    "īśvaram",
-    "maheśvaram",
-    "gita 5.29"
-   ],
-   [
-    "yathā",
-    "īritam",
-    "yatheritam",
-    "mahabharata 3.67.22"
-   ],
-   [
-    "mayā",
-    "īpsitāḥ",
-    "mayepsitāḥ",
-    "ramayana 2.4.12"
-   ]
-  ]
- },
  "t|f|d f": {
   "n": 9,
   "ex": [
@@ -4461,141 +4691,95 @@
    ]
   ]
  },
- "es|B|er B": {
+ "A|o|O": {
   "n": 9,
   "ex": [
    [
-    "buddheḥ",
-    "bhedam",
-    "buddherbhedam",
-    "gita 18.29"
-   ],
-   [
-    "agneḥ",
-    "bhagavataḥ",
-    "agner bhagavataḥ",
-    "ramayana 2.48.5"
-   ],
-   [
-    "adhipateḥ",
-    "bhāryām",
-    "adhipater bhāryām",
-    "mahabharata 3.61.32"
-   ]
-  ]
- },
- "us|r|U r": {
-  "n": 9,
-  "ex": [
-   [
-    "bāhuḥ",
-    "rāmam",
-    "bāhū rāmam",
-    "ramayana 2.34.3"
-   ],
-   [
-    "pṛthuḥ",
-    "rājā",
-    "pṛthū rājā",
-    "ramayana 2.102.10"
-   ],
-   [
-    "prāhuḥ",
-    "rājñām",
-    "prāhū rājñām",
-    "ramayana 2.88.19"
-   ]
-  ]
- },
- "us|b|ur b": {
-  "n": 9,
-  "ex": [
-   [
-    "śekuḥ",
-    "bāṣpam",
-    "śekur bāṣpam",
-    "ramayana 2.35.23"
-   ],
-   [
-    "cakruḥ",
-    "bandhu",
-    "cakrur bandhu",
-    "kumarasambhava 7.6"
-   ],
-   [
-    "ūcuḥ",
-    "bahuvidhāḥ",
-    "ūcur bahuvidhāḥ",
-    "ramayana 2.30.5"
-   ]
-  ]
- },
- "os|m|or m": {
-  "n": 8,
-  "ex": [
-   [
-    "pṛthoḥ",
     "mahā",
-    "pṛthor mahā",
-    "ramayana 2.102.10"
+    "ojase",
+    "mahaujase",
+    "ramayana 2.39.11"
    ],
    [
-    "bhruvoḥ",
-    "madhye",
-    "bhruvormadhye",
-    "gita 8.10"
+    "mahā",
+    "ojasaḥ",
+    "mahaujasaḥ",
+    "mahabharata 3.54.28"
    ],
    [
-    "ārurukṣoḥ",
-    "muneḥ",
-    "ārurukṣormuneḥ",
-    "gita 6.3"
+    "mahā",
+    "oghena",
+    "mahaughena",
+    "ramayana 2.7.10"
    ]
   ]
  },
- "a|O|O": {
-  "n": 8,
+ "O|A|Av A": {
+  "n": 9,
   "ex": [
    [
-    "iva",
-    "aurasān",
-    "ivaurasān",
-    "ramayana 2.2.26"
+    "tau",
+    "ānayiṣyati",
+    "tāvānayiṣyati",
+    "mahabharata 3.65.3"
    ],
    [
-    "rūpa",
-    "audārya",
-    "rūpaudārya",
-    "mahabharata 3.65.16"
+    "sahitau",
+    "āstām",
+    "sahitāv āstām",
+    "ramayana 3.10.53"
    ],
    [
-    "na",
-    "auddhatyam",
-    "nauddhatyam",
-    "astavakragita 17.17"
+    "tasthau",
+    "ātmānam",
+    "tasthāvātmānam",
+    "mahabharata 3.63.12"
    ]
   ]
  },
- "os|i|or i": {
-  "n": 8,
+ "os|c|oS c": {
+  "n": 9,
   "ex": [
    [
-    "vāyoḥ",
-    "iva",
-    "vāyoriva",
-    "gita 6.34"
+    "tayoḥ",
+    "ca",
+    "tayoś ca",
+    "ramayana 3.18.15"
    ],
    [
-    "guroḥ",
-    "iyam",
-    "guror iyam",
-    "kumarasambhava 5.59"
+    "prāṇayoḥ",
+    "ca",
+    "prāṇayoś ca",
+    "mahabharata 3.77.6"
    ],
    [
-    "mṛtyoḥ",
-    "iva",
-    "mṛtyor iva",
-    "ramayana 2.42.25"
+    "lakṣmaṇayoḥ",
+    "ca",
+    "lakṣmaṇayoś ca",
+    "ramayana 2.57.2"
+   ]
+  ]
+ },
+ "is|r|I r": {
+  "n": 9,
+  "ex": [
+   [
+    "ūrmiḥ",
+    "ruddha",
+    "ūrmī ruddha",
+    "ramayana 3.52.9"
+   ],
+   [
+    "bhāryābhiḥ",
+    "rājā",
+    "bhāryābhī rājā",
+    "ramayana 2.34.1"
+   ],
+   [
+    "dāśarathiḥ",
+    "rāmaḥ",
+    "dāśarathī rāmaḥ",
+    "ramayana 2.82.10"
    ]
   ]
  },
@@ -4645,6 +4829,52 @@
    ]
   ]
  },
+ "i|I|I": {
+  "n": 8,
+  "ex": [
+   [
+    "hi",
+    "īśvara",
+    "hīśvara",
+    "kumarasambhava 3.63"
+   ],
+   [
+    "hi",
+    "īdṛśam",
+    "hīdṛśam",
+    "ramayana 2.68.5"
+   ],
+   [
+    "yadi",
+    "īdṛśaiḥ",
+    "yadīdṛśaiḥ",
+    "ramayana 3.9.9"
+   ]
+  ]
+ },
+ "Es|r|E r": {
+  "n": 8,
+  "ex": [
+   [
+    "avadhūtaiḥ",
+    "ratna",
+    "avadhūtai ratna",
+    "meghaduta 1.39"
+   ],
+   [
+    "pauraiḥ",
+    "rāma",
+    "paurai rāma",
+    "ramayana 2.6.17"
+   ],
+   [
+    "śanais",
+    "rāmāt",
+    "śanai rāmāt",
+    "ramayana 2.96.17"
+   ]
+  ]
+ },
  "ar|k|aH k": {
   "n": 8,
   "ex": [
@@ -4668,26 +4898,26 @@
    ]
   ]
  },
- "Is|c|IS c": {
+ "O|e|Av e": {
   "n": 8,
   "ex": [
    [
-    "darīḥ",
-    "ca",
-    "darīś ca",
-    "mahabharata 3.61.6"
+    "tau",
+    "eka",
+    "tāv eka",
+    "mahabharata 3.59.4"
    ],
    [
-    "dāsīḥ",
-    "ca",
-    "dāsīś ca",
-    "ramayana 2.29.14"
+    "sahitau",
+    "eva",
+    "sahitāveva",
+    "mahabharata 3.58.33"
    ],
    [
-    "nadīḥ",
-    "ca",
-    "nadīś ca",
-    "ramayana 2.32.5"
+    "bhūmau",
+    "eva",
+    "bhūmāv eva",
+    "ramayana 2.103.15"
    ]
   ]
  },
@@ -4711,6 +4941,29 @@
     "mahat",
     "bhūmer mahat",
     "kathopanisad 1.1.23"
+   ]
+  ]
+ },
+ "is|I|ir I": {
+  "n": 8,
+  "ex": [
+   [
+    "patiḥ",
+    "īdṛśaḥ",
+    "patir īdṛśaḥ",
+    "ramayana 3.29.11"
+   ],
+   [
+    "vimuktiḥ",
+    "īśaḥ",
+    "vimuktir īśaḥ",
+    "kumarasambhava 3.59"
+   ],
+   [
+    "agryābhiḥ",
+    "īḍire",
+    "agryābhir īḍire",
+    "ramayana 3.4.10"
    ]
   ]
  },
@@ -4783,49 +5036,26 @@
    ]
   ]
  },
- "A|o|O": {
+ "in|e|inn e": {
   "n": 7,
   "ex": [
    [
-    "mahā",
-    "ojase",
-    "mahaujase",
-    "ramayana 2.39.11"
+    "tasmin",
+    "eva",
+    "tasminn eva",
+    "ramayana 3.40.27"
    ],
    [
-    "mahā",
-    "ojasaḥ",
-    "mahaujasaḥ",
-    "mahabharata 3.54.28"
+    "etasmin",
+    "eva",
+    "etasminn eva",
+    "mahabharata 3.51.11"
    ],
    [
-    "mahā",
-    "oghena",
-    "mahaughena",
-    "ramayana 2.7.10"
-   ]
-  ]
- },
- "os|c|oS c": {
-  "n": 7,
-  "ex": [
-   [
-    "prāṇayoḥ",
-    "ca",
-    "prāṇayoś ca",
-    "mahabharata 3.77.6"
-   ],
-   [
-    "lakṣmaṇayoḥ",
-    "ca",
-    "lakṣmaṇayoś ca",
-    "ramayana 2.57.2"
-   ],
-   [
-    "viṣṇoḥ",
-    "ca",
-    "viṣṇoś ca",
-    "ramayana 1.74.16"
+    "yasmin",
+    "etau",
+    "yasminn etau",
+    "kathopanisad 2.2.5"
    ]
   ]
  },
@@ -4852,26 +5082,26 @@
    ]
   ]
  },
- "is|r|I r": {
+ "Es|G|Er G": {
   "n": 7,
   "ex": [
    [
-    "bhāryābhiḥ",
-    "rājā",
-    "bhāryābhī rājā",
-    "ramayana 2.34.1"
+    "agraiḥ",
+    "ghoraiḥ",
+    "agrair ghoraiḥ",
+    "ramayana 3.63.11"
    ],
    [
-    "dāśarathiḥ",
-    "rāmaḥ",
-    "dāśarathī rāmaḥ",
-    "ramayana 2.82.10"
+    "kāñcanaiḥ",
+    "ghaṭaiḥ",
+    "kāñcanair ghaṭaiḥ",
+    "ramayana 2.59.3"
    ],
    [
-    "śuciḥ",
-    "rājā",
-    "śucī rājā",
-    "ramayana 1.43.17"
+    "rākṣasaiḥ",
+    "ghoraiḥ",
+    "rākṣasair ghoraiḥ",
+    "ramayana 3.5.15"
    ]
   ]
  },
@@ -4895,6 +5125,29 @@
     "ubhayoḥ",
     "senayorubhayoḥ",
     "gita 1.21"
+   ]
+  ]
+ },
+ "us|l|ur l": {
+  "n": 6,
+  "ex": [
+   [
+    "cikīrṣuḥ",
+    "loka",
+    "cikīrṣur loka",
+    "gita 3.25"
+   ],
+   [
+    "prepsuḥ",
+    "lubdhaḥ",
+    "prepsurlubdhaḥ",
+    "gita 18.27"
+   ],
+   [
+    "bāhuḥ",
+    "lakṣmaṇam",
+    "bāhur lakṣmaṇam",
+    "ramayana 3.60.18"
    ]
   ]
  },
@@ -4967,26 +5220,26 @@
    ]
   ]
  },
- "i|I|I": {
+ "Is|v|Ir v": {
   "n": 6,
   "ex": [
    [
-    "hi",
-    "īśvara",
-    "hīśvara",
-    "kumarasambhava 3.63"
+    "śrīḥ",
+    "vāc",
+    "śrīrvāc",
+    "gita 10.34"
    ],
    [
-    "hi",
-    "īdṛśam",
-    "hīdṛśam",
-    "ramayana 2.68.5"
+    "śrīḥ",
+    "vijayaḥ",
+    "śrīrvijayaḥ",
+    "gita 18.78"
    ],
    [
-    "utkrāmati",
-    "īśvaraḥ",
-    "utkrāmatīśvaraḥ",
-    "gita 15.8"
+    "veṇīḥ",
+    "vīrya",
+    "veṇīr vīrya",
+    "kumarasambhava 2.61"
    ]
   ]
  },
@@ -5013,66 +5266,49 @@
    ]
   ]
  },
- "in|e|inn e": {
+ "es|c|eS c": {
   "n": 6,
   "ex": [
    [
-    "etasmin",
-    "eva",
-    "etasminn eva",
-    "mahabharata 3.51.11"
+    "dhṛteḥ",
+    "ca",
+    "dhṛteśca",
+    "gita 18.29"
    ],
    [
-    "yasmin",
-    "etau",
-    "yasminn etau",
-    "kathopanisad 2.2.5"
+    "uḍupateḥ",
+    "ca",
+    "uḍupateś ca",
+    "kumarasambhava 5.22"
+   ],
+   [
+    "āhitāgneḥ",
+    "ca",
+    "āhitāgneś ca",
+    "ramayana 2.58.37"
    ]
   ]
  },
- "O|e|Av e": {
+ "Is|t|Is t": {
   "n": 6,
   "ex": [
    [
-    "tau",
-    "eka",
-    "tāv eka",
-    "mahabharata 3.59.4"
+    "śrīḥ",
+    "tilakam",
+    "śrīs tilakam",
+    "kumarasambhava 3.30"
    ],
    [
-    "sahitau",
-    "eva",
-    "sahitāveva",
-    "mahabharata 3.58.33"
+    "prakṛtīḥ",
+    "tāḥ",
+    "prakṛtīs tāḥ",
+    "ramayana 2.41.16"
    ],
    [
-    "bhūmau",
-    "eva",
-    "bhūmāv eva",
-    "ramayana 2.103.15"
-   ]
-  ]
- },
- "O|A|Av A": {
-  "n": 6,
-  "ex": [
-   [
-    "tau",
-    "ānayiṣyati",
-    "tāvānayiṣyati",
-    "mahabharata 3.65.3"
-   ],
-   [
-    "tasthau",
-    "ātmānam",
-    "tasthāvātmānam",
-    "mahabharata 3.63.12"
-   ],
-   [
-    "ambhodhau",
-    "āsīt",
-    "ambhodhāv āsīt",
-    "astavakragita 15.18"
+    "rākṣasīḥ",
+    "tāḥ",
+    "rākṣasīs tāḥ",
+    "ramayana 3.52.17"
    ]
   ]
  },
@@ -5099,6 +5335,52 @@
    ]
   ]
  },
+ "es|i|er i": {
+  "n": 6,
+  "ex": [
+   [
+    "gireḥ",
+    "iyam",
+    "girer iyam",
+    "kumarasambhava 8.69"
+   ],
+   [
+    "aśaneḥ",
+    "iva",
+    "aśaner iva",
+    "ramayana 2.110.47"
+   ],
+   [
+    "vāridheḥ",
+    "iva",
+    "vāridher iva",
+    "astavakragita 5.3"
+   ]
+  ]
+ },
+ "t|C|c C": {
+  "n": 6,
+  "ex": [
+   [
+    "tad",
+    "chidura",
+    "tacchidura",
+    "kumarasambhava 8.83"
+   ],
+   [
+    "mad",
+    "chandatas",
+    "macchandatas",
+    "ramayana 3.52.15"
+   ],
+   [
+    "tāpasāt",
+    "chādane",
+    "tāpasāc chādane",
+    "ramayana 2.33.8"
+   ]
+  ]
+ },
  "Os|i|Or i": {
   "n": 6,
   "ex": [
@@ -5122,26 +5404,26 @@
    ]
   ]
  },
- "us|l|ur l": {
+ "as|C|aS C": {
   "n": 5,
   "ex": [
    [
-    "cikīrṣuḥ",
-    "loka",
-    "cikīrṣur loka",
-    "gita 3.25"
+    "śrāntaḥ",
+    "chāyām",
+    "śrāntaś chāyām",
+    "ramayana 3.42.9"
    ],
    [
-    "prepsuḥ",
-    "lubdhaḥ",
-    "prepsurlubdhaḥ",
-    "gita 18.27"
+    "vāsasaḥ",
+    "chittvā",
+    "vāsasaś chittvā",
+    "mahabharata 3.59.17"
    ],
    [
-    "triśaṅkuḥ",
-    "lohitāṅgaḥ",
-    "triśaṅkur lohitāṅgaḥ",
-    "ramayana 2.36.10"
+    "parighaḥ",
+    "chinna",
+    "parighaś chinna",
+    "ramayana 3.25.8"
    ]
   ]
  },
@@ -5168,95 +5450,26 @@
    ]
   ]
  },
- "is|l|ir l": {
+ "as|f|a f": {
   "n": 5,
   "ex": [
    [
-    "jyotis",
-    "lekhā",
-    "jyotirlekhā",
-    "meghaduta 1.48"
+    "saḥ",
+    "ṛkṣa",
+    "sa ṛkṣa",
+    "ramayana 3.68.16"
    ],
    [
-    "ārtiḥ",
-    "loka",
-    "ārtir loka",
-    "astavakragita 18.60"
+    "oṃkāraḥ",
+    "ṛc",
+    "oṃkāra ṛc",
+    "gita 9.17"
    ],
    [
-    "smṛtiḥ",
-    "labdhā",
-    "smṛtirlabdhā",
-    "gita 18.73"
-   ]
-  ]
- },
- "Is|v|Ir v": {
-  "n": 5,
-  "ex": [
-   [
-    "śrīḥ",
-    "vāc",
-    "śrīrvāc",
-    "gita 10.34"
-   ],
-   [
-    "śrīḥ",
-    "vijayaḥ",
-    "śrīrvijayaḥ",
-    "gita 18.78"
-   ],
-   [
-    "veṇīḥ",
-    "vīrya",
-    "veṇīr vīrya",
-    "kumarasambhava 2.61"
-   ]
-  ]
- },
- "es|c|eS c": {
-  "n": 5,
-  "ex": [
-   [
-    "dhṛteḥ",
-    "ca",
-    "dhṛteśca",
-    "gita 18.29"
-   ],
-   [
-    "uḍupateḥ",
-    "ca",
-    "uḍupateś ca",
-    "kumarasambhava 5.22"
-   ],
-   [
-    "āhitāgneḥ",
-    "ca",
-    "āhitāgneś ca",
-    "ramayana 2.58.37"
-   ]
-  ]
- },
- "Es|r|E r": {
-  "n": 5,
-  "ex": [
-   [
-    "avadhūtaiḥ",
-    "ratna",
-    "avadhūtai ratna",
-    "meghaduta 1.39"
-   ],
-   [
-    "pauraiḥ",
-    "rāma",
-    "paurai rāma",
-    "ramayana 2.6.17"
-   ],
-   [
-    "śanais",
-    "rāmāt",
-    "śanai rāmāt",
-    "ramayana 2.96.17"
+    "hemantaḥ",
+    "ṛtuḥ",
+    "hemanta ṛtuḥ",
+    "ramayana 3.15.1"
    ]
   ]
  },
@@ -5283,26 +5496,26 @@
    ]
   ]
  },
- "Es|D|Er D": {
+ "Es|C|ES C": {
   "n": 5,
   "ex": [
    [
-    "mārgaiḥ",
-    "dhūma",
-    "mārgair dhūma",
-    "meghaduta 2.8"
+    "haimaiḥ",
+    "channā",
+    "haimaiśchannā",
+    "meghaduta 2.16"
    ],
    [
-    "uccais",
-    "dhvanatā",
-    "uccair dhvanatā",
-    "rtusamhara 2.10"
+    "oghaiḥ",
+    "chittvā",
+    "oghaiś chittvā",
+    "ramayana 3.29.19"
    ],
    [
-    "vastraiḥ",
-    "dhanaiḥ",
-    "vastrair dhanaiḥ",
-    "ramayana 2.29.15"
+    "svaiḥ",
+    "chattraiḥ",
+    "svaiś chattraiḥ",
+    "ramayana 2.40.21"
    ]
   ]
  },
@@ -5329,72 +5542,72 @@
    ]
   ]
  },
- "Is|t|Is t": {
+ "os|h|or h": {
   "n": 5,
   "ex": [
    [
-    "śrīḥ",
-    "tilakam",
-    "śrīs tilakam",
-    "kumarasambhava 3.30"
+    "gatāsoḥ",
+    "hi",
+    "gatāsor hi",
+    "ramayana 3.2.22"
    ],
    [
-    "prakṛtīḥ",
-    "tāḥ",
-    "prakṛtīs tāḥ",
-    "ramayana 2.41.16"
+    "viṣṇoḥ",
+    "haraḥ",
+    "viṣṇor haraḥ",
+    "kumarasambhava 7.44"
    ],
    [
-    "sprākṣīḥ",
-    "tvam",
-    "sprākṣīs tvam",
-    "ramayana 2.37.6"
+    "etayoḥ",
+    "hetum",
+    "etayor hetum",
+    "astavakragita 10.1"
    ]
   ]
  },
- "is|I|ir I": {
+ "os|y|or y": {
   "n": 5,
   "ex": [
    [
-    "vimuktiḥ",
-    "īśaḥ",
-    "vimuktir īśaḥ",
-    "kumarasambhava 3.59"
+    "lohayoḥ",
+    "yat",
+    "lohayor yat",
+    "ramayana 3.45.41"
    ],
    [
-    "vibhūtiḥ",
-    "īśvaraḥ",
-    "vibhūtir īśvaraḥ",
-    "kumarasambhava 8.81"
+    "mṛtyoḥ",
+    "yanti",
+    "mṛtyor yanti",
+    "kathopanisad 2.1.2"
    ],
    [
-    "patiḥ",
-    "īśvaraḥ",
-    "patir īśvaraḥ",
-    "ramayana 1.19.3"
+    "anugrahayoḥ",
+    "yathānyāyam",
+    "anugrahayor yathānyāyam",
+    "ramayana 2.1.20"
    ]
   ]
  },
- "es|i|er i": {
+ "os|B|or B": {
   "n": 5,
   "ex": [
    [
-    "gireḥ",
-    "iyam",
-    "girer iyam",
-    "kumarasambhava 8.69"
+    "manyoḥ",
+    "bhrū",
+    "manyor bhrū",
+    "kumarasambhava 3.71"
    ],
    [
-    "aśaneḥ",
-    "iva",
-    "aśaner iva",
-    "ramayana 2.110.47"
+    "tayoḥ",
+    "bhrātroḥ",
+    "tayor bhrātroḥ",
+    "ramayana 3.7.18"
    ],
    [
-    "vāridheḥ",
-    "iva",
-    "vāridher iva",
-    "astavakragita 5.3"
+    "vetanayoḥ",
+    "bhṛtāḥ",
+    "vetanayor bhṛtāḥ",
+    "ramayana 2.94.27"
    ]
   ]
  },
@@ -5418,6 +5631,29 @@
     "upāviśat",
     "rathopastha upāviśat",
     "gita 1.47"
+   ]
+  ]
+ },
+ "os|e|or e": {
+  "n": 4,
+  "ex": [
+   [
+    "etayoḥ",
+    "ekam",
+    "etayorekam",
+    "gita 5.1"
+   ],
+   [
+    "anveṣatoḥ",
+    "evam",
+    "anveṣator evam",
+    "ramayana 3.65.12"
+   ],
+   [
+    "saṃvadatoḥ",
+    "evam",
+    "saṃvadator evam",
+    "ramayana 2.83.4"
    ]
   ]
  },
@@ -5536,29 +5772,6 @@
    ]
   ]
  },
- "Es|C|ES C": {
-  "n": 4,
-  "ex": [
-   [
-    "haimaiḥ",
-    "channā",
-    "haimaiśchannā",
-    "meghaduta 2.16"
-   ],
-   [
-    "svaiḥ",
-    "chattraiḥ",
-    "svaiś chattraiḥ",
-    "ramayana 2.40.21"
-   ],
-   [
-    "dātraiḥ",
-    "chindan",
-    "dātraiś chindan",
-    "ramayana 2.74.7"
-   ]
-  ]
- },
  "I|e|y e": {
   "n": 4,
   "ex": [
@@ -5628,49 +5841,26 @@
    ]
   ]
  },
- "os|h|or h": {
+ "As|C|AS C": {
   "n": 4,
   "ex": [
    [
-    "viṣṇoḥ",
-    "haraḥ",
-    "viṣṇor haraḥ",
-    "kumarasambhava 7.44"
+    "ādityāḥ",
+    "chāyā",
+    "ādityāś chāyā",
+    "ramayana 3.15.10"
    ],
    [
-    "etayoḥ",
-    "hetum",
-    "etayor hetum",
-    "astavakragita 10.1"
+    "abhijñāḥ",
+    "cheda",
+    "abhijñāś cheda",
+    "kumarasambhava 2.41"
    ],
    [
-    "arthayoḥ",
-    "hīnam",
-    "arthayor hīnam",
-    "ramayana 2.98.50"
-   ]
-  ]
- },
- "os|B|or B": {
-  "n": 4,
-  "ex": [
-   [
-    "manyoḥ",
-    "bhrū",
-    "manyor bhrū",
-    "kumarasambhava 3.71"
-   ],
-   [
-    "vetanayoḥ",
-    "bhṛtāḥ",
-    "vetanayor bhṛtāḥ",
-    "ramayana 2.94.27"
-   ],
-   [
-    "pādayoḥ",
-    "bharataḥ",
-    "pādayor bharataḥ",
-    "ramayana 2.104.14"
+    "nāstikāḥ",
+    "chinna",
+    "nāstikāś chinna",
+    "ramayana 2.61.22"
    ]
   ]
  },
@@ -5697,26 +5887,26 @@
    ]
   ]
  },
- "t|C|c C": {
+ "k|j|g j": {
   "n": 4,
   "ex": [
    [
-    "tad",
-    "chidura",
-    "tacchidura",
-    "kumarasambhava 8.83"
+    "vāc",
+    "jvalan",
+    "vāg jvalan",
+    "kumarasambhava 5.30"
    ],
    [
-    "tāpasāt",
-    "chādane",
-    "tāpasāc chādane",
-    "ramayana 2.33.8"
+    "dhik",
+    "jīvitam",
+    "dhig jīvitam",
+    "ramayana 2.93.35"
    ],
    [
-    "snāpanāt",
-    "chādanena",
-    "snāpanāc chādanena",
-    "ramayana 2.103.10"
+    "pṛthak",
+    "janam",
+    "pṛthag janam",
+    "ramayana 3.43.23"
    ]
   ]
  },
@@ -5743,6 +5933,52 @@
    ]
   ]
  },
+ "t|G|d G": {
+  "n": 4,
+  "ex": [
+   [
+    "vat",
+    "ghoram",
+    "vad ghoram",
+    "ramayana 2.66.14"
+   ],
+   [
+    "vidyut",
+    "ghanam",
+    "vidyudghanam",
+    "ramayana 3.50.22"
+   ],
+   [
+    "asṛjat",
+    "ghorān",
+    "asṛjad ghorān",
+    "ramayana 1.53.20"
+   ]
+  ]
+ },
+ "k|B|g B": {
+  "n": 4,
+  "ex": [
+   [
+    "sruc",
+    "bhāṇḍa",
+    "srugbhāṇḍa",
+    "ramayana 3.54.18"
+   ],
+   [
+    "vāc",
+    "bhavatu",
+    "vāg bhavatu",
+    "ramayana 2.26.9"
+   ],
+   [
+    "sruc",
+    "bhāṇḍān",
+    "srugbhāṇḍān",
+    "ramayana 2.108.17"
+   ]
+  ]
+ },
  "u|f|v f": {
   "n": 4,
   "ex": [
@@ -5757,6 +5993,29 @@
     "ṛkṣa",
     "tarakṣvṛkṣa",
     "ramayana 2.88.7"
+   ]
+  ]
+ },
+ "A|U|o": {
+  "n": 4,
+  "ex": [
+   [
+    "nāsā",
+    "ūruḥ",
+    "nāsoruḥ",
+    "ramayana 3.58.21"
+   ],
+   [
+    "tīrtvā",
+    "ūrmi",
+    "tīrtvormi",
+    "ramayana 2.105.21"
+   ],
+   [
+    "tayā",
+    "ūrdhvam",
+    "tayordhvam",
+    "kathopanisad 2.3.16"
    ]
   ]
  },
@@ -5783,6 +6042,29 @@
    ]
   ]
  },
+ "es|g|er g": {
+  "n": 3,
+  "ex": [
+   [
+    "prakṛteḥ",
+    "guṇa",
+    "prakṛterguṇa",
+    "gita 3.29"
+   ],
+   [
+    "agneḥ",
+    "grahītum",
+    "agner grahītum",
+    "ramayana 3.53.24"
+   ],
+   [
+    "nṛpateḥ",
+    "gṛham",
+    "nṛpater gṛham",
+    "ramayana 1.31.21"
+   ]
+  ]
+ },
  "Is|y|Ir y": {
   "n": 3,
   "ex": [
@@ -5803,75 +6085,6 @@
     "yat",
     "rātrīr yat",
     "kathopanisad 1.1.9"
-   ]
-  ]
- },
- "os|e|or e": {
-  "n": 3,
-  "ex": [
-   [
-    "etayoḥ",
-    "ekam",
-    "etayorekam",
-    "gita 5.1"
-   ],
-   [
-    "saṃvadatoḥ",
-    "evam",
-    "saṃvadator evam",
-    "ramayana 2.83.4"
-   ],
-   [
-    "kṣetrajñayoḥ",
-    "evam",
-    "kṣetrajñayorevam",
-    "gita 13.35"
-   ]
-  ]
- },
- "as|C|aS C": {
-  "n": 3,
-  "ex": [
-   [
-    "vāsasaḥ",
-    "chittvā",
-    "vāsasaś chittvā",
-    "mahabharata 3.59.17"
-   ],
-   [
-    "vibhraṣṭaḥ",
-    "chinna",
-    "vibhraṣṭaśchinna",
-    "gita 6.38"
-   ],
-   [
-    "lakṣmaṇaḥ",
-    "chittvā",
-    "lakṣmaṇaś chittvā",
-    "ramayana 2.49.9"
-   ]
-  ]
- },
- "as|f|a f": {
-  "n": 3,
-  "ex": [
-   [
-    "oṃkāraḥ",
-    "ṛc",
-    "oṃkāra ṛc",
-    "gita 9.17"
-   ],
-   [
-    "paramaḥ",
-    "ṛṣiḥ",
-    "parama ṛṣiḥ",
-    "ramayana 1.17.39"
-   ],
-   [
-    "vasiṣṭhaḥ",
-    "ṛṣayaḥ",
-    "vasiṣṭha ṛṣayaḥ",
-    "ramayana 1.73.15"
    ]
   ]
  },
@@ -6059,52 +6272,6 @@
    ]
   ]
  },
- "os|y|or y": {
-  "n": 3,
-  "ex": [
-   [
-    "mṛtyoḥ",
-    "yanti",
-    "mṛtyor yanti",
-    "kathopanisad 2.1.2"
-   ],
-   [
-    "anugrahayoḥ",
-    "yathānyāyam",
-    "anugrahayor yathānyāyam",
-    "ramayana 2.1.20"
-   ],
-   [
-    "lekhayoḥ",
-    "yā",
-    "lekhayor yā",
-    "kumarasambhava 1.47"
-   ]
-  ]
- },
- "k|j|g j": {
-  "n": 3,
-  "ex": [
-   [
-    "vāc",
-    "jvalan",
-    "vāg jvalan",
-    "kumarasambhava 5.30"
-   ],
-   [
-    "dhik",
-    "jīvitam",
-    "dhig jīvitam",
-    "ramayana 2.93.35"
-   ],
-   [
-    "vaṇij",
-    "janaḥ",
-    "vaṇigjanaḥ",
-    "ramayana 1.1.79"
-   ]
-  ]
- },
  "Es|s|EH s": {
   "n": 3,
   "ex": [
@@ -6168,29 +6335,6 @@
    ]
   ]
  },
- "t|G|d G": {
-  "n": 3,
-  "ex": [
-   [
-    "vat",
-    "ghoram",
-    "vad ghoram",
-    "ramayana 2.66.14"
-   ],
-   [
-    "asṛjat",
-    "ghorān",
-    "asṛjad ghorān",
-    "ramayana 1.53.20"
-   ],
-   [
-    "rākṣasāt",
-    "ghora",
-    "rākṣasād ghora",
-    "ramayana 1.14.11"
-   ]
-  ]
- },
  "n|C|MS C": {
   "n": 3,
   "ex": [
@@ -6228,23 +6372,6 @@
     "muniḥ",
     "dhīr muniḥ",
     "ramayana 1.2.41"
-   ]
-  ]
- },
- "es|g|er g": {
-  "n": 2,
-  "ex": [
-   [
-    "prakṛteḥ",
-    "guṇa",
-    "prakṛterguṇa",
-    "gita 3.29"
-   ],
-   [
-    "nṛpateḥ",
-    "gṛham",
-    "nṛpater gṛham",
-    "ramayana 1.31.21"
    ]
   ]
  },
@@ -6307,6 +6434,23 @@
     "ūrdhvam",
     "ata ūrdhvam",
     "gita 12.8"
+   ]
+  ]
+ },
+ "os|j|or j": {
+  "n": 2,
+  "ex": [
+   [
+    "hetoḥ",
+    "janasthāna",
+    "hetor janasthāna",
+    "ramayana 3.48.13"
+   ],
+   [
+    "kṣetrajñayoḥ",
+    "jñānam",
+    "kṣetrajñayorjñānam",
+    "gita 13.3"
    ]
   ]
  },
@@ -6434,23 +6578,6 @@
    ]
   ]
  },
- "As|C|AS C": {
-  "n": 2,
-  "ex": [
-   [
-    "abhijñāḥ",
-    "cheda",
-    "abhijñāś cheda",
-    "kumarasambhava 2.41"
-   ],
-   [
-    "nāstikāḥ",
-    "chinna",
-    "nāstikāś chinna",
-    "ramayana 2.61.22"
-   ]
-  ]
- },
  "in|u|inn u": {
   "n": 2,
   "ex": [
@@ -6553,6 +6680,23 @@
    ]
   ]
  },
+ "is|f|ir f": {
+  "n": 2,
+  "ex": [
+   [
+    "hariḥ",
+    "ṛkṣarajas",
+    "harir ṛkṣarajas",
+    "ramayana 3.71.24"
+   ],
+   [
+    "gaṇikābhiḥ",
+    "ṛṣeḥ",
+    "gaṇikābhir ṛṣeḥ",
+    "ramayana 1.8.21"
+   ]
+  ]
+ },
  "I|I|I": {
   "n": 2,
   "ex": [
@@ -6567,6 +6711,23 @@
     "īśvarāḥ",
     "pṛthivīśvarāḥ",
     "ramayana 1.17.3"
+   ]
+  ]
+ },
+ "as|K|aH K": {
+  "n": 2,
+  "ex": [
+   [
+    "abhitas",
+    "kharam",
+    "abhitaḥ kharam",
+    "ramayana 3.22.32"
+   ],
+   [
+    "bhūyas",
+    "khanata",
+    "bhūyaḥ khanata",
+    "ramayana 1.39.10"
    ]
   ]
  },
@@ -6604,54 +6765,20 @@
    ]
   ]
  },
- "As|G|A G": {
+ "us|S|uH S": {
   "n": 2,
   "ex": [
    [
-    "channāḥ",
-    "ghaṭāḥ",
-    "channā ghaṭāḥ",
-    "ramayana 2.13.7"
+    "vapus",
+    "ślāghyā",
+    "vapuḥślāghyā",
+    "ramayana 3.32.17"
    ],
    [
-    "toyadharāḥ",
-    "ghanāḥ",
-    "toyadharā ghanāḥ",
-    "ramayana 2.87.10"
-   ]
-  ]
- },
- "k|B|g B": {
-  "n": 2,
-  "ex": [
-   [
-    "vāc",
-    "bhavatu",
-    "vāg bhavatu",
-    "ramayana 2.26.9"
-   ],
-   [
-    "sruc",
-    "bhāṇḍān",
-    "srugbhāṇḍān",
-    "ramayana 2.108.17"
-   ]
-  ]
- },
- "Es|G|Er G": {
-  "n": 2,
-  "ex": [
-   [
-    "kāñcanaiḥ",
-    "ghaṭaiḥ",
-    "kāñcanair ghaṭaiḥ",
-    "ramayana 2.59.3"
-   ],
-   [
-    "pratīkāśaiḥ",
-    "ghoraiḥ",
-    "pratīkāśair ghoraiḥ",
-    "ramayana 2.93.20"
+    "dhanus",
+    "śreṣṭhe",
+    "dhanuḥśreṣṭhe",
+    "ramayana 1.74.28"
    ]
   ]
  },
@@ -6689,20 +6816,37 @@
    ]
   ]
  },
- "A|U|o": {
+ "us|I|ur I": {
   "n": 2,
   "ex": [
    [
-    "tīrtvā",
-    "ūrmi",
-    "tīrtvormi",
-    "ramayana 2.105.21"
+    "tarpayāmāsuḥ",
+    "īśvaram",
+    "tarpayāmāsur īśvaram",
+    "ramayana 3.1.22"
    ],
    [
-    "tayā",
-    "ūrdhvam",
-    "tayordhvam",
-    "kathopanisad 2.3.16"
+    "setuḥ",
+    "ījānānām",
+    "setur ījānānām",
+    "kathopanisad 1.3.2"
+   ]
+  ]
+ },
+ "in|i|inn i": {
+  "n": 2,
+  "ex": [
+   [
+    "tasmin",
+    "iha",
+    "tasminn iha",
+    "ramayana 3.43.8"
+   ],
+   [
+    "yasmin",
+    "idam",
+    "yasminn idam",
+    "kathopanisad 1.1.29"
    ]
   ]
  },
@@ -6747,17 +6891,6 @@
     "ūru",
     "bāhūru",
     "gita 11.23"
-   ]
-  ]
- },
- "os|j|or j": {
-  "n": 1,
-  "ex": [
-   [
-    "kṣetrajñayoḥ",
-    "jñānam",
-    "kṣetrajñayorjñānam",
-    "gita 13.3"
    ]
   ]
  },
@@ -7047,28 +7180,6 @@
    ]
   ]
  },
- "is|f|ir f": {
-  "n": 1,
-  "ex": [
-   [
-    "gaṇikābhiḥ",
-    "ṛṣeḥ",
-    "gaṇikābhir ṛṣeḥ",
-    "ramayana 1.8.21"
-   ]
-  ]
- },
- "as|K|aH K": {
-  "n": 1,
-  "ex": [
-   [
-    "bhūyas",
-    "khanata",
-    "bhūyaḥ khanata",
-    "ramayana 1.39.10"
-   ]
-  ]
- },
  "Os|e|Or e": {
   "n": 1,
   "ex": [
@@ -7088,17 +7199,6 @@
     "rambhe",
     "bhaiṣī rambhe",
     "ramayana 1.63.4"
-   ]
-  ]
- },
- "us|S|uH S": {
-  "n": 1,
-  "ex": [
-   [
-    "dhanus",
-    "śreṣṭhe",
-    "dhanuḥśreṣṭhe",
-    "ramayana 1.74.28"
    ]
   ]
  },
@@ -7245,14 +7345,113 @@
    ]
   ]
  },
- "in|i|inn i": {
+ "es|l|er l": {
   "n": 1,
   "ex": [
    [
-    "yasmin",
-    "idam",
-    "yasminn idam",
-    "kathopanisad 1.1.29"
+    "ṛṣeḥ",
+    "lakṣmaṇa",
+    "ṛṣer lakṣmaṇa",
+    "ramayana 3.6.18"
+   ]
+  ]
+ },
+ "in|A|inn A": {
+  "n": 1,
+  "ex": [
+   [
+    "etasmin",
+    "āśrame",
+    "etasminn āśrame",
+    "ramayana 3.6.20"
+   ]
+  ]
+ },
+ "u|E|v E": {
+  "n": 1,
+  "ex": [
+   [
+    "tu",
+    "airāvataḥ",
+    "tv airāvataḥ",
+    "ramayana 3.13.24"
+   ]
+  ]
+ },
+ "us|G|ur G": {
+  "n": 1,
+  "ex": [
+   [
+    "nipetuḥ",
+    "ghora",
+    "nipetur ghora",
+    "ramayana 3.22.15"
+   ]
+  ]
+ },
+ "us|p|uH p": {
+  "n": 1,
+  "ex": [
+   [
+    "āyus",
+    "parikṣayaḥ",
+    "āyuḥparikṣayaḥ",
+    "ramayana 3.23.9"
+   ]
+  ]
+ },
+ "I|o|y o": {
+  "n": 1,
+  "ex": [
+   [
+    "nadī",
+    "oghān",
+    "nadyoghān",
+    "ramayana 3.24.11"
+   ]
+  ]
+ },
+ "os|g|or g": {
+  "n": 1,
+  "ex": [
+   [
+    "meghayoḥ",
+    "gagane",
+    "meghayor gagane",
+    "ramayana 3.49.3"
+   ]
+  ]
+ },
+ "Is|G|Ir G": {
+  "n": 1,
+  "ex": [
+   [
+    "piśācīḥ",
+    "ghora",
+    "piśācīr ghora",
+    "ramayana 3.52.14"
+   ]
+  ]
+ },
+ "As|I|A I": {
+  "n": 1,
+  "ex": [
+   [
+    "sītāyāḥ",
+    "īpsitaḥ",
+    "sītāyā īpsitaḥ",
+    "ramayana 3.55.7"
+   ]
+  ]
+ },
+ "an|f|ann f": {
+  "n": 1,
+  "ex": [
+   [
+    "āsan",
+    "ṛṣayaḥ",
+    "āsann ṛṣayaḥ",
+    "ramayana 3.69.16"
    ]
   ]
  },
@@ -7264,17 +7463,6 @@
     "odanaḥ",
     "bhavata odanaḥ",
     "kathopanisad 1.2.26"
-   ]
-  ]
- },
- "us|I|ur I": {
-  "n": 1,
-  "ex": [
-   [
-    "setuḥ",
-    "ījānānām",
-    "setur ījānānām",
-    "kathopanisad 1.3.2"
    ]
   ]
  },
