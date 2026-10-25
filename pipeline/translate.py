@@ -103,7 +103,7 @@ def main():
         todo = [v for v in verses if v["id"] not in out["t"]
                 and (a.part is None or v["id"].startswith(a.part + "."))][:a.limit]
         print(f"{slug}: {len(todo)} to translate, {len(out['t'])} done, model {a.model}")
-        lock, pace_lock, next_slot, errors = threading.Lock(), threading.Lock(), [time.monotonic()], []
+        lock, pace_lock, next_slot, errors, stop = threading.Lock(), threading.Lock(), [time.monotonic()], [], []
 
         def pace():
             with pace_lock:
@@ -113,6 +113,8 @@ def main():
                 time.sleep(wait)
 
         def work(v):
+            if stop:
+                return
             p = prompt_for(slug, v, labels)
             for attempt in range(5):
                 pace()
@@ -123,7 +125,16 @@ def main():
                     if e.code in (429, 500, 502, 503) and attempt < 4:
                         time.sleep(int(e.headers.get("Retry-After") or 10 * (attempt + 1)))
                         continue
-                    errors.append((v["id"], repr(e)))
+                    try:
+                        detail = e.read().decode("utf-8", "replace")[:300]
+                    except Exception:
+                        detail = ""
+                    errors.append((v["id"], f"HTTP {e.code} {detail}"))
+                    if e.code in (401, 402, 403) and not stop:
+                        # Key, credits or budget: every later request would fail the same way.
+                        stop.append(f"HTTP {e.code} from OpenRouter: {detail}")
+                        print(f"\nStopping: {stop[0]}\nCheck the key's credit and spending limit at "
+                              "openrouter.ai/settings/keys, then run the same command to continue.")
                     return
                 except Exception as e:
                     if attempt < 4:
@@ -151,8 +162,11 @@ def main():
         ex.shutdown()
         save(out_path, out)
         print(f"{slug}: {len(out['t'])}/{len(verses)} translated -> {out_path}")
-        for vid, err in errors:
+        shown = errors if not stop else errors[:3]
+        for vid, err in shown:
             print("  failed", vid, err, "(re-run to retry)")
+        if stop:
+            print(f"  stopped early; {len(errors)} requests failed. Run the same command to continue.")
 
 
 def save(tdir, out):
