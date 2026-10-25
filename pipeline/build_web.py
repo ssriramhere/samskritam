@@ -163,7 +163,7 @@ def main():
             shutil.rmtree(os.path.join(tdir, "d"))
         if os.path.isdir(tdir):  # rebuild from scratch, but keep files made by other steps
             for f in os.listdir(tdir):
-                if not f.endswith(("-translations.json", "-sandhi.json")):
+                if not f.endswith(("-translations.json", "-sandhi.json", "-glosses.json")):
                     os.remove(os.path.join(tdir, f))
         os.makedirs(tdir, exist_ok=True)
         by_ch = {}

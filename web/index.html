@@ -531,7 +531,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "unknown": "The rule engine has no entry for this form yet.",
     "not-checked": "Compound members are not checked yet."
   };
-  let translations = null, reviewed = null, modelNames = {}, writeHash = location.hash.length > 1;
+  let translations = null, glosses = null, reviewed = null, modelNames = {}, writeHash = location.hash.length > 1;
   // A text is split into chapters (web/data/<slug>/<chapter>.json), loaded as the reader moves.
   // Chapter ids: "2" (Gītā), "1" (Meghadūta, Pūrvamegha), "3.50" (Mahābhārata, parvan 3, adhyāya 50).
   let texts = [], text = null, tindex = null, curCh = null, verses = [], derivs = null, current = null, selected = -1, loadSeq = 0;
@@ -793,7 +793,9 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     highlight(w.k);
     document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.i == i ? "true" : "false"));
     let html = `<h3><span>${esc(w.d)}</span><span class="lat">${esc(w.f)}</span></h3>
-      <dl class="kv"><dt>Lemma</dt><dd>${esc(w.l)}</dd><dt>Grammar</dt><dd>${esc(w.sa)}</dd><dt></dt><dd style="color:var(--muted)">${esc(w.en)}</dd></dl>
+      <dl class="kv"><dt>Lemma</dt><dd>${esc(w.l)}</dd><dt>Grammar</dt><dd>${esc(w.sa)}</dd><dt></dt><dd style="color:var(--muted)">${esc(w.en)}</dd>${(() => {
+        const g = glosses && glosses.g[current.id] && glosses.g[current.id][i];
+        return g ? `<dt>Meaning</dt><dd>${esc(g)} <span style="color:var(--muted)">(${esc(modelNames[glosses.model] || glosses.model)}, AI)</span></dd>` : ""; })()}</dl>
       <div class="status"><span class="dot s-${w.s}"></span><span>${STATUS[w.s]}</span></div>`;
     if (w.alt) html += `<div class="hint">The engine's readings: ${w.alt.map(esc).join("; ")}</div>`;
     if (w.x && derivs && derivs[w.x]) {
@@ -842,11 +844,12 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     $("words").innerHTML = `<span class="hint">Loading…</span>`;
     return getJSON(`${base}.json`).then(data => {
       if (seq !== loadSeq) return;
-      curCh = ch; verses = data.verses; derivs = null; translations = null;
+      curCh = ch; verses = data.verses; derivs = null; translations = null; glosses = null;
       if (tindex && tindex.labels) verses.forEach(v => v.w.forEach(w => { if (w.lb != null) [w.sa, w.en] = tindex.labels[w.lb]; }));
       const v = verses.find(x => x.id === vid) || (edge === "last" ? verses[verses.length - 1] : verses[0]);
       renderVerse(v);
       getJSON(`${base}-translations.json`).then(tr => { if (seq === loadSeq) { translations = tr; renderTrans(current); } }).catch(() => {});
+      getJSON(`${base}-glosses.json`).then(g => { if (seq === loadSeq) { glosses = g; if (selected >= 0) renderDetail(selected); } }).catch(() => {});
       if (tindex && tindex.dshard) derivs = {};  // large texts: fetched per word, from shards
       else getJSON(`${base}-derivations.json`).then(d => { if (seq === loadSeq) { derivs = d; if (selected >= 0) renderDetail(selected); } }).catch(() => {});
     }).catch(() => { if (seq === loadSeq) $("words").innerHTML = `<span class="hint">This chapter could not load. Reload the page to try again.</span>`; });

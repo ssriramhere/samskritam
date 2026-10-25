@@ -33,7 +33,8 @@
     "api/read.py": {
       "maxDuration": 60,
       "memory": 1024,
-      "includeFiles": "engine/**"
+      "includeFiles": "engine/**",
+      "excludeFiles": "{web/**,reviewed/**,scripts/**,api/*.js,README.md,LICENSE*,NOTICE}"
     }
   },
   "git": {

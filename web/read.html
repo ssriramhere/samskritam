@@ -371,7 +371,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
             <button id="go" type="submit">Read</button>
             <label class="msel"><span class="eyebrow" style="letter-spacing:.08em">Model</span>
               <select id="model" aria-label="AI model"><option value="">Default</option></select></label>
-            <span class="eyebrow" style="letter-spacing:.08em">Try</span>
+            <span class="eyebrow" style="letter-spacing:.08em">Try a sample verse</span>
             <div class="ex" id="ex"></div>
           </div>
         </form>
@@ -407,10 +407,11 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "unknown": "The rule engine has no entry for this form. It may be a rare word, a compound, or a mistake in the split.",
     "not-checked": "Compound members are not checked yet."
   };
+  // Single sample verses to paste in; the Library holds whole texts.
   const EXAMPLES = [
-    ["Raghuvaṃśa 1.1", "वागर्थाविव संपृक्तौ वागर्थप्रतिपत्तये।\nजगतः पितरौ वन्दे पार्वतीपरमेश्वरौ॥"],
-    ["Hitopadeśa", "विद्या ददाति विनयं विनयाद्याति पात्रताम्।\nपात्रत्वाद्धनमाप्नोति धनाद्धर्मं ततः सुखम्॥"],
-    ["Śikṣāṣṭaka", "tṛṇād api sunīcena taror api sahiṣṇunā\namāninā mānadena kīrtanīyaḥ sadā hariḥ"],
+    ["vāgarthāv iva…", "वागर्थाविव संपृक्तौ वागर्थप्रतिपत्तये।\nजगतः पितरौ वन्दे पार्वतीपरमेश्वरौ॥", "One verse: Kālidāsa, Raghuvaṃśa 1.1"],
+    ["vidyā dadāti vinayaṃ…", "विद्या ददाति विनयं विनयाद्याति पात्रताम्।\nपात्रत्वाद्धनमाप्नोति धनाद्धर्मं ततः सुखम्॥", "One verse, from the Hitopadeśa"],
+    ["tṛṇād api sunīcena…", "tṛṇād api sunīcena taror api sahiṣṇunā\namāninā mānadena kīrtanīyaḥ sadā hariḥ", "One verse, from Caitanya's Śikṣāṣṭaka"],
   ];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   // Sūtra numbers link to the sūtra on ashtadhyayi.com (dhātupāṭha and other codes stay plain).
@@ -442,7 +443,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     return `<div class="split"><span class="eyebrow">Words split (padapāṭha)</span><div>${esc(dev)}</div><span class="si">${esc(iast)}</span></div>`;
   };
 
-  $("ex").innerHTML = EXAMPLES.map((e, i) => `<button type="button" data-i="${i}">${esc(e[0])}</button>`).join("");
+  $("ex").innerHTML = EXAMPLES.map((e, i) => `<button type="button" data-i="${i}" title="${esc(e[2])}">${esc(e[0])}</button>`).join("");
   $("ex").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
     $("t").value = EXAMPLES[+b.dataset.i][1]; countUp(); submit(); });
   $("f").addEventListener("submit", e => { e.preventDefault(); submit(); });
@@ -554,7 +555,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     if (b.ok) { rasa.runs.push(b); rasa.active = rasa.runs.length - 1; } else rasa.err = b.error || "That model couldn't read the rasa this time.";
     renderRasa();
   }
-  const verdictWord = r => r.kind === "rasa" ? r.rasa : r.kind === "bhava" ? "bhāva" : "no rasa";
+  const verdictWord = r => r.kind === "rasa" ? r.rasa : "no rasa";
   function renderRasa() {
     const r = rasa.runs[rasa.active], rev = rasa.rev;
     const used = rasa.runs.map(x => x.model), left = allModels.filter(m => !used.includes(m));
@@ -577,8 +578,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     let verdict;
     if (r.kind === "rasa") verdict = `<div class="verdict"><b>${esc(r.rasa)}</b><span>${esc(r.rasa_en)}${r.variety ? " · " + esc(r.variety) : ""}</span></div>
       <p class="note">Underlying emotion (<i>sthāyi-bhāva</i>): <span class="pill">${esc(r.sthayi)}</span>${esc(r.sthayi_en || "")}</p>`;
-    else if (r.kind === "bhava") verdict = `<div class="verdict"><b>bhāva</b><span>no full rasa in this verse${r.sthayi ? " · " + esc(r.sthayi) : ""}</span></div>`;
-    else verdict = `<div class="verdict"><b>no rasa</b><span>this verse doesn't convey an emotion</span></div>`;
+    else if (r.kind === "bhava") verdict = `<div class="verdict"><b>no rasa</b><span>The verse conveys a bhāva${r.sthayi ? `: ${esc(r.sthayi)}` : ""}, an emotion that doesn't develop into a rasa here.</span></div>`;
+    else verdict = `<div class="verdict"><b>no rasa</b><span>The verse doesn't convey an emotion, so there is no bhāva either.</span></div>`;
     const rows = ROWS.map(([f, c, name, sub]) => {
       const v = r[f]; if (!v || (Array.isArray(v) && !v.length)) return "";
       const list = [].concat(v);
