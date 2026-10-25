@@ -7,6 +7,7 @@ labelled on the site as the model's translation, not checked.
     export OPENROUTER_API_KEY=...
     python pipeline/translate.py mahabharata               # default model
     python pipeline/translate.py gita --model google/gemini-4-argon --limit 5
+    python pipeline/translate.py ramayana --part 2        # one kāṇḍa (or parvan) at a time
 
 Writes web/data/<slug>/<chapter>-translations.json. Re-running resumes: verses already
 translated by the same model are skipped.
@@ -77,6 +78,7 @@ def main():
     ap.add_argument("--rpm", type=float, default=18, help="requests per minute (OpenRouter new accounts: 20)")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--limit", type=int, default=None, help="first N verses, for a test")
+    ap.add_argument("--part", default=None, help="only verses under this part, e.g. 2 for the Rāmāyaṇa's Ayodhyākāṇḍa")
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
@@ -94,7 +96,8 @@ def main():
                 old = json.load(open(f, encoding="utf-8"))
                 if old.get("model") == a.model:
                     out["t"].update(old["t"])
-        todo = [v for v in verses if v["id"] not in out["t"]][:a.limit]
+        todo = [v for v in verses if v["id"] not in out["t"]
+                and (a.part is None or v["id"].startswith(a.part + "."))][:a.limit]
         print(f"{slug}: {len(todo)} to translate, {len(out['t'])} done, model {a.model}")
         lock, pace_lock, next_slot, errors = threading.Lock(), threading.Lock(), [time.monotonic()], []
 

@@ -165,7 +165,7 @@ def main():
         for ch, vs in by_ch.items():
             dump({"verses": vs}, os.path.join(tdir, f"{ch}.json"))
             used = {w["x"] for v in vs for w in v["w"] if w.get("x")}
-            dump({k: slim[k] for k in used if k in slim}, os.path.join(tdir, f"{ch}-derivations.json"))
+            dump({k: slim[k] for k in sorted(used) if k in slim}, os.path.join(tdir, f"{ch}-derivations.json"))
             label = ch.split(".")[-1] if len(levels) == 2 else (names.get(ch) or ch)
             chapters.append({"id": ch, "label": label, "n": len(vs)})
             part = ch.split(".")[0] if len(levels) == 2 else ""

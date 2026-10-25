@@ -7,3 +7,5 @@ bench/results/
 web/data/reviewed.json
 bench/private/
 data/dcs-repo
+data/build/ramayana.json
+data/build/ramayana-derivations.json

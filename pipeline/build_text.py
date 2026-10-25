@@ -76,8 +76,8 @@ TEXTS = {
                     5: "Sundarakāṇḍa", 6: "Yuddhakāṇḍa", 7: "Uttarakāṇḍa"},
         "speakers": True,
         "prose": False,
-        "note": "So far Bālakāṇḍa sargas 1–4: Nārada's account of Rāma, the krauñca birds and "
-                "the first śloka. More to follow. Numbering follows the Digital Corpus of Sanskrit.",
+        "note": "The critical edition, added one kāṇḍa at a time. So far: {parts}. "
+                "Numbering follows the critical edition, as annotated in the Digital Corpus of Sanskrit.",
     },
     "kathopanisad": {
         "title": "Kaṭhopaniṣad",
@@ -197,7 +197,10 @@ def build(slug: str):
     deriv_out = {ids[k]: v for k, v in derivations.items() if v}
     meta = {"title": cfg["title"], "author": cfg["author"],
             "part_label": cfg.get("part_label"), "levels": cfg.get("levels"),
-            "parvans": {str(k): v for k, v in cfg.get("parvans", {}).items()}, "note": cfg["note"],
+            "parvans": {str(k): v for k, v in cfg.get("parvans", {}).items()},
+            "note": cfg["note"].replace("{parts}", ", ".join(
+                cfg["parvans"][p] for p in sorted({int(c["ch"].split(".")[0]) for c in chapters}))
+                if "{parts}" in (cfg["note"] or "") else cfg["note"]),
             "sources": {"analysis": "Digital Corpus of Sanskrit, Oliver Hellwig, "
                                     "CC BY 4.0, github.com/OliverHellwig/sanskrit",
                         "engine": "Vidyut 0.4.0 (Ambuda), github.com/ambuda-org/vidyut"},
