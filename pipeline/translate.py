@@ -82,6 +82,7 @@ def main():
     a = ap.parse_args()
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
+    outcome = []  # so a shell loop can tell a finished run from a stopped one
     for slug in a.slugs:
         tdir = os.path.join(ROOT, "web/data", slug)
         tindex = json.load(open(os.path.join(tdir, "index.json"), encoding="utf-8"))
@@ -167,6 +168,13 @@ def main():
             print("  failed", vid, err, "(re-run to retry)")
         if stop:
             print(f"  stopped early; {len(errors)} requests failed. Run the same command to continue.")
+        outcome.append("stopped" if stop else "failed" if errors else "ok")
+        if stop:
+            break
+    if "stopped" in outcome:
+        sys.exit(2)
+    if "failed" in outcome:
+        sys.exit(1)
 
 
 def save(tdir, out):
