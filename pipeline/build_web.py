@@ -12,6 +12,7 @@ Also web/data/texts.json, the list of texts the reader offers. Chapter ids are
 add the verse number: "2.47", "3.50.1".
 """
 import json
+import re
 import os
 import sys
 
@@ -126,6 +127,16 @@ def chapter_of(vid: str) -> str:
     return vid.rsplit(".", 1)[0]
 
 
+def verse_key(text: str) -> str:
+    """Spelling-insensitive key for finding a pasted verse in the Library.
+    web/read.html computes the same key in the browser."""
+    import hashlib
+    import unicodedata
+    t = unicodedata.normalize("NFC", text.lower()).replace("ṁ", "m").replace("ṃ", "m")
+    t = re.sub(r"[^a-zāīūṛṝḷḹṅñṭḍṇśṣḥ]", "", t)
+    return hashlib.sha1(t.encode("utf-8")).hexdigest()[:12]
+
+
 def dump(obj, path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
@@ -231,6 +242,25 @@ def main():
         size = sum(os.path.getsize(os.path.join(tdir, f)) for f in os.listdir(tdir))
         print(f"{slug}: {len(verses)} verses in {len(chapters)} chapter files, {size // 1024} KB")
     dump(index, os.path.join(out_dir, "texts.json"))
+
+    # Find a pasted verse in the Library: key of the whole verse and of each line
+    # -> "slug|verse id", in 16 shards by the key's first hex digit.
+    finder = {}
+    for slug, *_ in TEXTS:
+        tdir = os.path.join(out_dir, slug)
+        if not os.path.exists(os.path.join(tdir, "index.json")):
+            continue
+        for c in json.load(open(os.path.join(tdir, "index.json"), encoding="utf-8"))["chapters"]:
+            for v in json.load(open(os.path.join(tdir, f"{c['id']}.json"), encoding="utf-8"))["verses"]:
+                if not v.get("iast"):
+                    continue
+                for t in ["".join(v["iast"])] + (v["iast"] if len(v["iast"]) > 1 else []):
+                    finder.setdefault(verse_key(t), f"{slug}|{v['id']}")
+    fdir = os.path.join(out_dir, "find")
+    os.makedirs(fdir, exist_ok=True)
+    for h in "0123456789abcdef":
+        dump({k: x for k, x in finder.items() if k[0] == h}, os.path.join(fdir, f"{h}.json"))
+    print(f"verse finder: {len(finder)} keys")
     shutil.copyfile(os.path.join(ROOT, "bench/data/v0.jsonl"), os.path.join(out_dir, "bench-v0.jsonl"))
 
 
