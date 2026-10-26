@@ -141,6 +141,9 @@ def main():
                     return
                 except Exception as e:
                     if attempt < 4:
+                        # A dropped connection (Wi-Fi, sleep): wait it out, 15 s, 30 s, 60 s, 120 s.
+                        if isinstance(e, (urllib.error.URLError, TimeoutError, ConnectionError)):
+                            time.sleep(15 * 2 ** attempt)
                         continue
                     errors.append((v["id"], repr(e)))
                     return
