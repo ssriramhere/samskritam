@@ -128,7 +128,7 @@ def main():
                     tr = ask(a.model, p)
                     break
                 except urllib.error.HTTPError as e:
-                    if e.code in (429, 500, 502, 503) and attempt < 4:
+                    if e.code in (408, 429, 500, 502, 503, 504) and attempt < 4:
                         time.sleep(int(e.headers.get("Retry-After") or 10 * (attempt + 1)))
                         continue
                     try:
