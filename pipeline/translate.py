@@ -103,7 +103,12 @@ def main():
                     out["t"].update(old["t"])
         todo = [v for v in verses if v["id"] not in out["t"]
                 and (a.part is None or v["id"].startswith(a.part + "."))][:a.limit]
-        print(f"{slug}: {len(todo)} to translate, {len(out['t'])} done, model {a.model}")
+        # With --part, report that part (a kāṇḍa or parvan) by name, and count within it.
+        scope = [v for v in verses if a.part is None or v["id"].startswith(a.part + ".")]
+        pname = (tindex.get("parts") or {}).get(a.part, "") if a.part else ""
+        where = f"{slug}, part {a.part}" + (f" ({pname})" if pname else "") if a.part else slug
+        in_scope = lambda: sum(1 for v in scope if v["id"] in out["t"])
+        print(f"{where}: {len(todo)} to translate, {in_scope()}/{len(scope)} done, model {a.model}")
         lock, pace_lock, next_slot, errors, stop = threading.Lock(), threading.Lock(), [time.monotonic()], [], []
 
         def pace():
@@ -150,7 +155,7 @@ def main():
                 n = len(out["t"])
                 if n % 10 == 0 or n == len(verses):
                     save(out_path, out)
-                    print(f"  {n}/{len(verses)}")
+                    print(f"  {where}: {in_scope()}/{len(scope)}")
 
         ex = ThreadPoolExecutor(a.workers)
         futures = [ex.submit(work, v) for v in todo]
@@ -165,7 +170,7 @@ def main():
             os._exit(1)  # don't wait for requests still in flight
         ex.shutdown()
         save(out_path, out)
-        print(f"{slug}: {len(out['t'])}/{len(verses)} translated -> {out_path}")
+        print(f"{where}: {in_scope()}/{len(scope)} translated -> {out_path}")
         shown = errors if not stop else errors[:3]
         for vid, err in shown:
             print("  failed", vid, err, "(re-run to retry)")

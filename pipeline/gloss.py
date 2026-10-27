@@ -105,7 +105,12 @@ def main():
                     out["g"].update(old["g"])
         todo = [v for v in verses if v["w"] and v["id"] not in out["g"]
                 and (a.part is None or v["id"].startswith(a.part + "."))][:a.limit]
-        print(f"{slug}: {len(todo)} to gloss, {len(out['g'])} done, model {a.model}")
+        # With --part, report that part (a kāṇḍa or parvan) by name, and count within it.
+        scope = [v for v in verses if a.part is None or v["id"].startswith(a.part + ".")]
+        pname = (tindex.get("parts") or {}).get(a.part, "") if a.part else ""
+        where = f"{slug}, part {a.part}" + (f" ({pname})" if pname else "") if a.part else slug
+        in_scope = lambda: sum(1 for v in scope if v["id"] in out["g"])
+        print(f"{where}: {len(todo)} to gloss, {in_scope()}/{len(scope)} done, model {a.model}")
         lock, pace_lock, next_slot, errors, stop = threading.Lock(), threading.Lock(), [time.monotonic()], [], []
 
         def pace():
@@ -151,7 +156,7 @@ def main():
                 out["g"][v["id"]] = g
                 if len(out["g"]) % 10 == 0:
                     save(tdir, out)
-                    print(f"  {len(out['g'])}/{len(verses)}")
+                    print(f"  {where}: {in_scope()}/{len(scope)}")
 
         ex = ThreadPoolExecutor(a.workers)
         futures = [ex.submit(work, v) for v in todo]
@@ -165,7 +170,7 @@ def main():
             os._exit(1)
         ex.shutdown()
         save(tdir, out)
-        print(f"{slug}: {len(out['g'])}/{len(verses)} glossed -> {tdir}")
+        print(f"{where}: {in_scope()}/{len(scope)} glossed -> {tdir}")
         shown = errors if not stop else errors[:3]
         for vid, err in shown:
             print("  failed", vid, err, "(re-run to retry)")
