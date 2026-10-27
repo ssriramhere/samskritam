@@ -47,8 +47,14 @@ def prompt_for(slug, v):
                          words=words, n=len(v["w"]))
 
 
+EFFORT = "minimal"
+
+
 def ask(model, prompt, n):
     body = {"model": model, "max_tokens": 4000, "messages": [{"role": "user", "content": prompt}]}
+    if EFFORT:
+        # Glossing needs little thought; Gemini's default thinking was most of the cost.
+        body["reasoning"] = {"effort": EFFORT}
     req = urllib.request.Request(
         "https://openrouter.ai/api/v1/chat/completions", data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json",
@@ -83,7 +89,11 @@ def main():
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--limit", type=int, default=None, help="first N verses, for a test")
     ap.add_argument("--part", default=None, help="only verses under this part, e.g. 2 for the Ayodhyākāṇḍa")
+    ap.add_argument("--reasoning-effort", default="minimal",
+                    help="OpenRouter reasoning effort (minimal, low, …); empty for the model's default")
     a = ap.parse_args()
+    global EFFORT
+    EFFORT = a.reasoning_effort
     if not os.environ.get("OPENROUTER_API_KEY"):
         sys.exit("Set OPENROUTER_API_KEY first.")
     outcome = []  # so a shell loop can tell a finished run from a stopped one
