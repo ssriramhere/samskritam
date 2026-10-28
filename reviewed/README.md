@@ -25,3 +25,19 @@ newlines (as the reader prints them):
 
 `kind` is `rasa`, `bhava` or `none`; `rasa` is one of the nine. The reader shows a
 reviewed reading above the AI's for that verse.
+
+## Word corrections
+
+One file per word of a Library verse: `reviewed/words/<text>/<verse>-<n>.json`, where
+`n` counts the verse's words from 0, for example `reviewed/words/gita/2.47-0.json`:
+
+```json
+{ "form": "karmaṇi", "fix": ["derivation"], "why": "What was wrong, and a source.",
+  "steps": [["1.2.45", "karman"], ["4.1.2", "karman ṅi"]], "flagged": [2],
+  "lemma": "…", "grammar": "…", "gloss": "…", "by": "Name to credit" }
+```
+
+`fix` lists what the reader corrected; only those fields are present. `steps` is the
+corrected derivation, each step `[sūtra number, form after it]`; `flagged` numbers the
+steps of the old derivation the reader marked wrong. The Library shows an approved
+correction below the word's own analysis.

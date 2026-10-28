@@ -170,6 +170,23 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .sjf #sjadd { justify-self: start }
 .sjhd { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: -2px }
 .sjsteps { display: grid; gap: 6px }
+.wjstep { display: grid; grid-template-columns: 1.6em 3.2em 6.5em minmax(0, 1fr) 9em 1.6em; gap: 8px; align-items: center }
+.wjstep .sjn { color: var(--muted); font-variant-numeric: tabular-nums }
+.wjstep .wjf { width: auto; margin: 0; justify-self: center; accent-color: var(--warn) }
+.wjhd span:nth-child(2) { text-align: center }
+.wjstep .sjc { font-family: var(--font-mono) !important }
+.wjstep .sjt { font-family: var(--font-display); font-style: italic; font-size: .92rem; color: var(--muted); min-width: 0; overflow-wrap: anywhere }
+.wjstep .sjt.ok { color: var(--ok) } .wjstep .sjt.bad { color: var(--warn); font-style: normal; font-family: var(--font-ui) }
+.wjstep .sjx { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 1.1rem }
+.wjstep.flag .sjc, .wjstep.flag .sjr { border-color: var(--warn) }
+.wjhd { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600 }
+.wjwhat { display: flex; gap: 14px; flex-wrap: wrap; font-size: .95rem }
+.wjwhat label { display: inline-flex; gap: 6px; align-items: center }
+.wjwhat input { width: auto; margin: 0 }
+.wjsec[hidden] { display: none }
+.wjrev { margin-top: 12px; border-left: 3px solid var(--ok); padding: 4px 0 4px 12px; font-size: .95rem }
+@media (max-width: 700px) { .wjstep { grid-template-columns: 1.6em 3.2em 6.5em minmax(0, 1fr) 1.6em } .wjhd .sjtl { display: none } .wjstep .sjt { grid-column: 3 / 5; grid-row: 2 } .wjstep .sjr { grid-column: 4; grid-row: 1 } .wjstep .sjx { grid-column: 5; grid-row: 1 } }
+
 .sjstep { display: grid; grid-template-columns: 1.6em 6.5em minmax(0, 1fr) 9em 1.6em; gap: 8px; align-items: center }
 .sjstep .sjn { color: var(--muted); font-variant-numeric: tabular-nums }
 .sjstep .sjc { font-family: var(--font-mono) !important }
@@ -816,7 +833,109 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         ? "An indeclinable, so there is no inflection to derive."
         : "No derivation shown: either the word is built from a root whose identity the annotation and the rules do not settle (common for nouns like yoga from √yuj), or the rule engine's derivation does not end in exactly this form."}</div>`;
     }
+    const rw = reviewed && reviewed._words && reviewed._words[text.slug] && reviewed._words[text.slug][current.id] && reviewed._words[text.slug][current.id][i];
+    if (rw) html += `<div class="wjrev"><span class="eyebrow">Reviewed correction, suggested by ${esc(rw.by)}</span>
+      ${rw.lemma || rw.grammar ? `<p>Analysis: <b>${esc(rw.lemma || w.l)}</b>${rw.grammar ? `, ${esc(rw.grammar)}` : ""}</p>` : ""}
+      ${rw.gloss ? `<p>Meaning: ${esc(rw.gloss)}</p>` : ""}
+      ${rw.steps && rw.steps.length ? `<div class="steps"><table><tbody>${rw.steps.map(([c, t, r]) => `<tr><td class="code">${sutraLink(c)}</td><td class="text">${esc(t || "")}</td><td class="res"><span class="ri">${esc(r)}</span></td></tr>`).join("")}</tbody></table></div>` : ""}
+      ${rw.why ? `<p class="hint">${esc(rw.why)}</p>` : ""}</div>`;
+    html += `<button type="button" class="linkbtn" id="wjbtn">Suggest a correction to this word</button><div id="wjbox"></div>`;
     const det = $("detail"); det.innerHTML = html; det.hidden = false;
+    $("wjbtn").onclick = () => openWordForm(w, i);
+  }
+
+  // A reader's correction to one word: its analysis, its derivation (flag the
+  // wrong steps, edit, add or remove sūtras, or supply one where none is shown),
+  // or its meaning. Sent as a pull request adding reviewed/words/<text>/<verse>-<n>.json.
+  function openWordForm(w, i) {
+    const box = $("wjbox"); $("wjbtn").hidden = true;
+    const d = w.x && derivs && derivs[w.x];
+    const g = glosses && glosses.g[current.id] && glosses.g[current.id][i];
+    const f = document.createElement("form"); f.className = "sug sjf";
+    f.innerHTML = `<p class="sjhead">Correcting <b>${esc(w.f)}</b> in ${esc(text.title)} ${esc(current.id)}. Tick what needs fixing, change it below, and leave the rest.</p>
+      <div class="wjwhat"><label><input type="checkbox" class="wjk" value="derivation" ${d ? "" : "checked"}> ${d ? "The derivation" : "Supply a derivation"}</label>
+        <label><input type="checkbox" class="wjk" value="analysis"> The lemma or grammar</label>
+        <label><input type="checkbox" class="wjk" value="meaning"> The meaning</label></div>
+      <div class="wjsec" data-s="derivation" ${d ? "hidden" : ""}>
+        <div class="flabel">The sūtras, in order</div>
+        <p class="hint sjtip">${d ? "Tick the box beside each step that is wrong, then correct it: change the sūtra number or the result, remove a step with ×, or add one." : "Give each step's sūtra number; its text appears beside it. Under \"Result\", write the form after that sūtra applies."}</p>
+        <div class="wjstep wjhd" aria-hidden="true"><span></span><span>${d ? "Wrong" : ""}</span><span>Sūtra no.</span><span class="sjtl">Sūtra text (filled in for you)</span><span>Result</span><span></span></div>
+        <div class="sjsteps" id="wjsteps"></div>
+        <button type="button" class="linkbtn" id="wjadd">+ Add a sūtra</button></div>
+      <div class="wjsec" data-s="analysis" hidden><div class="flabel">The correct analysis</div>
+        <div class="sugrow"><input id="wjlemma" maxlength="60" value="${esc(w.l)}" aria-label="Lemma"><input id="wjgram" maxlength="120" value="${esc(w.en)}" aria-label="Grammar"></div></div>
+      <div class="wjsec" data-s="meaning" hidden><div class="flabel">The meaning in this verse</div>
+        <input id="wjgloss" maxlength="80" value="${esc(g || "")}" aria-label="Meaning"></div>
+      <label class="flabel" for="wjwhy">Why (required)</label>
+      <textarea id="wjwhy" rows="2" maxlength="600" placeholder="What is wrong, and a source if you have one, e.g. Siddhānta Kaumudī no. 2185"></textarea>
+      <div class="sugrow"><input id="wjname" maxlength="80" placeholder="Name to credit if it's accepted" autocomplete="name"><input id="wjemail" type="email" maxlength="254" placeholder="Email, never shown" autocomplete="email"></div>
+      <input class="hp" id="wjweb" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="sugrow"><button type="submit" class="sendbtn">Send for review</button><button type="button" class="linkbtn" id="wjcancel">Cancel</button></div>
+      <p class="hint">Corrections are reviewed in public on GitHub before anything changes. Your email is never published.</p><p class="joinmsg" id="wjmsg" role="status"></p>`;
+    box.appendChild(f);
+    const steps = f.querySelector("#wjsteps");
+    const okCode = c => /^\d\.\d\.\d+(\.\d+)?$/.test(c) || /^\d\d\.\d{4}$/.test(c);
+    const lookup = row => {
+      const code = row.querySelector(".sjc").value.trim(), out = row.querySelector(".sjt");
+      if (!code) { out.textContent = ""; out.className = "sjt"; return; }
+      if (/^\d\d\.\d{4}$/.test(code)) { out.textContent = "dhātupāṭha entry"; out.className = "sjt ok"; return; }
+      if (!sutraText) { out.textContent = "Checking…"; return; }
+      const t = sutraText[code.split(".").slice(0, 3).join(".")];
+      out.textContent = t ? t : /^\d\.\d\.\d+$/.test(code) ? "No sūtra with this number" : "Write it like 6.1.77";
+      out.className = "sjt " + (t ? "ok" : "bad");
+    };
+    const number = () => steps.querySelectorAll(".sjn").forEach((n, k) => (n.textContent = k + 1 + "."));
+    const addRow = (code = "", res = "", orig = false) => {
+      const row = document.createElement("div"); row.className = "wjstep";
+      row.innerHTML = `<span class="sjn"></span>${orig ? `<input type="checkbox" class="wjf" aria-label="This step is wrong">` : "<span></span>"}
+        <input class="sjc" maxlength="12" placeholder="6.1.101" aria-label="Sūtra number" value="${esc(code)}">
+        <span class="sjt"></span><input class="sjr" maxlength="60" placeholder="Result" aria-label="Result after this sūtra" value="${esc(res)}">
+        <button type="button" class="sjx" aria-label="Remove this step">×</button>`;
+      if (orig) row.dataset.orig = `${code}|${res}`;
+      row.querySelector(".sjc").addEventListener("input", () => lookup(row));
+      const flag = row.querySelector(".wjf"); if (flag) flag.onchange = () => row.classList.toggle("flag", flag.checked);
+      row.querySelector(".sjx").onclick = () => { row.remove(); number(); };
+      steps.appendChild(row); number(); lookup(row); return row;
+    };
+    if (d) d.s.forEach(st => addRow(st[0], st[2], true)); else addRow();
+    f.querySelector("#wjadd").onclick = () => addRow().querySelector(".sjc").focus();
+    (sutraText ? Promise.resolve() : getJSON("data/sutras.json").then(x => { sutraText = x; }))
+      .then(() => steps.querySelectorAll(".wjstep").forEach(lookup)).catch(() => {});
+    f.querySelectorAll(".wjk").forEach(k => k.onchange = () => { f.querySelector(`.wjsec[data-s="${k.value}"]`).hidden = !k.checked; });
+    f.querySelector("#wjcancel").onclick = () => { f.remove(); $("wjbtn").hidden = false; };
+    f.onsubmit = async ev => {
+      ev.preventDefault();
+      const msg = f.querySelector("#wjmsg"), btn = f.querySelector(".sendbtn");
+      const fail = t => { msg.className = "joinmsg err"; msg.textContent = t; };
+      const fix = [...f.querySelectorAll(".wjk:checked")].map(k => k.value);
+      if (!fix.length) return fail("Tick at least one thing to fix.");
+      const why = f.querySelector("#wjwhy").value.trim();
+      if (why.length < 10) return fail("Say briefly what is wrong.");
+      const body = { kind: "word", slug: text.slug, id: current.id, wi: i, form: w.f, fix, why,
+        name: f.querySelector("#wjname").value, email: f.querySelector("#wjemail").value, website: f.querySelector("#wjweb").value,
+        current: { lemma: w.l, grammar: w.en, gloss: g || "", steps: d ? d.s.map(st => [st[0], st[2]]) : [] } };
+      if (fix.includes("derivation")) {
+        const rows = [...steps.querySelectorAll(".wjstep")];
+        body.steps = rows.map(r => [r.querySelector(".sjc").value.trim(), r.querySelector(".sjr").value.trim()]).filter(([c, r]) => c || r);
+        body.flagged = rows.map((r, k) => r.querySelector(".wjf") && r.querySelector(".wjf").checked ? k + 1 : 0).filter(Boolean);
+        if (!body.steps.length) return fail("Add at least one sūtra.");
+        const bad = body.steps.findIndex(([c]) => !okCode(c));
+        if (bad >= 0) return fail(`Step ${bad + 1}: write the sūtra number like 6.1.77.`);
+        const same = d && JSON.stringify(body.steps) === JSON.stringify(body.current.steps);
+        if (same && !body.flagged.length) return fail("The derivation hasn't changed. Tick the wrong steps or edit them.");
+      }
+      if (fix.includes("analysis")) { body.lemma = f.querySelector("#wjlemma").value.trim(); body.grammar = f.querySelector("#wjgram").value.trim(); }
+      if (fix.includes("meaning")) body.gloss = f.querySelector("#wjgloss").value.trim();
+      btn.disabled = true; msg.className = "joinmsg"; msg.textContent = "Sending…";
+      try {
+        const r = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        const out = await r.json().catch(() => null);
+        if (!out || !out.ok) throw new Error((out && out.error) || "We couldn't send that. Please try again.");
+        msg.className = "joinmsg ok"; msg.textContent = "Thank you. Your correction will be reviewed before it appears.";
+        f.querySelectorAll("textarea, input, button:not(#wjcancel)").forEach(x => (x.disabled = true));
+        f.querySelector("#wjcancel").textContent = "Close";
+      } catch (err) { fail(err.message); btn.disabled = false; }
+    };
   }
 
   function syncSelects() {

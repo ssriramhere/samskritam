@@ -171,6 +171,71 @@ async function rasa(req, res, b) {
   }
 }
 
+// A correction to one word of a Library verse: its analysis, its derivation
+// (with the steps the reader marked wrong), or its meaning.
+// Adds reviewed/words/<slug>/<verse id>-<word index>.json.
+const CODE = /^(\d\.\d\.\d{1,3}(\.\d{1,2})?|\d\d\.\d{4})$/;
+async function word(req, res, b) {
+  const slug = String(b.slug || ""), id = String(b.id || ""), wi = Number(b.wi);
+  if (!TITLES[slug] || !/^\d{1,3}(?:\.\d{1,3}){1,2}$/.test(id) || !Number.isInteger(wi) || wi < 0 || wi > 300) {
+    return res.status(400).json({ ok: false, error: "That word wasn't recognised. Reload the page and try again." });
+  }
+  const fix = Array.isArray(b.fix) ? b.fix.filter((x) => ["derivation", "analysis", "meaning"].includes(x)) : [];
+  if (!fix.length) return res.status(400).json({ ok: false, error: "Tick at least one thing to fix." });
+  const form = clean(b.form, 80), why = clean(b.why, 600), name = clean(b.name, 80), email = clean(b.email, 254).toLowerCase();
+  if (why.length < 10) return res.status(400).json({ ok: false, error: "Say briefly what is wrong." });
+  if (email && !EMAIL.test(email)) return res.status(400).json({ ok: false, error: "Check the email address, or leave it empty." });
+  const file = { form, fix, why, by: name || "a reader" };
+  if (fix.includes("derivation")) {
+    const steps = (Array.isArray(b.steps) ? b.steps : []).slice(0, 80).map((x) => [clean(x && x[0], 12), clean(x && x[1], 60)]);
+    if (!steps.length || steps.some(([c]) => !CODE.test(c))) {
+      return res.status(400).json({ ok: false, error: "Each step needs a sūtra number like 6.1.77." });
+    }
+    file.steps = steps;
+    file.flagged = (Array.isArray(b.flagged) ? b.flagged : []).map(Number).filter((n) => Number.isInteger(n) && n > 0 && n <= 200);
+  }
+  if (fix.includes("analysis")) { file.lemma = clean(b.lemma, 60); file.grammar = clean(b.grammar, 120); }
+  if (fix.includes("meaning")) file.gloss = clean(b.gloss, 80);
+  const cur = b.current && typeof b.current === "object" ? b.current : {};
+  const curSteps = (Array.isArray(cur.steps) ? cur.steps : []).slice(0, 80).map((x) => `${clean(x && x[0], 12)} → ${clean(x && x[1], 60)}`);
+  try {
+    const stop = await limited(req);
+    if (stop) return res.status(429).json({ ok: false, error: stop });
+    const sid = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    const ref = `${TITLES[slug]} ${id}`;
+    const flaggedText = file.flagged && file.flagged.length
+      ? file.flagged.map((n) => `step ${n}${curSteps[n - 1] ? ` (${curSteps[n - 1]})` : ""}`).join(", ") : "";
+    const suggested = [
+      file.lemma || file.grammar ? `Analysis: ${file.lemma || "(unchanged)"}; ${file.grammar || ""}` : "",
+      file.gloss ? `Meaning: ${file.gloss}` : "",
+      file.steps ? "Derivation:\n" + file.steps.map(([c, r], k) => `${k + 1}. ${c} → ${r}`).join("\n") : "",
+    ].filter(Boolean).join("\n\n");
+    const current = [
+      `Analysis: ${clean(cur.lemma, 60)}; ${clean(cur.grammar, 120)}`,
+      cur.gloss ? `Meaning: ${clean(cur.gloss, 80)}` : "",
+      curSteps.length ? "Derivation:\n" + curSteps.map((x, k) => `${k + 1}. ${x}`).join("\n") : "Derivation: (none shown)",
+    ].filter(Boolean).join("\n\n");
+    const pr = await openPR({
+      branch: `suggest-word-${slug}-${id}-${wi}-${sid}`, path: `reviewed/words/${slug}/${id}-${wi}.json`, file,
+      message: `Suggested correction: ${form} in ${ref}`,
+      title: `Word correction: ${form} in ${ref}`,
+      body: [
+        `A reader suggested a correction to **${form}** (word ${wi + 1}) in **${ref}**: https://samskritam.ai/#${slug}-${id}`,
+        "", `**What to fix:** ${fix.join(", ")}`, ...(flaggedText ? ["", `**Steps marked wrong:** ${flaggedText}`] : []),
+        "", "**Suggested**", fence(suggested), "", "**Current**", fence(current), "", "**Why**", fence(why),
+        "", "**Credit**", fence(name || "a reader (no name given)"),
+        email ? "\nThe reader left a contact email; it is stored privately, not here." : "",
+        "", "---", "**Approve:** merge. **Edit:** change the fields in this pull request's file, then merge. **Reject:** close.",
+      ].join("\n"),
+    });
+    if (email) await redis([["HSET", `suggest:pr:${pr.number}`, "email", email, "name", name, "word", `${slug} ${id} ${wi}`]]);
+    return res.status(200).json({ ok: true });
+  } catch (e) {
+    console.error("suggest word", e);
+    return res.status(502).json({ ok: false, error: "We couldn't save your suggestion just now. Please try again." });
+  }
+}
+
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") {
@@ -183,6 +248,7 @@ module.exports = async (req, res) => {
 
   if (b.kind === "sandhi") return sandhi(req, res, b);
   if (b.kind === "rasa") return rasa(req, res, b);
+  if (b.kind === "word") return word(req, res, b);
   const slug = String(b.slug || ""), id = String(b.id || "");
   if (!TITLES[slug] || !/^\d{1,3}(?:\.\d{1,3}){1,2}$/.test(id)) {
     return res.status(400).json({ ok: false, error: "That verse wasn't recognised. Reload the page and try again." });

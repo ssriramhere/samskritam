@@ -13,7 +13,7 @@ const out = {};
 let n = 0;
 if (existsSync(SRC)) {
   for (const slug of readdirSync(SRC)) {
-    if (slug === "sandhi" || slug === "rasa" || !statSync(join(SRC, slug)).isDirectory()) continue;
+    if (slug === "sandhi" || slug === "rasa" || slug === "words" || !statSync(join(SRC, slug)).isDirectory()) continue;
     for (const f of readdirSync(join(SRC, slug))) {
       const m = f.match(/^(\d+(?:\.\d+){1,2})\.json$/);
       if (!m) continue;
@@ -65,6 +65,31 @@ if (existsSync(rasaDir)) {
       n++;
     } catch (e) {
       console.warn(`skipped reviewed/rasa/${f}: ${e.message}`);
+    }
+  }
+}
+// Reviewed word corrections: reviewed/words/<slug>/<verse id>-<word index>.json
+const wordsDir = join(SRC, "words");
+if (existsSync(wordsDir)) {
+  let sutras = {};
+  try { sutras = JSON.parse(readFileSync(join(ROOT, "web/data/sutras.json"), "utf8")); } catch {}
+  for (const slug of readdirSync(wordsDir)) {
+    if (!statSync(join(wordsDir, slug)).isDirectory()) continue;
+    for (const f of readdirSync(join(wordsDir, slug))) {
+      const m = f.match(/^(\d+(?:\.\d+){1,2})-(\d+)\.json$/);
+      if (!m) continue;
+      try {
+        const r = JSON.parse(readFileSync(join(wordsDir, slug, f), "utf8"));
+        const entry = { by: String(r.by || "a reader").trim(), why: String(r.why || "").trim() };
+        if (r.lemma) entry.lemma = String(r.lemma);
+        if (r.grammar) entry.grammar = String(r.grammar);
+        if (r.gloss) entry.gloss = String(r.gloss);
+        if (Array.isArray(r.steps) && r.steps.length) entry.steps = r.steps.map(([c, x]) => [String(c), sutras[String(c)] || "", String(x || "")]);
+        ((((out._words ||= {})[slug] ||= {})[m[1]] ||= {}))[+m[2]] = entry;
+        n++;
+      } catch (e) {
+        console.warn(`skipped reviewed/words/${slug}/${f}: ${e.message}`);
+      }
     }
   }
 }
