@@ -159,7 +159,7 @@ def read(raw: str, ask_model) -> dict:
     if not chunks:
         raise ReaderError("The model returned no analysis. Try again.")
 
-    words, stats = [], {"agree": 0, "form-known": 0, "unknown": 0, "not-checked": 0}
+    words, stats = [], {"agree": 0, "form-known": 0, "unknown": 0, "stem-known": 0, "not-checked": 0}
     derivs = {}
     for ci, ch in enumerate(chunks):
         surface = to_iast_text(str(ch.get("surface") or ""))

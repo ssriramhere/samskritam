@@ -7,10 +7,13 @@ A claim is a dict in DCS / Universal Dependencies style:
      "feats": {"Case": "Loc", "Gender": "Neut", "Number": "Sing"}}
 
 check() returns a status:
-    "agree"        a kosha entry matches lemma and every stated feature
+    "agree"        a kosha entry matches lemma and every stated feature, or, for
+                   a prefixed verb the kosha doesn't list, the rules derive the
+                   form from the root with its prefixes (pari + √pracch -> paripapraccha)
     "form-known"   the form exists, but no entry matches the claimed analysis
-    "unknown"      the form is not in the kosha
-    "not-checked"  compound members and other tokens the engine does not cover
+    "unknown"      the form is not in the kosha and the rules don't derive it
+    "stem-known"   a compound member whose stem is in the kosha's stem list
+    "not-checked"  other compound members and tokens the engine does not cover
 """
 from __future__ import annotations
 
@@ -21,7 +24,7 @@ from functools import lru_cache
 
 from vidyut.kosha import Kosha
 from vidyut.lipi import Scheme, transliterate
-from vidyut.prakriya import (Lakara, Linga, Prayoga, Purusha, Vacana,
+from vidyut.prakriya import (Lakara, Linga, Pada, Prayoga, Purusha, Vacana,
                              Vibhakti, Vyakarana)
 
 DATA = os.environ.get(
@@ -254,9 +257,99 @@ def _avyaya_derivative(claim: dict, v: dict) -> bool:
             and e == c[:-1] and v.get("vibhakti") == Vibhakti.Dvitiya)
 
 
+# ---- forms the kosha doesn't list ---------------------------------------
+UPASARGAS = ["pra", "parA", "apa", "sam", "anu", "ava", "nis", "nir", "dus", "dur", "vi", "A",
+             "ni", "aDi", "api", "ati", "su", "ud", "aBi", "prati", "pari", "upa"]
+
+
+@lru_cache(maxsize=1)
+def _roots() -> dict:
+    """Unprefixed roots by spelling: canon(clean_text) -> [DhatuEntry]."""
+    out = {}
+    for d in kosha().dhatus():
+        if not (getattr(d.dhatu, "prefixes", None) or getattr(d.dhatu, "sanadi", None)):
+            out.setdefault(canon(d.clean_text), []).append(d)
+    return out
+
+
+@lru_cache(maxsize=1)
+def _stems() -> frozenset:
+    """Nominal stems the kosha lists (its basic prātipadikas), for compound members."""
+    return frozenset(canon(e.pratipadika.text) for e in kosha().pratipadikas()
+                     if str(e).startswith("PratipadikaEntry.Basic"))
+
+
+def _prefix_splits(lemma: str):
+    """(prefixes, root) pairs whose joining spells the lemma: paripracC -> (['pari'], 'pracC')."""
+    roots, seen = _roots(), set()
+    combos = [[p] for p in UPASARGAS] + [[p, q] for p in UPASARGAS for q in UPASARGAS if p != q]
+    for ps in combos:
+        joined = ps[0]
+        for q in ps[1:]:
+            joined = join_prefix(joined, q)
+        cands = []
+        if lemma.startswith(joined):
+            cands.append(lemma[len(joined):])
+        rest = lemma[len(joined) - 1:]
+        for (a, b), r in _VSANDHI.items():  # pra + Ap -> prAp
+            if joined[-1] == a and rest.startswith(r):
+                cands.append(b + rest[len(r):])
+        if joined[-1] in _YAN and lemma.startswith(joined[:-1] + _YAN[joined[-1]]):
+            cands.append(lemma[len(joined):])  # prati + A -> pratyA: vowel-initial root
+        for root in cands:
+            if root and canon(root) in roots and join_prefix(joined, root) == lemma:
+                key = (tuple(ps), root)
+                if key not in seen:
+                    seen.add(key)
+                    yield ps, root
+
+
+class _Derived:
+    """Stands in for a kosha entry when the form was derived rather than looked up."""
+    def __init__(self, pada):
+        self.pada = pada
+
+    def to_prakriya_args(self):
+        return self.pada
+
+    def __str__(self):  # a stable key, so identical derivations are stored once
+        return "derived:" + str(self.pada)
+
+
+def _derive_prefixed_verb(claim: dict):
+    """A finite verb with prefixes that the kosha doesn't list: derive it."""
+    f = claim.get("feats", {})
+    if claim.get("upos") != "VERB" or "Person" not in f:
+        return None
+    lemma = canon(to_slp1(claim["lemma"]))
+    want = {canon(k) for k in kosha_keys(claim["form"])}
+    laks = LAKARA.get((f.get("Tense", "Pres"), f.get("Mood", "Ind")), ())
+    prayogas = [Prayoga.Karmani] if f.get("Voice") == "Pass" else [Prayoga.Kartari, Prayoga.Karmani]
+    for ps, root in _prefix_splits(lemma):
+        for d in _roots()[canon(root)]:
+            dh = d.dhatu.with_prefixes(list(ps))
+            for lak in laks:
+                for pr in prayogas:
+                    pada = Pada.Tinanta(dhatu=dh, prayoga=pr, lakara=lak,
+                                        purusha=PERSON[f["Person"]], vacana=NUMBER[f["Number"]])
+                    try:
+                        texts = {canon(p.text) for p in vyakarana().derive(pada)}
+                    except Exception:
+                        continue
+                    if texts & want:
+                        return {"raw": _Derived(pada), "kind": "tinanta",
+                                "lemma": join_prefix("".join(ps), root),
+                                "lakara": lak, "purusha": PERSON[f["Person"]],
+                                "vacana": NUMBER[f["Number"]], "prayoga": pr, "derived": True}
+    return None
+
+
 def check(claim: dict) -> dict:
     f = claim.get("feats", {})
     if f.get("Case") == "Cpd":
+        stem = canon(to_slp1(claim.get("lemma") or claim["form"]))
+        if stem in _stems() or canon(to_slp1(claim["form"])) in _stems():
+            return {"status": "stem-known", "reason": "compound member; the stem is in the kosha"}
         return {"status": "not-checked", "reason": "compound member"}
     if claim["lemma"] in BOUND_MORPHEMES and claim.get("upos") != "CONJ":
         return {"status": "not-checked", "reason": "bound morpheme"}
@@ -267,6 +360,9 @@ def check(claim: dict) -> dict:
         extra.append(form_slp + "s")
     entries = lookup(claim["form"], extra)
     if not entries:
+        derived = _derive_prefixed_verb(claim)
+        if derived:
+            return {"status": "agree", "entry": derived}
         return {"status": "unknown"}
     hits = [v for v in entries if _matches(claim, v)] or \
         [v for v in entries if _avyaya_derivative(claim, v)]

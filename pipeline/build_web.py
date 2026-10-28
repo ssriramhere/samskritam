@@ -238,7 +238,8 @@ def main():
             "slug": slug, "title": meta["title"], "author": meta.get("author"),
             "levels": levels, "refStyle": ref_style, "default": default, "note": meta.get("note"),
             "verses": len(verses), "agree": st["agree"], "checkable": checkable,
-            "notChecked": st["not-checked"], "derivations": len(slim)})
+            "notChecked": st.get("not-checked", 0), "stemKnown": st.get("stem-known", 0),
+            "derivations": len(slim)})
         size = sum(os.path.getsize(os.path.join(tdir, f)) for f in os.listdir(tdir))
         print(f"{slug}: {len(verses)} verses in {len(chapters)} chapter files, {size // 1024} KB")
     dump(index, os.path.join(out_dir, "texts.json"))

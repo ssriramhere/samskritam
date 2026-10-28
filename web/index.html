@@ -80,6 +80,8 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .s-agree { --c: var(--ok) } .s-form-known { --c: var(--warn) } .s-unknown { --c: var(--none) } .s-not-checked { --c: var(--rule) }
 .dot { background: var(--c, var(--none)) }
 .s-not-checked .dot, .dot.s-not-checked { background: transparent; box-shadow: inset 0 0 0 1.5px var(--none) }
+.s-stem-known { --c: var(--ok) }
+.s-stem-known .dot, .dot.s-stem-known { background: transparent; box-shadow: inset 0 0 0 2px var(--ok) }
 
 /* The folio: a palm-leaf manuscript proportion with its two binding holes. */
 .folio { background: var(--leaf); border: 1px solid var(--rule); border-radius: 14px;
@@ -349,7 +351,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
           <div><span class="dot s-agree"></span><span>Pāṇini's rules allow this analysis</span></div>
           <div><span class="dot s-form-known"></span><span>Pāṇini's rules analyse this form differently</span></div>
           <div><span class="dot s-unknown"></span><span>The rule engine has no entry for this form yet</span></div>
-          <div><span class="dot s-not-checked"></span><span>Compound member, not yet checked</span></div>
+          <div><span class="dot s-stem-known"></span><span>Compound member: its stem is in the dictionary</span></div>
+          <div><span class="dot s-not-checked"></span><span>Compound member not in the dictionary</span></div>
         </div>
       </div>
 
@@ -391,7 +394,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       <ol class="steps3">
         <li><span class="stepn">1</span><div><h3>Scholars annotated it</h3><p>The Digital Corpus of Sanskrit records each word's dictionary form and grammar by hand: <span class="ex">adhikāraḥ → adhikāra, prathamā, puṃliṅga, ekavacana</span>.</p></div></li>
         <li><span class="stepn">2</span><div><h3>Pāṇini's rules check it</h3><p>Vidyut, a working implementation of more than 2,000 sūtras of the Aṣṭādhyāyī, tests whether its rules allow that analysis for this form. Where they do, it also derives the word sūtra by sūtra. The rules say what a form can be; choosing among the possibilities in context is still the scholar's reading.</p></div></li>
-        <li><span class="stepn">3</span><div><h3>You see the result</h3><p><span class="dot s-agree"></span> The rules allow the analysis. <span class="dot s-form-known"></span> The rules analyse the form differently, so it is open for review. <span class="dot s-unknown"></span> The rules have no entry yet. <span class="dot s-not-checked"></span> A compound member, not yet checked.</p></div></li>
+        <li><span class="stepn">3</span><div><h3>You see the result</h3><p><span class="dot s-agree"></span> The rules allow the analysis. <span class="dot s-form-known"></span> The rules analyse the form differently, so it is open for review. <span class="dot s-unknown"></span> The rules have no entry yet. <span class="dot s-stem-known"></span> A compound member whose stem is in the dictionary. <span class="dot s-not-checked"></span> A compound member that isn't.</p></div></li>
       </ol>
     </section>
 
@@ -530,7 +533,8 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     "agree": "Pāṇini's rules allow this analysis of the form. The choice in context is the scholars' reading.",
     "form-known": "Pāṇini's rules know this form but analyse it differently. Open for review.",
     "unknown": "The rule engine has no entry for this form yet.",
-    "not-checked": "Compound members are not checked yet."
+    "stem-known": "A compound member: its stem is in Vidyut's dictionary of stems. Members carry no case ending, so there is no inflection to check.",
+    "not-checked": "A compound member whose stem is not in Vidyut's dictionary of stems, so it isn't checked."
   };
   let translations = null, glosses = null, reviewed = null, modelNames = {}, writeHash = location.hash.length > 1;
   // A text is split into chapters (web/data/<slug>/<chapter>.json), loaded as the reader moves.
@@ -1020,7 +1024,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
     $("f-checked").textContent = t.checkable.toLocaleString("en-US");
     $("f-agree").textContent = (100 * t.agree / t.checkable).toFixed(1) + "%";
     $("f-deriv").textContent = t.derivations.toLocaleString("en-US");
-    $("n-note").textContent = `${t.notChecked.toLocaleString("en-US")} compound members are not yet checked, so they are left out of the agreement figure.` + (t.note ? " " + t.note : "");
+    $("n-note").textContent = `Compound members are left out of the agreement figure: ${(t.stemKnown || 0).toLocaleString("en-US")} have their stem in the dictionary, ${t.notChecked.toLocaleString("en-US")} don't.` + (t.note ? " " + t.note : "");
   }
 
   function loadText(slug, vid) {
