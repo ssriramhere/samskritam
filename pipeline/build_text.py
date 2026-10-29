@@ -40,7 +40,9 @@ TEXTS = {
         "publish": ["1", "3.50-78"],
         "critical_edition": True,
         "note": "The critical edition, added one parvan at a time. So far: {parts}. "
-                "Numbering follows the critical edition, as annotated in the Digital Corpus of Sanskrit.",
+                "Numbering follows the critical edition, as annotated in the Digital Corpus of Sanskrit. "
+                "Lines the corpus lacks are shown from the critical edition's electronic text, "
+                "© Bhandarkar Oriental Research Institute, Pune, 1999.",
     },
     "meghaduta": {
         "title": "Meghadūta",
@@ -267,7 +269,7 @@ def build(slug: str):
             note = None
             if missing:  # cited by pāda letters (verse) or line letter (prose)
                 note = ("Not in the Digital Corpus of Sanskrit, so shown from the critical edition "
-                        "without word analysis: " + ("line " if all(h.get("prose") for h in halves) else "pādas ")
+                        "(electronic text © BORI, Pune) without word analysis: " + ("line " if all(h.get("prose") for h in halves) else "pādas ")
                         + ", ".join(missing) + ".")
             out.append({"id": f"{ch_id}.{n}", "ch": ch_id, "v": n, "ce": None, **({"note": note} if note else {}),
                         "speaker": speakers.get(n), "lines": lines, "halves": halves,
