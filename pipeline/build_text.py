@@ -262,12 +262,13 @@ def build(slug: str):
             m = ({"name": "prose", "variant": None, "check": "none"}
                  if cfg["prose"] or all(h.get("prose") for h in halves) else meter.identify(lines))
             stats["meter:" + m["name"] + (" / " + m["variant"] if m.get("variant") else "")] += 1
-            missing = [h["ce"][-1] for h in halves if h.get("unanalysed")]
+            missing = [h["ce"][-1] if h.get("prose") else h["ce"][-1] + chr(ord(h["ce"][-1]) + 1)
+                       for h in halves if h.get("unanalysed")]
             note = None
-            if missing:
+            if missing:  # cited by pāda letters (verse) or line letter (prose)
                 note = ("Not in the Digital Corpus of Sanskrit, so shown from the critical edition "
-                        "without word analysis: " + ("pādas " if len(missing) > 1 else "pāda ")
-                        + ", ".join(f"{x}{chr(ord(x) + 1)}" for x in missing) + ".")
+                        "without word analysis: " + ("line " if all(h.get("prose") for h in halves) else "pādas ")
+                        + ", ".join(missing) + ".")
             out.append({"id": f"{ch_id}.{n}", "ch": ch_id, "v": n, "ce": None, **({"note": note} if note else {}),
                         "speaker": speakers.get(n), "lines": lines, "halves": halves,
                         "meter": m, "layer": "dcs"})

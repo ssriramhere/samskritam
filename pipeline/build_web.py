@@ -209,6 +209,9 @@ def main():
         slim = {k: {"f": v["form"], "s": [[s["sutra"], s["text"], s["result"], dev_step(s["result_slp"])]
                                           for s in v["steps"]]}
                 for k, v in der.items()}
+        if meta.get("publish"):  # derivations of the published chapters only
+            used = {w["x"] for v in verses for w in v["w"] if w.get("x")}
+            slim = {k: x for k, x in slim.items() if k in used}
 
         # Large texts keep each derivation once, in shards by id, loaded when a word is
         # opened; per-chapter files repeat common derivations in every chapter.
