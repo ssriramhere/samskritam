@@ -801,7 +801,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
       const chips = g.items.map(i => { const w = v.w[i];
         return `<button type="button" class="chip s-${w.s}" data-i="${i}" aria-pressed="false"><span class="dot"></span>${esc(w.d)}</button>`; }).join("");
       return `<div class="grp">${g.g ? `<span class="surf">${esc(g.g)}</span>` : `<span class="surf blank">&nbsp;</span>`}<div class="row">${chips}</div></div>`;
-    }).join("") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one here or in the verse for its grammar and derivation. Use ← and → to move between verses.</span>`;
+    }).join("") + (v.note ? `<span class="hint" style="flex-basis:100%">${esc(v.note)}</span>` : "") + `<span class="hint" style="flex-basis:100%">Words appear before sandhi. Tap one here or in the verse for its grammar and derivation. Use ← and → to move between verses.</span>`;
   }
 
   const shardsLoaded = {};

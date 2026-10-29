@@ -38,6 +38,7 @@ TEXTS = {
         "speakers": True,
         "prose": False,
         "publish": ["1", "3.50-78"],
+        "critical_edition": True,
         "note": "The critical edition, added one parvan at a time. So far: {parts}. "
                 "Numbering follows the critical edition, as annotated in the Digital Corpus of Sanskrit.",
     },
@@ -151,6 +152,87 @@ def chapter_ids(cfg, files):
     return [str(i) for i in range(1, len(files) + 1)]
 
 
+# The DCS's Mahābhārata files also carry passages of the vulgate, numbered with the
+# critical-edition verse they follow. Where the critical edition's own e-text is at
+# hand (data/ce/MBh01.txt ..., BORI, Unicode Roman, one line per two pādas, e.g.
+# "01001002a samāsīnān ..."), keep only corpus lines that are in it, number them as
+# it does, and show any edition line the corpus lacks without word analysis.
+CE_DIR = os.path.join(ROOT, "data/ce")
+_ce_cache = {}
+
+
+def _norm(s: str) -> str:
+    import re
+    s = s.lower().replace("ṁ", "m").replace("ṃ", "m").replace("’", "").replace("'", "")
+    s = re.sub(r"[^a-zāīūṛṝḷḹṅñṭḍṇśṣḥ]", "", s)
+    return s.replace("ttr", "tr")
+
+
+def critical_edition(cfg, ch_id):
+    """The edition's lines for one adhyāya: [(verse, pāda letter, text)], or None."""
+    import re
+    if not cfg.get("critical_edition") or "." not in ch_id:
+        return None
+    p, a = (int(x) for x in ch_id.split("."))
+    if p not in _ce_cache:
+        path = os.path.join(CE_DIR, f"MBh{p:02d}.txt")
+        if not os.path.exists(path):
+            _ce_cache[p] = None
+        else:
+            by = defaultdict(list)
+            for line in open(path, encoding="utf-8"):
+                m = re.match(r"(\d\d)(\d\d\d)(\d\d\d)(.) ?(.*)", line.rstrip("\n"))
+                if m and not line.startswith("%"):
+                    by[int(m[2])].append((int(m[3]), m[4], m[5].strip().replace("ṁ", "ṃ").replace("’", "'")))
+            _ce_cache[p] = by
+    return None if _ce_cache[p] is None else _ce_cache[p].get(a, [])
+
+
+def align_to_ce(halves, ce_lines, stats, derivations, ch_id):
+    import difflib
+    text_lines = [(i, l) for i, l in enumerate(ce_lines) if l[1] != " "]
+    by_norm = defaultdict(list)
+    for i, l in text_lines:
+        by_norm[_norm(l[2])].append(i)
+    match, used = {}, set()
+    for h in halves:
+        if "counter" not in h or speaker_of(h):
+            continue
+        n = _norm(h["text"])
+        hit = next((i for i in by_norm.get(n, []) if i not in used), None)
+        if hit is None:
+            best, hit = 0.0, None
+            for i, l in text_lines:
+                nn = _norm(l[2])
+                if i in used or abs(len(n) - len(nn)) > 12:
+                    continue
+                r = difflib.SequenceMatcher(None, n, nn, autojunk=False).ratio()
+                if r > best:
+                    best, hit = r, i
+            if best < 0.9:
+                hit = None
+        if hit is None:
+            stats["ce:dropped"] += 1
+            continue
+        used.add(hit)
+        match[hit] = h
+    verses, speakers = defaultdict(list), {}
+    for i, (v, q, text) in enumerate(ce_lines):
+        if q == " ":
+            speakers.setdefault(v, text)
+            continue
+        h = match.get(i)
+        if h is not None:
+            stats["ce:kept"] += 1
+            verses[v].append({"pos": i, "text": h["text"], "ce": f"{v}{q.lower()}", "prose": q.isupper(),
+                              "groups": analyse(h, stats, derivations)})
+        else:
+            stats["ce:not-in-corpus"] += 1
+            verses[v].append({"pos": i, "text": text, "ce": f"{v}{q.lower()}", "prose": q.isupper(), "groups": [],
+                              "unanalysed": True})
+    return verses, speakers
+
+
 def build(slug: str):
     cfg = TEXTS[slug]
     files = sorted(glob.glob(os.path.join(ROOT, cfg["source_dir"], "*.conllu")))
@@ -160,7 +242,10 @@ def build(slug: str):
     for fi in order:
         path, ch_id = files[fi], ids[fi]
         verses, speakers, pending = defaultdict(list), {}, None
-        for half in dcs.read(path):
+        ce_lines = critical_edition(cfg, ch_id)
+        if ce_lines is not None:
+            verses, speakers = align_to_ce(dcs.read(path), ce_lines, stats, derivations, ch_id)
+        for half in (dcs.read(path) if ce_lines is None else []):
             if "counter" not in half:
                 print("WARN unnumbered:", ch_id, half["text"][:60])
                 continue
@@ -175,9 +260,15 @@ def build(slug: str):
             halves = sorted(verses[n], key=lambda h: h["pos"])
             lines = [h["text"] for h in halves]
             m = ({"name": "prose", "variant": None, "check": "none"}
-                 if cfg["prose"] else meter.identify(lines))
+                 if cfg["prose"] or all(h.get("prose") for h in halves) else meter.identify(lines))
             stats["meter:" + m["name"] + (" / " + m["variant"] if m.get("variant") else "")] += 1
-            out.append({"id": f"{ch_id}.{n}", "ch": ch_id, "v": n, "ce": None,
+            missing = [h["ce"][-1] for h in halves if h.get("unanalysed")]
+            note = None
+            if missing:
+                note = ("Not in the Digital Corpus of Sanskrit, so shown from the critical edition "
+                        "without word analysis: " + ("pādas " if len(missing) > 1 else "pāda ")
+                        + ", ".join(f"{x}{chr(ord(x) + 1)}" for x in missing) + ".")
+            out.append({"id": f"{ch_id}.{n}", "ch": ch_id, "v": n, "ce": None, **({"note": note} if note else {}),
                         "speaker": speakers.get(n), "lines": lines, "halves": halves,
                         "meter": m, "layer": "dcs"})
         if len(cfg.get("levels", [])) == 2:

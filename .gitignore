@@ -14,3 +14,5 @@ data/build/ramayana-derivations.json
 data/sources/dcs-mahabharata/*
 data/build/mahabharata.json
 data/build/mahabharata-derivations.json
+# BORI critical-edition e-text, used only to check corpus lines (BORI copyright; not in git)
+data/ce/

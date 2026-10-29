@@ -18,6 +18,7 @@ from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from vidyut.lipi import Scheme, transliterate  # noqa: E402
 
 from engine import sandhi  # noqa: E402
@@ -71,6 +72,9 @@ def main():
         if not os.path.exists(os.path.join(ROOT, "data/build", src)):
             continue
         data = json.load(open(os.path.join(ROOT, "data/build", src), encoding="utf-8"))
+        if data["meta"].get("publish"):  # only what goes on the site (see build_web.publish_only)
+            from build_web import published
+            data["chapters"] = [c for c in data["chapters"] if published(str(c["ch"]), data["meta"]["publish"])]
         out, lines = {}, [0, 0, 0]
         for c in data["chapters"]:
             for v in c["verses"]:
