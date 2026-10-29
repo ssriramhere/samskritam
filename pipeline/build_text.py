@@ -21,8 +21,10 @@ from engine import dcs, labels, meter, verify  # noqa: E402
 
 TEXTS = {
     # The critical edition of the Mahābhārata, one CoNLL-U file per adhyāya
-    # (data/sources/dcs-mahabharata/mbh-<parvan>-<adhyāya>.conllu). For now
-    # the Nalopākhyāna, Āraṇyakaparvan 3.50-78; add files to grow it.
+    # (data/sources/dcs-mahabharata/mbh-<parvan>-<adhyāya>.conllu, made from the DCS
+    # files by pipeline/fetch_mahabharata.py; not in git). All eighteen parvans are
+    # built; "publish" picks what goes on the site: whole parvans ("1") or a run
+    # of adhyāyas ("3.50-78").
     "mahabharata": {
         "title": "Mahābhārata",
         "author": "Vyāsa (critical edition)",
@@ -35,8 +37,9 @@ TEXTS = {
                     16: "Mausalaparvan", 17: "Mahāprasthānikaparvan", 18: "Svargārohaṇaparvan"},
         "speakers": True,
         "prose": False,
-        "note": "So far the Nalopākhyāna (Āraṇyakaparvan, adhyāyas 50–78), with more of the "
-                "epic to follow. Numbering follows the critical edition.",
+        "publish": ["1", "3.50-78"],
+        "note": "The critical edition, added one parvan at a time. So far: {parts}. "
+                "Numbering follows the critical edition, as annotated in the Digital Corpus of Sanskrit.",
     },
     "meghaduta": {
         "title": "Meghadūta",
@@ -198,6 +201,7 @@ def build(slug: str):
     meta = {"title": cfg["title"], "author": cfg["author"],
             "part_label": cfg.get("part_label"), "levels": cfg.get("levels"),
             "parvans": {str(k): v for k, v in cfg.get("parvans", {}).items()},
+            "publish": cfg.get("publish"), "note_template": cfg["note"],
             "note": cfg["note"].replace("{parts}", ", ".join(
                 cfg["parvans"][p] for p in sorted({int(c["ch"].split(".")[0]) for c in chapters}))
                 if "{parts}" in (cfg["note"] or "") else cfg["note"]),

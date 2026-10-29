@@ -9,3 +9,8 @@ bench/private/
 data/dcs-repo
 data/build/ramayana.json
 data/build/ramayana-derivations.json
+# The Mahābhārata's sources are made by pipeline/fetch_mahabharata.py (the
+# Nalopākhyāna files already in git stay tracked); its build is too large for git.
+data/sources/dcs-mahabharata/*
+data/build/mahabharata.json
+data/build/mahabharata-derivations.json

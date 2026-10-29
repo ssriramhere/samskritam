@@ -142,6 +142,49 @@ def dump(obj, path):
         json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
 
 
+def published(ch: str, publish) -> bool:
+    """Whether chapter "3.52" is in a publish list like ["1", "3.50-78"]."""
+    p, a = (int(x) for x in ch.split("."))
+    for item in publish:
+        if "." not in item:
+            if int(item) == p:
+                return True
+            continue
+        ip, rng = item.split(".")
+        lo, _, hi = rng.partition("-")
+        if int(ip) == p and int(lo) <= a <= int(hi or lo):
+            return True
+    return False
+
+
+def publish_only(src: dict):
+    """Keep the chapters the text's publish list names (the whole text is built),
+    and recount the stats and the "So far" note for what is kept."""
+    meta, all_ch = src["meta"], src["chapters"]
+    src["chapters"] = [c for c in all_ch if published(str(c["ch"]), meta["publish"])]
+    st = {}
+    for c in src["chapters"]:
+        for v in c["verses"]:
+            for h in v["halves"]:
+                for g in h["groups"]:
+                    for t in g["tokens"]:
+                        st[t["status"]] = st.get(t["status"], 0) + 1
+    for k in ("agree", "form-known", "unknown"):
+        st.setdefault(k, 0)
+    meta["stats"] = st
+    parts = []
+    for p in sorted({int(c["ch"].split(".")[0]) for c in src["chapters"]}):
+        have = sorted(int(c["ch"].split(".")[1]) for c in src["chapters"] if int(c["ch"].split(".")[0]) == p)
+        total = sum(1 for c in all_ch if int(c["ch"].split(".")[0]) == p)
+        name = meta["parvans"][str(p)]
+        if len(have) < total:
+            name = (f"the Nalopākhyāna ({name} {have[0]}–{have[-1]})" if (p, have[0], have[-1]) == (3, 50, 78)
+                    else f"{name} {have[0]}–{have[-1]}")
+        parts.append(name)
+    if meta.get("note_template") and "{parts}" in meta["note_template"]:
+        meta["note"] = meta["note_template"].replace("{parts}", ", ".join(parts))
+
+
 def main():
     import shutil
     out_dir = os.path.join(ROOT, "web/data")
@@ -152,6 +195,8 @@ def main():
             print("skip", slug, "(not built)")
             continue
         src = json.load(open(src_path, encoding="utf-8"))
+        if src["meta"].get("publish"):
+            publish_only(src)
         verses = compact(src)
         st = src["meta"]["stats"]
         checkable = st["agree"] + st["form-known"] + st["unknown"]
