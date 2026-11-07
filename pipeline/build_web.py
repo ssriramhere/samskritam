@@ -142,6 +142,31 @@ def dump(obj, path):
         json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
 
 
+def _dcs(folder: str) -> str:
+    from urllib.parse import quote
+    return "https://github.com/OliverHellwig/sanskrit/tree/master/dcs/data/conllu/files/" + quote(folder)
+
+
+DCS = "Digital Corpus of Sanskrit (Oliver Hellwig), CC BY 4.0"
+# Where each text's verses and analysis come from, shown under the verse in the
+# Library. One entry per source, in order: [what it supplies, name, URL]. A text
+# from somewhere other than the DCS lists its own source here.
+SOURCES = {
+    "gita": [["Text", "gita/gita, public domain", "https://github.com/gita/gita"],
+             ["Word analysis", DCS, _dcs("Mahābhārata")]],
+    "meghaduta": [["Text and word analysis", DCS, _dcs("Meghadūta")]],
+    "kumarasambhava": [["Text and word analysis", DCS, _dcs("Kumārasaṃbhava")]],
+    "rtusamhara": [["Text and word analysis", DCS, _dcs("Ṛtusaṃhāra")]],
+    "ramayana": [["Text and word analysis", DCS, _dcs("Rāmāyaṇa")]],
+    "kathopanisad": [["Text and word analysis", DCS, _dcs("Kaṭhopaniṣad")]],
+    "astavakragita": [["Text and word analysis", DCS, _dcs("Aṣṭāvakragīta")]],
+    "mahabharata": [["Text and word analysis", DCS, _dcs("Mahābhārata")],
+                    ["Selection and numbering of lines; lines the corpus lacks",
+                     "Critical edition, electronic text © Bhandarkar Oriental Research Institute, Pune",
+                     "https://bombay.indology.info/mahabharata/statement.html"]],
+}
+
+
 def published(ch: str, publish) -> bool:
     """Whether chapter "3.52" is in a publish list like ["1", "3.50-78"]."""
     p, a = (int(x) for x in ch.split("."))
@@ -283,7 +308,7 @@ def main():
                 os.remove(os.path.join(out_dir, old))
 
         index.append({
-            "slug": slug, "title": meta["title"], "author": meta.get("author"),
+            "slug": slug, "title": meta["title"], "author": meta.get("author"), "sources": SOURCES.get(slug, []),
             "levels": levels, "refStyle": ref_style, "default": default, "note": meta.get("note"),
             "verses": len(verses), "agree": st["agree"], "checkable": checkable,
             "notChecked": st.get("not-checked", 0), "stemKnown": st.get("stem-known", 0),

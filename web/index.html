@@ -257,6 +257,8 @@ section.band { padding-block: 48px; border-top: 1px solid var(--rule) }
 .textbar button:hover { border-color: var(--indigo); color: var(--ink) }
 .textbar button[aria-pressed="true"] { background: var(--indigo); border-color: var(--indigo); color: var(--leaf) }
 #numbers .sub { color: var(--muted); margin: 16px 0 0; font-size: .9rem }
+.srcline { color: var(--muted); font-size: .8rem; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--rule) }
+.srcline a { color: inherit }
 .topnav { display: flex; gap: 18px; flex-wrap: wrap; font-size: .95rem }
 .topnav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent }
 .topnav a:hover { border-bottom-color: var(--indigo); color: var(--indigo) }
@@ -402,6 +404,7 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
         <div class="trans" id="trans"></div>
         <div class="words" id="words"><span class="hint">Loading the word analysis…</span></div>
         <div class="detail" id="detail" hidden></div>
+        <div class="srcline" id="srcline"></div>
       </article>
     </section>
 
@@ -1137,7 +1140,13 @@ footer .dev { font-family: var(--font-display); color: var(--ink) }
   }).catch(() => {});
   function getJSON(url) { return cache[url] || (cache[url] = fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.json(); })); }
 
+  function showSources(t) {
+    $("srcline").innerHTML = (t.sources || []).map(([what, name, url]) =>
+      `${esc(what)}: <a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)}</a>`).join(" · ");
+  }
+
   function showStats(t) {
+    showSources(t);
     $("n-title").textContent = `The ${t.title}, checked`;
     $("f-verses").textContent = t.verses.toLocaleString("en-US");
     $("f-checked").textContent = t.checkable.toLocaleString("en-US");
