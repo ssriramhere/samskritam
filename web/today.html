@@ -162,7 +162,7 @@ main { max-width: 680px; margin: 8px auto 64px; display: flex; flex-direction: c
   if (d.reel) { $('reel').poster = d.reel.replace(/\.mp4$/, '.jpg'); $('reel').src = d.reel; $('reel').hidden = false; $('download').href = d.reel; $('download').hidden = false;
     $('download').setAttribute('download', `${cfg.text}-${v.id}.mp4`); $('sharelabel').textContent = 'Share the reel'; }
   else $('copy').style.gridColumn = '1 / -1';
-  const caption = [`${cfg.heading || 'Sanskrit Verses for Today'} · ${cfg.title} ${v.id}`, d.hook || '', '', v.iast.join('\n'), '', (trs.t || {})[v.id] || '', '',
+  const caption = [`${cfg.heading || 'Sanskrit Verses for Today'} · ${cfg.title} ${v.id}`, ...(d.hook ? [d.hook] : []), '', v.iast.join('\n'), '', (trs.t || {})[v.id] || '', '',
     `Day ${n} of ${total} · ${cfg.series}`, `Today's reel: ${pageLink}`, `Word by word: ${link}`, '', [...(cfg.tags || []), ...(d.tags || [])].join(' ')].join('\n');
   const say = t => { $('msg').textContent = t; setTimeout(() => $('msg').textContent = '', 3000); };
   $('copy').onclick = async () => { try { await navigator.clipboard.writeText(caption); say('Caption copied'); } catch (e) { say('Copy did not work in this browser'); } };
