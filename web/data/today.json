@@ -1,5 +1,5 @@
 {
-  "about": "Verse of the day. Day 1 is 'start' (viewer's local date); day N shows the Nth verse of 'text' in order. 'days' holds the hook, word of the day and reel for a verse id; anything missing is simply not shown.",
+  "about": "Verse of the day. Day 1 is 'start' (viewer's local date); day N shows the Nth verse of 'text' in order. 'days' holds the hook, word of the day and reel for a verse id; anything missing is simply not shown. 'tags' are hashtags for every day's share and caption; a day may add its own 'tags'.",
   "text": "meghaduta",
   "title": "Meghadūta",
   "series": "The cloud's journey",
@@ -7,9 +7,24 @@
   "days": {
     "1.1": {
       "hook": "A lover in exile. A cloud as his messenger.",
-      "word": {"dev": "विरह", "iast": "viraha", "en": "separation from the one you love",
-               "note": "Inside the compound kāntā-viraha-guruṇā, “heavy with separation from his beloved”. The whole poem grows from it."},
-      "reel": "/reels/meghaduta-1.1.mp4"
+      "word": {
+        "dev": "विरह",
+        "iast": "viraha",
+        "en": "separation from the one you love",
+        "note": "Inside the compound kāntā-viraha-guruṇā, “heavy with separation from his beloved”. The whole poem grows from it."
+      },
+      "reel": "/reels/meghaduta-1.1.mp4",
+      "tags": [
+        "#Yaksha",
+        "#Ramagiri"
+      ]
     }
-  }
+  },
+  "heading": "Sanskrit Verses for Today",
+  "tags": [
+    "#Sanskrit",
+    "#Kalidasa",
+    "#Meghaduta",
+    "#संस्कृतम्"
+  ]
 }
