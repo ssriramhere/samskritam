@@ -162,8 +162,8 @@ main { max-width: 680px; margin: 8px auto 64px; display: flex; flex-direction: c
   if (d.reel) { $('reel').poster = d.reel.replace(/\.mp4$/, '.jpg'); $('reel').src = d.reel; $('reel').hidden = false; $('download').href = d.reel; $('download').hidden = false;
     $('download').setAttribute('download', `${cfg.text}-${v.id}.mp4`); $('sharelabel').textContent = 'Share the reel'; }
   else $('copy').style.gridColumn = '1 / -1';
-  const caption = [d.hook || `${cfg.title} ${v.id}`, '', v.iast.join('\n'), '', (trs.t || {})[v.id] || '', '',
-    `Day ${n} of ${total} · ${cfg.series}`, `Word by word: ${link}`, '', '#Sanskrit #Kalidasa #Meghaduta #संस्कृतम्'].join('\n');
+  const caption = [`Verse for Today · ${cfg.title} ${v.id}`, d.hook || '', '', v.iast.join('\n'), '', (trs.t || {})[v.id] || '', '',
+    `Day ${n} of ${total} · ${cfg.series}`, `Today's reel: ${pageLink}`, `Word by word: ${link}`, '', '#Sanskrit #Kalidasa #Meghaduta #संस्कृतम्'].join('\n');
   const say = t => { $('msg').textContent = t; setTimeout(() => $('msg').textContent = '', 3000); };
   $('copy').onclick = async () => { try { await navigator.clipboard.writeText(caption); say('Caption copied'); } catch (e) { say('Copy did not work in this browser'); } };
   // Fetch the reel ahead of time: phones only allow the share sheet straight after a tap,
@@ -175,9 +175,9 @@ main { max-width: 680px; margin: 8px auto 64px; display: flex; flex-direction: c
       if (navigator.canShare({files: [f]})) reelFile = f;
     }).catch(() => {});
   }
-  const shareText = `${d.hook ? d.hook + '\n' : ''}${cfg.title} ${v.id} · Day ${n} of ${total}\n${pageLink}`;
+  const shareText = `Verse for Today · ${cfg.title} ${v.id} (Day ${n} of ${total})\n${d.hook ? d.hook + '\n' : ''}${pageLink}`;
   $('share').onclick = async () => {
-    const data = {title: `${cfg.title} ${v.id}`, text: shareText};
+    const data = {title: 'Verse for Today', text: shareText};
     try {
       if (reelFile) { await navigator.share({...data, files: [reelFile]}); return; }
       if (navigator.share) { await navigator.share({...data, url: pageLink}); return; }
