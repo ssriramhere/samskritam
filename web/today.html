@@ -147,6 +147,7 @@ main { max-width: 680px; margin: 8px auto 64px; display: flex; flex-direction: c
   const v = vs.verses.find(x => x.id === vid) || vs.verses[n - 1 - order.findIndex(o => o[0] === ch)];
   const d = (cfg.days || {})[v.id] || {};
   const link = `https://samskritam.ai/#${cfg.text}-${v.id}`;
+  const pageLink = `https://samskritam.ai/today?d=${n}`;
   $('series').textContent = `Day ${n} of ${total} · ${cfg.series} · ${cfg.title} ${v.id}`;
   const shown = new Date(day0.getTime() + (n - 1) * 864e5);
   $('date').textContent = shown.toLocaleDateString(undefined, {day: 'numeric', month: 'long', year: 'numeric'});
@@ -165,17 +166,23 @@ main { max-width: 680px; margin: 8px auto 64px; display: flex; flex-direction: c
     `Day ${n} of ${total} · ${cfg.series}`, `Word by word: ${link}`, '', '#Sanskrit #Kalidasa #Meghaduta #संस्कृतम्'].join('\n');
   const say = t => { $('msg').textContent = t; setTimeout(() => $('msg').textContent = '', 3000); };
   $('copy').onclick = async () => { try { await navigator.clipboard.writeText(caption); say('Caption copied'); } catch (e) { say('Copy did not work in this browser'); } };
+  // Fetch the reel ahead of time: phones only allow the share sheet straight after a tap,
+  // so the file must already be in hand when the button is pressed.
+  let reelFile = null;
+  if (d.reel && navigator.canShare) {
+    fetch(d.reel).then(r => r.blob()).then(b => {
+      const f = new File([b], `${cfg.text}-${v.id}.mp4`, {type: 'video/mp4'});
+      if (navigator.canShare({files: [f]})) reelFile = f;
+    }).catch(() => {});
+  }
+  const shareText = `${d.hook ? d.hook + '\n' : ''}${cfg.title} ${v.id} · Day ${n} of ${total}\n${pageLink}`;
   $('share').onclick = async () => {
-    const data = {title: `${cfg.title} ${v.id}`, text: d.hook || '', url: link};
+    const data = {title: `${cfg.title} ${v.id}`, text: shareText};
     try {
-      if (d.reel && navigator.canShare) {
-        const blob = await (await fetch(d.reel)).blob();
-        const file = new File([blob], `${cfg.text}-${v.id}.mp4`, {type: 'video/mp4'});
-        if (navigator.canShare({files: [file]})) { await navigator.share({...data, files: [file]}); return; }
-      }
-      if (navigator.share) { await navigator.share(data); return; }
-      await navigator.clipboard.writeText(link); say('Link copied');
-    } catch (e) { if (e.name !== 'AbortError') { try { await navigator.clipboard.writeText(link); say('Link copied'); } catch (_) {} } }
+      if (reelFile) { await navigator.share({...data, files: [reelFile]}); return; }
+      if (navigator.share) { await navigator.share({...data, url: pageLink}); return; }
+      await navigator.clipboard.writeText(pageLink); say('Link copied');
+    } catch (e) { if (e.name !== 'AbortError') { try { await navigator.clipboard.writeText(pageLink); say('Link copied'); } catch (_) {} } }
   };
   const go = (el, k) => { if (k < 1 || k > Math.min(total, today)) el.setAttribute('aria-disabled', 'true'); else el.href = `/today?d=${k}`; };
   go($('prev'), n - 1); go($('next'), n + 1);
