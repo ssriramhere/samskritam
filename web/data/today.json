@@ -18,6 +18,36 @@
         "#Yaksha",
         "#Ramagiri"
       ]
+    },
+    "1.2": {
+      "hook": "Months alone on a mountain.\nThen, on the first day of the rains, a cloud.",
+      "word": {
+        "dev": "मेघ",
+        "iast": "megha",
+        "say": "Megha",
+        "en": "cloud",
+        "note": "Here megham, the cloud he sees clinging to the peak. The poem is named for it: Megha-dūta, the cloud messenger."
+      },
+      "tags": [
+        "#Ashadha",
+        "#Monsoon"
+      ],
+      "reel": "/reels/meghaduta-1.2.mp4"
+    },
+    "1.3": {
+      "hook": "One look at a rain cloud,\nand even a happy heart aches.",
+      "word": {
+        "dev": "अन्तर्बाष्प",
+        "iast": "antarbāṣpa",
+        "say": "Antar baashpa",
+        "en": "with tears held within",
+        "note": "antar, within, and bāṣpa, tears: standing before the cloud, he holds his tears back."
+      },
+      "tags": [
+        "#Longing",
+        "#Monsoon"
+      ],
+      "reel": "/reels/meghaduta-1.3.mp4"
     }
   },
   "heading": "Sanskrit Verses for Today",

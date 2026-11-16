@@ -1,0 +1,2 @@
+{ "name": "samskritam-reels", "private": true, "description": "Fonts for the Verse for Today reels",
+  "dependencies": { "@fontsource/tiro-devanagari-sanskrit": "5.2.5", "@fontsource/hind": "5.2.5", "@fontsource/ibm-plex-mono": "5.2.5" } }

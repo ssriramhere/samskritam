@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- One reel, 1080×1920, drawn from window.DATA (written by make_reel.py). render(t) sets the frame at t seconds. -->
+<link rel="stylesheet" href="node_modules/@fontsource/tiro-devanagari-sanskrit/index.css">
+<link rel="stylesheet" href="node_modules/@fontsource/tiro-devanagari-sanskrit/400-italic.css">
+<link rel="stylesheet" href="node_modules/@fontsource/hind/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/hind/600.css">
+<link rel="stylesheet" href="node_modules/@fontsource/ibm-plex-mono/400.css">
+<style>
+html,body{margin:0;background:#0f1120}
+#f{width:1080px;height:1920px;position:relative;overflow:hidden;background:#0f1120;color:#e8e9f2;font-family:Hind,sans-serif}
+.dev{font-family:'Tiro Devanagari Sanskrit',serif}
+.it{font-family:'Tiro Devanagari Sanskrit',serif;font-style:italic}
+.mono{font-family:'IBM Plex Mono',monospace}
+.scene{position:absolute;inset:0;opacity:0}
+#clouds{position:absolute;left:-200px;top:0;width:1480px;height:1920px;opacity:.13}
+.top{position:absolute;top:90px;left:84px;right:84px;display:flex;justify-content:space-between;font-size:38px;color:#a2a7bf}
+.bar{position:absolute;left:72px;right:72px;bottom:96px;height:8px;background:#2b2f48;border-radius:4px}
+.bar i{display:block;height:8px;background:#f0b840;border-radius:4px}
+.w{border-radius:14px;padding:0 6px}
+.on{background:#f0b840;color:#0f1120}
+.done{color:#e8e9f2}.todo{color:#5a5f78}
+.mk span{color:#3a3f5c}.mk span.lit{color:#f0b840}
+.pada{display:flex;flex-direction:column;gap:10px}
+</style></head>
+<body><div id="f">
+<svg id="clouds" viewBox="0 0 1480 1920" aria-hidden="true"></svg>
+
+<div class="scene" id="s1">
+  <div style="position:absolute;left:84px;right:84px;bottom:400px;display:flex;flex-direction:column;gap:36px">
+    <div id="eyebrow" style="font-size:32px;letter-spacing:.14em;text-transform:uppercase;color:#f0b840"></div>
+    <div id="hook" style="font-size:88px;font-weight:600;line-height:1.15"></div>
+    <div id="byline" style="font-size:44px;color:#a2a7bf"></div>
+  </div>
+</div>
+
+<div class="scene" id="s2">
+  <div class="top"><span class="ref"></span><span style="color:#f0b840">♪ chant</span></div>
+  <div id="padas" style="position:absolute;left:72px;right:60px;top:300px;display:flex;flex-direction:column;gap:64px"></div>
+  <div id="meterline" style="position:absolute;left:72px;right:72px;top:1560px;font-size:36px;color:#a2a7bf;line-height:1.45"></div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="top"><span class="ref"></span><span style="color:#f0b840">translation</span></div>
+  <div style="position:absolute;left:84px;right:84px;top:380px;display:flex;flex-direction:column;gap:60px">
+    <div id="t1" style="font-weight:600;line-height:1.3"></div>
+    <div id="t2" style="line-height:1.35"></div>
+    <div style="font-size:34px;color:#6b7086">AI translation · samskritam.ai</div>
+  </div>
+</div>
+
+<div class="scene" id="s4">
+  <div style="position:absolute;left:96px;right:96px;top:520px;display:flex;flex-direction:column;gap:44px">
+    <div style="font-size:38px;letter-spacing:.16em;text-transform:uppercase;color:#f0b840">One word</div>
+    <div class="dev" id="wdev" style="font-size:200px;line-height:1.1"></div>
+    <div class="it" id="wiast" style="font-size:64px;color:#a2a7bf"></div>
+    <div id="wen" style="font-size:72px;font-weight:600;line-height:1.2"></div>
+    <div id="wnote" style="font-size:46px;line-height:1.5;color:#a2a7bf"></div>
+  </div>
+</div>
+
+<div class="scene" id="s5" style="background:#333f99">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:56px;padding:96px">
+    <div class="dev" style="font-size:260px;line-height:1">कृ</div>
+    <div style="font-size:84px;font-weight:600">Read it word by word</div>
+    <div style="font-size:48px;line-height:1.45;color:#e6e8f6">Every word explained and checked<br>against Pāṇini's rules. Free.</div>
+    <div class="mono" id="endlink" style="background:#fff;color:#333f99;border-radius:24px;padding:30px 44px;font-size:46px"></div>
+    <div style="font-size:42px;color:#e6e8f6">A new verse every day</div>
+  </div>
+</div>
+
+<div class="bar"><i id="pb" style="width:0"></i></div>
+</div>
+<script src="data.js"></script>
+<script>
+const D=window.DATA, $=id=>document.getElementById(id);
+(function(){const s=$('clouds');
+ function cloud(x,y,k){return `<path transform="translate(${x} ${y}) scale(${k})" d="M0 60 Q0 20 40 20 Q50 -10 90 0 Q120 -25 150 5 Q190 0 195 35 Q230 40 225 65 Z"/>`;}
+ s.innerHTML='<g fill="none" stroke="#e8e9f2" stroke-width="2.2">'+[[60,180,1.6],[700,320,2.2],[260,700,2.8],[900,980,1.8],[80,1260,2.4],[760,1560,2.6],[380,1760,1.5]].map(c=>cloud(...c)).join('')+'</g>';})();
+$('eyebrow').textContent=`Sanskrit Verses for Today · Day ${D.day} of ${D.total}`;
+$('hook').innerHTML=D.hook.split('\n').map(l=>l.replace(/[&<>]/g,'')).join('<br>');
+$('byline').textContent=D.byline;
+document.querySelectorAll('.ref').forEach(e=>e.textContent=D.ref);
+$('meterline').textContent=`ऽ long · । short: the ${D.meter} meter`;
+$('t1').textContent=D.t1.text; $('t2').textContent=D.t2.text;
+$('t1').style.fontSize=(D.t1.text.length>150?58:66)+'px'; $('t2').style.fontSize=(D.t2.text.length>150?50:56)+'px';
+$('wdev').textContent=D.word.dev; $('wiast').textContent=D.word.iast; $('wen').textContent=`“${D.word.en}”`; $('wnote').textContent=D.word.note||'';
+$('endlink').textContent=D.endlink;
+$('padas').innerHTML=D.padas.map((p,k)=>`<div class="pada"><div class="dev" id="d${k}" style="font-size:${p.big?50:56}px;line-height:1.45"></div><div class="dev mk" id="m${k}" style="font-size:40px;letter-spacing:.2em"></div><div class="it" id="i${k}" style="font-size:${p.big?32:36}px;color:#a2a7bf"></div></div>`).join('');
+const T=D.scenes;
+function st(k,t){const p=D.padas[k],units=[...p.m].map(c=>c=='G'?2:1),tot=units.reduce((a,b)=>a+b,0);
+ let u=(t-p.start)/p.dur*tot,syl=0;if(u<0)return{syl:-1,word:-1};for(;syl<units.length&&u>=units[syl];syl++)u-=units[syl];
+ if(syl>=units.length)return{syl:99,word:99};const w=Math.floor(syl/units.length*p.n.reduce((a,b)=>a+b,0));
+ let acc=0,j=0;for(;j<p.n.length;j++){if(w<acc+p.n[j])break;acc+=p.n[j];}return{syl,word:Math.min(j,p.n.length-1)};}
+function draw(k,t){const p=D.padas[k],s=st(k,t),cls=j=>j<s.word?'w done':j==s.word?'w on':'w todo';
+ $('d'+k).innerHTML=p.d.map((w,j)=>`<span class="${cls(j)}">${w}</span>`).join(' ');
+ $('i'+k).innerHTML=p.i.map((w,j)=>`<span style="color:${j==s.word?'#f0b840':'#a2a7bf'}">${w}</span>`).join(' ');
+ $('m'+k).innerHTML=[...p.m].map((c,j)=>`<span class="${s.syl>=0&&j<=s.syl?'lit':''}">${c=='G'?'ऽ':'।'}</span>`).join('');}
+function ease(x){return x<0?0:x>1?1:x*x*(3-2*x)}
+window.render=function(t){
+ for(const [id,[a,b]] of Object.entries(T)){const fi=ease((t-a)/0.45),fo=ease((b-t)/0.45);$(id).style.opacity=Math.min(fi,id=='s5'?1:fo).toFixed(3);}
+ const c=$('clouds');c.style.transform=`translateX(${(t*6).toFixed(1)}px)`;c.style.opacity=t>=T.s5[0]?0:0.13;
+ for(let k=0;k<D.padas.length;k++)draw(k,t);
+ const a1=D.t1.at,e1=D.t1.at+D.t1.dur,a2=D.t2.at;
+ $('t1').style.color=(t>=a1&&t<e1)?'#f0b840':(t<a1?'#e8e9f2':'#a2a7bf');
+ $('t2').style.color=t>=a2?'#e8e9f2':'#5a5f78';
+ $('pb').style.width=(Math.min(t/D.total_s,1)*100).toFixed(2)+'%';};
+window.render(0);
+</script></body></html>
