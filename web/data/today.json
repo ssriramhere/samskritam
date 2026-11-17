@@ -48,6 +48,108 @@
         "#Monsoon"
       ],
       "reel": "/reels/meghaduta-1.3.mp4"
+    },
+    "1.4": {
+      "hook": "He offers the cloud fresh flowers,\nand a welcome.",
+      "word": {
+        "dev": "स्वागत",
+        "iast": "svāgata",
+        "say": "Svaagata",
+        "en": "welcome",
+        "note": "su, well, and āgata, come: “well come”, the greeting he speaks to the cloud."
+      },
+      "tags": [
+        "#Kutaja",
+        "#Monsoon"
+      ],
+      "reel": "/reels/meghaduta-1.4.mp4"
+    },
+    "1.5": {
+      "hook": "A cloud is only smoke, light,\nwater and wind.\nLove doesn't care.",
+      "word": {
+        "dev": "कामार्त",
+        "iast": "kāmārta",
+        "say": "Kaamaarta",
+        "en": "tormented by love",
+        "note": "kāma, love, and ārta, afflicted: those in love plead with anything, living or not."
+      },
+      "tags": [
+        "#Love"
+      ],
+      "reel": "/reels/meghaduta-1.5.mp4"
+    },
+    "1.6": {
+      "hook": "Better to ask the great and be refused\nthan to ask the small and succeed.",
+      "word": {
+        "dev": "याच्ञा",
+        "iast": "yācñā",
+        "say": "Yaachnyaa",
+        "en": "a request",
+        "note": "yācñā moghā varam adhiguṇe: a request refused by the noble is better."
+      },
+      "tags": [
+        "#Wisdom",
+        "#Subhashita"
+      ],
+      "reel": "/reels/meghaduta-1.6.mp4"
+    },
+    "1.7": {
+      "hook": "His message has one address:\nAlakā, city washed in Śiva's moonlight.",
+      "word": {
+        "dev": "शरण",
+        "iast": "śaraṇa",
+        "say": "Sharana",
+        "en": "refuge",
+        "note": "saṃtaptānāṃ tvam asi śaraṇam: “you are the refuge of the scorched.”"
+      },
+      "tags": [
+        "#Alaka",
+        "#Shiva"
+      ],
+      "reel": "/reels/meghaduta-1.7.mp4"
+    },
+    "1.8": {
+      "hook": "When the rain clouds come,\ntravellers' wives know\ntheir husbands are coming home.",
+      "word": {
+        "dev": "पथिक",
+        "iast": "pathika",
+        "say": "Pathika",
+        "en": "traveller",
+        "note": "pathika-vanitāḥ, the travellers' wives, who look up at the cloud and take heart."
+      },
+      "tags": [
+        "#Monsoon"
+      ],
+      "reel": "/reels/meghaduta-1.8.mp4"
+    },
+    "1.9": {
+      "hook": "Hope is the thread that keeps\na loving heart from breaking.",
+      "word": {
+        "dev": "आशाबन्ध",
+        "iast": "āśābandha",
+        "say": "Aashaa bandha",
+        "en": "the bond of hope",
+        "note": "āśā, hope, and bandha, bond: it holds a flower-soft heart through separation."
+      },
+      "tags": [
+        "#Hope"
+      ],
+      "reel": "/reels/meghaduta-1.9.mp4"
+    },
+    "1.10": {
+      "hook": "A gentle wind, a singing bird,\ncranes in rows:\ngood omens for the journey.",
+      "word": {
+        "dev": "बलाका",
+        "iast": "balākā",
+        "say": "Balaakaa",
+        "en": "female crane",
+        "note": "The balākās fly in garlands beside the cloud, a delight to the eyes."
+      },
+      "tags": [
+        "#Cranes",
+        "#Monsoon"
+      ],
+      "reel": "/reels/meghaduta-1.10.mp4"
     }
   },
   "heading": "Sanskrit Verses for Today",
