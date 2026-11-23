@@ -150,6 +150,37 @@
         "#Monsoon"
       ],
       "reel": "/reels/meghaduta-1.10.mp4"
+    },
+    "1.11": {
+      "hook": "Thunder, and the swans rise. They will fly with the cloud all the way to Kailāsa.",
+      "word": {
+        "dev": "राजहंस",
+        "iast": "rājahaṃsa",
+        "say": "Raaja hamsa",
+        "en": "royal swan",
+        "note": "rāja, king, and haṃsa, swan: when the rains begin, they fly north to Lake Mānasa."
+      },
+      "tags": [
+        "#Kailash",
+        "#Manasarovar",
+        "#Swans"
+      ],
+      "reel": "/reels/meghaduta-1.11.mp4"
+    },
+    "1.12": {
+      "hook": "Before leaving, the cloud embraces an old friend: a mountain marked by Rāma's footprints.",
+      "word": {
+        "dev": "रघुपति",
+        "iast": "raghupati",
+        "say": "Raghupati",
+        "en": "lord of the Raghus: Rāma",
+        "note": "raghupati-padaiḥ, “by the footprints of the lord of the Raghus”: Rāmagiri, where Rāma once walked."
+      },
+      "tags": [
+        "#Rama",
+        "#Ramagiri"
+      ],
+      "reel": "/reels/meghaduta-1.12.mp4"
     }
   },
   "heading": "Sanskrit Verses for Today",
