@@ -74,19 +74,9 @@ def tts(kokoro, text):
     return s, sr
 
 
-def main():
-    vid = sys.argv[1]
-    cfg = json.load(open(os.path.join(WEB, "data/today.json"), encoding="utf-8"))
-    slug = cfg["text"]
-    day = cfg["days"].get(vid) or sys.exit(f"web/data/today.json has no entry for {vid}: add its hook and word first")
-    idx = json.load(open(os.path.join(WEB, f"data/{slug}/index.json"), encoding="utf-8"))
-    order = [f"{c['id']}.{i + 1}" for c in idx["chapters"] for i in range(c["n"])]
-    ch = vid.rsplit(".", 1)[0]
-    v = next(x for x in json.load(open(os.path.join(WEB, f"data/{slug}/{ch}.json"), encoding="utf-8"))["verses"] if x["id"] == vid)
-    tr = json.load(open(os.path.join(WEB, f"data/{slug}/{ch}-translations.json"), encoding="utf-8"))["t"][vid]
-    t1, t2 = split_translation(tr)
-
-    # Pādas: each printed half-line holds two; pb gives the last token of the first.
+def padas_of(v):
+    """The verse's pādas: each printed half-line holds two; pb gives the last token of the first.
+    Each pāda: i (IAST words), d (Devanagari words), n (syllables per word), m (meter scan)."""
     padas = []
     for k, line in enumerate(v["lt"]):
         pb = (v.get("pb") or [[]] * len(v["lt"]))[k]
@@ -109,6 +99,22 @@ def main():
             if toks:
                 padas.append({"i": [t[0] for t in toks], "d": [t[1] for t in toks],
                               "n": [syllables(t[0]) for t in toks], "m": v["scan"][len(padas)] if len(padas) < len(v["scan"]) else ""})
+    return padas
+
+
+def main():
+    vid = sys.argv[1]
+    cfg = json.load(open(os.path.join(WEB, "data/today.json"), encoding="utf-8"))
+    slug = cfg["text"]
+    day = cfg["days"].get(vid) or sys.exit(f"web/data/today.json has no entry for {vid}: add its hook and word first")
+    idx = json.load(open(os.path.join(WEB, f"data/{slug}/index.json"), encoding="utf-8"))
+    order = [f"{c['id']}.{i + 1}" for c in idx["chapters"] for i in range(c["n"])]
+    ch = vid.rsplit(".", 1)[0]
+    v = next(x for x in json.load(open(os.path.join(WEB, f"data/{slug}/{ch}.json"), encoding="utf-8"))["verses"] if x["id"] == vid)
+    tr = json.load(open(os.path.join(WEB, f"data/{slug}/{ch}-translations.json"), encoding="utf-8"))["t"][vid]
+    t1, t2 = split_translation(tr)
+
+    padas = padas_of(v)
     for p in padas:
         p["big"] = sum(len(x) for x in p["i"]) > 38
 

@@ -1,0 +1,8 @@
+{
+  "name": "samskritam-site",
+  "private": true,
+  "description": "Functions for samskritam.ai (api/). The site itself is static (web/).",
+  "dependencies": {
+    "@vercel/blob": "2.9.0"
+  }
+}

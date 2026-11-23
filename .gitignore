@@ -18,3 +18,7 @@ data/build/mahabharata-derivations.json
 data/ce/
 # Private sign-up emails exported by scripts/export_contacts.mjs
 contacts.csv
+
+# Local copies of the private recordings (scripts/pull_recordings.mjs)
+recordings/
+node_modules/

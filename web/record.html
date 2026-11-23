@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recording sheet · Samskritam.ai</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#333f99">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap">
+<style>
+:root {
+  --paper: #f3f3f6; --leaf: #fbfaf5; --ink: #171a2c; --muted: #5a5f78; --rule: #d9dbe5;
+  --indigo: #333f99; --indigo-soft: #e6e8f6; --turmeric: #b07800; --ok: #2d7a57; --warn: #a8620a; --rec: #c0392b; --faint: #9aa0b8;
+  --font-display: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", Georgia, serif;
+  --font-ui: "Hind", "Noto Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f1120; --leaf: #171a2e; --ink: #e8e9f2; --muted: #a2a7bf; --rule: #2b2f48;
+  --indigo: #9ea8ff; --indigo-soft: #23284a; --turmeric: #f0b840; --ok: #6cc79a; --warn: #f2a23c; --rec: #ef6a5a; --faint: #5d6280; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0f1120; --leaf: #171a2e; --ink: #e8e9f2; --muted: #a2a7bf; --rule: #2b2f48;
+  --indigo: #9ea8ff; --indigo-soft: #23284a; --turmeric: #f0b840; --ok: #6cc79a; --warn: #f2a23c; --rec: #ef6a5a; --faint: #5d6280; color-scheme: dark }
+* { box-sizing: border-box }
+html, body { margin: 0 }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-ui); font-size: 1rem; line-height: 1.5;
+  padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px) }
+a { color: var(--indigo) }
+button { font: inherit; color: inherit }
+:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; border-radius: 4px }
+[hidden] { display: none !important }
+.app { max-width: 560px; margin: 0 auto; min-height: 100dvh; display: flex; flex-direction: column; background: var(--leaf) }
+@media (min-width: 600px) { .app { border-inline: 1px solid var(--rule) } }
+header.bar { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--rule); background: var(--leaf); position: sticky; top: 0; z-index: 2; min-height: 56px }
+header.bar .mark { font-family: var(--font-display); font-size: 1.5rem; color: var(--indigo); line-height: 1 }
+header.bar .title { font-weight: 600 }
+header.bar .right { margin-left: auto; font-size: .85rem; color: var(--muted); text-align: right }
+.back { background: none; border: 0; color: var(--indigo); cursor: pointer; padding: 6px 4px; font-size: .95rem }
+main { flex: 1; padding: 20px 16px 32px; display: flex; flex-direction: column; gap: 16px }
+.eyebrow { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600 }
+h1 { margin: 2px 0 0; font-size: 1.4rem; font-weight: 600; line-height: 1.25 }
+h2 { margin: 8px 0 0; font-size: 1.05rem; font-weight: 600 }
+.muted { color: var(--muted); font-size: .9rem }
+.small { font-size: .82rem; color: var(--muted) }
+.bar6 { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden }
+.bar6 > div { height: 6px; background: var(--indigo); border-radius: 3px; width: 0 }
+ol.days { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px }
+ol.days li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--leaf); border: 1px solid var(--rule); border-radius: 12px }
+ol.days li.next { background: var(--indigo-soft); border-color: var(--indigo) }
+ol.days li .t { flex: 1; min-width: 0 }
+ol.days li .t b { font-weight: 600 }
+ol.days li .s { font-size: .82rem; color: var(--muted) }
+ol.days li .s.ok { color: var(--ok) } ol.days li .s.wait { color: var(--warn) }
+ol.days li .act { display: flex; gap: 12px; font-size: .9rem }
+.linkbtn { background: none; border: 0; padding: 4px 0; color: var(--indigo); cursor: pointer; text-decoration: underline; text-underline-offset: 2px }
+.linkbtn.strong { font-weight: 600 }
+details.all { border-top: 1px solid var(--rule); padding-top: 8px }
+details.all summary { cursor: pointer; padding: 8px 0; font-weight: 600 }
+.btn { min-height: 48px; border-radius: 12px; border: 1px solid var(--rule); background: var(--leaf); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; font-size: 1rem; text-decoration: none; color: var(--ink) }
+.btn.primary { background: var(--indigo); border-color: var(--indigo); color: var(--leaf); font-weight: 600 }
+.btn:disabled { opacity: .5; cursor: default }
+input[type=text], input[type=password], select { font: inherit; min-height: 46px; border: 1px solid var(--rule); border-radius: 10px; padding: 0 12px; background: var(--paper); color: var(--ink); width: 100% }
+.verse { display: flex; flex-direction: column; gap: 14px }
+.pada { transition: opacity .2s }
+.pada .d { font-family: var(--font-display); font-size: 1.42rem; line-height: 1.5 }
+.pada .i { font-family: var(--font-display); font-style: italic; font-size: .92rem; color: var(--muted) }
+.pada .m { font-family: var(--font-display); font-size: .95rem; letter-spacing: .14em; color: var(--faint) }
+.pada .m span.on { color: var(--turmeric) }
+.pada.cur { background: var(--indigo-soft); border-radius: 10px; padding: 6px 10px; margin: 0 -10px }
+.pada.done { opacity: .45 }
+.recpane { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 8px }
+.round { width: 84px; height: 84px; border-radius: 42px; background: var(--rec); border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer }
+.round .dot { width: 30px; height: 30px; border-radius: 15px; background: #fff }
+.round .sq { width: 28px; height: 28px; border-radius: 4px; background: #fff }
+.opts { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 360px }
+.opt { display: flex; align-items: center; gap: 10px; font-size: .95rem }
+.opt input[type=checkbox] { width: 20px; height: 20px; flex: none }
+.opt select { min-height: 40px; width: auto; flex: 1 }
+.level { display: flex; align-items: flex-end; gap: 3px; height: 40px }
+.level span { width: 5px; background: var(--indigo); border-radius: 2px; height: 4px }
+.recdot { display: inline-flex; align-items: center; gap: 8px; color: var(--rec); font-weight: 600 }
+.recdot::before { content: ""; width: 10px; height: 10px; border-radius: 5px; background: var(--rec) }
+.timer { font-family: var(--font-mono) }
+.count { font-size: 4rem; font-weight: 600; color: var(--indigo); text-align: center; line-height: 1 }
+.card { background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px }
+.player { display: flex; align-items: center; gap: 12px }
+.play { width: 48px; height: 48px; border-radius: 24px; border: 0; background: var(--indigo); display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none }
+.play svg path { fill: var(--leaf) }
+canvas.wave { flex: 1; height: 44px; min-width: 0 }
+.checks { font-size: .85rem; display: flex; flex-direction: column; gap: 2px }
+.checks .good { color: var(--ok) } .checks .bad { color: var(--warn) }
+.stack { display: flex; flex-direction: column; gap: 10px }
+.toast { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--ink); color: var(--leaf); padding: 10px 16px; border-radius: 10px; font-size: .9rem; max-width: calc(100% - 32px); z-index: 5 }
+.voice { border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px }
+.voice .row { display: flex; gap: 14px; flex-wrap: wrap; font-size: .9rem }
+.linkbox { font-family: var(--font-mono); font-size: .78rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 8px; word-break: break-all }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px }
+.badge { font-size: .72rem; border-radius: 999px; padding: 1px 8px; background: var(--indigo-soft); color: var(--indigo) }
+.consent label { display: flex; gap: 10px; align-items: flex-start; font-size: .98rem }
+.consent input[type=checkbox] { width: 22px; height: 22px; flex: none; margin-top: 2px }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <button class="back" id="back" type="button" hidden>← Back</button>
+    <span class="mark" id="mark" aria-hidden="true">कृ</span>
+    <span class="title" id="htitle">Recording sheet</span>
+    <span class="right" id="hright">Private</span>
+  </header>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+const TEXT = 'meghaduta';
+const PART = 3 * 1024 * 1024;
+const $ = (s, el = document) => el.querySelector(s);
+const view = $('#view');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} }, del(k) { try { localStorage.removeItem(k); } catch {} } };
+let toastT;
+const toast = t => { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 3200); };
+
+// ---------- auth ----------
+const fromLink = (location.hash.match(/k=([A-Za-z0-9_-]{20,})/) || [])[1];
+if (fromLink) { ls.set('rec.k', fromLink); history.replaceState(null, '', location.pathname); }
+let key = ls.get('rec.k', '');
+async function api(path, opts = {}) {
+  const r = await fetch('/api/record' + path, { ...opts, headers: { Authorization: 'Bearer ' + key, ...(opts.headers || {}) } });
+  const j = r.headers.get('content-type')?.includes('json') ? await r.json() : null;
+  if (!r.ok) throw Object.assign(new Error(j?.error || `Error ${r.status}`), { status: r.status });
+  return j;
+}
+const post = (body) => api('', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+
+// ---------- state ----------
+let data, me, consent, kept = {}, voices = [], queued = {};
+const byId = id => data.days.find(d => d.id === id);
+const keyOf = id => `${TEXT}/${id}`;
+
+function header(title, right = 'Private', back = null) {
+  $('#htitle').textContent = title; $('#hright').textContent = right;
+  $('#back').hidden = !back; $('#mark').hidden = !!back; $('#back').onclick = back;
+}
+
+// ---------- offline queue (IndexedDB) ----------
+const idb = (() => {
+  let dbp;
+  const open = () => dbp ||= new Promise((ok, no) => { const r = indexedDB.open('record', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('q', { keyPath: 'upload' }); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); });
+  const tx = async (mode, fn) => { const db = await open(); return new Promise((ok, no) => { const t = db.transaction('q', mode); const s = t.objectStore('q'); const out = fn(s); t.oncomplete = () => ok(out.result); t.onerror = () => no(t.error); }); };
+  return { put: v => tx('readwrite', s => s.put(v)), del: k => tx('readwrite', s => s.delete(k)), all: () => tx('readonly', s => s.getAll()) };
+})();
+const memq = []; // used if IndexedDB is unavailable (private browsing)
+async function qAll() { try { return await idb.all(); } catch { return memq.slice(); } }
+async function qPut(v) { try { await idb.put(v); } catch { memq.push(v); } }
+async function qDel(k) { try { await idb.del(k); } catch { const i = memq.findIndex(x => x.upload === k); if (i >= 0) memq.splice(i, 1); } }
+async function refreshQueued() { queued = {}; for (const it of await qAll()) if (it.owner === me?.slug) queued[keyOf(it.vid)] = it; }
+
+let pumping = false;
+async function pump() {
+  if (pumping || !me) return; pumping = true;
+  try {
+    for (const it of await qAll()) {
+      if (it.owner !== me.slug) continue;
+      const blob = it.wav, n = Math.max(1, Math.ceil(blob.size / PART));
+      for (let i = (it.sent || 0); i < n; i++) {
+        await api(`?action=part&upload=${it.upload}&n=${i}`, { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: blob.slice(i * PART, (i + 1) * PART) });
+        it.sent = i + 1; await qPut(it);
+      }
+      const r = await post({ action: 'finish', upload: it.upload, parts: n, text: TEXT, vid: it.vid, dur: it.dur, checks: it.checks, recordedAt: it.recordedAt });
+      kept[keyOf(it.vid)] = r.take; await qDel(it.upload); delete queued[keyOf(it.vid)];
+      toast(`Day ${byId(it.vid).day} · ${it.vid} uploaded`);
+      if (route.name === 'list') renderList();
+    }
+  } catch (e) { if (e.status === 401) return signOut(e.message); /* offline or server trouble: try again later */ }
+  finally { pumping = false; }
+}
+addEventListener('online', pump);
+setInterval(pump, 30000);
+
+// ---------- audio ----------
+let ctx, stream, srcNode, recNode, analyser, drone, wakeLock;
+let capture = null; // Float32Array chunks while recording
+const SA = [['A', 110], ['A♯', 116.54], ['B', 123.47], ['C', 130.81], ['C♯', 138.59], ['D', 146.83], ['D♯', 155.56], ['E', 164.81], ['F', 174.61], ['F♯', 185], ['G', 196], ['G♯', 207.65], ['A (high)', 220], ['A♯ (high)', 233.08], ['B (high)', 246.94]];
+// Called straight from a tap: phones only let audio start inside one.
+function unlock() { ctx ||= new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state !== 'running') ctx.resume().catch(() => {}); }
+let audioP = null;
+function audioOn() { return audioP ||= openMic().catch(e => { audioP = null; throw e; }); }
+async function openMic() {
+  unlock();
+  if (ctx.state !== 'running') await ctx.resume();
+  stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } });
+  srcNode = ctx.createMediaStreamSource(stream);
+  analyser = ctx.createAnalyser(); analyser.fftSize = 1024; srcNode.connect(analyser);
+  const sink = ctx.createGain(); sink.gain.value = 0; sink.connect(ctx.destination);
+  if (ctx.audioWorklet) {
+    const code = `class R extends AudioWorkletProcessor{process(i){const c=i[0]&&i[0][0];if(c)this.port.postMessage(c.slice(0));return true}}registerProcessor('rec',R)`;
+    await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([code], { type: 'application/javascript' })));
+    recNode = new AudioWorkletNode(ctx, 'rec'); recNode.port.onmessage = e => { if (capture) capture.push(e.data); };
+  } else {
+    recNode = ctx.createScriptProcessor(4096, 1, 1); recNode.onaudioprocess = e => { if (capture) capture.push(e.inputBuffer.getChannelData(0).slice(0)); };
+  }
+  srcNode.connect(recNode); recNode.connect(sink);
+}
+function audioOff() {
+  audioP = null; droneOff(); if (stream) stream.getTracks().forEach(t => t.stop()); stream = null;
+  try { srcNode?.disconnect(); recNode?.disconnect(); } catch {}
+  releaseWake();
+}
+function droneOn() {
+  if (drone || !ctx) return;
+  const f = +ls.get('rec.sa', '138.59'), out = ctx.createGain(); out.gain.value = 0;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.connect(out); out.connect(ctx.destination);
+  const oscs = [[f, 'sawtooth', .05], [f * 1.5, 'sine', .05], [f * 2, 'sine', .06], [f / 2, 'sine', .08]].map(([hz, type, g]) => {
+    const o = ctx.createOscillator(), gn = ctx.createGain(); o.type = type; o.frequency.value = hz; gn.gain.value = g; o.connect(gn); gn.connect(lp); o.start(); return o; });
+  out.gain.linearRampToValueAtTime(1, ctx.currentTime + 1.2);
+  drone = { out, oscs };
+}
+function droneOff() { if (!drone) return; const d = drone; drone = null; d.out.gain.linearRampToValueAtTime(0, ctx.currentTime + .4); setTimeout(() => d.oscs.forEach(o => o.stop()), 500); }
+function beep(hz = 880, len = .08) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz; g.gain.value = .15; g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + len); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + len + .02); }
+async function holdWake() { try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {} }
+function releaseWake() { try { wakeLock?.release(); } catch {} wakeLock = null; }
+
+function levelLoop(el, stopIf) {
+  const bars = [...el.children], buf = new Float32Array(analyser.fftSize);
+  let lab = el.nextElementSibling;
+  const tick = () => {
+    if (stopIf()) return;
+    analyser.getFloatTimeDomainData(buf);
+    let pk = 0, sum = 0; for (const x of buf) { const a = Math.abs(x); if (a > pk) pk = a; sum += x * x; }
+    const rms = Math.sqrt(sum / buf.length), db = 20 * Math.log10(rms + 1e-9);
+    const lvl = Math.max(0, Math.min(1, (db + 60) / 54));
+    bars.forEach((b, i) => { const h = Math.max(4, lvl * 40 * (0.6 + 0.4 * Math.sin((Date.now() / 120) + i))); b.style.height = h + 'px'; b.style.background = pk > .98 ? 'var(--rec)' : ''; });
+    if (lab) lab.textContent = pk > .98 ? 'Too loud: move back a little' : db < -50 ? 'Listening…' : db < -38 ? 'A little quiet' : 'Level good';
+    if (lab) lab.style.color = pk > .98 ? 'var(--rec)' : db < -38 && db >= -50 ? 'var(--warn)' : 'var(--ok)';
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+function toWav(chunks, sr) {
+  const n = chunks.reduce((a, c) => a + c.length, 0), buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  const w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
+  let o = 44; for (const c of chunks) for (let i = 0; i < c.length; i++, o += 2) { const s = Math.max(-1, Math.min(1, c[i])); v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true); }
+  return new Blob([buf], { type: 'audio/wav' });
+}
+function analyse(chunks, sr) {
+  const win = Math.round(sr * .05), rms = []; let peak = 0, clipped = 0, acc = 0, k = 0, total = 0;
+  for (const c of chunks) for (let i = 0; i < c.length; i++) { const a = Math.abs(c[i]); if (a > peak) peak = a; if (a > .99) clipped++; acc += c[i] * c[i]; total++; if (++k === win) { rms.push(Math.sqrt(acc / win)); acc = 0; k = 0; } }
+  const s = rms.slice().sort((a, b) => a - b), db = x => 20 * Math.log10(x + 1e-9);
+  const noise = db(s[Math.floor(s.length * .1)] || 0), voice = db(s[Math.floor(s.length * .9)] || 0);
+  const peaks = []; const step = Math.max(1, Math.floor(rms.length / 120)); for (let i = 0; i < rms.length; i += step) peaks.push(Math.max(...rms.slice(i, i + step)));
+  return { dur: Math.round(total / sr * 10) / 10, peak: Math.round(db(peak) * 10) / 10, clipped, noise: Math.round(noise), voice: Math.round(voice), peaks };
+}
+
+// ---------- views ----------
+const route = { name: 'list' };
+function go(name, arg) { route.name = name; route.arg = arg; scrollTo(0, 0); ({ list: renderList, verse: renderVerse, review: renderReview, voices: renderVoices, consent: renderConsent })[name](arg); }
+
+function status(id) {
+  const k = kept[keyOf(id)], q = queued[keyOf(id)];
+  if (q) return `<span class="s wait">Kept · waiting to upload</span>`;
+  if (k) return `<span class="s ok">Recorded · ${Math.round(k.dur)} s</span>`;
+  return `<span class="s">Not yet</span>`;
+}
+function others(id) {
+  if (!me.owner) return '';
+  const b = voices.filter(v => v.kept[keyOf(id)]).map(v => `<span class="badge">${esc(v.name)} ✓</span>`).join('');
+  return b ? `<div class="badges">${b}</div>` : '';
+}
+function row(d, next) {
+  const has = kept[keyOf(d.id)] || queued[keyOf(d.id)];
+  return `<li class="${next ? 'next' : ''}">
+    ${has ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>`
+      : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${next ? 'var(--indigo)' : 'var(--faint)'}" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>`}
+    <div class="t"><b>Day ${d.day} · ${d.id}</b><div>${next && !has ? '<span class="s" style="color:var(--indigo)">Next</span>' : status(d.id)}</div>${others(d.id)}</div>
+    <div class="act">${kept[keyOf(d.id)] ? `<button class="linkbtn" data-listen="${d.id}" type="button">Listen</button>` : ''}
+      <button class="linkbtn${next ? ' strong' : ''}" data-rec="${d.id}" type="button">${has ? 'Redo' : 'Record'}</button></div></li>`;
+}
+function renderList() {
+  header('Recording sheet', me.owner ? 'Private' : me.name);
+  const first = data.days.findIndex(d => !d.reel);
+  const week = data.days.slice(Math.max(0, first), Math.max(0, first) + 7);
+  const done = week.filter(d => kept[keyOf(d.id)] || queued[keyOf(d.id)]).length;
+  const nextId = (week.find(d => !kept[keyOf(d.id)] && !queued[keyOf(d.id)]) || {}).id;
+  const nq = Object.keys(queued).length;
+  const chapters = [...new Set(data.days.map(d => d.id.split('.')[0]))];
+  const names = { 1: 'Pūrvamegha', 2: 'Uttaramegha' };
+  view.innerHTML = `
+    <div><div class="eyebrow">${esc(data.title)} · next to record</div>
+      <h1>Days ${week[0].day}–${week[week.length - 1].day}</h1>
+      <div class="muted">${done} of ${week.length} recorded · each about 20–40 seconds</div></div>
+    <div class="bar6"><div style="width:${Math.round(done / week.length * 100)}%"></div></div>
+    ${nq ? `<div class="small" style="color:var(--warn)">${nq} kept take${nq > 1 ? 's' : ''} waiting to upload. ${navigator.onLine ? 'Sending…' : 'They will go when you are back online.'}</div>` : ''}
+    <ol class="days">${week.map(d => row(d, d.id === nextId)).join('')}</ol>
+    <details class="all"><summary>All ${data.days.length} verses</summary>
+      ${chapters.map(c => `<h2>${names[c] || 'Part ' + c}</h2><ol class="days" style="margin-top:8px">${data.days.filter(d => d.id.split('.')[0] === c).map(d => row(d, false)).join('')}</ol>`).join('')}
+    </details>
+    <div class="small">Kept takes upload to private storage; only Sriram can listen to them. Find a quiet room and hold the phone about a hand's width away.</div>
+    <div class="small" style="display:flex;gap:16px;flex-wrap:wrap">
+      ${me.owner ? `<button class="linkbtn" id="tovoices" type="button">Voices and invitations</button>` : `<button class="linkbtn" id="tochoices" type="button">How my recordings may be used</button>`}
+      <button class="linkbtn" id="signout" type="button">Sign out on this phone</button></div>`;
+  view.querySelectorAll('[data-rec]').forEach(b => b.onclick = () => { unlock(); go('verse', b.dataset.rec); });
+  view.querySelectorAll('[data-listen]').forEach(b => b.onclick = () => listenKept(b.dataset.listen, b));
+  $('#tovoices')?.addEventListener('click', () => go('voices'));
+  $('#tochoices')?.addEventListener('click', () => go('consent'));
+  $('#signout').onclick = () => signOut();
+}
+let listening;
+async function listenKept(id, btn, voice) {
+  try {
+    if (listening) { listening.pause(); listening = null; }
+    const label = btn.dataset.label ||= btn.textContent;
+    btn.textContent = 'Loading…';
+    const r = await fetch(`/api/record?action=audio&text=${TEXT}&vid=${id}${voice ? '&voice=' + voice : ''}`, { headers: { Authorization: 'Bearer ' + key } });
+    if (!r.ok) throw new Error('Could not load that take');
+    listening = new Audio(URL.createObjectURL(await r.blob())); listening.play(); btn.textContent = 'Playing';
+    listening.onended = () => btn.textContent = label;
+  } catch (e) { btn.textContent = btn.dataset.label || 'Listen'; toast(e.message); }
+}
+
+function padasHtml(d) {
+  return d.padas.map((p, i) => `<div class="pada" data-p="${i}"><div class="d">${esc(p.d)}</div>
+    <div class="m" aria-label="meter">${[...p.m].map(c => `<span>${c === 'G' ? 'ऽ' : '।'}</span>`).join('')}</div></div>`).join('');
+}
+
+function renderVerse(id) {
+  const d = byId(id);
+  header(`Day ${d.day} · ${data.title} ${d.id}`, '', () => { stopAll(); go('list'); });
+  const sa = ls.get('rec.sa', '138.59'), droneOnPref = ls.get('rec.drone', '0') === '1', pace = ls.get('rec.pace', '0.26');
+  view.innerHTML = `
+    <div class="verse">${padasHtml(d)}</div>
+    <div class="small">${d.meter && d.meter !== 'unidentified' ? esc(d.meter[0].toUpperCase() + d.meter.slice(1)) + ' · ' : ''}chant as printed, sandhi and all. ऽ long, । short.</div>
+    <div class="recpane" id="pane">
+      <div class="opts">
+        <label class="opt"><input type="checkbox" id="drone" ${droneOnPref ? 'checked' : ''}> Śruti drone, in headphones only</label>
+        <label class="opt" id="saRow" ${droneOnPref ? '' : 'hidden'}>Sa <select id="sa">${SA.map(([n, f]) => `<option value="${f}" ${+sa === f ? 'selected' : ''}>${n} · ${Math.round(f)} Hz</option>`).join('')}</select></label>
+        <label class="opt">Guide pace <select id="pace"><option value="0.32" ${pace === '0.32' ? 'selected' : ''}>Slow</option><option value="0.26" ${pace === '0.26' ? 'selected' : ''}>Steady</option><option value="0.2" ${pace === '0.2' ? 'selected' : ''}>Brisk</option><option value="0" ${pace === '0' ? 'selected' : ''}>Off</option></select></label>
+      </div>
+      <div class="level" id="lvl" aria-hidden="true">${'<span></span>'.repeat(10)}</div><div class="small" id="lvltxt">Tap Get ready to check the level</div>
+      <button class="round" id="go" type="button" aria-label="Start recording"><span class="dot"></span></button>
+      <div class="small" id="hint">Tap to start · a 3-second count-in first</div>
+    </div>`;
+  const droneBox = $('#drone');
+  droneBox.onchange = () => { ls.set('rec.drone', droneBox.checked ? '1' : '0'); $('#saRow').hidden = !droneBox.checked; if (droneBox.checked) { droneOn(); toast('Use headphones: through a speaker the drone ends up in the recording'); } else droneOff(); };
+  $('#sa').onchange = e => { ls.set('rec.sa', e.target.value); if (drone) { droneOff(); setTimeout(droneOn, 550); } };
+  $('#pace').onchange = e => ls.set('rec.pace', e.target.value);
+  let live = true, looping = false; route.stop = () => live = false;
+  const ready = async () => {
+    await audioOn();
+    if (!looping) { looping = true; levelLoop($('#lvl'), () => !live || route.name !== 'verse'); }
+    if (droneBox.checked) droneOn();
+  };
+  // Open the microphone now if audio is already unlocked (a tap brought us here); otherwise on the red button.
+  if (ctx && ctx.state === 'running') ready().catch(() => { $('#lvltxt').textContent = 'Tap the red button to allow the microphone'; });
+  $('#go').onclick = async () => {
+    unlock();
+    try { await ready(); } catch (e) { return toast('The microphone is blocked. Allow it for samskritam.ai in your browser settings.'); }
+    record(d);
+  };
+}
+function stopAll() { route.stop?.(); capture = null; clearInterval(route.timer); audioOff(); }
+
+async function record(d) {
+  const pane = $('#pane');
+  pane.innerHTML = `<div class="count" id="count">3</div><div class="small">Get ready…</div>`;
+  for (const n of [3, 2, 1]) { $('#count').textContent = n; beep(n === 1 ? 1320 : 880); await new Promise(r => setTimeout(r, 1000)); }
+  if (route.name !== 'verse') return;
+  await holdWake();
+  capture = []; const t0 = performance.now();
+  header('', '', null); $('#htitle').innerHTML = `<span class="recdot">Recording</span>`; $('#hright').innerHTML = `<span class="timer" id="timer">0:00</span>`; $('#mark').hidden = true;
+  pane.innerHTML = `<div class="small">Guide only: the marks move at a steady pace; chant at yours.</div>
+    <div class="level" id="lvl" aria-hidden="true">${'<span></span>'.repeat(10)}</div><div class="small" id="lvltxt"></div>
+    <button class="round" id="stop" type="button" aria-label="Stop recording"><span class="sq"></span></button><div class="small">Tap to stop</div>`;
+  let live = true; route.stop = () => live = false;
+  levelLoop($('#lvl'), () => !live);
+  route.timer = setInterval(() => { const s = Math.floor((performance.now() - t0) / 1000); $('#timer') && ($('#timer').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`); }, 250);
+  guide(d, () => live);
+  $('#stop').onclick = () => {
+    live = false; clearInterval(route.timer);
+    const chunks = capture; capture = null; releaseWake();
+    if (!chunks || !chunks.length) return toast('Nothing was recorded. Check the microphone.');
+    const a = analyse(chunks, ctx.sampleRate);
+    const take = { wav: toWav(chunks, ctx.sampleRate), ...a, sr: ctx.sampleRate, at: new Date().toISOString() };
+    (route.takes ||= {})[d.id] ||= []; route.takes[d.id].push(take);
+    droneOff();
+    go('review', d.id);
+  };
+}
+function guide(d, alive) {
+  const pace = +ls.get('rec.pace', '0.26');
+  const padas = [...view.querySelectorAll('.pada')];
+  if (!pace) return;
+  const steps = []; let t = 0;
+  d.padas.forEach((p, i) => { [...p.m].forEach((c, j) => { steps.push([t, i, j]); t += (c === 'G' ? 2 : 1) * pace; }); t += (i % 2 ? 4 : 2) * pace; });
+  const start = performance.now();
+  const tick = () => {
+    if (!alive()) return;
+    const now = (performance.now() - start) / 1000;
+    let cur = -1, upto = -1;
+    for (const [st, i, j] of steps) if (st <= now) { cur = i; upto = j; }
+    padas.forEach((el, i) => { el.classList.toggle('cur', i === cur); el.classList.toggle('done', i < cur);
+      el.querySelectorAll('.m span').forEach((s, j) => s.classList.toggle('on', i < cur || (i === cur && j <= upto))); });
+    if (now < t + 1) requestAnimationFrame(tick); else padas.forEach(el => el.classList.remove('cur'));
+  };
+  tick();
+}
+
+function drawWave(canvas, peaks, progress = 0) {
+  const r = devicePixelRatio || 1, w = canvas.clientWidth, h = canvas.clientHeight; canvas.width = w * r; canvas.height = h * r;
+  const g = canvas.getContext('2d'); g.scale(r, r);
+  const cs = getComputedStyle(document.documentElement), on = cs.getPropertyValue('--indigo'), off = cs.getPropertyValue('--faint');
+  const max = Math.max(...peaks, 1e-6), bw = w / peaks.length;
+  peaks.forEach((p, i) => { const bh = Math.max(2, (p / max) * h); g.fillStyle = i / peaks.length < progress ? on : off; g.fillRect(i * bw, (h - bh) / 2, Math.max(1, bw - 1), bh); });
+}
+function checksHtml(t) {
+  const rows = [];
+  rows.push(t.dur < 5 ? ['bad', 'Very short: did it stop early?'] : ['good', `Length ${t.dur} s`]);
+  rows.push(t.clipped > 20 ? ['bad', 'Some clipping: move back a little or chant softer'] : t.peak < -24 ? ['bad', 'Quite quiet: move closer'] : ['good', 'No clipping']);
+  rows.push(t.noise > -45 ? ['bad', `Background noise is high (${t.noise} dB): a quieter room helps`] : ['good', `Little background noise (${Math.max(t.noise, -90)} dB)`]);
+  return rows.map(([c, s]) => `<div class="${c}">${c === 'good' ? '✓' : '!'} ${esc(s)}</div>`).join('');
+}
+function renderReview(id) {
+  const d = byId(id), takes = route.takes?.[id] || [], i = takes.length - 1, t = takes[i];
+  header(`Day ${d.day} · Take ${i + 1}`, '', () => go('verse', id));
+  const nextDay = data.days[data.days.indexOf(d) + 1];
+  view.innerHTML = `
+    <div class="card">
+      <div class="player"><button class="play" id="play" type="button" aria-label="Play take ${i + 1}"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path id="pi" d="M8 5v14l11-7z"/></svg></button>
+        <canvas class="wave" id="wave"></canvas><span class="timer muted">${Math.floor(t.dur / 60)}:${String(Math.round(t.dur % 60)).padStart(2, '0')}</span></div>
+      <div class="checks">${checksHtml(t)}</div>
+    </div>
+    ${takes.length > 1 ? `<div class="small">${takes.slice(0, -1).map((x, j) => `Take ${j + 1} · ${x.dur} s · <button class="linkbtn" data-take="${j}" type="button">play</button> · <button class="linkbtn" data-keep="${j}" type="button">keep this one</button>`).join('<br>')}</div>` : ''}
+    <div class="stack" style="margin-top:auto">
+      <button class="btn primary" id="keep" type="button">Keep take ${i + 1}${nextDay ? ` and go to Day ${nextDay.day}` : ''}</button>
+      <button class="btn" id="again" type="button">Record again</button>
+      <div class="small" style="text-align:center">Saved as ${TEXT}-${d.id}.wav · uploads when online</div>
+    </div>`;
+  const audio = new Audio(URL.createObjectURL(t.wav)), wave = $('#wave');
+  drawWave(wave, t.peaks);
+  audio.ontimeupdate = () => drawWave(wave, t.peaks, audio.currentTime / t.dur);
+  audio.onended = () => { $('#pi')?.setAttribute('d', 'M8 5v14l11-7z'); drawWave(wave, t.peaks); };
+  $('#play').onclick = () => { if (audio.paused) { audio.play(); $('#pi').setAttribute('d', 'M7 5h4v14H7zM13 5h4v14h-4z'); } else { audio.pause(); $('#pi').setAttribute('d', 'M8 5v14l11-7z'); } };
+  view.querySelectorAll('[data-take]').forEach(b => b.onclick = () => new Audio(URL.createObjectURL(takes[+b.dataset.take].wav)).play());
+  const keep = async (take) => {
+    audio.pause();
+    const up = (crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '') : Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2));
+    const item = { upload: up.slice(0, 32).padEnd(16, '0'), owner: me.slug, vid: id, wav: take.wav, dur: take.dur, recordedAt: take.at, checks: { peak: take.peak, noise: take.noise, clipped: take.clipped }, sent: 0 };
+    // A newer keep replaces an older one still waiting for this verse.
+    for (const it of await qAll()) if (it.owner === me.slug && it.vid === id) await qDel(it.upload);
+    await qPut(item); queued[keyOf(id)] = item;
+    delete route.takes[id];
+    pump();
+    if (nextDay) go('verse', nextDay.id); else { stopAll(); go('list'); }
+  };
+  $('#keep').onclick = () => { unlock(); keep(t); };
+  view.querySelectorAll('[data-keep]').forEach(b => b.onclick = () => keep(takes[+b.dataset.keep]));
+  $('#again').onclick = () => { unlock(); go('verse', id); };
+}
+
+async function renderVoices() {
+  header('Voices', '', () => go('list'));
+  const vs = voices;
+  view.innerHTML = `
+    <div><div class="eyebrow">Invite a singer</div><h1>Voices and invitations</h1>
+      <div class="muted">Each singer gets a private link. It opens this sheet for them alone; they see only their own recordings, and confirm how they may be used before recording.</div></div>
+    <form id="inv" class="stack"><label class="small" for="nm">Singer's name</label><input type="text" id="nm" autocomplete="off" maxlength="60" placeholder="Name as it should be credited">
+      <button class="btn primary" type="submit">Make an invitation link</button></form>
+    <div id="newlink"></div>
+    <div class="stack">${vs.length ? vs.map(v => `<div class="voice">
+      <b>${esc(v.name)}</b>
+      <div class="small">${v.revoked ? 'Link turned off' : v.consent ? `Reels and site: ${v.consent.publish ? 'yes' : 'no'} · Voice training: ${v.consent.train ? 'yes' : 'no'} · Credit: ${esc(v.consent.credit)}` : 'Has not opened the link yet'}</div>
+      <div class="small">${Object.keys(v.kept).length} verse${Object.keys(v.kept).length === 1 ? '' : 's'} recorded</div>
+      <div class="row">${v.link ? `<button class="linkbtn" data-copy="${esc(v.link)}" type="button">Copy link</button>` : ''}${v.link && navigator.share ? `<button class="linkbtn" data-share="${esc(v.link)}" data-name="${esc(v.name)}" type="button">Send link</button>` : ''}
+        ${v.link ? `<button class="linkbtn" data-revoke="${esc(v.slug)}" data-name="${esc(v.name)}" type="button">Turn off link</button>` : ''}</div>
+      ${Object.keys(v.kept).length ? `<div class="row">${Object.keys(v.kept).sort((a, b) => byId(a.split('/')[1]).day - byId(b.split('/')[1]).day).map(k => `<button class="linkbtn" data-play="${esc(k.split('/')[1])}" data-voice="${esc(v.slug)}" type="button">${esc(k.split('/')[1])}</button>`).join('')}</div>` : ''}
+    </div>`).join('') : '<div class="small">No one invited yet.</div>'}</div>`;
+  const copy = async (t) => { try { await navigator.clipboard.writeText(t); toast('Link copied'); } catch { toast('Copy did not work; press and hold the link to copy it'); } };
+  const share = (link, name) => navigator.share({ title: 'Recording for samskritam.ai', text: `${name}, here is your private recording link for samskritam.ai (Kālidāsa's Meghadūta). Please keep it to yourself: it opens your own recording sheet.`, url: link }).catch(() => {});
+  view.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => copy(b.dataset.copy));
+  view.querySelectorAll('[data-share]').forEach(b => b.onclick = () => share(b.dataset.share, b.dataset.name));
+  view.querySelectorAll('[data-play]').forEach(b => b.onclick = () => listenKept(b.dataset.play, b, b.dataset.voice).then(() => {}));
+  view.querySelectorAll('[data-revoke]').forEach(b => b.onclick = async () => {
+    if (b.dataset.armed !== '1') { b.dataset.armed = '1'; b.textContent = `Tap again to turn off ${b.dataset.name}'s link`; return; }
+    try { await post({ action: 'revoke', voice: b.dataset.revoke }); await loadMe(); renderVoices(); toast('Link turned off; their recordings are kept'); } catch (e) { toast(e.message); }
+  });
+  $('#inv').onsubmit = async (e) => {
+    e.preventDefault(); const name = $('#nm').value.trim(); if (!name) return;
+    try {
+      const r = await post({ action: 'invite', name });
+      await loadMe(); await renderVoices();
+      $('#newlink').innerHTML = `<div class="card"><b>Link for ${esc(name)}</b><div class="linkbox">${esc(r.voice.link)}</div>
+        <div style="display:flex;gap:16px"><button class="linkbtn strong" id="cp" type="button">Copy link</button>${navigator.share ? '<button class="linkbtn strong" id="sh" type="button">Send link</button>' : ''}</div>
+        <div class="small">Anyone with this link can record as ${esc(name)}, so send it to her directly.</div></div>`;
+      $('#cp').onclick = () => copy(r.voice.link); $('#sh')?.addEventListener('click', () => share(r.voice.link, name));
+    } catch (err) { toast(err.message); }
+  };
+}
+
+function renderConsent() {
+  const c = consent || { publish: true, train: false, credit: me.name };
+  header(consent ? 'Your choices' : 'Welcome', '', consent ? () => go('list') : null);
+  view.innerHTML = `
+    <div><div class="eyebrow">Recording for samskritam.ai</div><h1>Namaste, ${esc(me.name)}</h1></div>
+    <p style="margin:0">Sriram Subramanian is recording Kālidāsa's <i>Meghadūta</i>, one verse a day, for samskritam.ai. This sheet lets you record verses from your phone.</p>
+    <p style="margin:0">What you keep is stored privately: only Sriram can listen to it. Please choose how your recordings may be used.</p>
+    <form id="cf" class="stack consent">
+      <label><input type="checkbox" id="pub" ${c.publish ? 'checked' : ''}><span>Use my recordings in samskritam.ai's daily <i>Verse for Today</i> reels and on the website, with my name.</span></label>
+      <label><input type="checkbox" id="trn" ${c.train ? 'checked' : ''}><span>Use my recordings to train a computer-generated chanting voice for samskritam.ai. This is separate and optional.</span></label>
+      <label class="small" for="cr" style="display:block">Credit me as</label><input type="text" id="cr" maxlength="80" value="${esc(c.credit || me.name)}">
+      <div class="small">You can change these choices here at any time, or ask Sriram to delete your recordings.</div>
+      <button class="btn primary" type="submit">${consent ? 'Save my choices' : 'Agree and continue'}</button>
+    </form>`;
+  $('#cf').onsubmit = async (e) => {
+    e.preventDefault();
+    try { const r = await post({ action: 'consent', publish: $('#pub').checked, train: $('#trn').checked, credit: $('#cr').value.trim() });
+      consent = r.consent; toast('Saved'); go('list'); } catch (err) { toast(err.message); }
+  };
+}
+
+function renderLogin(msg) {
+  header('Recording sheet', 'Private');
+  view.innerHTML = `<div><div class="eyebrow">Samskritam.ai</div><h1>Recording sheet</h1></div>
+    <div class="muted">Enter your passcode, or open the invitation link you were sent.</div>
+    <form id="lf" class="stack"><input type="password" id="pc" autocomplete="current-password" placeholder="Passcode" aria-label="Passcode">
+      <button class="btn primary" type="submit">Open</button></form>
+    ${msg ? `<div class="small" style="color:var(--warn)">${esc(msg)}</div>` : ''}`;
+  $('#lf').onsubmit = (e) => { e.preventDefault(); key = $('#pc').value.trim(); if (key) start(); };
+}
+function signOut(msg) { ls.del('rec.k'); key = ''; me = null; stopAll(); renderLogin(msg); }
+
+async function loadMe() {
+  const r = await api('?action=me');
+  me = r.me; consent = r.consent; kept = r.kept || {}; voices = r.voices || [];
+}
+async function start() {
+  if (!key) return renderLogin();
+  view.innerHTML = '<div class="muted">Opening…</div>';
+  try {
+    [data] = await Promise.all([data || fetch(`/data/record/${TEXT}.json`).then(r => r.json()), loadMe()]);
+  } catch (e) {
+    if (e.status === 401) return signOut(e.message);
+    view.innerHTML = `<div class="muted">Could not reach samskritam.ai. ${navigator.onLine ? 'Try again in a moment.' : 'You are offline.'}</div>`; return;
+  }
+  ls.set('rec.k', key);
+  await refreshQueued();
+  if (!me.owner && !consent) go('consent'); else go('list');
+  pump();
+}
+start();
+})();
+</script>
+</body>
+</html>
