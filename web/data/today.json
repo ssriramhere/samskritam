@@ -181,6 +181,51 @@
         "#Ramagiri"
       ],
       "reel": "/reels/meghaduta-1.12.mp4"
+    },
+    "1.13": {
+      "hook": "Directions first, the message later: rest on the peaks, sip from the streams, and keep going.",
+      "word": {
+        "dev": "श्रोत्रपेय",
+        "iast": "śrotrapeya",
+        "say": "Shrotra peya",
+        "en": "a drink for the ears",
+        "note": "śrotra, ear, and peya, to be drunk: a message so sweet the ears drink it in."
+      },
+      "tags": [
+        "#Monsoon",
+        "#Travel"
+      ],
+      "reel": "/reels/meghaduta-1.13.mp4"
+    },
+    "1.14": {
+      "hook": "Up in the hills, wide-eyed women look up: is the wind carrying off the mountaintop?",
+      "word": {
+        "dev": "दिङ्नाग",
+        "iast": "diṅnāga",
+        "say": "Ding naaga",
+        "en": "elephant of the quarters",
+        "note": "dik, direction, and nāga, elephant: the great elephants who guard the corners of the sky."
+      },
+      "tags": [
+        "#Elephants",
+        "#Mythology"
+      ],
+      "reel": "/reels/meghaduta-1.14.mp4"
+    },
+    "1.15": {
+      "hook": "A rainbow rises over the dark cloud, like the peacock feather on Krishna the cowherd.",
+      "word": {
+        "dev": "गोपवेष",
+        "iast": "gopaveṣa",
+        "say": "Gopa vesha",
+        "en": "dressed as a cowherd",
+        "note": "gopa, cowherd, and veṣa, dress: Viṣṇu as Kṛṣṇa, with the peacock feather in his hair."
+      },
+      "tags": [
+        "#Krishna",
+        "#Rainbow"
+      ],
+      "reel": "/reels/meghaduta-1.15.mp4"
     }
   },
   "heading": "Sanskrit Verses for Today",
